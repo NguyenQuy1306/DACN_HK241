@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef } from "react";
 import {
   CircularProgress,
   Grid,
@@ -7,17 +7,29 @@ import {
   MenuItem,
   FormControl,
   Select,
-} from '@mui/material';
+} from "@mui/material";
 
-import PlaceDetails from '../PlaceDetails/PlaceDetails';
-import useStyles from './styles.js';
+import PlaceDetails from "../PlaceDetails/PlaceDetails";
+import useStyles from "./styles.js";
 
-const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }) => {
+const List = ({
+  places,
+  type,
+  setType,
+  rating,
+  setRating,
+  childClicked,
+  isLoading,
+}) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
-    setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    setElRefs((refs) =>
+      Array(places.length)
+        .fill()
+        .map((_, i) => refs[i] || createRef())
+    );
   }, [places]);
 
   return (
@@ -47,15 +59,22 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
               <MenuItem value="4.5">Above 4.5</MenuItem>
             </Select>
           </FormControl> */}
-          <div container spacing={3} className={classes.list}>
-            {places?.map((place, i) => (
-              <div ref={elRefs[i]} key={i} item xs={12}>
-                {i}
-                childClicked: {Number(childClicked)}
-                <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
-              </div>
-            ))}
-          </div>
+          <div></div>
+          {places?.map((place, i) => (
+            <div
+              ref={elRefs[i]}
+              key={i}
+              item
+              xs={12}
+              style={{ position: "relative" }}
+            >
+              <PlaceDetails
+                selected={Number(childClicked) === i}
+                refProp={elRefs[i]}
+                place={place}
+              />
+            </div>
+          ))}
         </>
       )}
     </div>
