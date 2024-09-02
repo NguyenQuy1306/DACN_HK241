@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker,InfoWindow  } from '@react-google-maps/api';
 import { getPlacesData } from '../../api/travelAdvisorAPI'; // Adjust the path based on your file structure
 import { CssBaseline, Grid } from '@mui/material';
 import { Button, Paper, Typography } from '@mui/material';
@@ -7,13 +7,15 @@ import useStyles from './styles';
 import Rating from '@mui/material/Rating';
 import { useMediaQuery } from '@mui/material';
 
-const Map = ({setPlaces,setCoords}) => {
+const Map = ({setPlaces,setCoords,setChildClicked}) => {
   const [markers, setMarkers] = useState([]);
   const [bounds, setBounds] = useState(null);
   const mapRef = useRef(null);
   const [center, setCenter] = useState({ lat: 45.42152967, lng: -75.6971931 });
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:100px)');
+  const [selectedMarker, setSelectedMarker] = useState(null); // To store the selected marker
+  const [highlightedMarkerIndex, setHighlightedMarkerIndex] = useState(null);
 
   // useEffect(() => {
   //   const fetchMarkers = async () => {
@@ -73,7 +75,8 @@ const Map = ({setPlaces,setCoords}) => {
                     lng: parseFloat(place.longitude),
                     name: place.name,
                     photo: place.photo,
-                    rating: place.rating
+                    rating: place.rating,
+                    address: place.address
                 }));
                 console.log("data ", data.length);
                 console.log("transformedMarkers ", transformedMarkers.length);
@@ -97,11 +100,25 @@ const Map = ({setPlaces,setCoords}) => {
   const onMapClick = (event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
+    // setCenter({ lat, lng });
+    setSelectedMarker(null); // Hide the info window when the map is clicked
+    setHighlightedMarkerIndex(null);
+  };
+  const onChildClick = (position,index) => {
+    setChildClicked(index);
+    setSelectedMarker(position);
+    const lat = position.lat;
+    const lng = position.lng;
     setCenter({ lat, lng });
+    setHighlightedMarkerIndex(index);  // Set the highlighted marker index
+
+
+    console.log("nguyenasdasd")
   };
   return (
     <div className={classes.mapContainer}>
-    
+      {/* {selectedMarker.name} */}
+    asdsa
     <Button
         variant="contained"
         color="primary"
@@ -125,12 +142,87 @@ const Map = ({setPlaces,setCoords}) => {
         gestureHandling="greedy"  // Allows both scrolling and zooming
         onChange={(e) => {
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+          
         }}
+        
       >
         {markers.map((position, index) => (
-          <Marker key={index} position={position} />
+          <Marker key={index} position={position} icon={{
+            className:classes.pointer,
+            url: highlightedMarkerIndex === index? "https://cdn-icons-png.flaticon.com/512/5193/5193674.png" :  "https://cdn-icons-png.flaticon.com/512/5193/5193679.png",
+            scaledSize: highlightedMarkerIndex === index? new window.google.maps.Size(70, 70) :   new window.google.maps.Size(45, 45)
+          }}
+          // onClick={setChildClicked(index)} 
+          onClick={() => onChildClick(position,index)}  // Corrected line
+          />
 
         ))}
+        {selectedMarker && (
+        <div
+        style={{
+          position: 'absolute',
+          left: '50%',
+          top: '20%',
+          transform: 'translate(-50%, -50%)',
+          background: 'white',
+          padding: '10px',
+          borderRadius: '10px',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+          zIndex: 100,
+          minWidth: '180px',
+          height:'200px',
+          
+          textAlign: 'center',
+          // position: 'relative', // This is required for the pseudo-element
+          display:'flex',
+          flexDirection: 'column'
+
+        }}
+      >
+        <img
+          src={selectedMarker.photo ? selectedMarker.photo.images.large.url : "https://via.placeholder.com/100"}
+          alt={selectedMarker.name}
+          style={{ width: '100%', height: '70%', borderRadius: '4px' }}
+        />
+        <div  style={{display:'flex'}}> 
+<div style={{ fontSize: '14px',fontWeight:'bold' ,
+  textOverflow: 'ellipsis',maxWidth:'230px', marginRight:'5px'}}>
+  {selectedMarker.name}
+
+</div >   
+★ {selectedMarker.rating}   
+</div> 
+<div style={{
+  fontSize: '10px',
+  fontWeight: 'inherit',
+  // whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '100%',
+ 
+}}>
+  {selectedMarker.address}
+
+</div>   
+      
+        {/* Tip of the talk bubble */}
+        <div style={{
+          content: "''",
+          position: 'absolute',
+          width: '0',
+          height: '0',
+          borderLeft: '15px solid transparent',
+          borderRight: '15px solid transparent',
+          borderTop: '17px solid white',
+          bottom: '-15px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 1,
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.1)', // Optional: Add a slight shadow to the tip
+        }}></div>
+      </div>
+      
+            )}
       </GoogleMap>
     </LoadScript>
     </div>

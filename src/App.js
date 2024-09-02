@@ -36,7 +36,7 @@ const App = () => {
           />
         </Grid>
         <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Map setPlaces={setPlaces} setCoords={setCoords} />
+          <Map setPlaces={setPlaces} setCoords={setCoords} setChildClicked={setChildClicked} />
         </Grid>
       </Grid>
     </>
