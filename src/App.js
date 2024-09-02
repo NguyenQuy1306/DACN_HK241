@@ -22,9 +22,10 @@ const App = () => {
 
   return (
     <>
-      <CssBaseline />
-      <Grid container spacing={3} style={{ width: '100%' }}>
-        <Grid item xs={12} md={4}>
+    <div style={{  height:'69px'}}> </div>
+    <div style={{  display: 'flex' }}>
+      {/* <CssBaseline /> */}
+    <div style={{width:'720px'}}>
           <List
             isLoading={isLoading}
             childClicked={childClicked}
@@ -34,11 +35,12 @@ const App = () => {
             rating={rating}
             setRating={setRating}
           />
-        </Grid>
-        <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+</div>
+        <div >
           <Map setPlaces={setPlaces} setCoords={setCoords} setChildClicked={setChildClicked} />
-        </Grid>
-      </Grid>
+        </div>
+       
+    </div>
     </>
   );
 };

@@ -118,7 +118,8 @@ const Map = ({setPlaces,setCoords,setChildClicked}) => {
   return (
     <div className={classes.mapContainer}>
       {/* {selectedMarker.name} */}
-    asdsa
+    
+    <div>
     <Button
         variant="contained"
         color="primary"
@@ -127,10 +128,11 @@ const Map = ({setPlaces,setCoords,setChildClicked}) => {
       >
         Search in this area
       </Button>
-      
+      </div>
+      <div >
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
-        mapContainerStyle={{ width: '600px', height: '600px' }}
+        mapContainerStyle={{  width: '500px', height: '585px',position:'fixed',overflow:'hidden'}}
         zoom={13}
         center={center}
         mapId="DEMO_MAP_ID"
@@ -225,6 +227,7 @@ const Map = ({setPlaces,setCoords,setChildClicked}) => {
             )}
       </GoogleMap>
     </LoadScript>
+    </div>
     </div>
   );
 };

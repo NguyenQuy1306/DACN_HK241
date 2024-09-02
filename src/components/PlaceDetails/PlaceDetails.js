@@ -23,7 +23,15 @@ const PlaceDetails = ({ place, selected, refProp }) => {
   return (
     <Card elevation={6}>
       <CardMedia
-        style={{ height: 350 }}
+        style={{ height: '180px',width:'180px',
+          // background:'50%',
+          backgroundColor: '#eaeaea',
+          backgroundSize: 'cover',
+          borderRadius: '10px',
+          flexShrink: 0,
+         
+          position: 'relative',
+          }}
         image={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
         title={place.name}
       />
