@@ -61,19 +61,11 @@ const List = ({
           </FormControl> */}
           <div></div>
           {places?.map((place, i) => (
-            <div
-              ref={elRefs[i]}
-              key={i}
-              item
-              xs={12}
-              style={{ position: "relative" }}
-            >
-              <PlaceDetails
-                selected={Number(childClicked) === i}
-                refProp={elRefs[i]}
-                place={place}
-              />
-            </div>
+            <PlaceDetails
+              selected={Number(childClicked) === i}
+              refProp={elRefs[i]}
+              place={place}
+            />
           ))}
         </>
       )}

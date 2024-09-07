@@ -26,10 +26,12 @@ const PlaceDetails = ({ place, selected, refProp }) => {
       style={{
         background: "#fff",
         border: "1px solid #eaeaea",
-        padding: "10px",
+        // padding: "10px",
+        padding: "10px 0px 0px 10px",
         height: "200px",
         borderRadius: "15px",
         display: "flex",
+        marginBottom: "10px",
       }}
     >
       <CardMedia
@@ -52,7 +54,24 @@ const PlaceDetails = ({ place, selected, refProp }) => {
       />
       <div>
         <CardContent style={{ height: "250px" }}>
-          <Typography gutterBottom variant="h5">
+          <Typography
+            className="title_card"
+            gutterBottom
+            variant="h5"
+            style={{
+              color: "#2a2a2a",
+              fontSize: "18px",
+              letterSpacing: "-0.25px",
+              lineHeight: 1.33,
+              overflow: "hidden",
+              textDecoration: "none",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              fontWeight: "700",
+              fontFamily:
+                "Beatrice, GT America, Helvetica, Verdana, sans-serif",
+            }}
+          >
             {place.name}
           </Typography>
           <Box display="flex" justifyContent="space-between" my={2}>
@@ -131,7 +150,6 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             Website
           </Button>
         </CardActions>
-        /div>
       </div>
     </div>
   );

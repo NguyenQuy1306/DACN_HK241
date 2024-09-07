@@ -11,6 +11,7 @@ import { Button, Paper, Typography } from "@mui/material";
 import useStyles from "./styles";
 import Rating from "@mui/material/Rating";
 import { useMediaQuery } from "@mui/material";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 
 const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const [markers, setMarkers] = useState([]);
@@ -118,10 +119,11 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
 
     console.log("nguyenasdasd");
   };
+
   return (
     <div className={classes.mapContainer}>
       {/* {selectedMarker.name} */}
-
+      ád
       <div>
         <Button
           variant="contained"
@@ -138,7 +140,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
         >
           <GoogleMap
             mapContainerStyle={{
-              width: "445px",
+              width: "545px",
               height: "548px",
               position: "fixed",
               overflow: "hidden",

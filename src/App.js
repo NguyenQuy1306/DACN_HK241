@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
-
+import Reservation from "./components/Dropdown/Reservation";
+import Filter from "./components/Filter/Filter";
 const App = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -21,25 +22,81 @@ const App = () => {
     const lng = autocomplete.getPlace().geometry.location.lng();
     setCoords({ lat, lng });
   };
-
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
-            height: "69px",
-            background: "#fff",
-            borderBottom: "1px solid #eaeaea",
-            // display: "block",
-            position: "fixed",
+            height: "32px",
+            background: "hsl(180, 9%, 98%)",
+            display: "block",
             // top: 0,
             width: "100%",
             zIndex: 5,
           }}
         >
-          {" "}
+          123123ád
         </div>
-        <div style={{ display: "flex", paddingTop: "69px" }}>
+        <div
+          style={{
+            height: "72px",
+            background: "hsl(180, 9%, 98%)",
+            display: "block",
+            // top: 0,
+            width: "100%",
+            zIndex: 10,
+          }}
+        >
+          ádsdsssssadasd
+        </div>
+        <div
+          style={{
+            height: "68px",
+            background: "white",
+            borderBottom: "1px solid #eaeaea",
+            display: "block",
+            position: "sticky",
+            width: "100%",
+            zIndex: 15,
+            top: "0",
+            boxShadow: "-0.0625rem 0.1875rem 0.375rem hsla(0, 0%, 0%, 0.12)",
+          }}
+        >
+          <div
+            style={{
+              listStyleType: "none",
+              display: "flex",
+              marginLeft: "auto",
+              marginRight: "auto",
+              padding: "1rem",
+              maxWidth: "80rem",
+            }}
+          >
+            <div
+              style={{
+                listStyleType: "none",
+                display: "flex",
+              }}
+            >
+              <Reservation></Reservation>
+              <Filter></Filter>
+            </div>
+            <div> bbbádaaa</div>
+          </div>
+        </div>
+        <div
+          style={{
+            height: "72px",
+            background: "hsl(180, 9%, 98%)",
+            display: "block",
+            // top: 0,
+            width: "100%",
+            // zIndex: 20, // ghi lên khi cuộn
+          }}
+        >
+          ádsdsssss
+        </div>
+        <div style={{ display: "flex" }}>
           {/* <CssBaseline /> */}
           <div style={{ width: "720px" }}>
             <List

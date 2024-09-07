@@ -9,10 +9,12 @@ export default makeStyles(() => ({
     width: "100px",
   },
   mapContainer: {
-    // width: "530px",
-    // height: "585px",
+    width: "445px",
+    height: "585px",
     position: "fixed",
     overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
   },
   markerContainer: {
     position: "absolute",
