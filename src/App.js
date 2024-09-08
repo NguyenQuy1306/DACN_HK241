@@ -4,6 +4,9 @@ import List from "./components/List/List";
 import Map from "./components/Map/Map";
 import Reservation from "./components/Dropdown/Reservation";
 import Filter from "./components/Filter/Filter";
+import SearchBox from "./components/Search/Search";
+import Header from "./components/Header/Header";
+import ResultSearch from "./components/Search/ResultSearch";
 const App = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -35,19 +38,37 @@ const App = () => {
             zIndex: 5,
           }}
         >
-          123123ád
+          <Header></Header>
         </div>
         <div
           style={{
             height: "72px",
-            background: "hsl(180, 9%, 98%)",
+            background: "white",
             display: "block",
             // top: 0,
             width: "100%",
             zIndex: 10,
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          ádsdsssssadasd
+          <div
+            style={{
+              width: "165px",
+            }}
+          >
+            {" "}
+            logooooooo
+          </div>
+          <SearchBox></SearchBox>{" "}
+          <div
+            style={{
+              width: "131px",
+            }}
+          >
+            {" "}
+            profile
+          </div>
         </div>
         <div
           style={{
@@ -84,19 +105,8 @@ const App = () => {
             <div> bbbádaaa</div>
           </div>
         </div>
-        <div
-          style={{
-            height: "72px",
-            background: "hsl(180, 9%, 98%)",
-            display: "block",
-            // top: 0,
-            width: "100%",
-            // zIndex: 20, // ghi lên khi cuộn
-          }}
-        >
-          ádsdsssss
-        </div>
-        <div style={{ display: "flex" }}>
+        <ResultSearch></ResultSearch>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           {/* <CssBaseline /> */}
           <div style={{ width: "720px" }}>
             <List
@@ -109,13 +119,11 @@ const App = () => {
               setRating={setRating}
             />
           </div>
-          <div>
-            <Map
-              setPlaces={setPlaces}
-              setCoords={setCoords}
-              setChildClicked={setChildClicked}
-            />
-          </div>
+          <Map
+            setPlaces={setPlaces}
+            setCoords={setCoords}
+            setChildClicked={setChildClicked}
+          />
         </div>
       </div>
     </>

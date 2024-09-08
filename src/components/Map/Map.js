@@ -12,6 +12,7 @@ import useStyles from "./styles";
 import Rating from "@mui/material/Rating";
 import { useMediaQuery } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import CachedIcon from "@mui/icons-material/Cached";
 
 const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const [markers, setMarkers] = useState([]);
@@ -116,24 +117,10 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
     const lng = position.lng;
     setCenter({ lat, lng });
     setHighlightedMarkerIndex(index); // Set the highlighted marker index
-
-    console.log("nguyenasdasd");
   };
 
   return (
     <div className={classes.mapContainer}>
-      {/* {selectedMarker.name} */}
-      ád
-      <div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleFilterPlaces}
-          className={classes.filterButton}
-        >
-          Search in this area
-        </Button>
-      </div>
       <div>
         <LoadScript
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
@@ -141,8 +128,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
           <GoogleMap
             mapContainerStyle={{
               width: "545px",
-              height: "548px",
-              position: "fixed",
+              height: "570px",
+              position: "sticky",
               overflow: "hidden",
             }}
             zoom={13}
@@ -254,6 +241,42 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
             )}
           </GoogleMap>
         </LoadScript>
+      </div>
+      <div className={classes.divfilterButton}>
+        <Button
+          onClick={handleFilterPlaces}
+          sx={{
+            position: "relative",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            textAlign: "center",
+            textDecoration: "none",
+            display: "inline-block",
+            verticalAlign: "bottom",
+            transition: "background-color 62.5ms, box-shadow 62.5ms",
+            backgroundColor: "black",
+            padding: "0.5rem 0.75rem",
+            fontSize: "0.8125rem",
+            fontWeight: 400,
+            fontFamily: "RalewayX, arial, sans-serif",
+            lineHeight: 1.38462,
+            borderRadius: "9999px",
+            whiteSpace: "nowrap",
+            boxShadow: "rgba(0, 0, 0, 0.12) -0.0625rem 0.1875rem 0.375rem",
+            color: "white",
+            border: "1px solid rgb(90, 96, 108)",
+          }}
+        >
+          <CachedIcon
+            style={{
+              fontSize: "100%",
+              verticalAlign: "bottom",
+              marginBottom: "3px",
+              marginRight: "2px",
+            }}
+          ></CachedIcon>
+          <span>Search in this area</span>
+        </Button>
       </div>
     </div>
   );

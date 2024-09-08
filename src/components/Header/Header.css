@@ -1,0 +1,25 @@
+.header_style {
+  list-style-type: none;
+  display: flex;
+  padding: 0.25rem;
+  background-color: hsl(180, 9%, 98%);
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  min-height: 100%;
+}
+
+.line_header {
+  display: inline-block; /* Ensure the div takes up space */
+  height: 100%; /* Adjust the height if needed */
+}
+.line_header ::after {
+  /* content: "|"; */
+  margin: 0 0.5rem;
+  color: hsl(214, 9%, 85%);
+  font-weight: 300;
+  display: inline-block;
+}

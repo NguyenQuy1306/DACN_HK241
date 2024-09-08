@@ -19,6 +19,7 @@ export default makeStyles((theme) => ({
     // height: "200px",
     borderRight: "0px solid #fff",
     padding: "10px",
+    marginTop: "5px",
   },
   marginBottom: {
     marginBottom: "30px",

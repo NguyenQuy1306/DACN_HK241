@@ -35,7 +35,6 @@ const List = ({
   return (
     <div className={classes.container}>
       {/* <Typography variant="h4">Food & Dining around you</Typography> */}
-      {places.length}
       {isLoading ? (
         <div className={classes.loading}>
           <CircularProgress size="5rem" />

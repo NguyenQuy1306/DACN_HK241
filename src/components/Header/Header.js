@@ -1,35 +1,87 @@
-import React from 'react';
-import { Autocomplete } from '@react-google-maps/api';
-import { AppBar, Toolbar, Typography, InputBase, Box } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-
-
-import useStyles from './styles.js';
+import React from "react";
+import "./Header.css";
 
 const Header = ({ onPlaceChanged, onLoad }) => {
-  const classes = useStyles();
-
   return (
-    <AppBar position="static">
-      <Toolbar className={classes.toolbar}>
-        <Typography variant="h5" className={classes.title}>
-          Travel Advisor
-        </Typography>
-        <Box display="flex">
-          <Typography variant="h6" className={classes.title}>
-            Explore new places
-          </Typography>
-          <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase placeholder="Search…" classes={{ root: classes.inputRoot, input: classes.inputInput }} />
-            </div>
-          </Autocomplete>
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <div
+      style={{
+        paddingRight: "0.5rem",
+        display: "block",
+        marginTop: "-px",
+        paddingRight: "10px",
+      }}
+    >
+      <div className="header_style">
+        <span style={{ cursor: "pointer" }}>
+          <span
+            style={{
+              position: "relative",
+              border: "0",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              textAlign: "center",
+              textDecoration: "none",
+              display: "inline-block",
+              verticalAlign: "bottom",
+              fontSize: "0.8125rem",
+              fontWeight: "500",
+              fontFamily: "RalewayX, arial, sans-serif",
+              fontStyle: "normal",
+              boxShadow: "none",
+              color: "hsl(174, 100%, 20%)",
+              backgroundColor: "transparent",
+              padding: "0 0.25rem",
+              borderRadius: "0",
+              height: "unset",
+              lineHeight: "unset",
+            }}
+            onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+          >
+            Register my restaurant
+          </span>
+        </span>
+        <div className="line_header">
+          <hr
+            style={{
+              height: "15px",
+              margin: " 0.5rem",
+              borderLeft: "1px solid rgb(213, 216, 220)",
+            }}
+          ></hr>
+        </div>{" "}
+        {/* The line separator */}
+        <span style={{ cursor: "pointer" }}>
+          <span
+            style={{
+              position: "relative",
+              border: "0",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              textAlign: "center",
+              textDecoration: "none",
+              display: "inline-block",
+              verticalAlign: "bottom",
+              fontSize: "0.8125rem",
+              fontWeight: "500",
+              fontFamily: "RalewayX, arial, sans-serif",
+              fontStyle: "normal",
+              boxShadow: "none",
+              color: "hsl(174, 100%, 20%)",
+              backgroundColor: "transparent",
+              padding: "0 0.25rem",
+              borderRadius: "0",
+              height: "unset",
+              lineHeight: "unset",
+            }}
+            onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+          >
+            Help
+          </span>
+        </span>
+      </div>
+    </div>
   );
 };
 
