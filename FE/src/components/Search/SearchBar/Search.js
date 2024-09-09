@@ -38,7 +38,7 @@ const SearchBox = () => {
         border: "1px solid rgb(213, 216, 220)",
         boxShadow: "none",
         gap: "0.375rem",
-        height: "3.125rem",
+        height: "2.88rem",
       }}
     >
       <InputSearch
@@ -53,7 +53,7 @@ const SearchBox = () => {
           style={{
             alignSelf: "normal",
             border: "none",
-            height: "50px",
+            height: "46px",
             marginBlock: "-0.375rem",
             borderLeft: "1px solid hsl(214, 9%, 85%)",
           }}

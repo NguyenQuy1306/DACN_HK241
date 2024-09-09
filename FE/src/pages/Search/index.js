@@ -3,9 +3,8 @@ import List from "../../components/List/List";
 import Map from "../../components/Map/Map";
 import Reservation from "../../components/Dropdown/Reservation";
 import Filter from "../../components/Filter/Filter";
-import SearchBox from "../../components/Search/Search";
-import Header from "../../components/Header/Header";
-import ResultSearch from "../../components/Search/ResultSearch";
+import ResultSearch from "../../components/Search/Result/ResultSearch";
+import SearchBar from "../../components/Search/SearchBar/SearchBar";
 const Search = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -26,42 +25,12 @@ const Search = () => {
   };
   return (
     <>
-      <div
-        style={{
-          height: "72px",
-          background: "white",
-          display: "block",
-          // top: 0,
-          width: "100%",
-          zIndex: 10,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "165px",
-          }}
-        >
-          {" "}
-          logooooooo
-        </div>
-        <SearchBox></SearchBox>{" "}
-        <div
-          style={{
-            width: "131px",
-          }}
-        >
-          {" "}
-          profile
-        </div>
-      </div>
+      <SearchBar></SearchBar>
       <div
         style={{
           height: "68px",
           background: "white",
           borderBottom: "1px solid #eaeaea",
-          display: "block",
           position: "sticky",
           width: "100%",
           zIndex: 15,
@@ -85,13 +54,14 @@ const Search = () => {
               display: "flex",
             }}
           >
-            <Reservation></Reservation>
-            <Filter></Filter>
+            <Reservation />
+            <Filter />
           </div>
-          <div> bbbádaaa</div>
+          <div>bbbádaaa</div>
         </div>
       </div>
       <ResultSearch></ResultSearch>
+
       <div style={{ display: "flex", flexDirection: "row" }}>
         {/* <CssBaseline /> */}
         <div style={{ width: "720px" }}>

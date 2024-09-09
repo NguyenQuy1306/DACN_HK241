@@ -1,6 +1,6 @@
 import MainLayout from "../layouts/MainLayout";
 import Search from "../pages/Search";
-// import LoginLayout from "../Layouts/LoginLayout";
+import DetailRestaurant from "../pages/DetailRestaurant";
 // import Register from "../Pages/Register/index";
 // import Devices from "../Pages/Devices/Devices";
 // import Dashboard from "../Pages/Dashboard/Dashboard"
@@ -19,7 +19,11 @@ export const routes = [
     component: Search,
     layout: MainLayout,
   },
-
+  {
+    path: "/DetailRestaurant",
+    component: DetailRestaurant,
+    layout: MainLayout,
+  },
   // {
   //   path: "*",
   //   component: NotFound,
