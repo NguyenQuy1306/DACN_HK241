@@ -29,7 +29,6 @@ const Header = () => {
             }}
           ></hr>
         </div>{" "}
-        {/* The line separator */}
         <span style={{ cursor: "pointer" }}>
           <span
             className="text_header"

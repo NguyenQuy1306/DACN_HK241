@@ -1,0 +1,31 @@
+.color-button {
+  border: 1px solid hsl(214, 9%, 85%) !important;
+  border-radius: 9999px !important;
+  font-family: "RalewayX", arial, sans-serif !important;
+  cursor: pointer !important;
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  align-items: center !important;
+  text-transform: none !important; /* Prevent text from being uppercase */
+  box-shadow: none !important;
+  margin-right: 10px !important;
+  background-color: hsl(0, 0%, 100%) !important;
+  color: hsl(218, 9%, 17%) !important;
+}
+
+.color-button-click {
+  background-color: #d4e8f5 !important;
+  color: #164d77 !important;
+}
+
+.color-button:hover {
+  background-color: #d4e8f5 !important;
+  border: 1px solid #5fc3f1 !important;
+  color: #164d77 !important;
+}
+
+.color-button-click:hover {
+  background-color: #699dc1 !important;
+  border: 1px solid #699dc1 !important;
+}

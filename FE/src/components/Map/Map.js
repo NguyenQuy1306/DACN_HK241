@@ -152,8 +152,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                   className: classes.pointer,
                   url:
                     highlightedMarkerIndex === index
-                      ? "https://cdn-icons-png.flaticon.com/512/5193/5193674.png"
-                      : "https://cdn-icons-png.flaticon.com/512/5193/5193679.png",
+                      ? "https://cdn-icons-png.flaticon.com/512/8095/8095096.png"
+                      : "https://cdn-icons-png.flaticon.com/512/8095/8095099.png",
                   scaledSize:
                     highlightedMarkerIndex === index
                       ? new window.google.maps.Size(70, 70)

@@ -12,8 +12,8 @@
 }
 
 .line_header {
-  display: inline-block; /* Ensure the div takes up space */
-  height: 100%; /* Adjust the height if needed */
+  display: inline-block;
+  height: 100%;
 }
 .line_header ::after {
   /* content: "|"; */

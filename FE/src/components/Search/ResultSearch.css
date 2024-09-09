@@ -5,8 +5,8 @@ ol {
   overflow-x: auto;
   white-space: nowrap;
   list-style: none;
-  -ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
-  scrollbar-width: none; /* Hides scrollbar in Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
