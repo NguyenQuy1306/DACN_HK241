@@ -1,0 +1,45 @@
+.header_style {
+  list-style-type: none;
+  display: flex;
+  background-color: hsl(180, 9%, 98%);
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  min-height: 100%;
+}
+
+.line_header {
+  display: inline-block; /* Ensure the div takes up space */
+  height: 100%; /* Adjust the height if needed */
+}
+.line_header ::after {
+  /* content: "|"; */
+  margin: 0 0.5rem;
+  color: hsl(214, 9%, 85%);
+  font-weight: 300;
+  display: inline-block;
+}
+.text_header {
+  position: relative;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 0.7125rem;
+  font-weight: 500;
+  font-family: "RalewayX", arial, sans-serif;
+  font-style: normal;
+  box-shadow: none;
+  color: hsl(174, 100%, 20%);
+  background-color: transparent;
+  padding: 0 0.25rem;
+  border-radius: 0;
+  height: unset;
+  line-height: unset;
+}
