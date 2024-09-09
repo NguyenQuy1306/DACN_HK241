@@ -83,8 +83,9 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
             photo: place.photo,
             rating: place.rating,
             address: place.address,
+            location_id: place.location_id,
           }));
-          console.log("data ", data.length);
+          console.log("transformedMarkers ", transformedMarkers);
           console.log("transformedMarkers ", transformedMarkers.length);
           setMarkers(transformedMarkers);
           setPlaces(transformedMarkers);

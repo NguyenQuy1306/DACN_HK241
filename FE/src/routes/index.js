@@ -20,7 +20,7 @@ export const routes = [
     layout: MainLayout,
   },
   {
-    path: "/DetailRestaurant",
+    path: "/DetailRestaurant/:id",
     component: DetailRestaurant,
     layout: MainLayout,
   },

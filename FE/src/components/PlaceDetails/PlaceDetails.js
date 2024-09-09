@@ -13,16 +13,24 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 
 import Rating from "@mui/material/Rating";
+import { useNavigate } from "react-router-dom";
 
 import useStyles from "./styles.js";
 
 const PlaceDetails = ({ place, selected, refProp }) => {
+  let navigate = useNavigate();
+
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
-
+  const handleClickDetailRestaurant = (id) => {
+    console.log("location_id", id);
+    localStorage.setItem("selectedPlaceId", id);
+    navigate(`/DetailRestaurant/${id}`);
+  };
   return (
     <div
+      onClick={() => handleClickDetailRestaurant(place.location_id)}
       style={{
         background: "#fff",
         border: "1px solid #eaeaea",
@@ -32,6 +40,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
         borderRadius: "15px",
         display: "flex",
         marginBottom: "10px",
+        cursor: "pointer",
       }}
     >
       <CardMedia

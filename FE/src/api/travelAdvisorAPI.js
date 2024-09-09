@@ -46,3 +46,24 @@ export const getWeatherData = async (lat, lng) => {
     console.log(error);
   }
 };
+
+export const getRestaurantById = async (location_id) => {
+  try {
+    if (location_id) {
+      const { data } = await axios.get(
+        `https://travel-advisor.p.rapidapi.com/restaurants/list?location_id=${location_id}&limit=30`,
+        {
+          params: { location_id: location_id },
+          headers: {
+            "x-rapidapi-key": process.env.REACT_APP_RAPID_API_TRAVEL_API_KEY,
+            "x-rapidapi-host": "travel-advisor.p.rapidapi.com",
+          },
+        }
+      );
+
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
