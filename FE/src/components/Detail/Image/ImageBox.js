@@ -4,11 +4,10 @@ import ListImage from "./ListImage/ListImage";
 import { getRestaurantById } from "../../../api/travelAdvisorAPI";
 
 const ImageBox = () => {
-  const location_id = localStorage.getItem("selectedPlaceId");
+  const location_id = localStorage.getItem("selectedPlaceId"); // Retrieve location_id from localStorage
   const [selectedPlace, setSelectedPlace] = useState(
-    getRestaurantById(location_id).then((data) => setSelectedPlace(data))
+    JSON.parse(localStorage.getItem("selectedPlace"))
   );
-  const photo = selectedPlace.length > 0 ? selectedPlace[0].photo : null;
 
   return (
     <div>
@@ -18,7 +17,6 @@ const ImageBox = () => {
           paddingBottom: "calc(17.205%),",
           overflow: "hidden",
           position: "relative",
-          //   height: "0px",
           backgroundColor: "rgb(249, 250, 250)",
         }}
       >
@@ -30,14 +28,12 @@ const ImageBox = () => {
             width: "1167px",
           }}
         >
-          {/* next button */}
-          adsasdasdasdasdasdasd
-          <NextButton></NextButton>
-          {/* list button: chạy vòng lặp rồi gọi call prop */}
-          <ListImage selectedPlace={photo}></ListImage>
-          {/* next button */}
+          {/* Next button */}
+          <NextButton />
+          {/* List of images, pass selectedPlace[0] as prop */}
+          <ListImage place={selectedPlace} />
         </div>
-        <div> {/* button number of image */}</div>
+        <div>{/* Button number of images */}</div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
-
 import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
 
@@ -23,11 +22,14 @@ const PlaceDetails = ({ place, selected, refProp }) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
-  const handleClickDetailRestaurant = (id) => {
-    console.log("location_id", id);
-    localStorage.setItem("selectedPlaceId", id);
+
+  const handleClickDetailRestaurant = async (id) => {
+    localStorage.setItem("selectedPlace", JSON.stringify(place));
+
+    localStorage.setItem("selectedPlaceId", JSON.stringify(id));
     navigate(`/DetailRestaurant/${id}`);
   };
+
   return (
     <div
       onClick={() => handleClickDetailRestaurant(place.location_id)}
