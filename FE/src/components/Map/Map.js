@@ -1,79 +1,34 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { getPlacesData } from "../../api/travelAdvisorAPI"; // Adjust the path based on your file structure
-import { CssBaseline, Grid } from "@mui/material";
-import { Button, Paper, Typography } from "@mui/material";
-import useStyles from "./styles";
-import Rating from "@mui/material/Rating";
-import { useMediaQuery } from "@mui/material";
-import ScheduleIcon from "@mui/icons-material/Schedule";
+import { Button } from "@mui/material";
 import CachedIcon from "@mui/icons-material/Cached";
+import useStyles from "./styles";
+import { useMediaQuery } from "@mui/material";
 
 const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const [markers, setMarkers] = useState([]);
   const [bounds, setBounds] = useState(null);
   const mapRef = useRef(null);
-  const [center, setCenter] = useState({ lat: 45.42152967, lng: -75.6971931 });
+  const [center, setCenter] = useState({ lat: 55.42152967, lng: -57.6971931 });
   const classes = useStyles();
-  const matches = useMediaQuery("(min-width:100px)");
-  const [selectedMarker, setSelectedMarker] = useState(null); // To store the selected marker
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [highlightedMarkerIndex, setHighlightedMarkerIndex] = useState(null);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const isFirstLoad = useRef(true); // Track the initial load
 
-  // useEffect(() => {
-  //   const fetchMarkers = async () => {
-  //     if (bounds) {
-  //       console.log("bounds ", bounds)
-  //       const { ne, sw } = bounds;
-  //       try {
-  //         const data = await getPlacesData('restaurants', sw, ne); // Change 'restaurants' to the type you want
-
-  //         if (data && Array.isArray(data)) {
-  //           setMarkers(data.map(place => ({
-  //             lat: parseFloat(place.latitude), // Ensure these fields match the API response structure
-  //             lng: parseFloat(place.longitude),
-  //           })));
-  //           console.log("markers ", markers)
-  //         } else {
-  //           console.error("Data format is not an array:", data);
-  //         }
-  //       } catch (error) {
-  //         console.error("Error fetching places data:", error);
-  //       }
-  //     }
-  //   };
   useEffect(() => {
     // Update center when coords change
     setCoords(center);
     setPlaces(markers);
-  }, [setCoords, setPlaces]);
-
-  useEffect(() => {
-    // Get user's current position on component mount
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.error("Error fetching geolocation:", error);
-        // Optional: Handle the error, e.g., use a fallback location
-      }
-    );
-  }, []);
+  }, [center, markers, setCoords, setPlaces]);
 
   const handleFilterPlaces = async () => {
     if (bounds) {
-      console.log("bounds ", bounds);
+      console.log("Fetching places with bounds: ", bounds);
       const { ne, sw } = bounds;
       try {
-        const data = await getPlacesData("restaurants", sw, ne); // Change 'restaurants' to the type you want
+        const data = await getPlacesData("restaurants", sw, ne);
 
         if (data && Array.isArray(data)) {
           const transformedMarkers = data.map((place) => ({
@@ -85,8 +40,6 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
             address: place.address,
             location_id: place.location_id,
           }));
-          console.log("transformedMarkers ", transformedMarkers);
-          console.log("transformedMarkers ", transformedMarkers.length);
           setMarkers(transformedMarkers);
           setPlaces(transformedMarkers);
         }
@@ -95,6 +48,36 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       }
     }
   };
+
+  useEffect(() => {
+    // Get user's current position only once on component mount
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        if (!isMapLoaded) {
+          setCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          setIsMapLoaded(true);
+        }
+      },
+      (error) => {
+        console.error("Error fetching geolocation:", error);
+      }
+    );
+  }, [isMapLoaded]);
+
+  useEffect(() => {
+    const fetchFilteredPlaces = async () => {
+      // Ensure bounds are set and component is not reloading
+      if (isFirstLoad.current && bounds) {
+        await handleFilterPlaces();
+        isFirstLoad.current = false;
+      }
+    };
+
+    fetchFilteredPlaces(); // Call the async function
+  }, [bounds]); // Dependency on bounds only
 
   const onMapIdle = () => {
     const map = mapRef.current;

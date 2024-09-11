@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import NextButton from "./NextButton/NextButton";
 import ListImage from "./ListImage/ListImage";
-import { getRestaurantById } from "../../../api/travelAdvisorAPI";
-
+import images from "../../../data/ImageData";
+import "./ImageBox.css";
 const ImageBox = () => {
   const location_id = localStorage.getItem("selectedPlaceId"); // Retrieve location_id from localStorage
   const [selectedPlace, setSelectedPlace] = useState(
     JSON.parse(localStorage.getItem("selectedPlace"))
   );
+
+  const [startIndex, setStartIndex] = useState(0);
+  const imagesToShow = 3; // Number of images to display at once
+
+  const handleNext = () => {
+    if (startIndex + imagesToShow < images.length) {
+      setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1);
+    }
+  };
 
   return (
     <div>
@@ -25,15 +40,36 @@ const ImageBox = () => {
             overflow: "hidden",
             position: "relative",
             zIndex: "1",
-            width: "1167px",
           }}
         >
+          {/* Previous button */}
+          {startIndex > 0 && (
+            <NextButton dimenson={true} onClick={handlePrevious} />
+          )}
+
+          {/* List of images */}
+          <ListImage
+            place={selectedPlace}
+            startIndex={startIndex}
+            endIndex={startIndex + imagesToShow}
+          />
+
           {/* Next button */}
-          <NextButton />
-          {/* List of images, pass selectedPlace[0] as prop */}
-          <ListImage place={selectedPlace} />
+          {startIndex <= images.length - 4 && (
+            <NextButton dimenson={false} onClick={handleNext} />
+          )}
         </div>
-        <div>{/* Button number of images */}</div>
+      </div>
+      <div className="number_image_h1">
+        <div className="number_image_h2">
+          <div className="number_image_h3">
+            <div className="number_image_h4">
+              <div className="number_image_h5">
+                <span>{images.length} photos</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
