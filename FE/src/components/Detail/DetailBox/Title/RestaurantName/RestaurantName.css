@@ -1,0 +1,10 @@
+.RestaurantName {
+  list-style-type: none;
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.show_count_rating {
+}

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import NextButton from "./NextButton/NextButton";
 import ListImage from "./ListImage/ListImage";
 import images from "../../../data/ImageData";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+
 import "./ImageBox.css";
 const ImageBox = () => {
   const location_id = localStorage.getItem("selectedPlaceId"); // Retrieve location_id from localStorage
