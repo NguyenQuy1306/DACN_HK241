@@ -5,6 +5,7 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import RestaurantName from "./RestaurantName/RestaurantName";
 import OtherInformation from "./OtherInformation/OtherInformation";
+import PositionInTop from "./PositionInTop/PositionInTop";
 const TitleDetail = ({ selectedPlace }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -31,7 +32,8 @@ const TitleDetail = ({ selectedPlace }) => {
           )}
         </div>
         <RestaurantName selectedPlace={selectedPlace}></RestaurantName>
-        <OtherInformation></OtherInformation>
+        <OtherInformation selectedPlace={selectedPlace}></OtherInformation>
+        <PositionInTop></PositionInTop>
       </div>
     </div>
   );

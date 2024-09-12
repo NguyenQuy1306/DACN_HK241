@@ -1,0 +1,30 @@
+.PositionInTop {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+}
+.PositionInTop_div1 {
+  height: 1.875rem;
+  margin: 2px;
+  width: 300px;
+  display: flex;
+}
+.PositionInTop_div1_icon {
+  width: 9%;
+  height: 100%;
+  transform: translate3d(0px, 0px, 0px);
+  content-visibility: visible;
+  color: hsl(174, 100%, 20%) !important;
+}
+.PositionInTop_div1 a {
+  color: hsl(174, 100%, 20%);
+  padding: 0.5rem;
+  font-weight: 600;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  width: 200px;
+}
+.PositionInTop_div1_icon_span {
+  width: 200px;
+}
