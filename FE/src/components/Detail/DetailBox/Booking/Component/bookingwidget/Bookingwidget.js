@@ -7,7 +7,12 @@ const Bookingwidget = ({ selectedPlace }) => {
   return (
     <div className="BookingwidgetDiv">
       <HeaderBookingwidget></HeaderBookingwidget>
-      <div className="BookingwidgetDiv_h1"></div>
+      <div className="BookingwidgetDiv_h1">
+        <span>
+          {" "}
+          🔥 Already <b> bookings</b> today
+        </span>
+      </div>
       <StepBookingwidget></StepBookingwidget>
       <ChooseBookingwidget></ChooseBookingwidget>
     </div>

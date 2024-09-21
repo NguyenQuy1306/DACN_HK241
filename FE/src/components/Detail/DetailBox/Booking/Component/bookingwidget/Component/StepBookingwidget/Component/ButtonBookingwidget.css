@@ -1,0 +1,27 @@
+.ButtonBookingwidgetDiv_H1_button {
+  border: 0px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0px 0.25rem;
+  border-radius: 0px;
+  height: unset;
+  line-height: unset;
+  width: 100%;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+  position: relative;
+  margin: 0.125rem 0px;
+  color: rgb(255, 255, 255);
+}
