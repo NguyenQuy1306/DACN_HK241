@@ -2,14 +2,21 @@ import React, { useState, useEffect, createRef } from "react";
 import "./Bookingwidget.css";
 import HeaderBookingwidget from "./Component/HeaderBookingwidget/HeaderBookingwidget";
 import StepBookingwidget from "./Component/StepBookingwidget/StepBookingwidget";
-import ChooseBookingwidget from "./Component/ChooseBookingwidget/ChooseBookingwidget";
+import { DateChooseBookingwidget } from "./Component/ChooseBookingwidget/DateChooseBookingwidget/DateChooseBookingwidget";
+import TimeChooseBookingwidget from "./Component/ChooseBookingwidget/TimeChooseBookingwidget/TimeChooseBookingwidget";
 const Bookingwidget = ({ selectedPlace }) => {
   const [date, setDate] = useState(null);
   const [closeDateDiv, setcloseDateDiv] = useState(false);
-  useEffect(() => {
-    if (date) {
-    }
-  }, [date]);
+  const [time, setTime] = useState(null);
+  const [closeTimeDiv, setcloseTimeDiv] = useState(true);
+  const [person, setPerson] = useState(null);
+  const [closePersonDiv, setClosePersonDiv] = useState(true);
+
+  // useEffect(() => {
+  //   if (person) {
+  //     console.log("person", person);
+  //   }
+  // }, [person]);
 
   return (
     <div className="BookingwidgetDiv">
@@ -22,11 +29,29 @@ const Bookingwidget = ({ selectedPlace }) => {
       </div>
       <StepBookingwidget
         datePicked={date}
+        timePicked={time}
+        personPicked={person}
         setDate={setDate}
+        setTime={setTime}
+        setPerson={setPerson}
         setcloseDateDiv={setcloseDateDiv}
+        setcloseTimeDiv={setcloseTimeDiv}
+        setclosePersonDiv={setClosePersonDiv}
       ></StepBookingwidget>
       {closeDateDiv === false && (
-        <ChooseBookingwidget setDate={setDate}></ChooseBookingwidget>
+        <DateChooseBookingwidget setDate={setDate}></DateChooseBookingwidget>
+      )}
+      {closeTimeDiv === false && (
+        <TimeChooseBookingwidget
+          setTime={setTime}
+          type={"Time"}
+        ></TimeChooseBookingwidget>
+      )}
+      {closePersonDiv === false && (
+        <TimeChooseBookingwidget
+          setTime={setPerson}
+          type={"Person"}
+        ></TimeChooseBookingwidget>
       )}
     </div>
   );

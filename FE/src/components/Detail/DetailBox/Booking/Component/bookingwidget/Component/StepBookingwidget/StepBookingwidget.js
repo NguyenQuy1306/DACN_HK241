@@ -2,15 +2,21 @@ import React, { useState, useEffect, createRef } from "react";
 import "./StepBookingwidget.css";
 import ButtonBookingwidget from "./Component/ButtonBookingwidget";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AccessTimeFilledSharpIcon from "@mui/icons-material/AccessTimeFilledSharp";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 
 const StepBookingwidget = ({
   selectedPlace,
   datePicked,
+  timePicked,
+  personPicked,
   setDate,
+  setTime,
+  setPerson,
   setcloseDateDiv,
+  setcloseTimeDiv,
+  setclosePersonDiv,
 }) => {
   const [chooseDate, setChooseDate] = useState();
   const [chooseTime, setChooseTime] = useState();
@@ -20,7 +26,7 @@ const StepBookingwidget = ({
   const [activeTime, setActiveTime] = useState(false);
   const [activePerson, setActivePerson] = useState(false);
   const [activeOffer, setActiveOffer] = useState(false);
-  const [lastClicked, setLastClicked] = useState(""); // New state to track the last clicked button
+  const [lastClicked, setLastClicked] = useState("Date"); // New state to track the last clicked button
   const options = { month: "short", day: "numeric" };
   const formattedDate = datePicked
     ? datePicked.toLocaleDateString("en-US", options)
@@ -37,37 +43,70 @@ const StepBookingwidget = ({
     if (datePicked) {
       setActiveTime(true);
       setcloseDateDiv(true);
+      setcloseTimeDiv(false);
+      setclosePersonDiv(true);
       setLastClicked("Time");
     }
-  }, [datePicked]);
+    if (timePicked) {
+      setActivePerson(true);
+      setcloseTimeDiv(true);
+      setclosePersonDiv(false);
+      setLastClicked("Guest");
+    }
+    if (personPicked) {
+      setcloseTimeDiv(true);
+      setclosePersonDiv(true);
+      setcloseTimeDiv(true);
+      setLastClicked("Offer");
+      setActiveOffer(true);
+    }
+  }, [datePicked, timePicked, personPicked]);
   const handleOnClickButtonwidget = (type) => {
     // Set last clicked button
     if (type === "Date") {
       setDate(null);
-      setChooseDate(true);
+      setTime(null);
+      setPerson(null);
+
       setActiveTime(false);
       setActivePerson(false);
       setActiveOffer(false);
+
       setcloseDateDiv(false);
+      setcloseTimeDiv(true);
+      setclosePersonDiv(true);
+
       setLastClicked(type);
-    } else if (type === "Time") {
+    } else if (type === "Time" && datePicked) {
       if (activeTime === false) {
         setActiveTime(!activeTime);
-        setcloseDateDiv(true);
+        // setcloseDateDiv(true);
       }
-      setLastClicked(type);
+      setTime(null);
+      setPerson(null);
+
+      setcloseDateDiv(true);
+      setclosePersonDiv(true);
+      setcloseTimeDiv(false);
 
       setActivePerson(false);
       setActiveOffer(false);
-    } else if (type === "Guest") {
+
+      setLastClicked(type);
+    } else if (type === "Guest" && datePicked && timePicked) {
+      setPerson(null);
+      setclosePersonDiv(false);
+      setcloseDateDiv(true);
+      setcloseDateDiv(true);
       if (activePerson === false) {
         setActivePerson(!activePerson);
+        setcloseTimeDiv(true);
       }
       if (activeTime === true) {
         setLastClicked(type);
       }
       setActiveOffer(false);
-    } else if (type === "Offer") {
+    } else if (type === "Offer" && datePicked && timePicked && personPicked) {
       if (activeOffer === false) {
         setActiveOffer(!activeOffer);
       }
@@ -108,9 +147,13 @@ const StepBookingwidget = ({
         >
           <ButtonBookingwidget
             icon={
-              <AccessTimeIcon style={getIconStyle(activeTime)}></AccessTimeIcon>
+              !timePicked && (
+                <AccessTimeFilledSharpIcon
+                  style={getIconStyle(activeTime)}
+                ></AccessTimeFilledSharpIcon>
+              )
             }
-            text={"Time"}
+            text={timePicked ? timePicked : "Time"}
             onClick={() => handleOnClickButtonwidget("Time")}
             colorText={activeTime === true ? "white" : "black"}
           ></ButtonBookingwidget>
@@ -132,13 +175,15 @@ const StepBookingwidget = ({
         >
           <ButtonBookingwidget
             icon={
-              <PersonOutlineOutlinedIcon
-                style={getIconStyle(
-                  activePerson === true && activeTime === true
-                )}
-              ></PersonOutlineOutlinedIcon>
+              !personPicked && (
+                <PersonOutlineOutlinedIcon
+                  style={getIconStyle(
+                    activePerson === true && activeTime === true
+                  )}
+                ></PersonOutlineOutlinedIcon>
+              )
             }
-            text={"Guest"}
+            text={personPicked ? `${personPicked} Guest` : "Guest"}
             onClick={() => handleOnClickButtonwidget("Guest")}
             colorText={
               activePerson === true && activeTime === true ? "white" : "black"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
-import "./ChooseBookingwidget.css";
+import "./DateChooseBookingwidget.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 const ChooseBookingwidgetDiv_footer = () => {
@@ -12,7 +12,7 @@ const ChooseBookingwidgetDiv_footer = () => {
     </div>
   );
 };
-const ChooseBookingwidget = ({ selectedPlace, setDate }) => {
+const DateChooseBookingwidget = ({ selectedPlace, setDate }) => {
   return (
     <div className="ChooseBookingwidgetDiv">
       <div className="ChooseBookingwidgetDiv_H1">
@@ -29,4 +29,4 @@ const ChooseBookingwidget = ({ selectedPlace, setDate }) => {
     </div>
   );
 };
-export default ChooseBookingwidget;
+export { DateChooseBookingwidget, ChooseBookingwidgetDiv_footer };
