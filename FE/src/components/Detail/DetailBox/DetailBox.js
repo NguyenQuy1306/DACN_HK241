@@ -8,6 +8,48 @@ const DetailBox = ({ selectedPlace }) => {
       {" "}
       <TitleDetail selectedPlace={selectedPlace}></TitleDetail>
       <Booking></Booking>
+      <div className="DetailBoxDiv_h1">
+        ng getItemg getItemg getItádasdadsasdasdasdasdasda ád ádá displayd ádád
+        ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđámng getItemg getItemg getItádasdadsasdasdasdasdasda
+        ád ádá displayd ádád ádá defaulteáddddddddđámng getItemg getItemg
+        getItádasdadsasdasdasdasdasda ád ádá displayd ádád ádá
+        defaulteáddddddddđám
+      </div>
     </div>
   );
 };

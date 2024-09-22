@@ -1,6 +1,7 @@
 .StepBookingwidgetDiv {
   width: 100%;
   border-bottom: 1px solid rgb(236, 237, 239);
+  height: 52.48px;
 }
 .StepBookingwidgetDiv_H1 {
   list-style-type: none;
@@ -31,9 +32,11 @@
   border-radius: 0px 0.25rem 0.25rem 0px;
   display: flex;
   align-items: center;
+  height: 32px;
 }
 .StepBookingwidgetDiv_H3.active {
   background-color: rgb(0, 102, 92);
+  color: black;
 }
 .StepBookingwidgetDiv_H3.lastClicked::after {
   content: "";
