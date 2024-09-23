@@ -4,6 +4,8 @@ import HeaderBookingwidget from "./Component/HeaderBookingwidget/HeaderBookingwi
 import StepBookingwidget from "./Component/StepBookingwidget/StepBookingwidget";
 import { DateChooseBookingwidget } from "./Component/ChooseBookingwidget/DateChooseBookingwidget/DateChooseBookingwidget";
 import TimeChooseBookingwidget from "./Component/ChooseBookingwidget/TimeChooseBookingwidget/TimeChooseBookingwidget";
+import MenuChooseBookingwidget from "./Component/ChooseBookingwidget/MenuChooseBookingwidget/MenuChooseBookingwidget";
+import { Menu } from "@mui/material";
 const Bookingwidget = ({ selectedPlace }) => {
   const [date, setDate] = useState(null);
   const [closeDateDiv, setcloseDateDiv] = useState(false);
@@ -48,10 +50,11 @@ const Bookingwidget = ({ selectedPlace }) => {
         ></TimeChooseBookingwidget>
       )}
       {closePersonDiv === false && (
-        <TimeChooseBookingwidget
-          setTime={setPerson}
-          type={"Person"}
-        ></TimeChooseBookingwidget>
+        // <TimeChooseBookingwidget
+        //   setTime={setPerson}
+        //   type={"Person"}
+        // ></TimeChooseBookingwidget>
+        <MenuChooseBookingwidget></MenuChooseBookingwidget>
       )}
     </div>
   );

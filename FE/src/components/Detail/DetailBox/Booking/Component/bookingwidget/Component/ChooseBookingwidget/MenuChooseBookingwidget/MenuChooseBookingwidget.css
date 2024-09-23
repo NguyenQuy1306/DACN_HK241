@@ -1,0 +1,75 @@
+.MenuChooseBookingwidgetDiv {
+  height: 100%;
+  overflow: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.MenuChooseBookingwidgetDiv_H1 {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.MenuChooseBookingwidgetDiv_H1_option {
+  max-height: calc(-22.5rem + 100vh);
+  min-height: 11.25rem;
+  padding-top: 0.75rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  flex: 1 1 0%;
+  overflow: auto;
+}
+.MenuChooseBookingwidgetDiv_H1_option_h3 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.375;
+  margin-top: 0px;
+}
+.MenuChooseBookingwidgetDiv_H1_option_choosen_icon {
+  color: rgb(177, 194, 193) !important;
+}
+.MenuChooseBookingwidgetDiv_H1_option_choosen_icon2 {
+  color: rgb(0, 102, 92) !important;
+}
+.MenuChooseBookingwidgetDiv_H1_divButton::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0px;
+  right: 0px;
+  height: 1rem;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.01) 0px,
+    rgb(255, 255, 255) 100%
+  );
+  transition: height 250ms;
+}
+.MenuChooseBookingwidgetDiv_H1_divButton {
+  position: relative;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+.MenuChooseBookingwidgetDiv_H1_divButton_Button {
+  position: relative;
+  border: 0;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: bottom;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  line-height: 1.375;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(174, 100%, 20%);
+  box-shadow: none;
+  width: 100%;
+}
