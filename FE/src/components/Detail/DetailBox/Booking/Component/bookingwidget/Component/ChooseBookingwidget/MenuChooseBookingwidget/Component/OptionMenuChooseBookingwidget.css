@@ -13,22 +13,42 @@
   width: 100% !important;
   min-width: 14rem !important;
   text-align: left !important;
-  border: 1px solid rgb(0, 102, 92) !important;
+  border: 1px solid rgb(213, 216, 220) !important;
   border-radius: 0.5rem !important;
-  user-select: none !important;
-  line-height: inherit !important;
-  font-family: inherit !important;
   text-transform: none !important;
+  color: black !important;
 }
-
+.OptionMenuChooseBookingwidgetDiv_button.active {
+  border: 1px solid rgb(0, 102, 92) !important;
+  color: rgb(0, 102, 92) !important;
+}
+.OptionMenuChooseBookingwidgetDiv_button.size {
+  height: 50px !important;
+}
 .OptionMenuChooseBookingwidgetDiv_button_H2 {
   padding: 1rem;
   -webkit-box-flex: 1;
   flex-grow: 1;
+  /* padding-right: 15px; */
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+}
+.OptionMenuChooseBookingwidgetDiv_button_H2.active {
+  padding: 0.5rem;
+  padding-top: 0.7rem;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+  height: 10px !important;
 }
 .OptionMenuChooseBookingwidgetDiv_button_H3 {
-  padding-top: 1rem;
-  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-left: 55px;
+}
+.OptionMenuChooseBookingwidgetDiv_button_H3.active {
+  padding-top: 0.5rem;
+  padding-left: 50px;
 }
 .OptionMenuChooseBookingwidgetDiv_button_H2_H1 {
   font-size: 0.8125rem;
@@ -38,13 +58,16 @@
   display: block;
 }
 .OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1 {
-  padding-right: 1.5rem;
+  color: inherit;
+  display: block;
+}
+.OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1.active {
   color: inherit;
   display: block;
 }
 .OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1_H1 {
   font-size: 0.8125rem;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   line-height: 1.38462;
   color: rgb(0, 102, 92);

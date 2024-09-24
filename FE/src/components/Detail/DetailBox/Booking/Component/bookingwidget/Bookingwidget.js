@@ -13,6 +13,8 @@ const Bookingwidget = ({ selectedPlace }) => {
   const [closeTimeDiv, setcloseTimeDiv] = useState(true);
   const [person, setPerson] = useState(null);
   const [closePersonDiv, setClosePersonDiv] = useState(true);
+  const [option, setOption] = useState(null);
+  const [closeOptionDiv, setCloseOptionDiv] = useState(true);
 
   // useEffect(() => {
   //   if (person) {
@@ -33,12 +35,15 @@ const Bookingwidget = ({ selectedPlace }) => {
         datePicked={date}
         timePicked={time}
         personPicked={person}
+        optionPicked={option}
         setDate={setDate}
         setTime={setTime}
         setPerson={setPerson}
+        setOption={setOption}
         setcloseDateDiv={setcloseDateDiv}
         setcloseTimeDiv={setcloseTimeDiv}
         setclosePersonDiv={setClosePersonDiv}
+        setcloseOptionDiv={setCloseOptionDiv}
       ></StepBookingwidget>
       {closeDateDiv === false && (
         <DateChooseBookingwidget setDate={setDate}></DateChooseBookingwidget>
@@ -50,10 +55,12 @@ const Bookingwidget = ({ selectedPlace }) => {
         ></TimeChooseBookingwidget>
       )}
       {closePersonDiv === false && (
-        // <TimeChooseBookingwidget
-        //   setTime={setPerson}
-        //   type={"Person"}
-        // ></TimeChooseBookingwidget>
+        <TimeChooseBookingwidget
+          setTime={setPerson}
+          type={"Person"}
+        ></TimeChooseBookingwidget>
+      )}
+      {closeOptionDiv === false && (
         <MenuChooseBookingwidget></MenuChooseBookingwidget>
       )}
     </div>

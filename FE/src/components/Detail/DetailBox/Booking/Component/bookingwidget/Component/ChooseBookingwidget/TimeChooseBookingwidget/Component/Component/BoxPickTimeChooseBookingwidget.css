@@ -4,29 +4,29 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   width: 86px;
-  height: 50px;
+
   margin-bottom: 15px;
 }
 .BoxPickTimeChooseBookingwidgetDiv_button {
-  position: relative;
-  border: 0px;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  vertical-align: bottom;
-  padding: 1rem 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.38462;
-  margin-bottom: 1rem;
-  width: 100%;
-  color: rgb(39, 42, 47);
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgb(213, 216, 220) 0px 0px 0px 1px inset;
-  border-radius: 0.25rem;
+  position: relative !important;
+  border: 0px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  vertical-align: bottom !important;
+  padding: 1rem 0.75rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  line-height: 1.38462 !important;
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+  color: rgb(39, 42, 47) !important;
+  background-color: rgb(255, 255, 255) !important;
+  box-shadow: rgb(213, 216, 220) 0px 0px 0px 1px inset !important;
+  border-radius: 0.25rem !important;
 }
 .BoxPickTimeChooseBookingwidgetDiv_button_span1 {
   text-transform: uppercase;

@@ -11,17 +11,20 @@ const StepBookingwidget = ({
   datePicked,
   timePicked,
   personPicked,
+  optionPicked,
   setDate,
   setTime,
   setPerson,
+  setOption,
   setcloseDateDiv,
   setcloseTimeDiv,
   setclosePersonDiv,
+  setcloseOptionDiv,
 }) => {
-  const [chooseDate, setChooseDate] = useState();
-  const [chooseTime, setChooseTime] = useState();
-  const [choosePerson, setChoosePerson] = useState();
-  const [chooseOffer, setChooseOffer] = useState();
+  // const [chooseDate, setChooseDate] = useState();
+  // const [chooseTime, setChooseTime] = useState();
+  // const [choosePerson, setChoosePerson] = useState();
+  // const [chooseOffer, setChooseOffer] = useState();
   const [activeDate, setActiveDate] = useState(true);
   const [activeTime, setActiveTime] = useState(false);
   const [activePerson, setActivePerson] = useState(false);
@@ -45,20 +48,31 @@ const StepBookingwidget = ({
       setcloseDateDiv(true);
       setcloseTimeDiv(false);
       setclosePersonDiv(true);
+      setcloseOptionDiv(true);
+
       setLastClicked("Time");
     }
     if (timePicked) {
       setActivePerson(true);
       setcloseTimeDiv(true);
       setclosePersonDiv(false);
+      setcloseOptionDiv(true);
+
       setLastClicked("Guest");
     }
     if (personPicked) {
       setcloseTimeDiv(true);
       setclosePersonDiv(true);
       setcloseTimeDiv(true);
+      setcloseOptionDiv(false);
       setLastClicked("Offer");
       setActiveOffer(true);
+    }
+    if (optionPicked) {
+      setcloseTimeDiv(true);
+      setclosePersonDiv(true);
+      setcloseTimeDiv(true);
+      // setCloseOptionDiv(true);
     }
   }, [datePicked, timePicked, personPicked]);
   const handleOnClickButtonwidget = (type) => {
@@ -67,7 +81,7 @@ const StepBookingwidget = ({
       setDate(null);
       setTime(null);
       setPerson(null);
-
+      setOption(null);
       setActiveTime(false);
       setActivePerson(false);
       setActiveOffer(false);
@@ -84,7 +98,7 @@ const StepBookingwidget = ({
       }
       setTime(null);
       setPerson(null);
-
+      setOption(null);
       setcloseDateDiv(true);
       setclosePersonDiv(true);
       setcloseTimeDiv(false);
@@ -95,6 +109,8 @@ const StepBookingwidget = ({
       setLastClicked(type);
     } else if (type === "Guest" && datePicked && timePicked) {
       setPerson(null);
+      setOption(null);
+
       setclosePersonDiv(false);
       setcloseDateDiv(true);
       setcloseDateDiv(true);

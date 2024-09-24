@@ -22,6 +22,7 @@ const MenuChooseBookingwidget = ({ selectedPlace }) => {
               text={"Reservation with menu"}
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
+              choosedOptionByWithMenu={choosedOptionByWithMenu}
               icon={
                 !choosedOptionByWithMenu ? (
                   <CheckCircleOutlineRoundedIcon className="MenuChooseBookingwidgetDiv_H1_option_choosen_icon"></CheckCircleOutlineRoundedIcon>
@@ -34,6 +35,7 @@ const MenuChooseBookingwidget = ({ selectedPlace }) => {
               text={"Reservation without menu"}
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
+              choosedOptionByWithMenu={choosedOptionByWithoutMenu}
               icon={
                 !choosedOptionByWithoutMenu ? (
                   <CheckCircleOutlineRoundedIcon className="MenuChooseBookingwidgetDiv_H1_option_choosen_icon"></CheckCircleOutlineRoundedIcon>
