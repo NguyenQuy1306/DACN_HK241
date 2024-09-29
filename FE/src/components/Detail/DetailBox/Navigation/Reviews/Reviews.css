@@ -1,0 +1,188 @@
+.ReviewsDiv h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.16667;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  width: 600px;
+  color: rgb(0, 0, 0);
+}
+.ReviewsDiv_H1 {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin-top: 10px;
+  grid-gap: 1rem;
+  background-color: hsl(180, 9%, 98%);
+  border-radius: 0.5rem;
+  padding: 1.25rem !important;
+  border: none !important;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-areas:
+    "average distribution"
+    "distributionAverage distribution";
+}
+.ReviewsDiv_H1_rating_summary {
+  grid-area: average;
+  width: 293px;
+}
+.ReviewsDiv_H1_rating_summary_H1 {
+  list-style-type: none;
+
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ReviewsDiv_H1_rating_summary_H2 {
+  list-style-type: none;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  flex-direction: row;
+}
+.ReviewsDiv_H1_rating_summary_img {
+  width: 5.5rem;
+  height: 5.5rem;
+  position: relative;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 0.55rem;
+}
+.ReviewsDiv_H1_rating_summary_img_point {
+  list-style-type: none;
+  display: flex;
+  -webkit-box-align: baseline;
+  align-items: baseline;
+  z-index: 1;
+}
+.ReviewsDiv_H1_rating_summary_img_point_h1 {
+  margin-left: 0.125rem;
+  color: hsl(0, 0%, 0%);
+  font-size: 0.8125rem;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.3846153846153846;
+}
+.ReviewsDiv_H1_rating_summary_img_point_h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.1666666666666667;
+  color: hsl(0, 0%, 0%);
+}
+.ReviewsDiv_H1_rating_summary_img_H1 {
+  height: 76px;
+  width: 76px;
+}
+.circular-progress-wrapper svg {
+  stroke-width: 5 !important; /* Adjust the stroke width here */
+}
+.ReviewsDiv_H1_rating_summary_img_count {
+  list-style-type: none;
+
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.ReviewsDiv_H1_rating_summary_img_count_span1 {
+  margin-left: 0.125rem;
+  color: hsl(218, 9%, 17%);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.375;
+}
+.ReviewsDiv_H1_rating_summary_img_count_span2 {
+  margin-left: 0.125rem;
+  color: hsl(218, 9%, 17%);
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.3846153846153846;
+}
+.ReviewsDiv_H1_rating_typeRating {
+  border: none;
+  padding: 0;
+  grid-area: distributionAverage;
+}
+.ReviewsDiv_H1_rating_typeRating_H1 {
+  list-style-type: none;
+
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.ReviewsDiv_H1_rating_typeRating_H2 {
+  list-style-type: none;
+
+  display: inline-flex;
+}
+.ReviewsDiv_H1_rating_classification {
+  list-style-type: none;
+
+  display: flex;
+
+  -webkit-box-align: center;
+
+  align-items: center;
+  grid-area: distribution;
+  border-left: 1px solid hsl(214, 9%, 85%);
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+}
+.ReviewsDiv_H1_rating_classification_H1 {
+  display: grid;
+
+  -ms-flex: 1;
+  flex: 1;
+  grid-gap: 0.125rem;
+}
+.ReviewsDiv_H1_rating_howToRating {
+  list-style-type: none;
+  display: flex;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  flex-direction: row;
+  align-items: flex-start;
+  border: 1px solid hsl(214, 9%, 85%);
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+.ReviewsDiv_H1_rating_howToRating_icon {
+  margin-right: 1rem;
+  vertical-align: bottom;
+  color: hsl(174, 100%, 20%);
+}
+.ReviewsDiv_H1_rating_howToRating_H1 {
+  list-style-type: none;
+  display: flex;
+
+  flex-direction: column;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+
+  align-items: flex-start;
+}
+.ReviewsDiv_H1_rating_howToRating_H1_span1 {
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.375;
+  font-size: 0.875rem;
+}
+.ReviewsDiv_H1_rating_howToRating_H1_span2 {
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.375;
+  font-size: 0.875rem;
+}
