@@ -12,19 +12,36 @@ const Navigation = ({ selectedPlace }) => {
   const reviewsData = [
     {
       reviewer: {
-        name: "JJ W.",
-        reviewsCount: 34,
+        name: "Bethanne S.",
+        reviewsCount: 1,
         avatarUrl: "path-to-avatar", // Replace with actual URL if needed
       },
-      date: "September 19, 2024",
+      date: "September 18, 2024",
       rating: 10,
-      content: `Consistently well prepared food with menu variety. Excellent attentive service.
-                Good seasoning on entrees. Meat prepared exactly to specifications.
-                Nice unhurried dining experience.`,
+      content: `We enjoyed the experience very much. The food was very well presented. 
+                The atmosphere was very nice. We tried the signature six-course package 
+                with the accompanying wine as recommended.`,
+      images: [
+        { url: "path-to-image-1" }, // Replace with actual image URLs
+        { url: "path-to-image-2" },
+        { url: "path-to-image-3" },
+      ],
       actions: {
-        like: "LIKE",
+        like: "1", // Number of likes
         report: "REPORT",
       },
+      comments: [
+        {
+          name: "Le Christine",
+          role: "Owner",
+          content: `Dear Bethanne, Thank you very much for sharing your full satisfaction 
+                    at the end of your experience at Le Christine! The whole team is 
+                    delighted to hear that you enjoyed the dinner and ambiance.`,
+          actions: {
+            like: "2", // Number of likes for the comment
+          },
+        },
+      ],
     },
     {
       reviewer: {
@@ -34,12 +51,23 @@ const Navigation = ({ selectedPlace }) => {
       },
       date: "September 18, 2024",
       rating: 9,
-      content: `Great ambiance and delicious food. A bit pricey, but the service makes up for it.
+      content: `Great ambiance and delicious food. A bit pricey, but the service makes up for it. 
                 The wine selection is excellent.`,
       actions: {
-        like: "LIKE",
+        like: "3", // Number of likes
         report: "REPORT",
       },
+      comments: [
+        {
+          name: "Le Christine",
+          role: "Owner",
+          content: `Dear Sarah, we appreciate your feedback and are glad to hear that 
+                    you enjoyed the ambiance and wine selection.`,
+          actions: {
+            like: "1", // Number of likes for the comment
+          },
+        },
+      ],
     },
     {
       reviewer: {
@@ -49,12 +77,13 @@ const Navigation = ({ selectedPlace }) => {
       },
       date: "September 17, 2024",
       rating: 8,
-      content: `The food was tasty, but the portions were smaller than expected.
+      content: `The food was tasty, but the portions were smaller than expected. 
                 The staff was friendly, and the location is perfect for a quiet dinner.`,
       actions: {
-        like: "LIKE",
+        like: "4", // Number of likes
         report: "REPORT",
       },
+      comments: [],
     },
     {
       reviewer: {
@@ -64,12 +93,23 @@ const Navigation = ({ selectedPlace }) => {
       },
       date: "September 15, 2024",
       rating: 7,
-      content: `Decent meal overall, but the wait time was too long. The food was good,
+      content: `Decent meal overall, but the wait time was too long. The food was good, 
                 but not enough to justify the delay.`,
       actions: {
-        like: "LIKE",
+        like: "2", // Number of likes
         report: "REPORT",
       },
+      comments: [
+        {
+          name: "Le Christine",
+          role: "Owner",
+          content: `Dear Emily, we apologize for the wait time and will work on improving 
+                    our service. We appreciate your feedback.`,
+          actions: {
+            like: "0", // Number of likes for the comment
+          },
+        },
+      ],
     },
   ];
 
@@ -111,19 +151,23 @@ const Navigation = ({ selectedPlace }) => {
           ></ButtonTavBarReview>
         </div>
       </div>
-      {onClickReviews && <Reviews></Reviews>}
-      <div className="NavigationDiv_H2">
-        <div className="NavigationDiv_H2_filter">
-          <div className="NavigationDiv_H2_filter_H1">
-            <FilterComment text={"Newest"}></FilterComment>
+      {onClickReviews && (
+        <>
+          <Reviews reviewData={reviewsData} />
+          <div className="NavigationDiv_H2">
+            <div className="NavigationDiv_H2_filter">
+              <div className="NavigationDiv_H2_filter_H1">
+                <FilterComment text={"Newest"} />
+              </div>
+            </div>
+            <ul className="NavigationDiv_H2_ul">
+              {reviewsData.map((review, index) => (
+                <Comment key={index} review={review} />
+              ))}
+            </ul>
           </div>
-        </div>
-        <ul className="NavigationDiv_H2_ul">
-          {reviewsData.map((review, index) => (
-            <Comment key={index} review={review} />
-          ))}
-        </ul>
-      </div>
+        </>
+      )}
     </div>
   );
 };

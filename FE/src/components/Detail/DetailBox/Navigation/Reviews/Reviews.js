@@ -9,8 +9,8 @@ import TypeRating from "./Component/TypeRating/TypeRating";
 import Classification from "./Component/Classification/Classification";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
-const Reviews = ({ selectedPlace }) => {
-  const reviews = [8, 8, 8, 9, 10]; // Empty array to simulate no reviews
+const Reviews = ({ selectedPlace, reviewData }) => {
+  const reviews = reviewData.map((review) => review.rating);
   const average =
     reviews.length > 0
       ? reviews.reduce((acc, curr) => acc + Number(curr), 0) / reviews.length

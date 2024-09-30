@@ -89,6 +89,7 @@ const StepBookingwidget = ({
       setcloseDateDiv(false);
       setcloseTimeDiv(true);
       setclosePersonDiv(true);
+      setcloseOptionDiv(true);
 
       setLastClicked(type);
     } else if (type === "Time" && datePicked) {
