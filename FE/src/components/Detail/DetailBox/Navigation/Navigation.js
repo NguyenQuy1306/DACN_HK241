@@ -4,6 +4,7 @@ import ButtonTavBarReview from "./Reviews/Component/ButtonTavBarReview/ButtonTav
 import Reviews from "./Reviews/Reviews";
 import FilterComment from "./Reviews/Component/FilterComment/FilterComment";
 import Comment from "./Reviews/Component/Comment/Comment";
+import Menu from "./Menu/Menu";
 const Navigation = ({ selectedPlace }) => {
   const [onClickDetail, setOnClickDetail] = useState(true);
   const [onClicMenu, setOnClicMenu] = useState(false);
@@ -168,6 +169,7 @@ const Navigation = ({ selectedPlace }) => {
           </div>
         </>
       )}
+      {onClicMenu && <Menu></Menu>}
     </div>
   );
 };
