@@ -12,7 +12,7 @@ import DetailRestaurant from "../pages/DetailRestaurant";
 // import HistoryComponent from "../Pages/History/history";
 // import Zones from "../Pages/Zone/Zone";
 // import ZoneDetails from "../Pages/Zone/ZoneDetails";
-
+import ViewImagepage from "../pages/ViewImagepage";
 export const routes = [
   {
     path: "/Search",
@@ -23,6 +23,10 @@ export const routes = [
     path: "/DetailRestaurant/:id",
     component: DetailRestaurant,
     layout: MainLayout,
+  },
+  {
+    path: "/DetailRestaurant/:id/menuImages",
+    component: ViewImagepage,
   },
   // {
   //   path: "*",

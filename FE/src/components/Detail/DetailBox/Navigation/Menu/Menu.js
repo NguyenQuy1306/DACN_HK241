@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import "./Menu.css";
 import CardMenuAvailable from "./Component/CardMenuAvailable/CardMenuAvailable";
 import ButtonMenuNavBar from "./Component/ButtonMenuNavBar/ButtonMenuNavBar";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import QuantityInput from "./Component/ButtonIncrement/ButtonIncrement";
+import BasicModal from "./Component/ModalMenu/ModalMenu";
 const Menu = ({ selectedPlace }) => {
+  let navigate = useNavigate();
+
   const menuAvailable = [
     {
       name: "Instant MICHELIN",
@@ -33,6 +39,69 @@ const Menu = ({ selectedPlace }) => {
       details: [],
     },
   ];
+  const foodData = [
+    {
+      category: "Các món soup",
+      items: [
+        { name: "SÚP MĂNG TÂY CUA", price: 500000 },
+        { name: "SÚP CUA VI CUA", price: 550000 },
+        { name: "SÚP HẢI SẢN", price: 600000 },
+        { name: "SÚP BÍ ĐỎ", price: 450000 },
+        { name: "SÚP NẤM TƯƠI", price: 480000 },
+      ],
+    },
+    {
+      category: "Các món khai vị",
+      items: [
+        { name: "GỎI CUỐN TÔM THỊT", price: 300000 },
+        { name: "NEM CUỐN RAU", price: 280000 },
+        { name: "CHẢ GIÒ HẢI SẢN", price: 320000 },
+        { name: "BÁNH XÈO NHỎ", price: 400000 },
+        { name: "NEM NƯỚNG NHA TRANG", price: 350000 },
+      ],
+    },
+    {
+      category: "Các món chính",
+      items: [
+        { name: "GÀ NƯỚNG MẬT ONG", price: 800000 },
+        { name: "BÒ KHO", price: 900000 },
+        { name: "CÁ HỒI SỐT CHANH DÂY", price: 1200000 },
+        { name: "THỊT KHO TÀU", price: 850000 },
+        { name: "LẨU HẢI SẢN", price: 1500000 },
+      ],
+    },
+    {
+      category: "Các món rau",
+      items: [
+        { name: "RAU MUỐNG XÀO TỎI", price: 250000 },
+        { name: "CẢI THÌA XÀO NẤM ĐÔNG CÔ", price: 300000 },
+        { name: "RAU MỒNG TƠI XÀO TỎI", price: 240000 },
+        { name: "BẮP CẢI LUỘC", price: 200000 },
+        { name: "CANH CẢI XANH", price: 260000 },
+      ],
+    },
+    {
+      category: "Các món tráng miệng",
+      items: [
+        { name: "CHÈ KHÚC BẠCH", price: 180000 },
+        { name: "BÁNH FLAN", price: 150000 },
+        { name: "CHÈ SẦU RIÊNG", price: 200000 },
+        { name: "RAU CÂU DỪA", price: 160000 },
+        { name: "TRÁI CÂY TƯƠI", price: 140000 },
+      ],
+    },
+    {
+      category: "Các món nước",
+      items: [
+        { name: "NƯỚC CAM TƯƠI", price: 120000 },
+        { name: "TRÀ ĐÀO", price: 100000 },
+        { name: "SINH TỐ BƠ", price: 140000 },
+        { name: "CÀ PHÊ SỮA ĐÁ", price: 110000 },
+        { name: "SỮA ĐẬU NÀNH", price: 90000 },
+      ],
+    },
+  ];
+
   const allFoodUrl = [
     "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-1-jpg-normal-25762204150.webp",
     "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-2-jpg-normal-25762205151.webp",
@@ -50,10 +119,37 @@ const Menu = ({ selectedPlace }) => {
     "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-14-jpg-normal-25762217163.webp",
     "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-15-jpg-normal-25762218164.webp",
   ];
+  localStorage.setItem("allFoodUrl", JSON.stringify(allFoodUrl));
   const [onClickMenuNavBar1, setOnClickMenuNavBar1] = useState(true);
   const [onClickMenuNavBar2, setOnClickMenuNavBar2] = useState(false);
   const [onClickMenuNavBar3, setOnClickMenuNavBar3] = useState(false);
-  const handleOnClickImageMenu = () => {};
+
+  const handleOnClickImageMenu = () => {
+    const location_id = localStorage.getItem("selectedPlaceId");
+    navigate(`/DetailRestaurant/${location_id}/menuImages`);
+  };
+  const [newCombo, setNewCombo] = useState([]);
+  const handleAddItem = (item, quantity) => {
+    if (quantity > 0) {
+      const existingItem = newCombo.find(
+        (comboItem) => comboItem.item.name === item.name
+      );
+
+      if (existingItem) {
+        setNewCombo((prev) =>
+          prev.map((comboItem) =>
+            comboItem.item.name === item.name
+              ? { ...comboItem, quantity: comboItem.quantity + quantity }
+              : comboItem
+          )
+        );
+      } else {
+        // Add new item to newCombo
+        setNewCombo((prev) => [...prev, { item, quantity }]);
+      }
+    }
+  };
+
   return (
     <>
       <div className="MenuNavBarDiv">
@@ -65,24 +161,25 @@ const Menu = ({ selectedPlace }) => {
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
-            ></ButtonMenuNavBar>
+            />
             <ButtonMenuNavBar
               text={"Tất cả món ăn"}
               clicked={onClickMenuNavBar2}
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
-            ></ButtonMenuNavBar>
+            />
             <ButtonMenuNavBar
               text={"Tạo combo mới"}
               clicked={onClickMenuNavBar3}
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
-            ></ButtonMenuNavBar>
+            />
           </div>
         </div>
       </div>
+
       {onClickMenuNavBar1 && (
         <div className="MenuNavBar_menu">
           <div className="MenuNavBar_menu_H1">
@@ -97,17 +194,22 @@ const Menu = ({ selectedPlace }) => {
               </span>
             </p>
             {menuAvailable.map((menu, index) => (
-              <CardMenuAvailable key={index} menu={menu}></CardMenuAvailable>
+              <CardMenuAvailable key={index} menu={menu} />
             ))}
           </div>
         </div>
       )}
+
       {onClickMenuNavBar2 && (
         <div className="MenuNavBar_allfood">
           {allFoodUrl.map((menuImage, index) => {
             if (index < 8) {
               return (
-                <div key={index} className="col-md-4 ImageAllFoodDiv">
+                <div
+                  key={index}
+                  className="col-md-4 ImageAllFoodDiv"
+                  onClick={() => handleOnClickImageMenu()}
+                >
                   <img
                     src={menuImage}
                     alt={`Menu ${index + 1}`}
@@ -117,9 +219,12 @@ const Menu = ({ selectedPlace }) => {
               );
             } else if (index === 8) {
               return (
-                <div key={index} className="col-md-4 ImageAllFoodDiv">
+                <div
+                  key={index}
+                  className="col-md-4 ImageAllFoodDiv"
+                  onClick={() => handleOnClickImageMenu()}
+                >
                   <div className="ImageAllFoodDiv_number8">
-                    {" "}
                     <div className="ImageAllFoodDiv_number8_H1">
                       <div className="ImageAllFoodDiv_number8_H1_div">+8</div>
                     </div>
@@ -132,10 +237,47 @@ const Menu = ({ selectedPlace }) => {
                 </div>
               );
             }
-            return null; // In case you want to return nothing after index 8
+            return null;
           })}
         </div>
       )}
+
+      {onClickMenuNavBar3 && (
+        <div className="MenuNavBar_createMenu">
+          <div className="MenuNavBar_createMenu_div">
+            {foodData.map((category, index) => (
+              <div key={index} className="MenuNavBar_createMenu_div_index">
+                <h3 className="MenuNavBar_createMenu_div_index_H3">
+                  {category.category}
+                </h3>
+                <ul>
+                  {category.items.map((item, idx) => (
+                    <li
+                      className="MenuNavBar_createMenu_div_index_H3_li"
+                      key={idx}
+                    >
+                      <span>{item.name}</span>
+                      <span className="MenuNavBar_createMenu_div_index_H3_span2">
+                        {item.price} đ
+                      </span>
+
+                      <QuantityInput
+                        onQuantityChange={(quantity) =>
+                          handleAddItem(item, quantity)
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            {/* <Button onClick={handleCreateCombo}>Tạo menu</Button> */}
+            <BasicModal combo={newCombo}></BasicModal>
+          </div>
+        </div>
+      )}
+
+      {/* <BasicModal combo={newCombo}></BasicModal> */}
     </>
   );
 };

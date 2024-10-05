@@ -110,3 +110,27 @@
   font-size: 30px;
   cursor: pointer;
 }
+.MenuNavBar_createMenu {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: auto;
+  margin-top: 26px;
+}
+.MenuNavBar_createMenu_div
+{
+  width: 100%;
+}
+.MenuNavBar_createMenu_div_index_H3_li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd; /* Optional: add a border for separation */
+}
+.MenuNavBar_createMenu_div_index_H3_span2
+{
+  margin-left: auto; 
+  margin-right: 10px;
+}
