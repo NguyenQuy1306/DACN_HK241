@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Unstable_NumberInput as BaseNumberInput } from "@mui/base/Unstable_NumberInput";
 import { styled } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -28,21 +28,40 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function QuantityInput({ onQuantityChange }) {
-  const handleChange = (event, value) => {
-    const quantity = Number(value);
-    if (!isNaN(quantity) && onQuantityChange) {
-      onQuantityChange(quantity);
+export default function QuantityInput({
+  onQuantityChange,
+  resetNewMenu,
+  setResetNewMenu,
+}) {
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    const quantity = Number(newValue);
+
+    if (!isNaN(quantity)) {
+      setValue(quantity);
+      if (onQuantityChange) {
+        onQuantityChange(quantity);
+      }
+      setResetNewMenu(false);
     }
   };
+
+  useEffect(() => {
+    if (resetNewMenu) {
+      setValue(0);
+      setResetNewMenu(false);
+    }
+  }, [resetNewMenu, setResetNewMenu]);
 
   return (
     <NumberInput
       aria-label="Quantity Input"
       min={0}
       max={50}
+      value={value}
       defaultValue={0}
-      onChange={handleChange} // Add this line to capture changes
+      onChange={handleChange}
     />
   );
 }

@@ -3,7 +3,10 @@ import "./Menu.css";
 import CardMenuAvailable from "./Component/CardMenuAvailable/CardMenuAvailable";
 import ButtonMenuNavBar from "./Component/ButtonMenuNavBar/ButtonMenuNavBar";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+
 import QuantityInput from "./Component/ButtonIncrement/ButtonIncrement";
 import BasicModal from "./Component/ModalMenu/ModalMenu";
 const Menu = ({ selectedPlace }) => {
@@ -139,7 +142,7 @@ const Menu = ({ selectedPlace }) => {
         setNewCombo((prev) =>
           prev.map((comboItem) =>
             comboItem.item.name === item.name
-              ? { ...comboItem, quantity: comboItem.quantity + quantity }
+              ? { ...comboItem, quantity: quantity }
               : comboItem
           )
         );
@@ -149,7 +152,33 @@ const Menu = ({ selectedPlace }) => {
       }
     }
   };
+  const [currentPage, setCurrentPage] = useState(1); // State to track the current page
+  const itemsPerPage = 2;
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value); // Update the current page
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+  const currentFoodItems = foodData.slice(indexOfFirstItem, indexOfLastItem);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "hsl(174, 100%, 20%)",
+      },
+      secondary: {
+        main: "#E0C2FF",
+        light: "#F5EBFF",
+        // dark: will be calculated from palette.secondary.main,
+        contrastText: "#47008F",
+      },
+    },
+  });
+  const [resetNewMenu, setResetNewMenu] = useState(false);
+  const handleResetNewMenu = () => {
+    setResetNewMenu(true);
+    setNewCombo([]);
+  };
   return (
     <>
       <div className="MenuNavBarDiv">
@@ -243,38 +272,61 @@ const Menu = ({ selectedPlace }) => {
       )}
 
       {onClickMenuNavBar3 && (
-        <div className="MenuNavBar_createMenu">
-          <div className="MenuNavBar_createMenu_div">
-            {foodData.map((category, index) => (
-              <div key={index} className="MenuNavBar_createMenu_div_index">
-                <h3 className="MenuNavBar_createMenu_div_index_H3">
-                  {category.category}
-                </h3>
-                <ul>
-                  {category.items.map((item, idx) => (
-                    <li
-                      className="MenuNavBar_createMenu_div_index_H3_li"
-                      key={idx}
-                    >
-                      <span>{item.name}</span>
-                      <span className="MenuNavBar_createMenu_div_index_H3_span2">
-                        {item.price} đ
-                      </span>
+        <>
+          <div className="MenuNavBar_createMenu">
+            <Button
+              className="menu-description_button"
+              onClick={() => handleResetNewMenu()}
+            >
+              <RestartAltIcon className="modal-modal-description_button_icon"></RestartAltIcon>
+              <span className="modal-modal-description_button_span">Reset</span>
+            </Button>
+            <div className="MenuNavBar_createMenu_div">
+              {currentFoodItems.map((category, index) => (
+                <div key={index} className="MenuNavBar_createMenu_div_index">
+                  <h3 className="MenuNavBar_createMenu_div_index_H3">
+                    {category.category}
+                  </h3>
+                  <ul>
+                    {category.items.map((item, idx) => (
+                      <li
+                        className="MenuNavBar_createMenu_div_index_H3_li"
+                        key={idx}
+                      >
+                        <span>{item.name}</span>
+                        <span className="MenuNavBar_createMenu_div_index_H3_span2">
+                          {item.price} đ
+                        </span>
 
-                      <QuantityInput
-                        onQuantityChange={(quantity) =>
-                          handleAddItem(item, quantity)
-                        }
-                      />
-                    </li>
-                  ))}
-                </ul>
+                        <QuantityInput
+                          onQuantityChange={(quantity) =>
+                            handleAddItem(item, quantity)
+                          }
+                          resetNewMenu={resetNewMenu}
+                          setResetNewMenu={setResetNewMenu}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              {/* <Button onClick={handleCreateCombo}>Tạo menu</Button> */}
+              <div className="MenuNavBar_createMenu_div_pagination">
+                <ThemeProvider theme={theme}>
+                  <Pagination
+                    count={Math.ceil(foodData.length / itemsPerPage)} // Calculate number of pages
+                    page={currentPage} // Track current page
+                    onChange={handlePageChange} // Handle page change
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                  />
+                </ThemeProvider>
               </div>
-            ))}
-            {/* <Button onClick={handleCreateCombo}>Tạo menu</Button> */}
-            <BasicModal combo={newCombo}></BasicModal>
+              <BasicModal combo={newCombo}></BasicModal>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* <BasicModal combo={newCombo}></BasicModal> */}

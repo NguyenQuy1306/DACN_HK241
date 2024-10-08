@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CustomizedTables from "../TableInModalMenu/TableInModalMenu";
+import AddIcon from "@mui/icons-material/Add";
+
 import "./ModalMenu.css";
 const style = {
   position: "absolute",
@@ -21,11 +23,14 @@ export default function BasicModal({ combo }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const handleCancelCreateMenu = () => {
+    setOpen(false);
+  };
   return (
     <div>
       <Button onClick={handleOpen} className="modal-modal-description_button">
-        Tạo menu
+        <AddIcon className="modal-modal-description_button_icon"></AddIcon>
+        <span className="odal-modal-description_button_span"> Tạo menu </span>
       </Button>
       <Modal
         open={open}
@@ -41,12 +46,17 @@ export default function BasicModal({ combo }) {
             {console.log("combobb", combo)}
             <CustomizedTables combo={combo}></CustomizedTables>
           </Typography>
-          <Button className="modal-modal-description_button">
-            Đặt bàn với menu được tạo
-          </Button>
-          <Button className="modal-modal-description_button_cancel">
-            Huỷ bỏ
-          </Button>
+          <div className="modal-modal-description_button_div">
+            <Button className="modal-modal-description_button">
+              Đặt bàn với menu được tạo
+            </Button>
+            <Button
+              className="modal-modal-description_button_cancel"
+              onClick={() => handleCancelCreateMenu()}
+            >
+              Huỷ bỏ
+            </Button>
+          </div>
         </Box>
       </Modal>
     </div>

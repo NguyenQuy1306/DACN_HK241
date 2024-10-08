@@ -116,11 +116,13 @@
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  margin-top: 26px;
+  margin-top: 12px;
 }
 .MenuNavBar_createMenu_div
 {
   width: 100%;
+
+
 }
 .MenuNavBar_createMenu_div_index_H3_li {
   display: flex;
@@ -133,4 +135,33 @@
 {
   margin-left: auto; 
   margin-right: 10px;
+}
+.MenuNavBar_createMenu_div_pagination
+{
+  margin-left: 235px;
+}
+.menu-description_button
+{
+  position: relative !important;
+  border: 0 !important;
+  border-radius: 0.25rem !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  -webkit-text-decoration: none !important;
+  text-decoration: none !important;
+  display: flex !important;
+  vertical-align: bottom !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  font-style: normal;
+  line-height: 1.375 !important;
+  color: hsl(0, 0%, 100%) !important;
+  background-color: hsl(174, 100%, 20%) !important;
+  box-shadow: none !important;
+  width: fit-content !important;
+  height: 35px !important;
+  align-items: center;
+  margin-left: 515px !important;
+
 }
