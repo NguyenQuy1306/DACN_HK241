@@ -1,5 +1,11 @@
 import React, { useState, useEffect, createRef } from "react";
 import "./About.css";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
+import RestaurantMenuOutlinedIcon from "@mui/icons-material/RestaurantMenuOutlined";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import WorkspacesOutlinedIcon from "@mui/icons-material/WorkspacesOutlined";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined";
 
 const About = ({ selectedPlace }) => {
   const restaurantData = {
@@ -71,21 +77,37 @@ const About = ({ selectedPlace }) => {
   const now = daysOfWeek[new Date().getDay()];
   return (
     <div className="AboutDiv">
-      <h3>Chi tiết {restaurantData.name}</h3>
+      <h3 className="AboutDiv_h3">Chi tiết {restaurantData.name}</h3>
       <div className="AboutDiv_H1">
         <div className="AboutDiv_H1_div">
           <div className="AboutDiv_H1_div_div1">
-            <div className="AboutDiv_H1_div_div1_title">Phù hợp:</div>
+            <div className="AboutDiv_H1_div_div1_title">
+              {" "}
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <WorkspacesOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></WorkspacesOutlinedIcon>
+              </div>
+              Phù hợp:
+            </div>
             <div className="AboutDiv_H1_div_div1_description">
               <span> - {restaurantData.suitability}</span>
             </div>
-            <div className="AboutDiv_H1_div_div1_title">Món đặc sắc:</div>
+            <div className="AboutDiv_H1_div_div1_title">
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <RestaurantMenuOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></RestaurantMenuOutlinedIcon>
+              </div>
+              Món đặc sắc:
+            </div>
             <div className="AboutDiv_H1_div_div1_description">
               {restaurantData.specialDishes.map((food, index) => (
                 <span key={index}>{food}, </span>
               ))}
             </div>
-            <div className="AboutDiv_H1_div_div1_title">Không gian:</div>
+            <div className="AboutDiv_H1_div_div1_title">
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <BusinessOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></BusinessOutlinedIcon>
+              </div>
+              Không gian:
+            </div>
             <div className="AboutDiv_H1_div_div1_description12">
               {" "}
               <span>- {restaurantData.space.architecture} </span>
@@ -100,13 +122,21 @@ const About = ({ selectedPlace }) => {
                 {restaurantData.space.privateRooms.description}
               </span>
             </div>
-            <div className="AboutDiv_H1_div_div1_title">Các tiện ích khác:</div>
+            <div className="AboutDiv_H1_div_div1_title">
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <VerifiedOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></VerifiedOutlinedIcon>
+              </div>
+              Các tiện ích khác:
+            </div>
             <div className="AboutDiv_H1_div_div1_description">
               {restaurantData.additionalFacilities.map((service, index) => (
                 <span key={index}>{service}, </span>
               ))}
             </div>
             <div className="AboutDiv_H1_div_div1_title">
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <AccessTimeOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></AccessTimeOutlinedIcon>
+              </div>
               Giờ đóng và mở cửa:
             </div>
             <div className="AboutDiv_H1_div_div1_description">
@@ -137,7 +167,13 @@ const About = ({ selectedPlace }) => {
                 )
               )}
             </div>
-            <div className="AboutDiv_H1_div_div1_title">Điểm đặc trưng:</div>
+            <div className="AboutDiv_H1_div_div1_title">
+              {" "}
+              <div className="AboutDiv_H1_div_div1_title_icon">
+                <WhatshotOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></WhatshotOutlinedIcon>
+              </div>
+              Điểm đặc trưng:
+            </div>
             <div className="AboutDiv_H1_div_div1_description">
               <span>- {restaurantData.highlights}</span>
             </div>

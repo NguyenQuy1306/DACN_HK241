@@ -3,6 +3,10 @@
     margin-top: 12px;
     display: block;
 }
+.AboutDiv_h3
+{
+    margin-top: 12px;
+}
 .AboutDiv_H1_div
 {
     width: 100%;
@@ -26,11 +30,12 @@
 
     text-align: left;
     text-transform: uppercase;
-    font-weight: 500;
     min-height: 16px;
     margin: 5px 0px 5px 0px;
     font-size: 14px;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
 }
 .AboutDiv_H1_div_div1_description
 {
@@ -43,6 +48,7 @@
     padding-bottom: 5px;
     margin-top: -5px;
     width: 100% !important;
+    margin-left: 23px;
 }
 .AboutDiv_H1_div_div1_description12
 {
@@ -57,6 +63,16 @@
     width: 100% !important;
     display: flex;
     flex-direction: column;
+    margin-left: 23px;
+}
+.AboutDiv_H1_div_div1_title_icon
+{
+    margin-right: 0.7rem;
+}
+.AboutDiv_H1_div_div1_title_icon_css
+{
+    vertical-align: bottom !important;
+
 }
 .AboutDiv_H1_div_div1_description span
 {
