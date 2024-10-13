@@ -9,7 +9,7 @@ const DetailBox = ({ selectedPlace }) => {
       {" "}
       <TitleDetail selectedPlace={selectedPlace}></TitleDetail>
       <Booking></Booking>
-      <Navigation></Navigation>
+      <Navigation selectedPlace={selectedPlace}></Navigation>
     </div>
   );
 };

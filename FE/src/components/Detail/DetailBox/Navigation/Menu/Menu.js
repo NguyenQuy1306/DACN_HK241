@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Pagination } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-
 import QuantityInput from "./Component/ButtonIncrement/ButtonIncrement";
 import BasicModal from "./Component/ModalMenu/ModalMenu";
 const Menu = ({ selectedPlace }) => {

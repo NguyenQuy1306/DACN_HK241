@@ -1,0 +1,63 @@
+
+.DirectionDiv
+{
+    margin-top: 10px;
+}
+.DirectionDiv_h1
+{
+    display: flex;
+
+    float: left;
+    width: 100%;
+    color: #1b1b1b;
+    min-height: 18px;
+    text-align: left;
+    font-size: 15px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    width: 100% !important;
+}
+.DirectionDiv_h1_div_span1
+{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    color: hsl(218, 9%, 17%);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 400px;
+  padding-right: 10px;
+}
+.DirectionDiv_h1_icon
+{
+    vertical-align: bottom !important;
+    
+}
+.DirectionDiv_h1_div
+{
+    display: flex;
+    flex-direction: column;
+}
+.DirectionDiv_h1_div_span2
+{
+    font-size: 12px;
+    line-height: 24px;
+    font-weight: normal;
+    color: hsl(218, 9%, 17%);
+    font-size: 0.8rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+    
+}
+.DirectionDiv_h1_div_div
+{
+    display: flex;
+}

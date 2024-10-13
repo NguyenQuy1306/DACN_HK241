@@ -6,6 +6,7 @@ import FilterComment from "./Reviews/Component/FilterComment/FilterComment";
 import Comment from "./Reviews/Component/Comment/Comment";
 import Menu from "./Menu/Menu";
 import About from "./About/About";
+import Direction from "./Direction/Direction";
 const Navigation = ({ selectedPlace }) => {
   const [onClickDetail, setOnClickDetail] = useState(true);
   const [onClicMenu, setOnClicMenu] = useState(false);
@@ -172,6 +173,7 @@ const Navigation = ({ selectedPlace }) => {
       )}
       {onClicMenu && <Menu></Menu>}
       {onClickDetail && <About></About>}
+      {onClickPath && <Direction selectedPlace={selectedPlace}></Direction>}
     </div>
   );
 };
