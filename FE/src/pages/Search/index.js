@@ -5,6 +5,11 @@ import Reservation from "../../components/Dropdown/Reservation";
 import Filter from "../../components/Filter/Filter";
 import ResultSearch from "../../components/Search/Result/ResultSearch";
 import SearchBar from "../../components/Search/SearchBar/SearchBar";
+import SortIcon from "@mui/icons-material/Sort";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import { Button } from "@mui/material";
+import "./Search.css";
 const Search = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -62,24 +67,46 @@ const Search = () => {
       </div>
       <ResultSearch></ResultSearch>
 
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        {/* <CssBaseline /> */}
-        <div style={{ width: "720px" }}>
-          <List
-            isLoading={isLoading}
-            childClicked={childClicked}
-            places={filteredPlaces.length ? filteredPlaces : places}
-            type={type}
-            setType={setType}
-            rating={rating}
-            setRating={setRating}
-          />
+      <div className="listRestaurantDiv">
+        <div className="listRestaurantDiv_H1">
+          <div className="listRestaurantDiv_H1_left">
+            <div className="listRestaurantDiv_H1_left_sort">
+              <div className="listRestaurantDiv_H1_left_sort_div">
+                <div className="listRestaurantDiv_H1_left_sort_div_div">
+                  <div>
+                    <Button className="listRestaurantDiv_H1_left_sort_div_div_button">
+                      <div className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv">
+                        <SortIcon className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv_icon"></SortIcon>
+                      </div>
+                      <span>
+                        <span>Sort by</span>
+                      </span>
+                      <div className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv2">
+                        <ExpandMoreIcon className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv_icon"></ExpandMoreIcon>
+                      </div>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <List
+              isLoading={isLoading}
+              childClicked={childClicked}
+              places={filteredPlaces.length ? filteredPlaces : places}
+              type={type}
+              setType={setType}
+              rating={rating}
+              setRating={setRating}
+            />
+          </div>
+          <div className="listRestaurantDiv_H1_right">
+            <Map
+              setPlaces={setPlaces}
+              setCoords={setCoords}
+              setChildClicked={setChildClicked}
+            />
+          </div>
         </div>
-        <Map
-          setPlaces={setPlaces}
-          setCoords={setCoords}
-          setChildClicked={setChildClicked}
-        />
       </div>
     </>
   );

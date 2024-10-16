@@ -33,7 +33,7 @@ const List = ({
   }, [places]);
 
   return (
-    <div className={classes.container}>
+    <div>
       {isLoading ? (
         <div className={classes.loading}>
           <CircularProgress size="5rem" />
@@ -57,7 +57,7 @@ const List = ({
               <MenuItem value="4.5">Above 4.5</MenuItem>
             </Select>
           </FormControl> */}
-          <div></div>
+
           {places?.map((place, i) => (
             <PlaceDetails
               selected={Number(childClicked) === i}
