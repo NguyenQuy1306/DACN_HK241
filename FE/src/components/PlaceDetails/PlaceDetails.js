@@ -45,13 +45,15 @@ const PlaceDetails = ({ place, selected, refProp }) => {
     setCurrentImages(images.slice(startIndex, startIndex + imagesToShow));
   }, [startIndex, imagesToShow]);
 
-  const handleNext = () => {
+  const handleNext = (e) => {
+    e.stopPropagation();
     if (startIndex + imagesToShow < images.length) {
       setStartIndex(startIndex + 1);
     }
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = (e) => {
+    e.stopPropagation();
     if (startIndex > 0) {
       setStartIndex(startIndex - 1);
     }

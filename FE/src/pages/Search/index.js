@@ -7,7 +7,8 @@ import ResultSearch from "../../components/Search/Result/ResultSearch";
 import SearchBar from "../../components/Search/SearchBar/SearchBar";
 import SortIcon from "@mui/icons-material/Sort";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import CloseIcon from "@mui/icons-material/Close";
+import SortDetail from "../../components/Sort/SortDetail";
 import { Button } from "@mui/material";
 import "./Search.css";
 const Search = () => {
@@ -27,6 +28,15 @@ const Search = () => {
     const lat = autocomplete.getPlace().geometry.location.lat();
     const lng = autocomplete.getPlace().geometry.location.lng();
     setCoords({ lat, lng });
+  };
+  const [chooseRelevance, setChooseRelevance] = useState(true);
+  const [chooseOffer, setChooseOffer] = useState(false);
+  const [choosePrice, setChoosePrice] = useState(false);
+  const [choosePopularity, setChoosePopularity] = useState(false);
+  const [chooseNewRestaurant, setChooseNewRestaurant] = useState(false);
+  const [openSort, SetOpenSort] = useState(false);
+  const handleOnCloseSort = () => {
+    SetOpenSort(!openSort);
   };
   return (
     <>
@@ -74,7 +84,10 @@ const Search = () => {
               <div className="listRestaurantDiv_H1_left_sort_div">
                 <div className="listRestaurantDiv_H1_left_sort_div_div">
                   <div>
-                    <Button className="listRestaurantDiv_H1_left_sort_div_div_button">
+                    <Button
+                      className="listRestaurantDiv_H1_left_sort_div_div_button"
+                      onClick={handleOnCloseSort}
+                    >
                       <div className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv">
                         <SortIcon className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv_icon"></SortIcon>
                       </div>
@@ -85,6 +98,82 @@ const Search = () => {
                         <ExpandMoreIcon className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv_icon"></ExpandMoreIcon>
                       </div>
                     </Button>
+                    {openSort && (
+                      <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown">
+                        <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_title">
+                          <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_title_name">
+                            <h3>
+                              <span>Sắp xếp</span>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_list">
+                          <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_list_div">
+                            <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_list_div_H1">
+                              <div>
+                                <div>
+                                  <SortDetail
+                                    text="Liên quan"
+                                    setChooseRelevance={setChooseRelevance}
+                                    setChoosePrice={setChoosePrice}
+                                    setChoosePopularity={setChoosePopularity}
+                                    setChooseOffer={setChooseOffer}
+                                    setChooseNewRestaurant={
+                                      setChooseNewRestaurant
+                                    }
+                                    choosed={chooseRelevance}
+                                  ></SortDetail>
+                                  <SortDetail
+                                    text="Offer"
+                                    setChooseRelevance={setChooseRelevance}
+                                    setChoosePrice={setChoosePrice}
+                                    setChoosePopularity={setChoosePopularity}
+                                    setChooseOffer={setChooseOffer}
+                                    setChooseNewRestaurant={
+                                      setChooseNewRestaurant
+                                    }
+                                    choosed={chooseOffer}
+                                  ></SortDetail>
+                                  <SortDetail
+                                    text="Giá"
+                                    setChooseRelevance={setChooseRelevance}
+                                    setChoosePrice={setChoosePrice}
+                                    setChoosePopularity={setChoosePopularity}
+                                    setChooseOffer={setChooseOffer}
+                                    setChooseNewRestaurant={
+                                      setChooseNewRestaurant
+                                    }
+                                    choosed={choosePrice}
+                                  ></SortDetail>
+                                  <SortDetail
+                                    text="Phổ biến"
+                                    setChooseRelevance={setChooseRelevance}
+                                    setChoosePrice={setChoosePrice}
+                                    setChoosePopularity={setChoosePopularity}
+                                    setChooseOffer={setChooseOffer}
+                                    setChooseNewRestaurant={
+                                      setChooseNewRestaurant
+                                    }
+                                    choosed={choosePopularity}
+                                  ></SortDetail>
+                                  <SortDetail
+                                    text="Nhà hàng mới"
+                                    setChooseRelevance={setChooseRelevance}
+                                    setChoosePrice={setChoosePrice}
+                                    setChoosePopularity={setChoosePopularity}
+                                    setChooseOffer={setChooseOffer}
+                                    setChooseNewRestaurant={
+                                      setChooseNewRestaurant
+                                    }
+                                    choosed={chooseNewRestaurant}
+                                  ></SortDetail>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
