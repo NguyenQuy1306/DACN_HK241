@@ -53,7 +53,19 @@ public class Restaurant {
     private String TrangThai;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<FavoriteListRestaurant> favoriteListRestaurants;
+    private Set<FavoriteListRestaurant> danhSachNhaHangYeuThich;
+
+    @OneToMany(mappedBy = "NhaHang")
+    private Set<TimeActive> danhSachKhungGioHoatDong;
+
+    @OneToMany(mappedBy = "NhaHang")
+    private Set<RestaurantHasUtility> danhSachNhahangCoTienIch;
+
+    @OneToMany(mappedBy = "NhaHang")
+    private Set<RestaurantSpace> danhSachKhongGianNhaHang;
+
+    @OneToMany(mappedBy = "NhaHang")
+    private Set<RestaurantHasPaymentMethod> danhSachNhaHangCoPhuongThucThanhToan;
 
     @ManyToOne
     @JoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")

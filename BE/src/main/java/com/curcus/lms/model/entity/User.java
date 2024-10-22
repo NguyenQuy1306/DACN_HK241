@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
-
+import java.util.Set;
 import java.util.List;
 import java.sql.Date;
 
@@ -20,7 +20,7 @@ import java.sql.Date;
 @DynamicInsert
 @Table(name = "NguoiDung")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "user_role", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "VaiTro", discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,9 @@ public class User {
 
     @Column(nullable = true)
     private String GioiTinh;
+
+    @OneToMany(mappedBy = "NguoiDung")
+    private Set<UserLikeRate> danhSachNguoiDungThichDanhGia;
 
     @Transient
     public String getDiscriminatorValue() {
