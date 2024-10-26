@@ -9,29 +9,25 @@ import java.util.Set;
 @Getter
 @Setter
 public class RestaurantResponse implements Serializable {
-    private Long courseId;
-
-    private String courseThumbnail;
-
-    private String title;
-
-    private String description;
-
-    private Long price;
-
-    private Long instructorId;
-
-    private int categoryId;
+    private Long MaSoNhaHang;
+    private String URL;
+    private String Ten;
+    private String DiaChi;
+    private String LoaiHinh;
+    private String KhoangGia;
+    private String GioHoatDong;
+    private String PhuHop;
+    private String MonDacSac;
+    private String MoTaKhongGian;
+    private String DiemDacTrung;
 
     @Override
     public String toString() {
-        return "CourseResponse{" +
-                "courseId=" + courseId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", instructorId=" + instructorId +
-                ", categoryId=" + categoryId +
+        return "RestaurantResponse{" +
+                "MaSoNhaHang=" + MaSoNhaHang +
+                ", URL='" + URL + '\'' +
+                ", Ten='" + Ten + '\'' +
+                ", DiaChi=" + DiaChi +
                 '}';
     }
 
@@ -42,16 +38,15 @@ public class RestaurantResponse implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         RestaurantResponse that = (RestaurantResponse) o;
-        return Objects.equals(courseId, that.courseId) &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(price, that.price) &&
-                Objects.equals(instructorId, that.instructorId) &&
-                Objects.equals(categoryId, that.categoryId);
+        return Objects.equals(MaSoNhaHang, that.MaSoNhaHang) &&
+                Objects.equals(URL, that.URL) &&
+                Objects.equals(Ten, that.Ten) &&
+                Objects.equals(DiaChi, that.DiaChi);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseId, title, description, price, instructorId, categoryId);
+        return Objects.hash(MaSoNhaHang, URL, Ten, DiaChi);
     }
+
 }
