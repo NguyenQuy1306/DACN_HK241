@@ -21,7 +21,7 @@ import java.util.Set;
 @Builder
 @Entity
 @DynamicInsert
-@Table(name = "NhaHang")
+@Table(name = "Tag")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

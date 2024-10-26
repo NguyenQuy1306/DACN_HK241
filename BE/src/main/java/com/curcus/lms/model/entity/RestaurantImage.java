@@ -36,4 +36,7 @@ public class RestaurantImage {
     @JoinColumn(name = "MaSoNhaHang", referencedColumnName = "MaSoNhaHang")
     private Restaurant NhaHang;
 
+    @Column(nullable = false, columnDefinition = "VARCHAR")
+    private String URL;
+
 }

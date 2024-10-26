@@ -15,5 +15,5 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class TimeActiveId implements Serializable {
     private Long MaSoNhaHang;
-    private Byte NgayTrongTuan;
+    private String NgayTrongTuan;
 }

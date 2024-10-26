@@ -30,26 +30,32 @@ public class Restaurant {
 
     // @Column(nullable = false)
     // private String courseThumbnail;
-
+    @Column(nullable = false)
+    private String URL;
     @Column(nullable = false)
     private String Ten;
     @Column(nullable = false)
     private String DiaChi;
     @Column(nullable = false)
-    private String SDT;
+    private String LoaiHinh;
     @Column(nullable = false)
-    private String MoTa;
+    private String KhoangGia;
     @Column(nullable = false)
-    private String KinhDo;
-    @Column(nullable = false)
-    private String ViDo;
-    @Column(nullable = false)
+    private String GioHoatDong;
+    @Column(nullable = false, columnDefinition = "VARCHAR")
+    private String PhuHop;
+    @Column(nullable = false, columnDefinition = "VARCHAR")
+    private String MonDacSac;
+    @Column(nullable = false, columnDefinition = "VARCHAR")
+    private String MoTaKhongGian;
+    @Column(nullable = false, columnDefinition = "VARCHAR")
     private String DiemDacTrung;
-    @Column(nullable = false)
+    private String KinhDo;
+    private String ViDo;
+
+    // dư thuộc tính~
     private String LoaiAmThuc;
-    @Column(nullable = false)
     private String KieuNhaHang;
-    @Column(nullable = false)
     private String TrangThai;
 
     @OneToMany(mappedBy = "NhaHang")

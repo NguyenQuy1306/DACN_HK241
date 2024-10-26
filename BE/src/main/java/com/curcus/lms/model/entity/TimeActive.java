@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Getter
@@ -28,6 +29,11 @@ import java.util.Set;
 public class TimeActive {
     @EmbeddedId
     private TimeActiveId MaSo;
+
+    @Column(nullable = false)
+    private LocalTime GioMo;
+    @Column(nullable = false)
+    private LocalTime GioDong;
 
     @JsonIgnore
     @ManyToOne

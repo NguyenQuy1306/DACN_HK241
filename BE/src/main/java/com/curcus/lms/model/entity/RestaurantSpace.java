@@ -34,9 +34,7 @@ public class RestaurantSpace {
     @JoinColumn(name = "MaSoNhaHang")
     private Restaurant NhaHang;
 
-    @Column(nullable = false)
-    private Short SoLuongGhe;
+    private String SoLuongGhe;
 
-    @Column(nullable = false)
-    private Short SoLuongRôm;
+    private Short SoLuongRoom;
 }

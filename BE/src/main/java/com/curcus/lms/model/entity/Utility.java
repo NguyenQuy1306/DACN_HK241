@@ -25,7 +25,7 @@ public class Utility {
     @Column(name = "MaSoTienIch")
     private Long MaSoTienIch;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String Ten;
     @Column(nullable = false)
     private String MoTa;
