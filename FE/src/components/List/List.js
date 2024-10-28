@@ -11,6 +11,7 @@ import {
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import useStyles from "./styles.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const List = ({
   places,
@@ -23,7 +24,9 @@ const List = ({
 }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
-
+  const data_restaurantsInMaps = useSelector(
+    (state) => state.restaurant.restaurants
+  );
   useEffect(() => {
     setElRefs((refs) =>
       Array(places.length)
@@ -61,6 +64,11 @@ const List = ({
           {places?.map((place, i) => (
             <PlaceDetails
               selected={Number(childClicked) === i}
+              restaurantsImageType={
+                place.danhSachAnhNhaHang
+                  ? place.danhSachAnhNhaHang
+                  : "https://via.placeholder.com/100"
+              }
               refProp={elRefs[i]}
               place={place}
             />

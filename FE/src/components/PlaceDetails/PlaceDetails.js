@@ -15,7 +15,7 @@ import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
 import useStyles from "./styles.js";
 import "./PlaceDetails.css";
-import images from "../../data/ImageData.js";
+// import images from "../../data/ImageData.js";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import Tags from "../Detail/DetailBox/Title/Tags/Tags.js";
@@ -24,7 +24,7 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
-const PlaceDetails = ({ place, selected, refProp }) => {
+const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
   let navigate = useNavigate();
 
   if (selected)
@@ -37,17 +37,21 @@ const PlaceDetails = ({ place, selected, refProp }) => {
     navigate(`/DetailRestaurant/${id}`);
   };
   const [startIndex, setStartIndex] = useState(0);
-  const [currentImages, setCurrentImages] = useState(images.slice(0, 1)); // hiển thị ảnh đầu tiên ban đầu
+  const [currentImages, setCurrentImages] = useState(
+    restaurantsImageType.slice(0, 1)
+  ); // hiển thị ảnh đầu tiên ban đầu
   const imagesToShow = 1; // Số lượng ảnh hiển thị
 
   // Cập nhật danh sách ảnh khi startIndex thay đổi
   useEffect(() => {
-    setCurrentImages(images.slice(startIndex, startIndex + imagesToShow));
+    setCurrentImages(
+      restaurantsImageType.slice(startIndex, startIndex + imagesToShow)
+    );
   }, [startIndex, imagesToShow]);
 
   const handleNext = (e) => {
     e.stopPropagation();
-    if (startIndex + imagesToShow < images.length) {
+    if (startIndex + imagesToShow < restaurantsImageType.length) {
       setStartIndex(startIndex + 1);
     }
   };
@@ -84,23 +88,28 @@ const PlaceDetails = ({ place, selected, refProp }) => {
               )}
 
               <div className="PlaceDetailDiv_H1_div_div_listImage">
-                {" "}
-                {Object.values(currentImages).map((image, i) => (
-                  <div className="PlaceDetailDiv_H1_div_div_listImage_boxImage">
-                    <picture>
-                      <img
-                        className="PlaceDetailDiv_H1_div_div_listImage_boxImage_image"
-                        src={
-                          image
-                            ? Object.values(image)
-                            : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
-                        }
-                      />
-                    </picture>
-                  </div>
-                ))}
+                {Object.values(currentImages).map((image, i) => {
+                  return (
+                    <div
+                      className="PlaceDetailDiv_H1_div_div_listImage_boxImage"
+                      key={i} // Ideally, use a unique id from the image if available
+                    >
+                      <picture>
+                        <img
+                          className="PlaceDetailDiv_H1_div_div_listImage_boxImage_image"
+                          src={
+                            image ||
+                            "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+                          }
+                          alt={`Image ${i}`} // Ensure to provide a descriptive alt text
+                        />
+                      </picture>
+                    </div>
+                  );
+                })}
               </div>
-              {startIndex <= images.length - 2 && (
+
+              {startIndex <= restaurantsImageType.length - 2 && (
                 <Button
                   className="PlaceDetailDiv_H1_div_div_button2"
                   onClick={handleNext}

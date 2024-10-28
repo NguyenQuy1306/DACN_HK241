@@ -10,7 +10,7 @@ import com.curcus.lms.model.entity.RestaurantImage;
 
 @Getter
 @Setter
-public class RestaurantResponse implements Serializable {
+public class RestaurantInMapsResponse implements Serializable {
     private Long MaSoNhaHang;
     private String URL;
     private String Ten;
@@ -22,10 +22,13 @@ public class RestaurantResponse implements Serializable {
     private String MonDacSac;
     private String MoTaKhongGian;
     private String DiemDacTrung;
+    private Double ViDo;
+    private Double KinhDo;
+    private Set<String> danhSachAnhNhaHang;
 
     @Override
     public String toString() {
-        return "RestaurantResponse{" +
+        return "RestaurantInMapsResponse{" +
                 "MaSoNhaHang=" + MaSoNhaHang +
                 ", URL='" + URL + '\'' +
                 ", Ten='" + Ten + '\'' +
@@ -39,7 +42,7 @@ public class RestaurantResponse implements Serializable {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        RestaurantResponse that = (RestaurantResponse) o;
+        RestaurantInMapsResponse that = (RestaurantInMapsResponse) o;
         return Objects.equals(MaSoNhaHang, that.MaSoNhaHang) &&
                 Objects.equals(URL, that.URL) &&
                 Objects.equals(Ten, that.Ten) &&

@@ -10,8 +10,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
 import SortDetail from "../../components/Sort/SortDetail";
 import { Button } from "@mui/material";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./Search.css";
 const Search = () => {
+  const data_restaurantsImagesType = useSelector(
+    (state) => state.restaurant.restaurantsImages
+  );
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
   const [coords, setCoords] = useState({

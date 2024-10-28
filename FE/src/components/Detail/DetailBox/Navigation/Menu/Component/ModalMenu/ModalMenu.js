@@ -43,7 +43,6 @@ export default function BasicModal({ combo }) {
             Menu của bạn
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {console.log("combobb", combo)}
             <CustomizedTables combo={combo}></CustomizedTables>
           </Typography>
           <div className="modal-modal-description_button_div">

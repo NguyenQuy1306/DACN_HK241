@@ -50,8 +50,8 @@ public class Restaurant {
     private String MoTaKhongGian;
     @Column(nullable = false, columnDefinition = "VARCHAR")
     private String DiemDacTrung;
-    private String KinhDo;
-    private String ViDo;
+    private Double KinhDo;
+    private Double ViDo;
 
     // dư thuộc tính~
     private String LoaiAmThuc;
@@ -73,6 +73,9 @@ public class Restaurant {
     @OneToMany(mappedBy = "NhaHang")
     private Set<RestaurantHasPaymentMethod> danhSachNhaHangCoPhuongThucThanhToan;
 
+    @OneToMany(mappedBy = "NhaHang")
+    private Set<RestaurantImage> danhSachAnhNhaHang;
+
     @ManyToOne
     @JoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")
     private User ChuNhaHang;
@@ -93,5 +96,25 @@ public class Restaurant {
     // enrollment=" + enrollment
     // + "]";
     // }
-
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "MaSoNhaHang=" + MaSoNhaHang +
+                ", URL='" + URL + '\'' +
+                ", Ten='" + Ten + '\'' +
+                ", DiaChi='" + DiaChi + '\'' +
+                ", LoaiHinh='" + LoaiHinh + '\'' +
+                ", KhoangGia='" + KhoangGia + '\'' +
+                ", GioHoatDong='" + GioHoatDong + '\'' +
+                ", PhuHop='" + PhuHop + '\'' +
+                ", MonDacSac='" + MonDacSac + '\'' +
+                ", MoTaKhongGian='" + MoTaKhongGian + '\'' +
+                ", DiemDacTrung='" + DiemDacTrung + '\'' +
+                ", KinhDo=" + KinhDo +
+                ", ViDo=" + ViDo +
+                ", LoaiAmThuc='" + LoaiAmThuc + '\'' +
+                ", KieuNhaHang='" + KieuNhaHang + '\'' +
+                ", TrangThai='" + TrangThai + '\'' +
+                '}';
+    }
 }
