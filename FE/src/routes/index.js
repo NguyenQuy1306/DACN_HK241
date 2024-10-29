@@ -1,6 +1,10 @@
 import MainLayout from "../layouts/MainLayout";
 import Search from "../pages/Search";
 import DetailRestaurant from "../pages/DetailRestaurant";
+import Home from "../pages/Home";
+import FavoriteList from "../pages/FavoriteList";
+import FilterIndex from "../components/FilterItem";
+import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 // import Register from "../Pages/Register/index";
 // import Devices from "../Pages/Devices/Devices";
 // import Dashboard from "../Pages/Dashboard/Dashboard"
@@ -14,19 +18,29 @@ import DetailRestaurant from "../pages/DetailRestaurant";
 // import ZoneDetails from "../Pages/Zone/ZoneDetails";
 
 export const routes = [
-  {
-    path: "/Search",
-    component: Search,
-    layout: MainLayout,
-  },
-  {
-    path: "/DetailRestaurant/:id",
-    component: DetailRestaurant,
-    layout: MainLayout,
-  },
-  // {
-  //   path: "*",
-  //   component: NotFound,
-  //   layout: null,
-  // },
+    {
+        path: "/Search",
+        component: Search,
+        layout: MainLayout,
+    },
+    {
+        path: "/DetailRestaurant/:id",
+        component: DetailRestaurant,
+        layout: MainLayout,
+    },
+    {
+        path: "/Home",
+        component: Home,
+        layout: MainLayout,
+    },
+    {
+        path: "/favorite-list",
+        component: FavoriteList,
+        layout: MainLayout,
+    },
+    {
+        path: "/register-restaurant",
+        component: RegisterRestaurant1,
+        layout: MainLayout,
+    },
 ];

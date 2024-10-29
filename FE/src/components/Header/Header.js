@@ -17,7 +17,7 @@ const Header = () => {
             onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
           >
-            Register my restaurant
+            ĐĂNG KÝ NHÀ HÀNG CỦA BẠN
           </span>
         </span>
         <div className="line_header">
@@ -35,7 +35,7 @@ const Header = () => {
             onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
           >
-            Help
+            TRỢ GIÚP
           </span>
         </span>
       </div>

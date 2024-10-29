@@ -1,0 +1,99 @@
+.card-img {
+    width: 190px;
+    height: 156px;
+    border-radius: 4px;
+}
+
+.tags {
+    list-style-type: none;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 0;
+}
+
+.tag {
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 100px;
+    background-color: #D85151;
+}
+
+.bbq {
+    background-color: #28433C;
+}
+
+.container {
+    display: flex;
+}
+
+.pay {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0068FF;
+    border: 1px solid #0068FF;
+    background-color: #fff;
+}
+
+.pay-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.pay-text {
+    margin: 0;
+}
+
+.card-body {
+    margin-left: 24px;
+}
+
+.card-body__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.restaurant-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.restaurant-address {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+}
+
+.address {
+    max-width: 312px;
+    margin: 0;
+    color: #8C8D90;
+}
+
+.rating {
+    font-size: 20px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.avg-price {
+    border-left: 2px solid #CF022B;
+    padding-left: 12px;
+    margin-top: 12px;
+    color: #CF022B;
+}

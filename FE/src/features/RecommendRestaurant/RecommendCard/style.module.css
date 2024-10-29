@@ -1,0 +1,83 @@
+.container {
+    width: 304px;
+    padding: 8px;
+}
+
+.container:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.card-img {
+    width: 100%;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.body {
+    padding: 4px;
+}
+
+.tags {
+    font-size: 12px;
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+.tag {
+    padding: 0 12px;
+}
+
+.address {
+    font-size: 12px;
+}
+
+.res-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.res-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.rating-point {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.categories {
+    font-size: 12px;
+    font-style: italic;
+    margin: 0;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.price-title {
+    font-size: 12px;
+    margin: 0;
+}
+
+.avg-price {
+    font-size: 12px;
+    color: #CF022B;
+    margin-left: 8px;
+}
+
+.booking {
+    margin: 6px 0;
+}
+
+.booking > a {
+    font-size: 12px;
+    color: #00665C;
+}

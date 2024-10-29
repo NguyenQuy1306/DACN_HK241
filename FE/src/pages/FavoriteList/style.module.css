@@ -1,0 +1,44 @@
+.container {
+
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-size: 24px;
+    margin: 0;
+    padding-left: 12px;
+    
+}
+
+.sub-title {
+    font-size: 12px;
+    display: flex;
+    margin-top: 12px;
+}
+
+.home-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 6px 6px 4px rgba(0,0,0,0.04);
+    padding: 10px;
+}
+
+.content-wrapper {
+    width: 768px;
+    margin: 134px auto;
+}
+
+.quantity {
+    border-right: 2px solid #ccc;
+    padding-right: 6px;
+}
+
+.update-time {
+    padding-left: 6px;
+}
+
