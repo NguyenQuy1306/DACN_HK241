@@ -104,24 +104,6 @@ const Menu = ({ selectedPlace }) => {
     },
   ];
 
-  const allFoodUrl = [
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-1-jpg-normal-25762204150.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-2-jpg-normal-25762205151.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-3-jpg-normal-25762206152.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-4-jpg-normal-25762207153.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-5-jpg-normal-25762208154.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-6-jpg-normal-25762209155.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-7-jpg-normal-25762210156.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-8-jpg-normal-25762211157.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-9-jpg-normal-25762212158.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-10-jpg-normal-25762213159.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-11-jpg-normal-25762214160.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-12-jpg-normal-25762215161.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-13-jpg-normal-25762216162.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-14-jpg-normal-25762217163.webp",
-    "https://pasgo.vn/Upload/anh-chi-tiet-bang-gia/nha-hang-din-ky-cu-lao-xanh-15-jpg-normal-25762218164.webp",
-  ];
-  localStorage.setItem("allFoodUrl", JSON.stringify(allFoodUrl));
   const [onClickMenuNavBar1, setOnClickMenuNavBar1] = useState(true);
   const [onClickMenuNavBar2, setOnClickMenuNavBar2] = useState(false);
   const [onClickMenuNavBar3, setOnClickMenuNavBar3] = useState(false);
@@ -130,6 +112,7 @@ const Menu = ({ selectedPlace }) => {
     const location_id = localStorage.getItem("selectedPlaceId");
     navigate(`/DetailRestaurant/${location_id}/menuImages`);
   };
+
   const [newCombo, setNewCombo] = useState([]);
   const handleAddItem = (item, quantity) => {
     if (quantity > 0) {
@@ -230,7 +213,7 @@ const Menu = ({ selectedPlace }) => {
 
       {onClickMenuNavBar2 && (
         <div className="MenuNavBar_allfood">
-          {allFoodUrl.map((menuImage, index) => {
+          {selectedPlace.danhSachAnhMenu.map((menuImage, index) => {
             if (index < 8) {
               return (
                 <div

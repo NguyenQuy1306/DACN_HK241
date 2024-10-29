@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import lombok.*;
 import java.util.Set;
+import java.util.Map;
 
 import com.curcus.lms.model.entity.RestaurantImage;
 
@@ -24,7 +25,7 @@ public class RestaurantInMapsResponse implements Serializable {
     private String DiemDacTrung;
     private Double ViDo;
     private Double KinhDo;
-    private Set<String> danhSachAnhNhaHang;
+    private Map<String, Set<String>> imageUrls; // Chứa các loại ảnh theo loại
 
     @Override
     public String toString() {

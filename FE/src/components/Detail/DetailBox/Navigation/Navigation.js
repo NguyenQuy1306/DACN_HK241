@@ -171,7 +171,7 @@ const Navigation = ({ selectedPlace }) => {
           </div>
         </>
       )}
-      {onClicMenu && <Menu></Menu>}
+      {onClicMenu && <Menu selectedPlace={selectedPlace}></Menu>}
       {onClickDetail && <About selectedPlace={selectedPlace}></About>}
       {onClickPath && <Direction selectedPlace={selectedPlace}></Direction>}
     </div>

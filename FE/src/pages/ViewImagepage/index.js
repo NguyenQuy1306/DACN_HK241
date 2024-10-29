@@ -8,8 +8,12 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
 const ViewImagepage = () => {
   let navigate = useNavigate();
-  const allFoodUrlString = localStorage.getItem("allFoodUrl");
-  const allFoodUrl = allFoodUrlString ? JSON.parse(allFoodUrlString) : [];
+  const [selectedPlace, setSelectedPlace] = useState(
+    JSON.parse(localStorage.getItem("selectedPlace"))
+  );
+  console.log("selectedPlaceselectedPlace", selectedPlace);
+  const allFoodUrlString = selectedPlace.danhSachAnhMenu;
+  const allFoodUrl = allFoodUrlString ? allFoodUrlString : [];
   const [showImage, setShowImage] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 

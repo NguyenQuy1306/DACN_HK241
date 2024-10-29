@@ -84,7 +84,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
         url: place.url,
         phuHop: place.phuHop,
         maSoNhaHang: place.maSoNhaHang,
-        danhSachAnhNhaHang: place.danhSachAnhNhaHang,
+        danhSachAnhNhaHang: place.imageUrls.RESTAURANTIMAGE,
+        danhSachAnhMenu: place.imageUrls.MENUIMAGE,
       }));
       setMarkers(transformedMarkers);
       setPlaces(transformedMarkers);

@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,13 +27,18 @@ public abstract class RestaurantMapper {
     @Mapping(source = "diemDacTrung", target = "diemDacTrung")
     @Mapping(source = "viDo", target = "viDo")
     @Mapping(source = "kinhDo", target = "kinhDo")
+    @Mapping(source = "danhSachAnhNhaHang", target = "imageUrls", qualifiedByName = "mapImageUrls")
     public abstract RestaurantInMapsResponse toDetailResponse(Restaurant restaurant);
 
-    // Phương thức mapping cho danhSachAnhNhaHang
-    protected Set<String> mapDanhSachAnhNhaHang(Set<RestaurantImage> danhSachAnhNhaHang) {
+    // Phương thức để ánh xạ danh sách ảnh thành map dựa trên loại ảnh
+    @Named("mapImageUrls")
+    protected Map<String, Set<String>> mapImageUrls(Set<RestaurantImage> danhSachAnhNhaHang) {
         return danhSachAnhNhaHang.stream()
-                .map(RestaurantImage::getURL) // Đảm bảo RestaurantImage có phương thức getURL()
-                .collect(Collectors.toSet());
+                .collect(Collectors.groupingBy(
+                        image -> image.getKieuAnh().toString(), // Chuyển đổi sang String để phù hợp với Map<String,
+                                                                // Set<String>>
+                        Collectors.mapping(RestaurantImage::getURL, // Dùng URL làm value
+                                Collectors.toSet()) // Gom thành Set URL
+                ));
     }
-
 }
