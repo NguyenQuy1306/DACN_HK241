@@ -12,7 +12,6 @@ import {
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Rating from "@mui/material/Rating";
-import { useNavigate } from "react-router-dom";
 import useStyles from "./styles.js";
 import "./PlaceDetails.css";
 // import images from "../../data/ImageData.js";
@@ -23,10 +22,8 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-
+import StarRating from "./StarRating/StarRating.js";
 const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
-  let navigate = useNavigate();
-
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
@@ -34,7 +31,7 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
   const handleClickDetailRestaurant = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(place));
     localStorage.setItem("selectedPlaceId", JSON.stringify(id));
-    navigate(`/DetailRestaurant/${id}`);
+    window.open("/DetailRestaurant/${id}", "_blank");
   };
   const [startIndex, setStartIndex] = useState(0);
   const [currentImages, setCurrentImages] = useState(
@@ -72,7 +69,7 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
   return (
     <div>
       <div
-        onClick={() => handleClickDetailRestaurant(place.location_id)}
+        onClick={() => handleClickDetailRestaurant(place.maSoNhaHang)}
         className="PlaceDetailDiv"
       >
         <div className="PlaceDetailDiv_H1">
@@ -124,6 +121,7 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
             <div>
               <div className="PlaceDetailDiv_H1_detail_listTag">
                 <Tags></Tags>
+                {/* {place.loaiHinh} */}
                 <div className="heart_favorite">
                   {isFavorited ? (
                     <FavoriteRoundedIcon
@@ -147,29 +145,32 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
                       </a>
                     </h2>
                   </div>
+                  <div className="PlaceDetailDiv_H1_detail_name_div1_div">
+                    <StarRating rating={2.6}></StarRating>
+                    <div className="PlaceDetailDiv_H1_detail_rating">
+                      {/* <span className="PlaceDetailDiv_H1_detail_rating_span1">
+                    <span>4</span>
+                    <StarBorderIcon className="PlaceDetailDiv_H1_detail_rating_span1_icon"></StarBorderIcon>
+                  </span> */}
+                      <span className="PlaceDetailDiv_H1_detail_rating_span2">
+                        <ChatBubbleOutlineOutlinedIcon className="PlaceDetailDiv_H1_detail_rating_span2_icon"></ChatBubbleOutlineOutlinedIcon>
+                        <span>123</span>
+                      </span>
+                    </div>
+                  </div>
                   <p className="PlaceDetailDiv_H1_detail_name_div1_p">
                     {place.address}
                   </p>
                 </div>
-                <div className="PlaceDetailDiv_H1_detail_rating">
-                  <span className="PlaceDetailDiv_H1_detail_rating_span1">
-                    <span>4</span>
-                    <StarBorderIcon className="PlaceDetailDiv_H1_detail_rating_span1_icon"></StarBorderIcon>
-                  </span>
-                  <span className="PlaceDetailDiv_H1_detail_rating_span2">
-                    <ChatBubbleOutlineOutlinedIcon className="PlaceDetailDiv_H1_detail_rating_span2_icon"></ChatBubbleOutlineOutlinedIcon>
-                    <span>123</span>
-                  </span>
-                </div>
               </div>
               <p className="PlaceDetailDiv_H1_detail_p">
-                <span>Giá chỉ từ </span>
-                <span className="PlaceDetailDiv_H1_detail_p_span">100000đ</span>
+                {/* <span>Chỉ từ </span> */}
+                <span className="PlaceDetailDiv_H1_detail_p123">
+                  {place.khoangGia} đ/người
+                </span>
               </p>
             </div>
-            <p className="PlaceDetailDiv_H1_detail_p123">
-              Instant MICHELIN €69
-            </p>
+            <p className="">{place.loaiHinh}</p>
           </div>
         </div>
         {/* 

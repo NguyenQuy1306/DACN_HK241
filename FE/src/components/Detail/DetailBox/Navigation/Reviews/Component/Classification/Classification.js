@@ -2,7 +2,6 @@ import React from "react";
 import "./Classification.css";
 
 const Classification = ({ selectedPlace, text, rating }) => {
-  console.log("rating", rating);
   return (
     <div className="ClassificationDiv">
       <div className="ClassificationDiv_H1">

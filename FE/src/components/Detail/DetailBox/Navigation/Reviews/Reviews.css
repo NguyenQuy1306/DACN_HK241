@@ -3,7 +3,7 @@
   font-weight: 400;
   line-height: 1.16667;
   margin-bottom: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1.3rem;
   width: 600px;
   color: rgb(0, 0, 0);
 }
@@ -94,7 +94,7 @@
   align-items: center;
 }
 .ReviewsDiv_H1_rating_summary_img_count_span1 {
-  margin-left: 0.125rem;
+  margin-left: 60px;
   color: hsl(218, 9%, 17%);
   text-align: center;
   font-size: 1rem;
@@ -110,6 +110,7 @@
   font-weight: 300;
   font-style: normal;
   line-height: 1.3846153846153846;
+  margin-left: 60px;
 }
 .ReviewsDiv_H1_rating_typeRating {
   border: none;
@@ -185,4 +186,12 @@
   font-style: normal;
   line-height: 1.375;
   font-size: 0.875rem;
+}
+.y-css-35tusp
+{
+  display: inline-block;
+  border-color: rgba(240, 240, 240, 1);
+  width: 32px;
+  height: 32px;
+  margin-right: 4px;
 }

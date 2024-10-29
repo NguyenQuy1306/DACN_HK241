@@ -8,7 +8,7 @@ import "react-circular-progressbar/dist/styles.css";
 import TypeRating from "./Component/TypeRating/TypeRating";
 import Classification from "./Component/Classification/Classification";
 import VerifiedIcon from "@mui/icons-material/Verified";
-
+import StarRating from "./StarRating/StarRating";
 const Reviews = ({ selectedPlace, reviewData }) => {
   const reviews = reviewData.map((review) => review.rating);
   const average =
@@ -40,11 +40,11 @@ const Reviews = ({ selectedPlace, reviewData }) => {
   }
 
   const ranges = [
-    { label: "9-10", count: range9to10 },
-    { label: "7-8", count: range7to8 },
-    { label: "5-6", count: range5to6 },
-    { label: "3-4", count: range3to4 },
-    { label: "1-2", count: range1to2 },
+    { label: "5", count: range9to10 },
+    { label: "4", count: range7to8 },
+    { label: "3", count: range5to6 },
+    { label: "2", count: range3to4 },
+    { label: "1", count: range1to2 },
   ];
 
   // Find the range with the most reviews
@@ -58,7 +58,7 @@ const Reviews = ({ selectedPlace, reviewData }) => {
       <h2>
         <span>Reviews</span>
         <div className="ReviewsDiv_H1">
-          <div className="ReviewsDiv_H1_rating_summary">
+          {/* <div className="ReviewsDiv_H1_rating_summary">
             <div className="ReviewsDiv_H1_rating_summary_H1">
               <div className="ReviewsDiv_H1_rating_summary_H2">
                 <div className="ReviewsDiv_H1_rating_summary_img">
@@ -93,10 +93,13 @@ const Reviews = ({ selectedPlace, reviewData }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="ReviewsDiv_H1_rating_typeRating">
+            <span className="ReviewsDiv_H1_rating_summary_img_count_span1">
+              Đánh giá chung
+            </span>
             <div className="ReviewsDiv_H1_rating_typeRating_H1">
-              <div className="ReviewsDiv_H1_rating_typeRating_H2">
+              {/* <div className="ReviewsDiv_H1_rating_typeRating_H2">
                 <TypeRating
                   text={"Đồ ăn"}
                   rating={reviews.length > 0 ? 9 : 0}
@@ -109,56 +112,62 @@ const Reviews = ({ selectedPlace, reviewData }) => {
                   text={"Không khí"}
                   rating={reviews.length > 0 ? 7 : 0}
                 />
+              </div> */}
+              <div class="y-css-f0t6x4" role="img" aria-label="4 star rating">
+                <StarRating rating={4.5}></StarRating>
               </div>
             </div>
+            <span className="ReviewsDiv_H1_rating_summary_img_count_span2">
+              <span>{reviews.length} reviews</span>
+            </span>
           </div>
           <div className="ReviewsDiv_H1_rating_classification">
             <div className="ReviewsDiv_H1_rating_classification_H1">
               <Classification
-                text={"9-10"}
+                text={"5"}
                 rating={
                   reviews.length > 0
-                    ? mostReviews.label === "9-10"
+                    ? mostReviews.label === "5"
                       ? 100
                       : (range9to10 * 100) / mostReviews.count
                     : 0
                 }
               />
               <Classification
-                text={"7-8"}
+                text={"4"}
                 rating={
                   reviews.length > 0
-                    ? mostReviews.label === "7-8"
+                    ? mostReviews.label === "4"
                       ? 100
                       : (range7to8 * 100) / mostReviews.count
                     : 0
                 }
               />
               <Classification
-                text={"5-6"}
+                text={"3"}
                 rating={
                   reviews.length > 0
-                    ? mostReviews.label === "5-6"
+                    ? mostReviews.label === "3"
                       ? 100
                       : (range5to6 * 100) / mostReviews.count
                     : 0
                 }
               />
               <Classification
-                text={"3-4"}
+                text={"2"}
                 rating={
                   reviews.length > 0
-                    ? mostReviews.label === "3-4"
+                    ? mostReviews.label === "2"
                       ? 100
                       : (range3to4 * 100) / mostReviews.count
                     : 0
                 }
               />
               <Classification
-                text={"1-2"}
+                text={"1"}
                 rating={
                   reviews.length > 0
-                    ? mostReviews.label === "1-2"
+                    ? mostReviews.label === "1"
                       ? 100
                       : (range1to2 * 100) / mostReviews.count
                     : 0

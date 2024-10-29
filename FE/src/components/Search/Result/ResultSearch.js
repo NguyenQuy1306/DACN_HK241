@@ -12,7 +12,7 @@ const ResultSearch = () => {
   return (
     <>
       <Result1></Result1>
-      <div
+      {/* <div
         style={{
           height: "45px",
 
@@ -29,7 +29,7 @@ const ResultSearch = () => {
             <span className="span_ResultSearch2_2"> 4,020 restaurants</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

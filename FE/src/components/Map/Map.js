@@ -117,7 +117,12 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
     setSelectedMarker(null); // Hide the info window when the map is clicked
     setHighlightedMarkerIndex(null);
   };
+  const [mapLoaded, setMapLoaded] = useState(false);
 
+  const onMapLoad = (map) => {
+    setMapLoaded(true);
+    mapRef.current = map;
+  };
   const onChildClick = (position, index) => {
     setChildClicked(index);
     setSelectedMarker(position);
@@ -143,7 +148,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
             mapId="DEMO_MAP_ID"
             onIdle={onMapIdle}
             onClick={onMapClick}
-            onLoad={(map) => (mapRef.current = map)}
+            onLoad={onMapLoad}
             gestureHandling="greedy"
           >
             {markers.map((position, index) => (

@@ -217,7 +217,7 @@ z-index: 1;
 }
 .PlaceDetailDiv_H1_detail_name_div1_name h2
 {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.375;
     margin: 0;
@@ -247,10 +247,13 @@ z-index: 1;
 {margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     color: hsl(218, 9%, 17%);
-    font-size: 1rem;
+    font-size: 0.87rem;
     font-weight: 300;
     font-style: normal;
-    line-height: 1.375;}
+    /* line-height: 1.375; */
+    /* font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+
+}
 
 .PlaceDetailDiv_H1_detail_rating
 {
@@ -301,16 +304,20 @@ z-index: 1;
 }
 .PlaceDetailDiv_H1_detail_p123
 {
-    margin-top: 0.125rem;
+    /* margin-top: 0.125rem; */
     margin-bottom: 0.25rem;
-    padding-left: 0.5rem;
+    /* padding-left: 0.2rem; */
     color: hsl(348, 98%, 41%);
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: bold;
     font-style: normal;
     line-height: 1.375;
-    display: inline-block;
-    border-left: 4px solid hsl(348, 98%, 41%);
+    /* display: inline-block; */
+    /* border-left: 4px solid hsl(348, 98%, 41%); */
     white-space: nowrap;
     overflow: hidden;
+}
+.PlaceDetailDiv_H1_detail_name_div1_div
+{
+    display: flex;
 }

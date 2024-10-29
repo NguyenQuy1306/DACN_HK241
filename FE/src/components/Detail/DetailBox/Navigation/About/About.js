@@ -77,7 +77,7 @@ const About = ({ selectedPlace }) => {
   const now = daysOfWeek[new Date().getDay()];
   return (
     <div className="AboutDiv">
-      <h3 className="AboutDiv_h3">Chi tiết {restaurantData.name}</h3>
+      <h3 className="AboutDiv_h3">Chi tiết {selectedPlace.name}</h3>
       <div className="AboutDiv_H1">
         <div className="AboutDiv_H1_div">
           <div className="AboutDiv_H1_div_div1">
@@ -89,7 +89,7 @@ const About = ({ selectedPlace }) => {
               Phù hợp:
             </div>
             <div className="AboutDiv_H1_div_div1_description">
-              <span> - {restaurantData.suitability}</span>
+              <span> - {selectedPlace.phuHop}</span>
             </div>
             <div className="AboutDiv_H1_div_div1_title">
               <div className="AboutDiv_H1_div_div1_title_icon">
@@ -98,9 +98,7 @@ const About = ({ selectedPlace }) => {
               Món đặc sắc:
             </div>
             <div className="AboutDiv_H1_div_div1_description">
-              {restaurantData.specialDishes.map((food, index) => (
-                <span key={index}>{food}, </span>
-              ))}
+              <span> - {selectedPlace.monDacSac}</span>
             </div>
             <div className="AboutDiv_H1_div_div1_title">
               <div className="AboutDiv_H1_div_div1_title_icon">
@@ -110,16 +108,16 @@ const About = ({ selectedPlace }) => {
             </div>
             <div className="AboutDiv_H1_div_div1_description12">
               {" "}
-              <span>- {restaurantData.space.architecture} </span>
-              <span>- Sức chứa: {restaurantData.space.capacity} Khách </span>
-              {restaurantData.space.floors.map((floor, index) => (
+              <span>- {selectedPlace.moTaKhongGian} </span>
+              {/* <span>- Sức chứa: {selectedPlace.space.capacity} Khách </span> */}
+              {/* {selectedPlace.space.floors.map((floor, index) => (
                 <span key={index}>
                   - {floor.name}: {floor.capacity} Khách{" "}
                 </span>
-              ))}
+              ))} */}
               <span>
-                - Phòng riêng: {restaurantData.space.privateRooms.total} Phòng{" "}
-                {restaurantData.space.privateRooms.description}
+                {/* - Phòng riêng: {selectedPlace.space.privateRooms.total} Phòng{" "}
+                {selectedPlace.space.privateRooms.description} */}
               </span>
             </div>
             <div className="AboutDiv_H1_div_div1_title">
@@ -129,9 +127,9 @@ const About = ({ selectedPlace }) => {
               Các tiện ích khác:
             </div>
             <div className="AboutDiv_H1_div_div1_description">
-              {restaurantData.additionalFacilities.map((service, index) => (
+              {/* {restaurantData.additionalFacilities.map((service, index) => (
                 <span key={index}>{service}, </span>
-              ))}
+              ))} */}
             </div>
             <div className="AboutDiv_H1_div_div1_title">
               <div className="AboutDiv_H1_div_div1_title_icon">
@@ -141,7 +139,7 @@ const About = ({ selectedPlace }) => {
             </div>
             <div className="AboutDiv_H1_div_div1_description">
               {" "}
-              {Object.entries(restaurantData.openingHours).map(
+              {/* {Object.entries(selectedPlace.openingHours).map(
                 ([day, times], index) => (
                   <div
                     key={index}
@@ -165,7 +163,7 @@ const About = ({ selectedPlace }) => {
                     </div>
                   </div>
                 )
-              )}
+              )} */}
             </div>
             <div className="AboutDiv_H1_div_div1_title">
               {" "}
@@ -175,7 +173,7 @@ const About = ({ selectedPlace }) => {
               Điểm đặc trưng:
             </div>
             <div className="AboutDiv_H1_div_div1_description">
-              <span>- {restaurantData.highlights}</span>
+              <span>{selectedPlace.diemDacTrung}</span>
             </div>
           </div>
         </div>
