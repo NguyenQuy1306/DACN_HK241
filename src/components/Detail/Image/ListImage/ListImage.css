@@ -1,0 +1,12 @@
+.ListImage {
+  display: -webkit-flex;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}

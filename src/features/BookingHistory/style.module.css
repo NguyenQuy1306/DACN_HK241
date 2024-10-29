@@ -1,0 +1,33 @@
+.header {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.quantity {
+    font-size: 16px;
+}
+
+.status-list {
+    display: flex;
+    list-style-type: none;
+}
+
+.status-item {
+    font-size: 16px;
+    padding: 8px 24px;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    font-weight: 600;  
+    margin-left: 12px; 
+}
+
+.status-item:first-child {
+    margin-left: 0;
+}
+
+.list-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+

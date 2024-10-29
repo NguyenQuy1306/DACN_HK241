@@ -1,0 +1,19 @@
+.header {
+    font-size: 20px;
+}
+
+.body {
+    padding: 24px 32px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
+
+.body-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.body-sub-title {
+    font-size: 12px;
+    color: #272A2F;
+}

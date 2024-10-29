@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.logo__name {
+    margin: 0;
+    font-family: "Khand", sans-serif;
+    color: rgb(10,108,61);
+    font-size: 32px;
+    margin-top: 4px;
+}
+
+.logo__image {
+    width: 40px;
+}
