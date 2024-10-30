@@ -19,7 +19,6 @@ export const getPlacesData = async (type, sw, ne) => {
         },
       }
     );
-    console.log("data", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -50,7 +49,9 @@ export const getWeatherData = async (lat, lng) => {
 export const getRestaurantById = async (location_id) => {
   try {
     if (location_id) {
-      const { data } = await axios.get(
+      const {
+        data: { data },
+      } = await axios.get(
         `https://travel-advisor.p.rapidapi.com/restaurants/list?location_id=${location_id}&limit=30`,
         {
           params: { location_id: location_id },

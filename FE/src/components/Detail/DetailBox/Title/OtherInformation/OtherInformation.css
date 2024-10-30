@@ -1,0 +1,9 @@
+.OtherInformation_H1 {
+  list-style-type: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.OtherInformation_H2 {
+}

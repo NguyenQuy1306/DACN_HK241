@@ -1,0 +1,18 @@
+.div_AImage {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: white;
+  width: 33.333333333333336%;
+  height: 100%;
+  display: inline-block;
+  color: white;
+  position: relative;
+}
+.image_AImage {
+  width: 600px;
+  height: 201px;
+  cursor: pointer;
+  background-color: hsl(180, 9%, 98%);
+  width: 100%;
+}

@@ -1,0 +1,40 @@
+.ButtonTavBarReviewDiv {
+  padding: 0 !important;
+  border: 0 !important;
+  background-color: transparent !important;
+  outline: none !important;
+  min-width: 121px !important;
+  min-height: 52.84px !important;
+}
+.ButtonTavBarReviewDiv_H1 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.75rem;
+  padding-top: 1rem;
+  margin-bottom: -0.0625rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.375;
+  text-decoration: none;
+  border-color: hsl(174, 100%, 20%);
+  border-bottom: none;
+  color: hsl(218, 9%, 17%);
+  text-transform: none;
+}
+.ButtonTavBarReviewDiv_H1.active {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.75rem;
+  padding-top: 1rem;
+  margin-bottom: -0.0625rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.375;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: hsl(174, 100%, 20%);
+  border-bottom: 4px solid hsl(174, 100%, 20%);
+  color: hsl(174, 100%, 20%);
+}

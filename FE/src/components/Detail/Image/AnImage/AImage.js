@@ -1,34 +1,21 @@
 import React, { useState, useEffect } from "react";
-import NextButton from "./NextButton/NextButton";
-const AImage = () => {
+import placeholderImage from "../../../../assets/images/nhin-ben-ngoai (1).jpg";
+
+import "./AImage.css";
+const AImage = (image) => {
+  // console.log("imageurlll::: ", image);
   return (
-    <div>
-      <div
-        style={{
-          margin: "0px",
-          paddingBottom: "calc(17.205%),",
-          overflow: "hidden",
-          position: "relative",
-          //   height: "0px",
-          backgroundColor: "rgb(249, 250, 250)",
-        }}
-      >
-        <div
-          style={{
-            overflow: "hidden",
-            position: "relative",
-            zIndex: "1",
-            width: "1167px",
-          }}
-        >
-          {/* next button */}
-          adsasdasdasdasdasdasd
-          <NextButton></NextButton>
-          {/* list button: chạy vòng lặp rồi gọi call prop */}
-          {/* next button */}
-        </div>
-        <div> {/* button number of image */}</div>
-      </div>
+    <div className="div_AImage">
+      <picture>
+        <img
+          className="image_AImage"
+          src={
+            image
+              ? Object.values(image)
+              : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+          }
+        />
+      </picture>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.BookingwidgetDiv {
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.12) -0.0625rem 0.0875rem 0.375rem 0.275rem;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  z-index: 2;
+}
+.BookingwidgetDiv_h1 {
+  text-align: center;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  color: hsl(218, 9%, 17%);
+  background: hsl(201, 61%, 89%);
+  margin: 0.5rem auto 0 auto;
+  width: fit-content;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0.5rem auto 0 auto;
+}
+.BookingwidgetDiv_h1 b {
+  font-weight: bold;
+}
