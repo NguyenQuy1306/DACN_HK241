@@ -1,0 +1,17 @@
+.container {
+
+}
+
+.label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.input-field {
+    padding: 6px 12px;
+    width: 100%;
+    background-color: #fff;
+    color: #495057;
+    border-radius: 4px;
+}

@@ -53,7 +53,6 @@ const Search = () => {
           background: "white",
           borderBottom: "1px solid #eaeaea",
           position: "sticky",
-          width: "100%",
           zIndex: 15,
           top: "0",
           boxShadow: "-0.0625rem 0.1875rem 0.375rem hsla(0, 0%, 0%, 0.12)",

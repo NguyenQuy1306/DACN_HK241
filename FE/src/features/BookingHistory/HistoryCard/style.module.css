@@ -1,0 +1,127 @@
+.container {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.confirm-status, .cancel-status {
+    position: absolute;
+    top: 12px;
+    right: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.confirm-status {
+    background-color: #B0FFF7;
+}
+
+.cancel-status {
+    background-color: #E6B8B8;
+    color: #FF0000;
+}
+
+.card-body {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.card-img {
+    width: 236px;
+    border-top-left-radius: 8px;
+}
+
+.card-content {
+    margin-left: 24px;
+    margin-top: 12px;
+}
+
+.restaurant-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.restaurant-address {
+    font-size: 14px;
+    color: #272A2F;
+}
+
+.time-frame {
+    display: flex;
+    align-items: center;
+    width: 310px;
+    justify-content: space-between;
+    margin-top: 36px;
+}
+
+.time-frame__title {
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.time-frame__day, .time-frame__hour, .time-frame__cus {
+    text-align: center;
+}
+.time-frame__detail {
+    font-weight: 600;
+    text-align: center;
+}
+
+.card-actions {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.card-delete, .card-modify, .card-direction, .card-booking {
+    display: flex;
+    align-items: center;
+
+}
+
+.card-modify {
+
+}
+
+.card-direction {
+
+}
+
+.action-content {
+    margin-bottom: 0;
+    padding-left: 8px;
+}
+
+.prepayment {
+    margin-bottom: 12px;
+}
+
+.delete-icon {
+    color:#FF0000
+}
+.modify-icon, .booking-icon {
+    color: #00665C;
+}
+.direction-icon {
+    color: #00665C;
+}
+
+.action-content--delete {
+    color: #FF0000;
+}
+
+.action-content--modify, .action-content--booking {
+    color: #00665C;
+}
+
+.action-content--direction {
+    color: #00665C;
+}
+
+

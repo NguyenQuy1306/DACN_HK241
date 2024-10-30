@@ -1,0 +1,36 @@
+.selection-title {
+    font-size: 20px;
+    margin-left: 8px;
+    font-weight: 400;
+}
+
+
+.card-list {
+    display: flex !important;
+    overflow: hidden;
+    align-items: center;
+    justify-content: start;
+    padding: 8px;
+}
+
+.selection-header{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.action-btn {
+    width: 48px;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.action-btn:hover {
+    border-color: rgb(0,102,92) ;
+}
+
+.action-more {
+    color: rgb(0,102,92);
+    font-size: 20px;
+    margin-right: 12px;
+}

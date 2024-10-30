@@ -1,0 +1,33 @@
+.add-icon {
+    display: flex;
+    align-items: center;
+}
+
+.add-text {
+    margin: 0;
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 16px;
+    gap: 12px;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.quantity {
+    font-size: 16px;
+}
+
+.icon-wrapper {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
