@@ -1,0 +1,20 @@
+.PickTimeChooseBookingwidgetDiv p {
+  margin-top: 0px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  line-height: 1.38462;
+  text-transform: uppercase;
+}
+.PickTimeChooseBookingwidgetDiv {
+  padding-bottom: 10px;
+}
+.PickTimeChooseBookingwidgetDiv_H1 {
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  flex-wrap: wrap;
+}

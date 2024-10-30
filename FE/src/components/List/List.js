@@ -11,6 +11,7 @@ import {
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import useStyles from "./styles.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const List = ({
   places,
@@ -23,7 +24,9 @@ const List = ({
 }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
-
+  const data_restaurantsInMaps = useSelector(
+    (state) => state.restaurant.restaurants
+  );
   useEffect(() => {
     setElRefs((refs) =>
       Array(places.length)
@@ -33,7 +36,7 @@ const List = ({
   }, [places]);
 
   return (
-    <div className={classes.container}>
+    <div>
       {isLoading ? (
         <div className={classes.loading}>
           <CircularProgress size="5rem" />
@@ -57,10 +60,15 @@ const List = ({
               <MenuItem value="4.5">Above 4.5</MenuItem>
             </Select>
           </FormControl> */}
-          <div></div>
+
           {places?.map((place, i) => (
             <PlaceDetails
               selected={Number(childClicked) === i}
+              restaurantsImageType={
+                place.danhSachAnhNhaHang
+                  ? place.danhSachAnhNhaHang
+                  : "https://via.placeholder.com/100"
+              }
               refProp={elRefs[i]}
               place={place}
             />

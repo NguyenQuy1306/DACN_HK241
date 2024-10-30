@@ -1,0 +1,53 @@
+.TypeRatingDiv {
+  list-style-type: none;
+
+  display: flex;
+  padding: 0 1.25rem;
+  margin: 0.5rem 0;
+  border-right: 1px solid hsl(214, 9%, 85%);
+  height: 2.3125rem;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.TypeRatingDiv_H1 {
+  list-style-type: none;
+
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: column;
+
+  display: inline-flex;
+}
+.TypeRatingDiv_H1_point {
+  list-style-type: none;
+
+  display: flex;
+  -webkit-box-align: baseline;
+
+  align-items: baseline;
+}
+.TypeRatingDiv_H1_point_span1 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: hsl(0, 0%, 0%);
+}
+.TypeRatingDiv_H1_point_span2 {
+  margin-left: 0.125rem;
+  color: hsl(0, 0%, 0%);
+  font-size: 0.625rem;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.5;
+}
+.TypeRatingDiv_H1_point_p {
+  margin: 0;
+  color: hsl(218, 9%, 17%);
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.3846153846153846;
+}

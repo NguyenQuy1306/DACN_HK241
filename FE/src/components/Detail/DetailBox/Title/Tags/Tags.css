@@ -1,0 +1,70 @@
+.Tag-p {
+  padding-right: 2rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  line-height: 1.375;
+}
+.Tags-p-span1 {
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+.Tags-p-span1-a,
+.Tags-p-span3-a,
+.Tags-p-span5-a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: currentColor;
+  background-color: transparent;
+}
+a:-webkit-any-link {
+  cursor: pointer;
+}
+.Tags-p-span2 {
+  margin-left: 0.25rem;
+}
+
+.Tags-p-span3 {
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+
+.Tags-p-span4 {
+  vertical-align: middle !important;
+  line-height: 1 !important;
+  font-size: 25% !important;
+  font-weight: 100 !important;
+  margin-top: 5px !important;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.Tags-p-span5 {
+  margin-bottom: 0.25rem;
+  display: inline-block;
+}
+.Tags-p-span1-a-span {
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+  border-radius: 0.25rem;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(164, 25%, 21%);
+  font-weight: 400;
+  width: m;
+  height: m;
+  display: inline-block;
+}
+
+.Tags-p-span3-a-span,
+.Tags-p-span5-a-span {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+  line-height: 1.3846153846153846;
+  text-transform: uppercase;
+}

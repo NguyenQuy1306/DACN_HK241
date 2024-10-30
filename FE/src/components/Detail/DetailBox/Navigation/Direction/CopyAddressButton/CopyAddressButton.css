@@ -1,0 +1,50 @@
+/* CopyAddressButton.css */
+.CopyAddressButtonDiv {
+    display: inline-block;
+    position: relative;
+    margin-left: 30px;
+  }
+  
+  .CopyAddressButtonDiv_copy_button {
+    position: absolute;
+    top: -10%; /* Position it below the button */
+    left: 120%;
+    margin-left: 50px;
+    transform: translateX(-50%);
+    background-color: #dff0d8; /* Background color for the copied message */
+    padding: 4px 8px; /* Padding for the message */
+    border-radius: 4px; /* Rounded corners for the message */
+    margin-top: 4px; /* Space between button and message */
+    background-color: #ffffff; /* Button background */
+    border: 1px solid hsl(174, 100%, 20%); /* Button border */
+    color: hsl(174, 100%, 20%);
+    width:130px;
+    display: flex;
+  }
+  .CopyAddressButtonDiv_copy_button_icon
+  {
+    vertical-align: bottom !important;
+    margin-top: 2px !important;
+    font-size: small !important;
+    margin-right: 3px;
+  }
+  .CopyAddressButtonDiv_copy_button:hover {
+    background-color: #f0f0f0; /* Background color on hover */
+  }
+  
+  .CopyAddressButtonDiv_copy_button_copied {
+    position: absolute;
+    top: -10%; /* Position it below the button */
+    left: 120%;
+    margin-left: 50px;
+    transform: translateX(-50%);
+    background-color: rgb(238, 246, 245); /* Background color for the copied message */
+    color: hsl(174, 100%, 20%); /* Text color for the copied message */
+    padding: 4px 8px; /* Padding for the message */
+    border-radius: 4px; /* Rounded corners for the message */
+    margin-top: 4px; /* Space between button and message */
+  }
+  
+  .CopyAddressButtonDiv_copy_button_copied_message.visible {
+    display: block; /* Show message when copied */
+  }

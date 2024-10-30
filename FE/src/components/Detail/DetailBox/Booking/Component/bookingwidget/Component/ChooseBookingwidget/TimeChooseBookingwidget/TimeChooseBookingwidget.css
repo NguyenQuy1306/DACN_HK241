@@ -1,0 +1,60 @@
+.TimeChooseBookingwidgetDiv {
+  height: 100%;
+  overflow: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.TimeChooseBookingwidgetDiv_H1 {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+.TimeChooseBookingwidgetDiv_H1::before {
+  z-index: 1;
+  top: 0px;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.01) 0px,
+    rgb(255, 255, 255) 100%
+  );
+  opacity: 1;
+  height: 2.5rem;
+}
+.TimeChooseBookingwidgetDiv_H1::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  pointer-events: none;
+  transition: height 500ms, opacity 500ms;
+}
+.TimeChooseBookingwidgetDiv_H2 {
+  overflow: auto;
+  position: relative;
+  width: 100%;
+}
+.TimeChooseBookingwidgetDiv_H3 {
+  max-height: calc(-17.5rem + 100vh);
+  padding-top: 0.75rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  margin-bottom: 20px;
+}
+.TimeChooseBookingwidgetDiv_H3 h3 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: RalewayX, arial, sans-serif;
+  line-height: 1.375;
+  margin-top: 0px;
+}
+.TimeChooseBookingwidgetDiv_H3 h3::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: rgb(236, 237, 239);
+  margin-top: 0.75rem;
+}
