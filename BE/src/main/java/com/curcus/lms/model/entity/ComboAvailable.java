@@ -25,7 +25,7 @@ import java.util.Set;
 public class ComboAvailable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaSComBoCoSan")
+    @Column(name = "MaSoComBoCoSan")
     private Long MaSComBoCoSan;
 
     @Column(nullable = false)

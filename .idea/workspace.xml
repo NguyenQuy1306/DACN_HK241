@@ -5,6 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/ComboAvailable.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/ComboAvailable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/Discount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/curcus/lms/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/.env" beforeDir="false" afterPath="$PROJECT_DIR$/FE/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package.json" afterDir="false" />
@@ -37,6 +44,8 @@
       <change beforePath="$PROJECT_DIR$/FE/src/redux/features/scheduleSlice.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Import Data/import.py" beforeDir="false" afterPath="$PROJECT_DIR$/Import Data/import.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Import Data/restaurant_data_basta-hiro-vincom-dong-khoi-3740.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Import Data/restaurant_data_basta-hiro-vincom-dong-khoi-3740.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,11 +53,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/FE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2oBZQRBG2Min5t1GyxaXZW1rm2x" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -57,9 +67,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "User__Nhut",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Admin/Documents/HK241/DACN/DACN_HK241"
+    "last_opened_file_path": "C:/Users/Admin/Documents/HK241/DACN/DACN_HK241",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

@@ -28,11 +28,13 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String Email;
+
     @Column(nullable = false)
     private String HoTen;
 
     @Column(nullable = true, unique = true)
     private String SDT;
+
     @Column(nullable = true)
     private Date NgaySinh;
 

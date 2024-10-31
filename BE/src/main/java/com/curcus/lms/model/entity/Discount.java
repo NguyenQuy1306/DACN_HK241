@@ -47,6 +47,7 @@ public class Discount {
     @ManyToOne
     @JoinColumn(name = "MaSoMonAn")
     private Food MonAn;
+
     @OneToMany(mappedBy = "GiamGia")
     private Set<OrderTableApplyDiscount> danhSachDonDatBanApDungGiamGia;
 }
