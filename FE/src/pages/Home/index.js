@@ -24,11 +24,14 @@ import BookingHistory from "./../../features/BookingHistory/index";
 import FavoriteList from "../../features/FavoriteCardList";
 import ReviewList from "../../features/ReviewList";
 import PersonalInfo from "../../features/PersonalInfo";
+import RegisterRestaurant1 from "../RegisterRestaurant1";
+import { useNavigate } from "react-router-dom";
 
 function Home(props) {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [childrenDrawer, setChildrenDrawer] = useState(false);
-    const [navItem, setNavItem] = useState("booking");
+    const [navItem, setNavItem] = useState("");
     const [isScrolled, setIsScrolled] = useState(false);
     const showChildrenDrawer = () => {
         setChildrenDrawer(true);
@@ -38,7 +41,7 @@ function Home(props) {
     };
     const showDrawer = () => {
         setOpen(true);
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
     };
     const onClose = () => {
         setOpen(false);
@@ -60,6 +63,10 @@ function Home(props) {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        console.log("Current Item: " + navItem)
+    },[navItem])
 
     const carouselRef = React.useRef(null);
 
@@ -151,7 +158,7 @@ function Home(props) {
                             <IoStorefrontOutline size={24} />
                         </div>
                         <p
-                            // onClick={setNavItem("register")}
+                            onClick={() => navigate("../register-restaurant")}
                             className="menu-text"
                         >
                             Đăng ký nhà hàng
@@ -181,8 +188,8 @@ function Home(props) {
                     }}
                     mask={false}
                 >
-                    {navItem === "booking" && <BookingHistory />}
                     {navItem === "favorite" && <FavoriteList />}
+                    {navItem === "booking" && <BookingHistory />}
                     {navItem === "comment" && <ReviewList />}
                     {navItem === "account" && <PersonalInfo />}
                 </Drawer>

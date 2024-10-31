@@ -9,6 +9,7 @@
     list-style-type:none ;
     justify-content: center;
     align-items: start;
+    padding: 0 32px;
 
 }
 
@@ -41,6 +42,7 @@
     align-items: center;
     justify-content: space-between;
     font-weight:200;
+    padding: 12px 32px;
 }
 
 .copyright {

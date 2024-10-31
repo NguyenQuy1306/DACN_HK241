@@ -169,7 +169,8 @@
 }
 
 .about__content {
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 1.4;
 }
 
 .owner-side {

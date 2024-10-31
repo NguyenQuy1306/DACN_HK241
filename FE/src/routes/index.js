@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import FavoriteList from "../pages/FavoriteList";
 import FilterIndex from "../components/FilterItem";
 import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
+import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 // import Register from "../Pages/Register/index";
 // import Devices from "../Pages/Devices/Devices";
 // import Dashboard from "../Pages/Dashboard/Dashboard"
@@ -41,6 +42,11 @@ export const routes = [
     {
         path: "/register-restaurant",
         component: RegisterRestaurant1,
+        layout: MainLayout,
+    },
+    {
+        path: "/register-restaurant2",
+        component: RegisterRestaurant2,
         layout: MainLayout,
     },
 ];

@@ -1,0 +1,140 @@
+.header {
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 200px;
+}
+
+.container {
+
+}
+
+.progress {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+    list-style-type: none;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #00665C;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.separator {
+    width: 24px;
+    height: 1px;
+    background-color: #ccc;
+    margin: auto 0;
+}
+
+.progress-title {
+    margin: 0;
+    color: #00665C;
+    padding-left: 8px;
+}
+
+.login-btn {
+}
+
+.body {
+    padding: 56px 160px;
+    display: flex;
+    gap: 32px;
+}
+
+.restaurant-info {
+    flex:1;
+}
+
+.restaurant-info__title {
+    font-size: 32px;
+    color: #00665C;
+}
+
+.bonus-info {
+    flex:1;
+    margin-top: 12px;
+    background-color: #F8F9FA;
+    padding: 16px;
+
+}
+
+.input-wrapper {
+    margin-top: 24px;
+}
+
+.form-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.back-icon {
+}
+
+.back-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-action:hover {
+    cursor: pointer;
+}
+
+.bonus-info__title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.back-btn {
+    margin: 0;
+    padding-left: 8px;
+    margin-bottom: 4px;
+}
+
+.bonus-info__sub-title {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.reason-list {
+    list-style-type: none;
+}
+.reason-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.reason-text {
+    margin: 0;
+    padding-left: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.note {
+    margin-top: 48px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+}
