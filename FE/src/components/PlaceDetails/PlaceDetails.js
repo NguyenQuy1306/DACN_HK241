@@ -23,7 +23,13 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "./StarRating/StarRating.js";
-const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
+const PlaceDetails = ({
+  place,
+  selected,
+  refProp,
+  restaurantsImageType,
+  index,
+}) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
@@ -116,6 +122,7 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
                 </Button>
               )}
             </div>
+            <div className="PlaceDetailDiv_H1_div_index">{index + 1}</div>
           </div>
           <div className="PlaceDetailDiv_H1_detail">
             <div>

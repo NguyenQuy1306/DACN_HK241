@@ -71,6 +71,7 @@ const List = ({
               }
               refProp={elRefs[i]}
               place={place}
+              index={i}
             />
           ))}
         </>
