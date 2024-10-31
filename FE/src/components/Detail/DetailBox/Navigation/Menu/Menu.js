@@ -14,33 +14,44 @@ const Menu = ({ selectedPlace }) => {
   const menuAvailable = [
     {
       name: "Instant MICHELIN",
-      price: 69,
+      price: 69000,
       availability: "Available from Jan 05 to Jan 05",
       type: "Temporary",
-      details: [],
-    },
-    {
-      name: "Menu Signature 6 temps",
-      price: 95,
-      availability: "Permanent TheFork offer",
-      type: "Permanent",
       details: [
-        "Amuse bouche",
-        "Appetizer",
-        "Plat de poisson",
-        "Plat de viande",
-        "Fromage",
-        "Dessert",
+        {
+          category: "Các món soup",
+          items: [
+            "SÚP MĂNG TÂY CUA",
+            "SÚP CUA VI CUA",
+            "SÚP HẢI SẢN",
+            "SÚP BÍ ĐỎ",
+            "SÚP NẤM TƯƠI",
+          ],
+        },
+        {
+          category: "Các món khai vị",
+          items: [
+            "GỎI CUỐN TÔM THỊT",
+            "NEM CUỐN RAU",
+            "CHẢ GIÒ HẢI SẢN",
+            "BÁNH XÈO NHỎ",
+            "NEM NƯỚNG NHA TRANG",
+          ],
+        },
+        {
+          category: "Các món nướng",
+          items: [
+            "GỎI CUỐN TÔM THỊT",
+            "NEM CUỐN RAU",
+            "CHẢ GIÒ HẢI SẢN",
+            "BÁNH XÈO NHỎ",
+            "NEM NƯỚNG NHA TRANG",
+          ],
+        },
       ],
     },
-    {
-      name: "Menu Découverte",
-      price: 39,
-      availability: "Permanent TheFork offer",
-      type: "Permanent",
-      details: [],
-    },
   ];
+
   const foodData = [
     {
       category: "Các món soup",
