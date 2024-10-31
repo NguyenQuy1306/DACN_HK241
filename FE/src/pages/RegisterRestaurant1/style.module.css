@@ -1,5 +1,97 @@
 .header {
     padding: 8px 0;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
-    padding-left: 104px;
+    border-bottom: 1px solid #ccc;
+    padding-left: 234px;
 }
+
+.head-side {
+    margin-left: 234px;
+    margin-top: 48px;
+    position: relative;
+}
+
+.head-side__title {
+    font-size: 40px;
+}
+
+.description {
+    font-size: 20px;
+    color:#374557;
+    line-height: 1.4;
+}
+
+.head-side__img {
+    width: 682px;
+    height: 368px;
+}
+
+.advertise {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.form_1 {
+    background-color: #00665C;
+    width: fit-content;
+    padding: 48px;
+    position: absolute;
+    top: 300px;
+    left: 0;
+}
+
+.name-input, .others-input {
+    display: flex;
+}
+
+.name-input {
+    margin-bottom: 24px;
+}
+
+.next-btn {
+    color: #fff;
+    text-align: end;
+    padding: 12px;
+}
+.next-btn:hover {
+    cursor: pointer;
+}
+
+.benefit-side {
+    margin-top: 176px;
+}
+
+.benefit-side__title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.benefit-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    padding: 16px;
+    background-color: #eef6f6;
+}
+
+.benefit-item {
+    flex:1;
+    text-align: center;
+    padding: 48px;
+}
+
+.footer-side__title {
+    font-size: 48px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 36px;
+}
+
+.footer-sub-title {
+    color: #6b7582;
+    font-size: 18px;
+    text-align: center;
+}
+
