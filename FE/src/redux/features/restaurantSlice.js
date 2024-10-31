@@ -32,6 +32,12 @@ export const restaurantSlice = createSlice({
     restaurantsImages: [],
     error: "",
     loading: false,
+    openBookingWithMenu: false,
+  },
+  reducers: {
+    setOpenBookingWithMenu: (state, action) => {
+      state.openBookingWithMenu = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,5 +55,6 @@ export const restaurantSlice = createSlice({
       });
   },
 });
+export const { setOpenBookingWithMenu } = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

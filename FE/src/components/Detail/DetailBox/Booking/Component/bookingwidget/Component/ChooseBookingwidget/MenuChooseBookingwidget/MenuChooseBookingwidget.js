@@ -5,7 +5,7 @@ import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlin
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { red } from "@mui/material/colors";
 import { Button } from "@mui/material";
-const MenuChooseBookingwidget = ({ selectedPlace }) => {
+const MenuChooseBookingwidget = ({ selectedPlace, openBookingWithMenu }) => {
   const [choosedOptionByWithMenu, setChoosedOptionByWithMenu] = useState(true);
   const [choosedOptionByWithoutMenu, setChoosedOptionByWithoutMenu] =
     useState(false);
@@ -23,6 +23,7 @@ const MenuChooseBookingwidget = ({ selectedPlace }) => {
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
               choosedOptionByWithMenu={choosedOptionByWithMenu}
+              openBookingWithMenu={openBookingWithMenu}
               icon={
                 !choosedOptionByWithMenu ? (
                   <CheckCircleOutlineRoundedIcon className="MenuChooseBookingwidgetDiv_H1_option_choosen_icon"></CheckCircleOutlineRoundedIcon>
@@ -36,6 +37,7 @@ const MenuChooseBookingwidget = ({ selectedPlace }) => {
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
               choosedOptionByWithMenu={choosedOptionByWithoutMenu}
+              openBookingWithMenu={openBookingWithMenu}
               icon={
                 !choosedOptionByWithoutMenu ? (
                   <CheckCircleOutlineRoundedIcon className="MenuChooseBookingwidgetDiv_H1_option_choosen_icon"></CheckCircleOutlineRoundedIcon>

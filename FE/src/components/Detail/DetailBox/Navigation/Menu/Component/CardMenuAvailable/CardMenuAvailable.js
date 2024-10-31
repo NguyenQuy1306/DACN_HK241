@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CardMenuAvailable.css";
 import { Button, Modal, Box } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BasicModal from "../ModalMenu/ModalMenu";
 import CloseIcon from "@mui/icons-material/Close";
+import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const [open, setOpen] = useState(false);
@@ -12,9 +14,16 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const handleCloseModal = () => {
     setOpen(false);
   };
+  const dispatch = useDispatch();
+  const openBookingWithMenu = useSelector(
+    (state) => state.restaurant.openBookingWithMenu
+  );
+
   const handleOnClickBookingRestaurantWithAvailableMenu = () => {
     setOpen(false);
+    dispatch(setOpenBookingWithMenu(true));
   };
+
   return (
     <div>
       <div className="CardMenuAvailableDiv" onClick={handleOpen}>
