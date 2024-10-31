@@ -1,0 +1,66 @@
+.TitleDetail_H1 {
+  padding-top: 1rem;
+  grid-area: info;
+}
+.TitleDetail_H2 {
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+.heart_favorite {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  z-index: 1;
+}
+.heart_favorite_button {
+  color: hwb(174 0% 70%);
+  background-color: transparent;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0 0.25rem;
+  width: 1.25em;
+  height: 1.25em;
+  line-height: unset;
+
+  position: relative;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: RalewayX, arial, sans-serif;
+  font-style: normal;
+
+  border-radius: 0;
+
+  box-shadow: none !important;
+  border: none;
+}
+.heart_favorite_button:hover {
+  background-color: white;
+}
+.heart_favorite_button:active {
+  background-color: transparent; /* Fixes background display issue on click */
+}
+.heart_favorite_button:click {
+}
+.heart_favorite_button_icon {
+  width: 1.25em;
+  height: 1.25em;
+  overflow: hidden;
+  fill: currentColor;
+  vertical-align: text-bottom;
+  font-size: 1.25rem;
+  color: hsl(0, 0%, 0%);
+  cursor: pointer;
+}
+
+.heart_favorite_button_icon1 {
+  cursor: pointer;
+  color: #ff0050;
+}
