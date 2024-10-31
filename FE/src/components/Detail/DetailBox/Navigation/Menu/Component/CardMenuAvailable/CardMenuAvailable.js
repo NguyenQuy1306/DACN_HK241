@@ -12,6 +12,9 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const handleCloseModal = () => {
     setOpen(false);
   };
+  const handleOnClickBookingRestaurantWithAvailableMenu = () => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="CardMenuAvailableDiv" onClick={handleOpen}>
@@ -88,7 +91,12 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
                   </div>
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_button">
                     <div className="CardMenuAvailableDiv_Modal_div_div_p_button_div">
-                      <Button className="CardMenuAvailableDiv_Modal_div_div_p_button_div_css">
+                      <Button
+                        className="CardMenuAvailableDiv_Modal_div_div_p_button_div_css"
+                        onClick={
+                          handleOnClickBookingRestaurantWithAvailableMenu
+                        }
+                      >
                         <span>Đặt menu này!</span>
                       </Button>
                     </div>
