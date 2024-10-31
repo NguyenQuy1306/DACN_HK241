@@ -16,31 +16,41 @@ import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 // import HistoryComponent from "../Pages/History/history";
 // import Zones from "../Pages/Zone/Zone";
 // import ZoneDetails from "../Pages/Zone/ZoneDetails";
-
+import ViewImagepage from "../pages/ViewImagepage";
 export const routes = [
-    {
-        path: "/Search",
-        component: Search,
-        layout: MainLayout,
-    },
-    {
-        path: "/DetailRestaurant/:id",
-        component: DetailRestaurant,
-        layout: MainLayout,
-    },
-    {
-        path: "/Home",
-        component: Home,
-        layout: MainLayout,
-    },
-    {
-        path: "/favorite-list",
-        component: FavoriteList,
-        layout: MainLayout,
-    },
-    {
-        path: "/register-restaurant",
-        component: RegisterRestaurant1,
-        layout: MainLayout,
-    },
+  {
+    path: "/Search",
+    component: Search,
+    layout: MainLayout,
+  },
+  {
+    path: "/DetailRestaurant/:id",
+    component: DetailRestaurant,
+    layout: MainLayout,
+  },
+  {
+    path: "/Home",
+    component: Home,
+    layout: MainLayout,
+  },
+  {
+    path: "/favorite-list",
+    component: FavoriteList,
+    layout: MainLayout,
+  },
+  {
+    path: "/register-restaurant",
+    component: RegisterRestaurant1,
+    layout: MainLayout,
+  },
+
+  {
+    path: "/DetailRestaurant/:id/menuImages",
+    component: ViewImagepage,
+  },
+  // {
+  //   path: "*",
+  //   component: NotFound,
+  //   layout: null,
+  // },
 ];

@@ -1,0 +1,18 @@
+.BookingDiv {
+  padding-top: 1rem;
+  margin-top: -8.125rem;
+  grid-area: booking;
+}
+.BookingDiv_H2 {
+  z-index: 10;
+  position: sticky;
+  top: 1rem;
+}
+.BookingDiv_H2::before,
+.BookingDiv_H2::after {
+  content: " ";
+  display: table;
+}
+.BookingDiv_H3 {
+  position: relative;
+}

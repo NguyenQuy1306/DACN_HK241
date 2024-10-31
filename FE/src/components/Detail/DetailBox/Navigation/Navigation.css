@@ -1,0 +1,53 @@
+.NavigationDiv {
+  grid-area: details;
+}
+.Navigation_H1 {
+  list-style-type: none;
+
+  display: flex;
+  position: sticky;
+  background-color: hsl(0, 0%, 100%);
+  top: 0;
+  z-index: 5;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+.Navigation_H2 {
+  list-style-type: none;
+  display: flex;
+  border-bottom: 1px solid;
+  border-color: hsl(220, 9%, 93%);
+  width: 100%;
+}
+.NavigationDiv_H2 {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+  flex-direction: column;
+}
+.NavigationDiv_H2_filter {
+  margin-top: initial;
+}
+.NavigationDiv_H2_filter_H1 {
+  list-style-type: none;
+  display: flex;
+  padding-top: 0.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid;
+  border-color: hsl(220, 9%, 93%);
+
+  flex-wrap: wrap;
+}
+.NavigationDiv_H2_ul {
+  list-style-type: none;
+
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+  flex-direction: column;
+
+  overflow: auto;
+}

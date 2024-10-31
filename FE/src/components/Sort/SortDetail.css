@@ -1,0 +1,61 @@
+.SortDetailDiv
+{margin-top: 1rem;}
+.SortDetailDiv_Label
+{
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    flex: 1 1 0%;
+    position: relative;
+    padding: 0px 1rem 1.5rem 2rem;
+    cursor: pointer;
+}
+.SortDetailDiv_Label_icon
+{
+        list-style-type: none;
+    display: flex;
+    margin-top: 0.125rem;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.SortDetailDiv_Label_icon_div
+{
+    width: 16px !important;
+    height: 16px !important;
+    color: hsl(174, 100%, 20%) !important ;
+}
+.SortDetailDiv_Label_span2
+{
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    white-space: nowrap !important;
+    height: 1px !important;
+    width: 1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    contain: paint !important;
+}
+.SortDetailDiv_Label_span3
+{
+    color: black;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.38462;
+}
+.SortDetailDiv_Label_span3.active
+{
+    color: rgb(0, 102, 92);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.38462;
+}

@@ -1,0 +1,43 @@
+.ClassificationDiv {
+  list-style-type: none;
+  display: flex;
+
+  -webkit-box-align: center;
+
+  align-items: center;
+  -webkit-box-pack: center;
+
+  justify-content: center;
+  -webkit-box-flex: 1;
+}
+.ClassificationDiv_H1 {
+  flex: 0 0 1.875rem;
+}
+.ClassificationDiv_H1_p {
+  margin: 0;
+  color: hsl(218, 9%, 17%);
+  text-align: right;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.3846153846153846;
+}
+.ClassificationDiv_H2 {
+  margin-left: 0.75rem;
+  background-color: hsl(174, 29%, 80%);
+  height: 0.5rem;
+  max-width: 8.75rem;
+  border-radius: 0.5rem;
+
+  flex: 1;
+  position: relative;
+  /* overflow: hidden; */
+}
+.ClassificationDiv_H2_div {
+  background-color: hsl(174, 100%, 20%);
+  height: 0.5rem;
+  width: 100%;
+  min-width: 5px;
+  border-radius: 0.5rem;
+  position: absolute;
+}

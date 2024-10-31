@@ -1,0 +1,169 @@
+.AboutDiv_H1
+{
+    margin-top: 12px;
+    display: block;
+}
+.AboutDiv_h3
+{
+    margin-top: 12px;
+}
+.AboutDiv_H1_div
+{
+    width: 100%;
+}
+.AboutDiv_H1_div::before
+{
+    display: table;
+    content: " ";
+}
+.AboutDiv_H1_div_div1
+{
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.AboutDiv_H1_div_div1_title
+{
+    float: left;
+    width: 100%;
+    color: #3a3939;
+
+    text-align: left;
+    text-transform: uppercase;
+    min-height: 16px;
+    margin: 5px 0px 5px 0px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+}
+.AboutDiv_H1_div_div1_description
+{
+    float: left;
+    width: 100%;
+    color: #1b1b1b;
+    min-height: 18px;
+    text-align: left;
+    font-size: 15px;
+    padding-bottom: 5px;
+    margin-top: -5px;
+    width: 100% !important;
+    margin-left: 23px;
+}
+.AboutDiv_H1_div_div1_description12
+{
+    float: left;
+    width: 100%;
+    color: #1b1b1b;
+    min-height: 18px;
+    text-align: left;
+    font-size: 15px;
+    padding-bottom: 5px;
+    margin-top: -5px;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    margin-left: 23px;
+}
+.AboutDiv_H1_div_div1_title_icon
+{
+    margin-right: 0.7rem;
+}
+.AboutDiv_H1_div_div1_title_icon_css
+{
+    vertical-align: bottom !important;
+
+}
+.AboutDiv_H1_div_div1_description span
+{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    margin-left: 0.75rem;
+    color: hsl(218, 9%, 17%);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+}
+.AboutDiv_H1_div_div1_description12 span
+{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    margin-left: 0.75rem;
+    color: hsl(218, 9%, 17%);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+   
+}
+.AboutDiv_H1_div_div1_description_div
+{
+    margin-top: 10px;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    list-style-type: none;
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    -webkit-box-align: center;
+    align-items: center;
+  
+   
+    font-weight: normal;
+    margin-left: 0.75rem;
+    color: hsl(218, 9%, 17%);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.AboutDiv_H1_div_div1_description_div_date
+{
+
+    text-transform: capitalize;
+    min-width: 8rem;
+}
+.AboutDiv_H1_div_div1_description_div_lunch_div
+{
+    margin-left: 0.75rem;
+    margin-right: 1rem;
+}
+.AboutDiv_H1_div_div1_description_div_lunch_div ::after
+{
+    content: " •";
+}
+.AboutDiv_H1_div_div1_description_div.active{
+    margin-top: 10px;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    list-style-type: none;
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: 0.93rem;
+    -webkit-box-align: center;
+    align-items: center;
+    color:hsl(174, 80%, 29%);
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    margin-left: 0.75rem;
+    
+    font-size: 0.86rem;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.375;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
