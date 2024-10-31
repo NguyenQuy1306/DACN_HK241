@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import FavoriteList from "../pages/FavoriteList";
 import FilterIndex from "../components/FilterItem";
 import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
+import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 // import Register from "../Pages/Register/index";
 // import Devices from "../Pages/Devices/Devices";
 // import Dashboard from "../Pages/Dashboard/Dashboard"
@@ -18,6 +19,7 @@ import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 // import ZoneDetails from "../Pages/Zone/ZoneDetails";
 import ViewImagepage from "../pages/ViewImagepage";
 export const routes = [
+
   {
     path: "/Search",
     component: Search,
@@ -48,9 +50,5 @@ export const routes = [
     path: "/DetailRestaurant/:id/menuImages",
     component: ViewImagepage,
   },
-  // {
-  //   path: "*",
-  //   component: NotFound,
-  //   layout: null,
-  // },
+
 ];
