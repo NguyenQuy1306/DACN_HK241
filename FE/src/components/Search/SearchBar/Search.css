@@ -17,9 +17,11 @@ button.search-btn {
   line-height: 1.375;
   border: 1px solid hsl(174, 100%, 20%);
   width: 108px;
-  margin-left: 5px;
+  margin-left: 12px;
+  height: 38px;
 }
 
 button.search-btn:hover {
   background-color: #144d46;
+
 }

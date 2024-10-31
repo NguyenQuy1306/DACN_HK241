@@ -33,10 +33,14 @@ export const restaurantSlice = createSlice({
     error: "",
     loading: false,
     openBookingWithMenu: false,
+    hoveredMarkerIndex: null,
   },
   reducers: {
     setOpenBookingWithMenu: (state, action) => {
       state.openBookingWithMenu = action.payload;
+    },
+    setHoveredMarkerIndex: (state, action) => {
+      state.hoveredMarkerIndex = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -55,6 +59,7 @@ export const restaurantSlice = createSlice({
       });
   },
 });
-export const { setOpenBookingWithMenu } = restaurantSlice.actions;
+export const { setOpenBookingWithMenu, setHoveredMarkerIndex } =
+  restaurantSlice.actions;
 
 export default restaurantSlice.reducer;
