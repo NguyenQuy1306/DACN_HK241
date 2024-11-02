@@ -8,9 +8,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import QuantityInput from "./Component/ButtonIncrement/ButtonIncrement";
 import BasicModal from "./Component/ModalMenu/ModalMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { getFood } from "../../../../../redux/features/foodSlice";
 const Menu = ({ selectedPlace }) => {
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const foodDatafromAPI = useSelector((state) => state.food.food);
+  console.log("foodDatafromAPI::: ", foodDatafromAPI);
   const menuAvailable = [
     {
       name: "Instant MICHELIN",
@@ -52,69 +56,6 @@ const Menu = ({ selectedPlace }) => {
     },
   ];
 
-  const foodData = [
-    {
-      category: "Các món soup",
-      items: [
-        { name: "SÚP MĂNG TÂY CUA", price: 500000 },
-        { name: "SÚP CUA VI CUA", price: 550000 },
-        { name: "SÚP HẢI SẢN", price: 600000 },
-        { name: "SÚP BÍ ĐỎ", price: 450000 },
-        { name: "SÚP NẤM TƯƠI", price: 480000 },
-      ],
-    },
-    {
-      category: "Các món khai vị",
-      items: [
-        { name: "GỎI CUỐN TÔM THỊT", price: 300000 },
-        { name: "NEM CUỐN RAU", price: 280000 },
-        { name: "CHẢ GIÒ HẢI SẢN", price: 320000 },
-        { name: "BÁNH XÈO NHỎ", price: 400000 },
-        { name: "NEM NƯỚNG NHA TRANG", price: 350000 },
-      ],
-    },
-    {
-      category: "Các món chính",
-      items: [
-        { name: "GÀ NƯỚNG MẬT ONG", price: 800000 },
-        { name: "BÒ KHO", price: 900000 },
-        { name: "CÁ HỒI SỐT CHANH DÂY", price: 1200000 },
-        { name: "THỊT KHO TÀU", price: 850000 },
-        { name: "LẨU HẢI SẢN", price: 1500000 },
-      ],
-    },
-    {
-      category: "Các món rau",
-      items: [
-        { name: "RAU MUỐNG XÀO TỎI", price: 250000 },
-        { name: "CẢI THÌA XÀO NẤM ĐÔNG CÔ", price: 300000 },
-        { name: "RAU MỒNG TƠI XÀO TỎI", price: 240000 },
-        { name: "BẮP CẢI LUỘC", price: 200000 },
-        { name: "CANH CẢI XANH", price: 260000 },
-      ],
-    },
-    {
-      category: "Các món tráng miệng",
-      items: [
-        { name: "CHÈ KHÚC BẠCH", price: 180000 },
-        { name: "BÁNH FLAN", price: 150000 },
-        { name: "CHÈ SẦU RIÊNG", price: 200000 },
-        { name: "RAU CÂU DỪA", price: 160000 },
-        { name: "TRÁI CÂY TƯƠI", price: 140000 },
-      ],
-    },
-    {
-      category: "Các món nước",
-      items: [
-        { name: "NƯỚC CAM TƯƠI", price: 120000 },
-        { name: "TRÀ ĐÀO", price: 100000 },
-        { name: "SINH TỐ BƠ", price: 140000 },
-        { name: "CÀ PHÊ SỮA ĐÁ", price: 110000 },
-        { name: "SỮA ĐẬU NÀNH", price: 90000 },
-      ],
-    },
-  ];
-
   const [onClickMenuNavBar1, setOnClickMenuNavBar1] = useState(true);
   const [onClickMenuNavBar2, setOnClickMenuNavBar2] = useState(false);
   const [onClickMenuNavBar3, setOnClickMenuNavBar3] = useState(false);
@@ -128,13 +69,13 @@ const Menu = ({ selectedPlace }) => {
   const handleAddItem = (item, quantity) => {
     if (quantity > 0) {
       const existingItem = newCombo.find(
-        (comboItem) => comboItem.item.name === item.name
+        (comboItem) => comboItem.item.ten === item.ten
       );
-
+      console.log("item.name", item.ten);
       if (existingItem) {
         setNewCombo((prev) =>
           prev.map((comboItem) =>
-            comboItem.item.name === item.name
+            comboItem.item.ten === item.ten
               ? { ...comboItem, quantity: quantity }
               : comboItem
           )
@@ -153,7 +94,10 @@ const Menu = ({ selectedPlace }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentFoodItems = foodData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentFoodItems = foodDatafromAPI.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const theme = createTheme({
     palette: {
       primary: {
@@ -183,6 +127,7 @@ const Menu = ({ selectedPlace }) => {
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
+              selectedPlace={selectedPlace}
             />
             <ButtonMenuNavBar
               text={"Tất cả món ăn"}
@@ -190,6 +135,7 @@ const Menu = ({ selectedPlace }) => {
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
+              selectedPlace={selectedPlace}
             />
             <ButtonMenuNavBar
               text={"Tạo combo mới"}
@@ -197,6 +143,7 @@ const Menu = ({ selectedPlace }) => {
               setOnClickMenuNavBar1={setOnClickMenuNavBar1}
               setOnClickMenuNavBar2={setOnClickMenuNavBar2}
               setOnClickMenuNavBar3={setOnClickMenuNavBar3}
+              selectedPlace={selectedPlace}
             />
           </div>
         </div>
@@ -278,17 +225,17 @@ const Menu = ({ selectedPlace }) => {
               {currentFoodItems.map((category, index) => (
                 <div key={index} className="MenuNavBar_createMenu_div_index">
                   <h3 className="MenuNavBar_createMenu_div_index_H3">
-                    {category.category}
+                    {category.categoryResponse.ten}
                   </h3>
                   <ul>
-                    {category.items.map((item, idx) => (
+                    {category.foodResponses.map((item, idx) => (
                       <li
                         className="MenuNavBar_createMenu_div_index_H3_li"
                         key={idx}
                       >
-                        <span>{item.name}</span>
+                        <span>{item.ten}</span>
                         <span className="MenuNavBar_createMenu_div_index_H3_span2">
-                          {item.price} đ
+                          {item.gia} đ
                         </span>
 
                         <QuantityInput
@@ -307,7 +254,7 @@ const Menu = ({ selectedPlace }) => {
               <div className="MenuNavBar_createMenu_div_pagination">
                 <ThemeProvider theme={theme}>
                   <Pagination
-                    count={Math.ceil(foodData.length / itemsPerPage)} // Calculate number of pages
+                    count={Math.ceil(foodDatafromAPI.length / itemsPerPage)} // Calculate number of pages
                     page={currentPage} // Track current page
                     onChange={handlePageChange} // Handle page change
                     color="primary"
