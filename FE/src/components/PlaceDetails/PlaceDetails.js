@@ -163,7 +163,11 @@ const PlaceDetails = ({
                     </h2>
                   </div>
                   <div className="PlaceDetailDiv_H1_detail_name_div1_div">
-                    <StarRating rating={2.6}></StarRating>
+                    <StarRating
+                      rating={2.6}
+                      size={"32"}
+                      classname={"y-css-35tusp"}
+                    ></StarRating>
                     <div className="PlaceDetailDiv_H1_detail_rating">
                       {/* <span className="PlaceDetailDiv_H1_detail_rating_span1">
                     <span>4</span>

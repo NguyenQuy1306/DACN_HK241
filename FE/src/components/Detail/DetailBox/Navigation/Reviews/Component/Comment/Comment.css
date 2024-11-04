@@ -67,8 +67,8 @@
 .CommentDiv_blockquote_H1_personalDetail_detail_cite {
   margin: 0;
   color: hsl(218, 9%, 17%);
-
-  font-weight: 400;
+  
+  font-weight: 500;
   font-style: normal;
   line-height: 1.3846153846153846;
   font-size: 0.875rem;
@@ -281,4 +281,35 @@
   border-radius: 0px !important;
   height: unset !important;
   line-height: unset !important;
+}
+.CommentDiv_blockquote_H2_comment_listImage
+{
+  list-style-type: none;
+  display: flex;
+  background-color: hsl(220, 9%, 93%);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 8rem;
+  height: 6.25rem;
+  position: relative;
+  cursor: pointer;
+}
+.CommentDiv_blockquote_H2_comment_listImage_text
+{
+  position: absolute;
+  bottom: 0;
+  height: 2.5rem;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.CommentDiv_blockquote_H2_comment_listImage_text_p
+{
+  color: hsl(0, 0%, 100%);
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.3846153846153846;
 }
