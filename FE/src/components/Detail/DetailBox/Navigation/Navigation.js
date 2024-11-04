@@ -165,7 +165,11 @@ const Navigation = ({ selectedPlace }) => {
             </div>
             <ul className="NavigationDiv_H2_ul">
               {reviewsData.map((review, index) => (
-                <Comment key={index} review={review} />
+                <Comment
+                  key={index}
+                  review={review}
+                  selectedPlace={selectedPlace}
+                />
               ))}
             </ul>
           </div>

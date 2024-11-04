@@ -6,6 +6,7 @@ import ButtonFilter from "../../components/Filter/Button/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
+import ModalViewImage from "../../components/Modal/ModalViewImage/ModalViewImage";
 const ViewImagepage = () => {
   let navigate = useNavigate();
   const [selectedPlace, setSelectedPlace] = useState(
@@ -15,35 +16,17 @@ const ViewImagepage = () => {
   const allFoodUrlString = selectedPlace.danhSachAnhMenu;
   const allFoodUrl = allFoodUrlString ? allFoodUrlString : [];
   const [showImage, setShowImage] = useState("");
+
+  const handleBackDetailPage = () => {
+    const location_id = localStorage.getItem("selectedPlaceId");
+    navigate(`/DetailRestaurant/${location_id}`);
+  };
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleOnClickImage = (index) => {
     setCurrentIndex(index);
     setShowImage(allFoodUrl[index]);
   };
-
-  const handleNextImage = () => {
-    const nextIndex = (currentIndex + 1) % allFoodUrl.length;
-    setCurrentIndex(nextIndex);
-    setShowImage(allFoodUrl[nextIndex]);
-  };
-
-  const handlePreviousImage = () => {
-    const prevIndex =
-      (currentIndex - 1 + allFoodUrl.length) % allFoodUrl.length;
-    setCurrentIndex(prevIndex);
-    setShowImage(allFoodUrl[prevIndex]);
-  };
-
-  const handleCloseDetailView = () => {
-    setShowImage("");
-  };
-
-  const handleBackDetailPage = () => {
-    const location_id = localStorage.getItem("selectedPlaceId");
-    navigate(`/DetailRestaurant/${location_id}`);
-  };
-
   return (
     <>
       <div>
@@ -92,52 +75,13 @@ const ViewImagepage = () => {
       </div>
 
       {showImage && (
-        <div className="viewDetailPhoto">
-          <div className="viewDetailPhoto_h1">
-            <div className="viewDetailPhoto_h2">
-              <section className="viewDetailPhoto_h2_section">
-                <div className="viewDetailPhoto_h2_section_div">
-                  <div className="viewDetailPhoto_h2_section_div_div">
-                    <p className="viewDetailPhoto_h2_section_div_div_p">
-                      <span>
-                        {currentIndex + 1} of {allFoodUrl.length}
-                      </span>
-                    </p>
-                    <Button
-                      className="viewDetailPhoto_h2_section_div_div_button"
-                      onClick={handleCloseDetailView}
-                    >
-                      <CloseIcon className="viewDetailPhoto_h2_section_div_div_button_icon" />
-                    </Button>
-                    <div className="viewDetailPhoto_h2_section_div_div_h1">
-                      <div className="viewDetailPhoto_h2_section_div_div_h2">
-                        <span className="viewDetailPhoto_h2_section_div_div_h2_span">
-                          <img
-                            src={showImage}
-                            alt={`Menu ${currentIndex + 1}`}
-                            className="viewDetailPhoto_h2_section_div_div_h2_image"
-                          />
-                        </span>
-                      </div>
-                      <Button
-                        className="viewDetailPhoto_h2_section_div_div_h1_button1"
-                        onClick={handlePreviousImage}
-                      >
-                        <ArrowBackIosIcon className="viewDetailPhoto_h2_section_div_div_h1_button1_icon" />
-                      </Button>
-                      <Button
-                        className="viewDetailPhoto_h2_section_div_div_h1_button2"
-                        onClick={handleNextImage}
-                      >
-                        <ArrowForwardIosIcon />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
+        <ModalViewImage
+          showImage={showImage}
+          allFoodUrl={allFoodUrl}
+          setShowImage={setShowImage}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        ></ModalViewImage>
       )}
     </>
   );
