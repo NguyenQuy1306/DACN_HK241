@@ -14,7 +14,8 @@ const Menu = ({ selectedPlace }) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const foodDatafromAPI = useSelector((state) => state.food.food);
-  console.log("foodDatafromAPI::: ", foodDatafromAPI);
+  const menuDatafromAPI = useSelector((state) => state.combo.combo);
+  // console.log("menuDatafromAPI::: ", menuDatafromAPI);
   const menuAvailable = [
     {
       name: "Instant MICHELIN",
@@ -162,7 +163,7 @@ const Menu = ({ selectedPlace }) => {
                 những món khác có thể tạo combo hoặc sẵn tại chỗ.
               </span>
             </p>
-            {menuAvailable.map((menu, index) => (
+            {menuDatafromAPI.map((menu, index) => (
               <CardMenuAvailable key={index} menu={menu} />
             ))}
           </div>

@@ -127,6 +127,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickDetail}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Menu"}
@@ -135,6 +136,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClicMenu}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Chỉ đường"}
@@ -143,6 +145,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickPath}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Reviews"}
@@ -151,6 +154,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickReviews}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
         </div>
       </div>

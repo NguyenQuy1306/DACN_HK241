@@ -24,14 +24,29 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
     dispatch(setOpenBookingWithMenu(true));
   };
 
+  const { comboId, comboName, comboPrice, comboCreationTime, foods } = menu;
+
+  // Group foods by category
+  const groupedFoods = foods.reduce((acc, food) => {
+    const categoryId = food.danhMuc.maSoDanhMuc;
+    const categoryName = food.danhMuc.ten;
+    //!acc[categoryId] nếu null thì trong acc chưa có category này.
+    // dùng dictionary để lưu trữ
+    if (!acc[categoryId]) {
+      acc[categoryId] = { categoryName, items: [] };
+    }
+    acc[categoryId].items.push(food);
+
+    return acc;
+  }, {});
   return (
     <div>
       <div className="CardMenuAvailableDiv" onClick={handleOpen}>
         <div className="CardMenuAvailableDiv_H1">
           <div>
-            <h3 className="CardMenuAvailableDiv_H1_h3">{menu.name}</h3>
+            <h3 className="CardMenuAvailableDiv_H1_h3">{comboName}</h3>
             <span className="CardMenuAvailableDiv_H1_span">
-              <span>€{menu.price} per guest</span>
+              <span>{comboPrice} đ/ người</span>
             </span>
           </div>
           <Button className="CardMenuAvailableDiv_H1_button">
@@ -41,7 +56,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
         <div className="CardMenuAvailableDiv_H2">
           <div className="CardMenuAvailableDiv_H2_div">
             <div className="CardMenuAvailableDiv_H2_div_div2">
-              {menu.availability}
+              {comboCreationTime}
             </div>
           </div>
         </div>
@@ -61,23 +76,24 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
                     Menu de la St-Sylvestre
                   </div>
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_priceMenu">
-                    <span>120000đ</span>
+                    <span>{comboPrice}đ</span>
                   </div>
 
                   <p className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu"></p>
 
-                  {menu.details.map((detail, detailIndex) => (
-                    <div key={detailIndex}>
-                      <h3>{detail.category}</h3>
+                  {Object.values(groupedFoods).map((category, index) => (
+                    <div key={index}>
+                      <h3>{category.categoryName}</h3>
                       <ul>
-                        {detail.items.map((item, itemIndex) => (
+                        {category.items.map((item, itemIndex) => (
                           <p
                             key={itemIndex}
                             className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu_p"
                           >
-                            {item}
+                            {item.ten} - {item.gia} VND
                           </p>
                         ))}
+                        {/* {detail.ten} */}
                       </ul>
                     </div>
                   ))}
