@@ -6,6 +6,7 @@ import BasicModal from "../ModalMenu/ModalMenu";
 import CloseIcon from "@mui/icons-material/Close";
 import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
+const { formatCurrency } = require("../../../../../../../helper/helper");
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const [open, setOpen] = useState(false);
@@ -18,10 +19,12 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const openBookingWithMenu = useSelector(
     (state) => state.restaurant.openBookingWithMenu
   );
-
+  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
   const handleOnClickBookingRestaurantWithAvailableMenu = () => {
     setOpen(false);
-    dispatch(setOpenBookingWithMenu(true));
+    dispatch(
+      setOpenBookingWithMenu({ openBookingWithMenu: true, menuChoosed: [menu] })
+    );
   };
 
   const { comboId, comboName, comboPrice, comboCreationTime, foods } = menu;
@@ -46,7 +49,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
           <div>
             <h3 className="CardMenuAvailableDiv_H1_h3">{comboName}</h3>
             <span className="CardMenuAvailableDiv_H1_span">
-              <span>{comboPrice} đ/ người</span>
+              <span>{formatCurrency(comboPrice)} đ/ người</span>
             </span>
           </div>
           <Button className="CardMenuAvailableDiv_H1_button">
@@ -73,10 +76,10 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
               <div className="CardMenuAvailableDiv_Modal_div_div">
                 <p className="CardMenuAvailableDiv_Modal_div_div_p">
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_nameMenu">
-                    Menu de la St-Sylvestre
+                    {comboName}
                   </div>
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_priceMenu">
-                    <span>{comboPrice}đ</span>
+                    <span>{formatCurrency(comboPrice)}đ</span>
                   </div>
 
                   <p className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu"></p>

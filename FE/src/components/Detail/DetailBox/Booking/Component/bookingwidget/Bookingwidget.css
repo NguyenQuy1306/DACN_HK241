@@ -96,12 +96,13 @@
   margin: -0.5rem 0px 0px;
   font-size: 0.8125rem;
   font-weight: 600;
+  display: flex;
 }
 .BookingwidgetDiv_H1_new_h1_div_detail_p3
 {
   font-weight: 300;
     font-style: normal;
-    line-height: 1.375;
+    line-height: 1.175;
     margin: 0.25rem 0px 0px;
     font-size: 0.8125rem;
 }
@@ -121,4 +122,17 @@
   bottom: 1rem;
   left: 1rem;
   border-radius: 0.25rem;
+}
+.BookingwidgetDiv_H1_new_h1_div_detail_p2_div_button
+{
+  width: fit-content !important;
+  height: 13px !important;
+  font-size: 0.5rem !important;
+  background-color: hsl(174, 100%, 20%) !important;
+  color: white !important;
+
+}
+.BookingwidgetDiv_H1_new_h1_div_detail_p2_div
+{
+  padding-left: 10px;
 }

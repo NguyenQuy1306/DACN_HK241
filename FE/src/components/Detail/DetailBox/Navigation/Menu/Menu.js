@@ -10,6 +10,10 @@ import QuantityInput from "./Component/ButtonIncrement/ButtonIncrement";
 import BasicModal from "./Component/ModalMenu/ModalMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { getFood } from "../../../../../redux/features/foodSlice";
+import CloseIcon from "@mui/icons-material/Close";
+
+const { formatCurrency } = require("../../../../../helper/helper");
+
 const Menu = ({ selectedPlace }) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,6 +121,7 @@ const Menu = ({ selectedPlace }) => {
     setResetNewMenu(true);
     setNewCombo([]);
   };
+
   return (
     <>
       <div className="MenuNavBarDiv">
@@ -164,7 +169,11 @@ const Menu = ({ selectedPlace }) => {
               </span>
             </p>
             {menuDatafromAPI.map((menu, index) => (
-              <CardMenuAvailable key={index} menu={menu} />
+              <CardMenuAvailable
+                key={index}
+                menu={menu}
+                typeMenu={"available"}
+              />
             ))}
           </div>
         </div>
@@ -236,7 +245,7 @@ const Menu = ({ selectedPlace }) => {
                       >
                         <span>{item.ten}</span>
                         <span className="MenuNavBar_createMenu_div_index_H3_span2">
-                          {item.gia} đ
+                          {formatCurrency(item.gia)} đ
                         </span>
 
                         <QuantityInput
@@ -269,8 +278,6 @@ const Menu = ({ selectedPlace }) => {
           </div>
         </>
       )}
-
-      {/* <BasicModal combo={newCombo}></BasicModal> */}
     </>
   );
 };
