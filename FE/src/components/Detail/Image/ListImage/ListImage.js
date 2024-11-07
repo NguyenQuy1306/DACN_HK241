@@ -5,7 +5,7 @@ import AImage from "../AnImage/AImage";
 import images from "../../../../data/ImageData";
 const ListImage = ({ place, startIndex, endIndex }) => {
   const images = place.danhSachAnhNhaHang.slice(startIndex, endIndex);
-  console.log("selectedPlace.danhSachAnhNhaHang:images:: ", images);
+  // console.log("selectedPlace.danhSachAnhNhaHang:images:: ", images);
 
   return (
     <div className="ListImage" aria-hidden="false">

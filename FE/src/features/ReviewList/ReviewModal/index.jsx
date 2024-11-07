@@ -13,7 +13,6 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
             },
         ];
     }, []);
-    console.log(options);
     return (
         <div className={styles.container}>
             <Modal

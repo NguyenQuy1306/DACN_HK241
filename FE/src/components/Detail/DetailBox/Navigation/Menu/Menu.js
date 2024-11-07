@@ -76,7 +76,6 @@ const Menu = ({ selectedPlace }) => {
       const existingItem = newCombo.find(
         (comboItem) => comboItem.item.ten === item.ten
       );
-      console.log("item.name", item.ten);
       if (existingItem) {
         setNewCombo((prev) =>
           prev.map((comboItem) =>

@@ -34,7 +34,16 @@ export const getComboAvailable = async (params) => {
     throw error.response.data; // Adjust to throw the error response for handling in Redux
   }
 };
-
+export const getTableForRestaurant = async (params) => {
+  try {
+    const response = await API.get(`api/table/restaurant`, {
+      params,
+    });
+    return response.data; // Ensure this matches your ApiResponse structure
+  } catch (error) {
+    throw error.response.data; // Adjust to throw the error response for handling in Redux
+  }
+};
 // export const getRecords = () => API.get("api/records");
 // export const getRelays = () => API.get("api/relay");
 // export const controlRelays = (data) => API.post("api/relay", data);

@@ -10,12 +10,14 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.curcus.lms.repository.TableAvailableRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.ColumnDefault;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -26,6 +28,7 @@ import java.util.Set;
 @DynamicInsert
 @Table(name = "Ban")
 public class TableAvailable {
+
     @EmbeddedId
     private TableAvailableId MaSo;
 
@@ -41,4 +44,5 @@ public class TableAvailable {
     private LocalDate Ngay;
     @Column(nullable = false)
     private LocalTime Gio;
+
 }

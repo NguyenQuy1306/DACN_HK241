@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenBookingWithMenu } from "../../../../../../redux/features/restaurantSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { Modal } from "@mui/material";
+import { getTableForRestaurant } from "../../../../../../redux/features/tableSlice";
 
 const { formatCurrency } = require("../../../../../../helper/helper");
-
 const Bookingwidget = ({ selectedPlace }) => {
   const [date, setDate] = useState(null);
   const [closeDateDiv, setcloseDateDiv] = useState(false);
@@ -43,6 +43,13 @@ const Bookingwidget = ({ selectedPlace }) => {
     setCloseOptionDiv(true);
   };
   useEffect(() => {
+    if (selectedPlace && selectedPlace.maSoNhaHang) {
+      dispatch(
+        getTableForRestaurant({ restaurantId: selectedPlace.maSoNhaHang })
+      );
+    }
+  }, [dispatch, selectedPlace?.maSoNhaHang]);
+  useEffect(() => {
     if (openBookingWithMenu) {
       setDate(null);
       setcloseDateDiv(false);
@@ -71,7 +78,6 @@ const Bookingwidget = ({ selectedPlace }) => {
     setOpen(true);
   };
   const newMenu = useSelector((state) => state.restaurant.newMenu);
-  console.log("newCombonewCombo:; ", newMenu);
 
   // Grouping function to handle both cases
   const groupFoodsByCategory = (foods) => {
@@ -107,6 +113,7 @@ const Bookingwidget = ({ selectedPlace }) => {
   const handleCloseModal = () => {
     setOpen(false);
   };
+  const tableAvailable = useSelector((state) => state.table.tables);
   return (
     <>
       <div className="BookingwidgetDiv">
@@ -155,7 +162,7 @@ const Bookingwidget = ({ selectedPlace }) => {
                     <span>
                       <span>
                         {" "}
-                        {menuChoosed[0].comboPrice
+                        {menuChoosed[0].comboName
                           ? formatCurrency(menuChoosed[0].comboPrice)
                           : formatCurrency(totalCost)}
                       </span>{" "}
@@ -220,18 +227,23 @@ const Bookingwidget = ({ selectedPlace }) => {
           setcloseOptionDiv={setCloseOptionDiv}
         ></StepBookingwidget>
         {closeDateDiv === false && (
-          <DateChooseBookingwidget setDate={setDate}></DateChooseBookingwidget>
+          <DateChooseBookingwidget
+            setDate={setDate}
+            tableAvailable={tableAvailable}
+          ></DateChooseBookingwidget>
         )}
         {closeTimeDiv === false && (
           <TimeChooseBookingwidget
             setTime={setTime}
             type={"Time"}
+            tableAvailable={tableAvailable}
           ></TimeChooseBookingwidget>
         )}
         {closePersonDiv === false && (
           <TimeChooseBookingwidget
             setTime={setPerson}
             type={"Person"}
+            tableAvailable={tableAvailable}
           ></TimeChooseBookingwidget>
         )}
         {closeOptionDiv === false && (
@@ -247,13 +259,17 @@ const Bookingwidget = ({ selectedPlace }) => {
               <div className="CardMenuAvailableDiv_Modal_div_div">
                 <p className="CardMenuAvailableDiv_Modal_div_div_p">
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_nameMenu">
-                    {menuChoosed[0].comboName
+                    {Array.isArray(menuChoosed) &&
+                    menuChoosed.length > 0 &&
+                    menuChoosed[0].comboName
                       ? menuChoosed[0].comboName
                       : "Menu bạn đã tạo"}
                   </div>
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_priceMenu">
                     <span>
-                      {menuChoosed[0].comboName
+                      {Array.isArray(menuChoosed) &&
+                      menuChoosed.length > 0 &&
+                      menuChoosed[0].comboName
                         ? formatCurrency(menuChoosed[0].comboPrice)
                         : formatCurrency(totalCost)}
                       đ
@@ -262,7 +278,10 @@ const Bookingwidget = ({ selectedPlace }) => {
 
                   <p className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu"></p>
 
-                  {!menuChoosed[0].comboName
+                  {Array.isArray(menuChoosed) &&
+                  menuChoosed.length > 0 &&
+                  Array.isArray(menuChoosed[0]) &&
+                  !menuChoosed[0].comboName
                     ? Object.values(groupedFoods).map((category, index) => (
                         <div key={index}>
                           <h3>{category.categoryName}</h3>

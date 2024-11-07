@@ -22,7 +22,6 @@ const style = {
 
 export default function BasicModal({ combo }) {
   const dispatch = useDispatch();
-  console.log("combo format:::l", combo);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
