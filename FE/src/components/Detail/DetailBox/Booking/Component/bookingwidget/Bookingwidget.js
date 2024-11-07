@@ -79,7 +79,6 @@ const Bookingwidget = ({ selectedPlace }) => {
   };
   const newMenu = useSelector((state) => state.restaurant.newMenu);
 
-  // Grouping function to handle both cases
   const groupFoodsByCategory = (foods) => {
     return foods.reduce((acc, food) => {
       const categoryId =
@@ -94,7 +93,6 @@ const Bookingwidget = ({ selectedPlace }) => {
     }, {});
   };
 
-  // Determine which data to use for grouping
   let groupedFoods = {};
 
   if (
@@ -103,10 +101,8 @@ const Bookingwidget = ({ selectedPlace }) => {
     Array.isArray(menuChoosed[0]) &&
     !menuChoosed[0].comboName
   ) {
-    // Use newMenu data if comboName is not selected
     groupedFoods = groupFoodsByCategory(newMenu[0]);
   } else if (menuChoosed[0]) {
-    // Use selected combo data
     groupedFoods = groupFoodsByCategory(menuChoosed[0].foods);
   }
 
@@ -114,6 +110,52 @@ const Bookingwidget = ({ selectedPlace }) => {
     setOpen(false);
   };
   const tableAvailable = useSelector((state) => state.table.tables);
+  const [timeTableAvailable, setTimeTableAvailable] = useState([]);
+  const [personTableAvailable, setPersonTableAvailable] = useState([]);
+  useEffect(() => {
+    if (date) {
+      const formattedDate = date
+        .toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .split("/")
+        .reverse()
+        .join("-");
+
+      const times = tableAvailable
+        .filter((item) => {
+          return item.ngay === formattedDate;
+        })
+        .map((item) => item.gio);
+
+      setTimeTableAvailable(times); // Update state
+    }
+  }, [date, tableAvailable]);
+
+  useEffect(() => {
+    if (time && timeTableAvailable.length > 0) {
+      const formattedDate = date
+        .toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .split("/")
+        .reverse()
+        .join("-");
+      const persons = tableAvailable
+        .filter((item) => {
+          return item.ngay === formattedDate && item.gio.slice(0, -3) === time;
+        })
+        .map((item) => item.ban)
+        .flat();
+
+      const personCount = persons.map((table) => table.soNguoi);
+      setPersonTableAvailable(personCount);
+    }
+  }, [time, date, tableAvailable, timeTableAvailable]);
   return (
     <>
       <div className="BookingwidgetDiv">
@@ -236,14 +278,16 @@ const Bookingwidget = ({ selectedPlace }) => {
           <TimeChooseBookingwidget
             setTime={setTime}
             type={"Time"}
-            tableAvailable={tableAvailable}
+            timeTableAvailable={timeTableAvailable}
+            text={"thời gian"}
           ></TimeChooseBookingwidget>
         )}
         {closePersonDiv === false && (
           <TimeChooseBookingwidget
             setTime={setPerson}
             type={"Person"}
-            tableAvailable={tableAvailable}
+            text={"số người"}
+            timeTableAvailable={personTableAvailable}
           ></TimeChooseBookingwidget>
         )}
         {closeOptionDiv === false && (

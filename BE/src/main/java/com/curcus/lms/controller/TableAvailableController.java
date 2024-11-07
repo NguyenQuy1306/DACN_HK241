@@ -18,6 +18,7 @@ import com.curcus.lms.model.response.*;
 import com.curcus.lms.repository.FoodRepository;
 import com.curcus.lms.service.FoodService;
 import com.curcus.lms.service.TableAvailableService;
+import com.curcus.lms.util.TableAvailableSorter;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import com.curcus.lms.exception.ApplicationException;
@@ -26,6 +27,7 @@ import com.curcus.lms.exception.ValidationException;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/table")
@@ -40,15 +42,17 @@ public class TableAvailableController {
     }
 
     @GetMapping("/restaurant")
-    public ResponseEntity<ApiResponse<List<TableAvailableResponse>>> getTableForRestaurant(
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getTableForRestaurant(
             @RequestParam Long restaurantId) {
 
-        ApiResponse<List<TableAvailableResponse>> apiResponse = new ApiResponse<>();
+        ApiResponse<List<Map<String, Object>>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
 
         try {
-            List<TableAvailableResponse> tableAvailableResponses = tableAvailableService
+            List<Map<String, Object>> tableAvailableResponses = tableAvailableService
                     .getTableAvailableForRestaurant(restaurantId);
+            TableAvailableSorter tableAvailableSorter = new TableAvailableSorter();
+            tableAvailableSorter.sortTableAvailableList(tableAvailableResponses);
             apiResponse.ok(tableAvailableResponses);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));

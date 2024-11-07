@@ -12,7 +12,6 @@ const ViewImagepage = () => {
   const [selectedPlace, setSelectedPlace] = useState(
     JSON.parse(localStorage.getItem("selectedPlace"))
   );
-  // console.log("selectedPlaceselectedPlace", selectedPlace);
   const allFoodUrlString = selectedPlace.danhSachAnhMenu;
   const allFoodUrl = allFoodUrlString ? allFoodUrlString : [];
   const [showImage, setShowImage] = useState("");

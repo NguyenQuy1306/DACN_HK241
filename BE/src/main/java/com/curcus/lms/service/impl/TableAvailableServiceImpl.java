@@ -12,6 +12,7 @@ import com.curcus.lms.service.TableAvailableService;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,11 +42,13 @@ public class TableAvailableServiceImpl implements TableAvailableService {
     }
 
     @Override
-    public List<TableAvailableResponse> getTableAvailableForRestaurant(Long restaurantId) {
+    public List<Map<String, Object>> getTableAvailableForRestaurant(Long restaurantId) {
         try {
             List<TableAvailable> tableAvailables = tableAvailableRepository.findAllTableForRestaurant(restaurantId);
-            return tableAvailables.stream().map(tableAvailableMapper::toTableAvailableResponse)
-                    .collect(Collectors.toList());
+            // return
+            // tableAvailables.stream().map(tableAvailableMapper::toTableAvailableResponse)
+            // .collect(Collectors.toList());
+            return tableAvailableMapper.toGroupedTableAvailableResponses(tableAvailables);
         } catch (
 
         Exception ex) {

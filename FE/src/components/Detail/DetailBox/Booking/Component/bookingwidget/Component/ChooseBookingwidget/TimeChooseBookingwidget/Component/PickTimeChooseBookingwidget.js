@@ -17,7 +17,7 @@ const PickTimeChooseBookingwidget = ({
         {listTime.map((place, i) => (
           <BoxPickTimeChooseBookingwidget
             key={i}
-            time={place}
+            time={text !== "Person" ? place.slice(0, -3) : place}
             setTime={setTime}
           />
         ))}

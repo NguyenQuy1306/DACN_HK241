@@ -17,12 +17,14 @@ const DateChooseBookingwidget = ({
   setDate,
   tableAvailable,
 }) => {
+  console.log("tableAvalable,L:", tableAvailable);
   const uniqueDates = [...new Set(tableAvailable.map((item) => item.ngay))];
   const dateObjects = uniqueDates.map((dateStr) => new Date(dateStr));
 
   // Get min and max date
   const minDate = new Date(Math.min(...dateObjects));
   const maxDate = new Date(Math.max(...dateObjects));
+
   return (
     <div className="ChooseBookingwidgetDiv">
       <div className="ChooseBookingwidgetDiv_H1">

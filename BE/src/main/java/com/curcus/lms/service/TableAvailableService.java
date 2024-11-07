@@ -1,6 +1,7 @@
 package com.curcus.lms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.curcus.lms.model.entity.TableAvailable;
 import com.curcus.lms.model.request.*;
@@ -10,5 +11,5 @@ import org.springframework.data.domain.Pageable;
 public interface TableAvailableService {
     public TableAvailable saveWithGeneratedThuTuBan(TableAvailable tableAvailable);
 
-    public List<TableAvailableResponse> getTableAvailableForRestaurant(Long restaurantId);
+    public List<Map<String, Object>> getTableAvailableForRestaurant(Long restaurantId);
 }
