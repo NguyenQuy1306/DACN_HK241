@@ -17,7 +17,6 @@ const DateChooseBookingwidget = ({
   setDate,
   tableAvailable,
 }) => {
-  console.log("tableAvalable,L:", tableAvailable);
   const uniqueDates = [...new Set(tableAvailable.map((item) => item.ngay))];
   const dateObjects = uniqueDates.map((dateStr) => new Date(dateStr));
 
@@ -32,9 +31,21 @@ const DateChooseBookingwidget = ({
           <Calendar
             onChange={setDate}
             // value={date}
-            minDate={minDate}
-            maxDate={maxDate}
+            // minDate={minDate}
+            // maxDate={maxDate}
             locale="vi"
+            tileDisabled={({ date }) => {
+              const dateString = date
+                .toLocaleDateString("en-GB", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .split("/")
+                .reverse()
+                .join("-"); // Get the date in YYYY-MM-DD format (format này của database)
+              return !uniqueDates.includes(dateString); // Disable the tile if the date is not available
+            }}
           ></Calendar>
         </div>
         <ChooseBookingwidgetDiv_footer></ChooseBookingwidgetDiv_footer>
