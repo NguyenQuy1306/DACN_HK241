@@ -1,0 +1,95 @@
+/* Đặt nền cho trang đăng ký */
+.register-container {
+  position: absolute; /* Positions the container relative to the page */
+  left: 0; /* Moves it to the far left of the page */
+  top: 0; /* Optional: set this to position it at the top */
+  width: 600px;
+  height: 100%;
+  border: 1px solid #ccc;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+
+
+/* Tiêu đề của trang */
+.register-container h2 {
+  text-align: center; /* Căn giữa văn bản */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+/* Nhóm các trường input */
+.input-group {
+  margin-bottom: 15px;
+  width: 200%;
+  margin-left: -50%;
+}
+
+/* Nhãn cho trường input */
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Các trường input */
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Nút đăng ký */
+.register-button {
+  width: 100%; /* Độ rộng đầy đủ */
+  padding: 10px; /* Khoảng cách bên trong */
+  background-color: #007bff; /* Màu nền của nút */
+  color: white; /* Màu chữ */
+  border: none; /* Không có viền */
+  border-radius: 4px; /* Bo góc */
+  cursor: pointer; /* Hiệu ứng chuột khi di chuột lên nút */
+  margin-bottom: 5px;
+}
+
+/* Hiệu ứng cho nút khi hover */
+.register-button:hover {
+  background-color: #2e92fc; /* Màu nền khi hover */
+}
+
+/* Liên kết ở cuối trang */
+.footer-links {
+  text-align: center; /* Căn giữa các liên kết */
+  margin-top: 10px; /* Khoảng cách trên */
+}
+
+.footer-links a {
+  color: #007bff; /* Màu chữ của liên kết */
+  text-decoration: none; /* Không có gạch chân */
+}
+
+.footer-links a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.error-message {
+  color: red; /* Màu đỏ cho thông báo lỗi */
+  margin-top: 10px;
+}
+
+.back-to-login-button {
+  width: 200px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.back-to-login-button:hover {
+  background-color: #e01414;
+}

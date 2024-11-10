@@ -16,6 +16,8 @@ import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 // import HistoryComponent from "../Pages/History/history";
 // import Zones from "../Pages/Zone/Zone";
 // import ZoneDetails from "../Pages/Zone/ZoneDetails";
+import Login from "../pages/Authentication/Login";
+import Register from "../pages/Authentication/Register";
 import ViewImagepage from "../pages/ViewImagepage";
 export const routes = [
   {
@@ -47,6 +49,14 @@ export const routes = [
   {
     path: "/DetailRestaurant/:id/menuImages",
     component: ViewImagepage,
+  },
+  {
+    path: "/Register",
+    component: Register,
+  },
+  {
+    path: "/Login",
+    component: Login,
   },
   // {
   //   path: "*",

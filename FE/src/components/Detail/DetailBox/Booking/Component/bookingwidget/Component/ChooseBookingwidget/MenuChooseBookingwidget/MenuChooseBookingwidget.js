@@ -9,7 +9,7 @@ const MenuChooseBookingwidget = ({ selectedPlace, openBookingWithMenu }) => {
   const [choosedOptionByWithMenu, setChoosedOptionByWithMenu] = useState(true);
   const [choosedOptionByWithoutMenu, setChoosedOptionByWithoutMenu] =
     useState(false);
-
+  const handleBooking = () => {};
   return (
     <div className="MenuChooseBookingwidgetDiv">
       <div className="MenuChooseBookingwidgetDiv_H1">
@@ -49,7 +49,10 @@ const MenuChooseBookingwidget = ({ selectedPlace, openBookingWithMenu }) => {
           </div>
         </div>
         <div className="MenuChooseBookingwidgetDiv_H1_divButton">
-          <Button className="MenuChooseBookingwidgetDiv_H1_divButton_Button">
+          <Button
+            className="MenuChooseBookingwidgetDiv_H1_divButton_Button"
+            onClick={handleBooking}
+          >
             <span>CONTINUE</span>
           </Button>
         </div>
