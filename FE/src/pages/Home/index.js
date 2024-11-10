@@ -29,27 +29,30 @@ import BookingHistory from "./../../features/BookingHistory/index";
 import FavoriteList from "../../features/FavoriteCardList";
 import ReviewList from "../../features/ReviewList";
 import PersonalInfo from "../../features/PersonalInfo";
+import RegisterRestaurant1 from "../RegisterRestaurant1";
+import { useNavigate } from "react-router-dom";
 
 function Home(props) {
-  const [open, setOpen] = useState(false);
-  const [childrenDrawer, setChildrenDrawer] = useState(false);
-  const [navItem, setNavItem] = useState("booking");
-  const [isScrolled, setIsScrolled] = useState(false);
-  const showChildrenDrawer = () => {
-    setChildrenDrawer(true);
-  };
-  const onChildrenDrawerClose = () => {
-    setChildrenDrawer(false);
-  };
-  const showDrawer = () => {
-    setOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-  const onClose = () => {
-    setOpen(false);
-    document.body.style.overflow = "auto";
-  };
 
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [childrenDrawer, setChildrenDrawer] = useState(false);
+    const [navItem, setNavItem] = useState("");
+    const [isScrolled, setIsScrolled] = useState(false);
+    const showChildrenDrawer = () => {
+        setChildrenDrawer(true);
+    };
+    const onChildrenDrawerClose = () => {
+        setChildrenDrawer(false);
+    };
+    const showDrawer = () => {
+        setOpen(true);
+        // document.body.style.overflow = "hidden";
+    };
+    const onClose = () => {
+        setOpen(false);
+        document.body.style.overflow = "auto";
+    };
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 555) {
@@ -66,7 +69,9 @@ function Home(props) {
     };
   }, []);
 
+
   const carouselRef = React.useRef(null);
+
 
   const next = () => {
     carouselRef.current.next();
@@ -107,6 +112,7 @@ function Home(props) {
           <li onClick={showChildrenDrawer} className="user-menu__item">
             <div className="menu-icon">
               <IoBookOutline size={24} />
+
             </div>
             <p onClick={() => setNavItem("booking")} className="menu-text">
               Lịch sử đặt bàn

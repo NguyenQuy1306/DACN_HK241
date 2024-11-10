@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./style.module.css";
-import { Button, Modal, Select } from "antd";
+import { Button, Flex, Modal, Rate, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
@@ -50,51 +50,17 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
                 ]}
             >
                 <div className={styles["point-list"]}>
-                    <div className={styles["point-section"]}>
-                        <p className={styles["point-label"]}>Điểm món ăn</p>
-                        <Select
-                            status="primary"
-                            defaultValue="8"
-                            style={{
-                                width: 120,
-                                border: "1px solid #00665C",
-                                borderRadius: "4px",
-                                textAlign: "center",
-                            }}
-                            onChange={handleChange}
-                            options={options}
+                    <Flex
+                        gap="middle"
+                        vertical
+                    >
+                        {value ? <span>{desc[value - 1]}</span> : null}
+                        <Rate
+                            tooltips={desc}
+                            onChange={setValue}
+                            value={value}
                         />
-                    </div>
-                    <div className={styles["point-section"]}>
-                        <p className={styles["point-label"]}>Điểm dịch vụ</p>
-                        <Select
-                            status="primary"
-                            defaultValue="8"
-                            style={{
-                                width: 120,
-                                border: "1px solid #00665C",
-                                borderRadius: "4px",
-                                textAlign: "center",
-                            }}
-                            onChange={handleChange}
-                            options={options}
-                        />
-                    </div>
-                    <div className={styles["point-section"]}>
-                        <p className={styles["point-label"]}>Điểm không gian</p>
-                        <Select
-                            status="primary"
-                            defaultValue="8"
-                            style={{
-                                width: 120,
-                                border: "1px solid #00665C",
-                                borderRadius: "4px",
-                                textAlign: "center",
-                            }}
-                            onChange={handleChange}
-                            options={options}
-                        />
-                    </div>
+                    </Flex>
                 </div>
                 <p className={styles["point-label"]}>Nhận xét</p>
 

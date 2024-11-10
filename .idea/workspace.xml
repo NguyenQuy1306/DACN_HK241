@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/FE/.env" beforeDir="false" afterPath="$PROJECT_DIR$/FE/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/FE/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FE/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/api/travelAdvisorAPI.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/api/travelAdvisorAPI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Detail/Image/AnImage/AImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Detail/Image/AnImage/AImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Detail/Image/ImageBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Detail/Image/ImageBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Detail/Image/ListImage/ListImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Detail/Image/ListImage/ListImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Detail/Image/NextButton/NextButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Detail/Image/NextButton/NextButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Detail/Image/NextButton/NextButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Detail/Image/NextButton/NextButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Footer/style.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Footer/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Input/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Input/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Input/style.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Input/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/List/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/List/List.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/List/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/List/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Map/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Map/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/PlaceDetails/PlaceDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/PlaceDetails/PlaceDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/components/Search/Result/ResultSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/components/Search/Result/ResultSearch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/data/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/features/ReviewList/ReviewModal/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/ReviewList/ReviewModal/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/DetailRestaurant/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/DetailRestaurant/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/Home/Home.css" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/Home/Home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/Home/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/RegisterRestaurant1/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/RegisterRestaurant1/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/RegisterRestaurant1/style.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/RegisterRestaurant1/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/Search/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/Search/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/redux/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/redux/features/scheduleSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/routes/index.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/FE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2oBZQRBG2Min5t1GyxaXZW1rm2x" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "User__Nhut",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Admin/Documents/HK241/DACN/DACN_HK241"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="" />
+      <created>1730344912597</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730344912597</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
+  </component>
+</project>
