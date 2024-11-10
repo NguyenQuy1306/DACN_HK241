@@ -34,7 +34,7 @@ public class Food {
     private Long Gia;
     @Column(nullable = false)
     private String MoTa;
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String TrangThai;
 
     @ManyToOne

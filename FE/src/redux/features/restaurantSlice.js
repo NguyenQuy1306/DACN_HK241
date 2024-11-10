@@ -32,6 +32,21 @@ export const restaurantSlice = createSlice({
     restaurantsImages: [],
     error: "",
     loading: false,
+    openBookingWithMenu: false,
+    menuChoosed: [],
+    newMenu: [],
+    hoveredMarkerIndex: null,
+  },
+  reducers: {
+    setOpenBookingWithMenu: (state, action) => {
+      const { openBookingWithMenu, menuChoosed, newMenu } = action.payload;
+      state.openBookingWithMenu = openBookingWithMenu;
+      state.menuChoosed = menuChoosed || [];
+      state.newMenu = newMenu || [];
+    },
+    setHoveredMarkerIndex: (state, action) => {
+      state.hoveredMarkerIndex = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,5 +64,7 @@ export const restaurantSlice = createSlice({
       });
   },
 });
+export const { setOpenBookingWithMenu, setHoveredMarkerIndex } =
+  restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

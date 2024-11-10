@@ -19,6 +19,13 @@
         padding-right: 1rem;
         width: 46rem;
 }
+.listRestaurantDiv_H1_left
+{
+    border-top: 1px;
+    border-top-color: hsl(220, 9%, 93%);
+    border-top-style:solid;
+    margin-top: 16px;
+}
 .listRestaurantDiv_H1_left_sort
 {
     display: flex;

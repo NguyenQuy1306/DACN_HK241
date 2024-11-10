@@ -13,9 +13,6 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
             },
         ];
     }, []);
-    const desc = ["Thất vọng", "Tệ", "Bình thường", "Tốt", "Tuyệt vời"];
-    const [value, setValue] = useState(3);
-    console.log(options);
     return (
         <div className={styles.container}>
             <Modal

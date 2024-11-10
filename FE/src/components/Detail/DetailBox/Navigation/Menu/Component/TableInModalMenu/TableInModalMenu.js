@@ -33,7 +33,7 @@ export default function CustomizedTables({ combo }) {
   let totalPrice = 0;
 
   for (let i = 0; i < combo.length; i++) {
-    totalPrice += combo[i].item.price * combo[i].quantity;
+    totalPrice += combo[i].item.gia * combo[i].quantity;
   }
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 400, overflow: "auto" }}>
@@ -52,17 +52,17 @@ export default function CustomizedTables({ combo }) {
         </TableHead>
         <TableBody>
           {combo.map((row) => (
-            <StyledTableRow key={row.item.name}>
+            <StyledTableRow key={row.item.ten}>
               <StyledTableCell align="left" className="StyledTableCell1">
-                {row.item.name}
+                {row.item.ten}
               </StyledTableCell>
 
               <StyledTableCell align="left" className="StyledTableCell2">
-                {row.item.price}
+                {row.item.gia}
               </StyledTableCell>
               <StyledTableCell align="left">{row.quantity}</StyledTableCell>
               <StyledTableCell align="left">
-                {row.quantity * row.item.price} đ
+                {row.quantity * row.item.gia} đ
               </StyledTableCell>
             </StyledTableRow>
           ))}

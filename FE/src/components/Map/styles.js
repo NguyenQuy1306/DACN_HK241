@@ -9,8 +9,8 @@ export default makeStyles(() => ({
     width: "100px",
   },
   mapContainer: {
-    width: "445px",
-    height: "585px",
+    width: "490px",
+    height: "625px",
     position: "sticky", // Use sticky positioning
     top: "50px", // Ensure it sticks to the top of the container
     overflow: "hidden",

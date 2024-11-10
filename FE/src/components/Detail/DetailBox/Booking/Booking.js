@@ -6,7 +6,7 @@ const Booking = ({ selectedPlace }) => {
     <div className="BookingDiv">
       <div className="BookingDiv_H2">
         <div className="BookingDiv_H3">
-          <Bookingwidget></Bookingwidget>
+          <Bookingwidget selectedPlace={selectedPlace}></Bookingwidget>
         </div>
       </div>
     </div>

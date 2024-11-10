@@ -25,8 +25,8 @@ import java.util.Set;
 public class ComboAvailable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaSComBoCoSan")
-    private Long MaSComBoCoSan;
+    @Column(name = "MaSoComBoCoSan")
+    private Long MaSoComBoCoSan;
 
     @Column(nullable = false)
     private String Ten;
@@ -37,7 +37,7 @@ public class ComboAvailable {
 
     @ManyToOne
     @JoinColumn(name = "MaSoNhahang")
-    private Restaurant Nhahang;
+    private Restaurant NhaHang;
 
     @ManyToOne
     @JoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")

@@ -8,7 +8,7 @@ const DetailBox = ({ selectedPlace }) => {
     <div className="DetailBoxDiv">
       {" "}
       <TitleDetail selectedPlace={selectedPlace}></TitleDetail>
-      <Booking></Booking>
+      <Booking selectedPlace={selectedPlace}></Booking>
       <Navigation selectedPlace={selectedPlace}></Navigation>
     </div>
   );
