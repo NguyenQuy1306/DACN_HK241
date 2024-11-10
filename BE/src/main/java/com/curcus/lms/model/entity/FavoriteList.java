@@ -31,19 +31,58 @@ public class FavoriteList {
     @Column(nullable = false)
     private String Ten;
 
+    @Column(nullable = false)
+    private LocalDateTime ThoiGianCapNhat;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaSoKhachHang", referencedColumnName = "MaSoNguoiDung")
-    private User KhachHang; // Correctly reflects a single user association
+    private User khachHang; // Correctly reflects a single user association
+
+    public void setKhachHang(User khachHang) {
+        khachHang = khachHang;
+    }
 
     @OneToMany(mappedBy = "DanhSachYeuThich")
     private Set<FavoriteListRestaurant> favoriteListRestaurants;
-    // @Override
-    // public String toString() {
-    // return "Course [courseId=" + courseId + ", title=" + title + ", description="
-    // + description + ", price=" + price
-    // + ", instructor=" + instructor.getUserId() + ", category=" + category + ",
-    // enrollment=" + enrollment
-    // + "]";
-    // }
 
+
+    public Long getMaSoDanhSachYeuThich() {
+        return MaSoDanhSachYeuThich;
+    }
+
+    public void setMaSoDanhSachYeuThich(Long maSoDanhSachYeuThich) {
+        MaSoDanhSachYeuThich = maSoDanhSachYeuThich;
+    }
+
+    public String getTen() {
+        return Ten;
+    }
+
+    public void setTen(String ten) {
+        Ten = ten;
+    }
+
+    public LocalDateTime getThoiGianCapNhat() {
+        return ThoiGianCapNhat;
+    }
+
+    public void setThoiGianCapNhat(LocalDateTime thoiGianCapNhat) {
+        ThoiGianCapNhat = thoiGianCapNhat;
+    }
+
+    public User getKhachHang() {
+        return khachHang;
+    }
+
+    public void setKhachHang(Customer khachHang) {
+        khachHang = khachHang;
+    }
+
+    public Set<FavoriteListRestaurant> getFavoriteListRestaurants() {
+        return favoriteListRestaurants;
+    }
+
+    public void setFavoriteListRestaurants(Set<FavoriteListRestaurant> favoriteListRestaurants) {
+        this.favoriteListRestaurants = favoriteListRestaurants;
+    }
 }

@@ -30,10 +30,13 @@ public class OrderTable {
 
     @Column(nullable = false)
     private String SoKhach;
+
     @Column(nullable = false)
     private String Ngay;
+
     @Column(nullable = false)
     private String Gio;
+
     @Column(nullable = false)
     private String TrangThai;
 
@@ -50,11 +53,99 @@ public class OrderTable {
     private Restaurant NhaHang;
 
     @OneToMany(mappedBy = "DonDatBan")
-    private Set<OrderTableHasComboAvailable> danhSachDonDatBanCoComboCoSan;
+    private Set<OrderTableHasComboAvailable> DanhSachDonDatBanCoComboCoSan;
+
+    public Long getMaSoDatBan() {
+        return MaSoDatBan;
+    }
+
+    public void setMaSoDatBan(Long maSoDatBan) {
+        MaSoDatBan = maSoDatBan;
+    }
+
+    public String getSoKhach() {
+        return SoKhach;
+    }
+
+    public void setSoKhach(String soKhach) {
+        SoKhach = soKhach;
+    }
+
+    public String getNgay() {
+        return Ngay;
+    }
+
+    public void setNgay(String ngay) {
+        Ngay = ngay;
+    }
+
+    public String getGio() {
+        return Gio;
+    }
+
+    public void setGio(String gio) {
+        Gio = gio;
+    }
+
+    public String getTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        TrangThai = trangThai;
+    }
+
+    public PaymentMethod getPhuongThucThanhToan() {
+        return PhuongThucThanhToan;
+    }
+
+    public void setPhuongThucThanhToan(PaymentMethod phuongThucThanhToan) {
+        PhuongThucThanhToan = phuongThucThanhToan;
+    }
+
+    public User getKhachHang() {
+        return KhachHang;
+    }
+
+    public void setKhachHang(User khachHang) {
+        KhachHang = khachHang;
+    }
+
+    public Restaurant getNhaHang() {
+        return NhaHang;
+    }
+
+    public void setNhaHang(Restaurant nhaHang) {
+        NhaHang = nhaHang;
+    }
+
+    public Set<OrderTableHasComboAvailable> getDanhSachDonDatBanCoComboCoSan() {
+        return DanhSachDonDatBanCoComboCoSan;
+    }
+
+    public void setDanhSachDonDatBanCoComboCoSan(Set<OrderTableHasComboAvailable> danhSachDonDatBanCoComboCoSan) {
+        this.DanhSachDonDatBanCoComboCoSan = danhSachDonDatBanCoComboCoSan;
+    }
+
+    public Set<OrderTableHasFood> getDanhSachDonDatBanCoMonAn() {
+        return DanhSachDonDatBanCoMonAn;
+    }
+
+    public void setDanhSachDonDatBanCoMonAn(Set<OrderTableHasFood> danhSachDonDatBanCoMonAn) {
+        this.DanhSachDonDatBanCoMonAn = danhSachDonDatBanCoMonAn;
+    }
+
+    public Set<OrderTableApplyDiscount> getDanhSachDonDatBanApDungGiamGia() {
+        return DanhSachDonDatBanApDungGiamGia;
+    }
+
+    public void setDanhSachDonDatBanApDungGiamGia(Set<OrderTableApplyDiscount> danhSachDonDatBanApDungGiamGia) {
+        this.DanhSachDonDatBanApDungGiamGia = danhSachDonDatBanApDungGiamGia;
+    }
 
     @OneToMany(mappedBy = "DonDatBan")
-    private Set<OrderTableHasFood> danhSachDonDatBanCoMonAn;
+    private Set<OrderTableHasFood> DanhSachDonDatBanCoMonAn;
     @OneToMany(mappedBy = "DonDatBan")
-    private Set<OrderTableApplyDiscount> danhSachDonDatBanApDungGiamGia;
+    private Set<OrderTableApplyDiscount> DanhSachDonDatBanApDungGiamGia;
 
 }

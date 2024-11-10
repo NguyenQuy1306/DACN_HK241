@@ -1,5 +1,6 @@
 package com.curcus.lms.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,24 +24,44 @@ import java.util.Set;
 @DynamicInsert
 @Table(name = "DanhSachYeuThich_NhaHang")
 public class FavoriteListRestaurant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MaSo;
+    @EmbeddedId
+    private FavoriteListRestaurantId MaSo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("MaSoDanhSachYeuThich")
     @JoinColumn(name = "MaSoDanhSachYeuThich")
     private FavoriteList DanhSachYeuThich;
+
+    public FavoriteListRestaurantId getMaSo() {
+        return MaSo;
+    }
+
+    public void setMaSo(FavoriteListRestaurantId maSo) {
+        MaSo = maSo;
+    }
+
+    public FavoriteList getDanhSachYeuThich() {
+        return DanhSachYeuThich;
+    }
+
+    public void setDanhSachYeuThich(FavoriteList danhSachYeuThich) {
+        DanhSachYeuThich = danhSachYeuThich;
+    }
+
+    public Restaurant getNhaHang() {
+        return NhaHang;
+    }
+
+    public void setNhaHang(Restaurant nhaHang) {
+        NhaHang = nhaHang;
+    }
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("MaSoNhaHang")
     @JoinColumn(name = "MaSoNhaHang")
     private Restaurant NhaHang;
 
-    // @Override
-    // public String toString() {
-    // return "Course [courseId=" + courseId + ", title=" + title + ", description="
-    // + description + ", price=" + price
-    // + ", instructor=" + instructor.getUserId() + ", category=" + category + ",
-    // enrollment=" + enrollment
-    // + "]";
-    // }
 
 }

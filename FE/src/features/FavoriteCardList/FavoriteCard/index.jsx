@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import { FcLike } from "react-icons/fc";
 import { MdOutlineLock } from "react-icons/md";
 
-function FavoriteCard() {
+function FavoriteCard({ name, quantity, updateTime }) {
     return (
         <div className={styles.container}>
             <div className={styles["card-icon"]}>
@@ -15,15 +15,14 @@ function FavoriteCard() {
                 </div>
             </div>
             <div className={styles["card-content"]}>
-                <h3 className={styles["card-name"]}>Best BBQ in Ha Noi</h3>
+                <h3 className={styles["card-name"]}>{name}</h3>
                 <div className={styles.private}>
                     <MdOutlineLock size={16} />
                     <p className={styles["private__text"]}>Riêng tư</p>
-
                 </div>
                 <div className={styles["card-footer"]}>
-                    <p className={styles.quantity}>2 nhà hàng</p>
-                    <p className={styles["update-time"]}>Cập nhật: 22/09/2024</p>
+                    <p className={styles.quantity}>{quantity} nhà hàng</p>
+                    <p className={styles["update-time"]}>Cập nhật: {updateTime}</p>
                 </div>
             </div>
         </div>

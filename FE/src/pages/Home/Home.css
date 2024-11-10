@@ -19,7 +19,7 @@
 }
 
 .content {
-    width: 1008px;
+    width: 1246px;
     margin: 0 auto;
 }
 
@@ -76,11 +76,35 @@
 .category-list {
     display: flex;
     margin: 0 auto;
-    width: fit-content;
+    width: 1242px;
+    align-items: center;
+    overflow: hidden;
+    gap: 0;
+    justify-content: start;
+    margin-bottom: 24px;
+    padding: 8px 0;
+}
+
+.left-nav-btn {
+    position: absolute;
+    top: 1042px;
+    left: 212px;
+    
+}
+
+.right-nav-btn {
+    position: absolute;
+    top: 1042px;
+    right: 212px;
+    
 }
 
 .category-link {
     margin: 0 8px;
+}
+
+.category-link:hover {
+    cursor: pointer;
 }
 
 .top-restaurant-banner {

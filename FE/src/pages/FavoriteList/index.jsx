@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@mui/icons-material";
 import { Divider, Drawer } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { FcLike } from "react-icons/fc";
 import { FiEdit2 } from "react-icons/fi";
@@ -12,11 +12,17 @@ import Logo from "../../components/Logo";
 import FavoriteCardDetail from "../../features/FavoriteCardList/FavoriteCardDetail";
 import HeaderInfo from "../../features/UserInfo/components/HeaderInfo";
 import styles from "./style.module.css";
-
+import axios from "axios";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 function FavoriteList() {
+    const location = useLocation();
+    const originList = location.state?.card;
+    const listId = useParams();
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [childrenDrawer, setChildrenDrawer] = useState(false);
-
+    const [restaurants, setRestaurants] = useState([]);
     const showChildrenDrawer = () => {
         setChildrenDrawer(true);
     };
@@ -31,6 +37,23 @@ function FavoriteList() {
         setOpen(false);
         document.body.style.overflow = "auto";
     };
+
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/favorite-restaurants/${listId.id}`);
+                if (response.status === 200) {
+                    setRestaurants(response.data);
+                } else {
+                    console.log("Failure!");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchRestaurants();
+    }, [listId]);
 
     return (
         <div className={styles.container}>
@@ -131,15 +154,33 @@ function FavoriteList() {
             <div className={styles["content-wrapper"]}>
                 <div className={styles.title}>
                     <FcLike size={32} />
-                    <h3 className={styles.name}>Best BBQ in Ha Noi</h3>
+                    <h3 className={styles.name}>{originList.ten}</h3>
                 </div>
                 <div className={styles["sub-title"]}>
-                    <p className={styles.quantity}>1 nhà hàng</p>
-                    <p className={styles["update-time"]}>Cập nhật: 23/10/2024</p>
+                    <p className={styles.quantity}>{restaurants.length} nhà hàng</p>
+                    <p className={styles["update-time"]}>
+                        Cập nhật: {format(new Date(originList.thoiGianCapNhat), "dd/MM/yyyy HH:mm:ss")}
+                    </p>
                 </div>
                 <Divider />
 
-                <FavoriteCardDetail />
+                {restaurants.map((res, index) => {
+                    return (
+                        <div
+                            onClick={() => {
+                                navigate(`/DetailRestaurant/${res.maSoNhaHang}`);
+                            }}
+                        >
+                            <FavoriteCardDetail
+                                key={index}
+                                name={res.tenNhaHang}
+                                address={res.diaChi}
+                                avgPrice={res.khoangGia}
+                                imgUrl={res.anhNhaHang}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

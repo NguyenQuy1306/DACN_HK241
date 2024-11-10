@@ -1,13 +1,16 @@
-import React from "react";
-import styles from "./style.module.css";
-import Logo from "../../components/Logo";
-import Input from "../../components/Input";
 import { Button } from "antd";
-import BenefitItem from "./components/BenefitItem";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import Input from "../../components/Input";
+import Logo from "../../components/Logo";
+import BenefitItem from "./components/BenefitItem";
+import styles from "./style.module.css";
+import { setFirstName, setLastName, setPhone, setEmail } from "../../redux/features/RegisterRestaurantSlice";
 function RegisterRestaurant1() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userInfo = useSelector((state) => state.restaurantRegister);
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -42,6 +45,11 @@ function RegisterRestaurant1() {
                                 type="text"
                                 label="Họ và tên đệm"
                                 labelColor="white"
+                                value={userInfo.fname}
+                                placeholder="Hãy nhập họ và tên đệm..."
+                                onChange={(name) => {
+                                    dispatch(setFirstName(name));
+                                }}
                             />
                         </div>
                         <div style={{ minWidth: "392px" }}>
@@ -49,6 +57,11 @@ function RegisterRestaurant1() {
                                 type="text"
                                 label="Tên"
                                 labelColor="white"
+                                value={userInfo.lname}
+                                placeholder="Hãy nhập tên của bạn..."
+                                onChange={(name) => {
+                                    dispatch(setLastName(name));
+                                }}
                             />
                         </div>
                     </div>
@@ -58,6 +71,12 @@ function RegisterRestaurant1() {
                                 type="email"
                                 label="Email"
                                 labelColor="white"
+                                value={userInfo.email}
+                                initialValue="honhop71@gmail.com"
+                                placeholder="Hãy nhập email của bạn..."
+                                onChange={(name) => {
+                                    dispatch(setEmail(name));
+                                }}
                             />
                         </div>
                         <div style={{ minWidth: "392px" }}>
@@ -65,10 +84,20 @@ function RegisterRestaurant1() {
                                 type="text"
                                 label="Số điện thoại"
                                 labelColor="white"
+                                value={userInfo.phone}
+                                placeholder="Hãy nhập SĐT của bạn..."
+                                onChange={(name) => {
+                                    dispatch(setPhone(name));
+                                }}
                             />
                         </div>
                     </div>
-                    <p onClick={()=>navigate("../register-restaurant2")} className={styles["next-btn"]}>NEXT</p>
+                    <p
+                        onClick={() => navigate("../register-restaurant2")}
+                        className={styles["next-btn"]}
+                    >
+                        NEXT
+                    </p>
                 </div>
             </div>
             <div className={styles["benefit-side"]}>

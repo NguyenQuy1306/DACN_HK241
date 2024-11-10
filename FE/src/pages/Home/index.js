@@ -1,51 +1,77 @@
-import { Button, Drawer } from "antd";
-import React, { useEffect, useState } from "react";
-import { CiFilter } from "react-icons/ci";
-import { FaCalendarCheck } from "react-icons/fa";
+import { CloseOutlined } from "@mui/icons-material";
+import { Button, Drawer, Tooltip } from "antd";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { CiFilter, CiUser } from "react-icons/ci";
+import { FaAngleLeft, FaAngleRight, FaCalendarCheck } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
-import { IoIosStar } from "react-icons/io";
-import { IoBookOutline, IoBookSharp } from "react-icons/io5";
+import { IoIosHeartEmpty, IoIosStar } from "react-icons/io";
+import { IoBookOutline, IoStorefrontOutline } from "react-icons/io5";
 import { MdChevronRight, MdOutlineLogout, MdOutlineLoyalty, MdStars } from "react-icons/md";
+import { TfiComment } from "react-icons/tfi";
+import { useNavigate } from "react-router-dom";
 import LogoImage from "../../assets/images/logo.png";
 import FilterItem from "../../components/FilterItem";
 import Logo from "../../components/Logo";
 import Search from "../../components/Search/SearchBar/SearchBar";
 import CategoryItem from "../../features/Cetegogy/CategoryItem";
+import FavoriteList from "../../features/FavoriteCardList";
+import PersonalInfo from "../../features/PersonalInfo";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
+import ReviewList from "../../features/ReviewList";
 import SlideCard from "../../features/Selections/components/SlideCard";
 import HeaderInfo from "../../features/UserInfo/components/HeaderInfo";
-import { IoIosHeartEmpty } from "react-icons/io";
-import { TfiComment } from "react-icons/tfi";
-import { CiUser } from "react-icons/ci";
-import { IoStorefrontOutline } from "react-icons/io5";
-import "./Home.css";
-import { CloseOutlined } from "@mui/icons-material";
 import BookingHistory from "./../../features/BookingHistory/index";
-import FavoriteList from "../../features/FavoriteCardList";
-import ReviewList from "../../features/ReviewList";
-import PersonalInfo from "../../features/PersonalInfo";
-import RegisterRestaurant1 from "../RegisterRestaurant1";
-import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 function Home(props) {
     const navigate = useNavigate();
+    const categoryRef = useRef();
+    const [itemWidth, setItemWidth] = useState(0);
+    const categoryItemPerPage = 9;
+    const [testScroll, setTestScroll] = useState(0);
+    const [recommendList, setRecommendList] = useState([]);
+    const [startIndex, setStartIndex] = useState(0);
     const [open, setOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [navItem, setNavItem] = useState("");
+    const [recommendedList, setRecommendedList] = useState([]);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [previousState, setPreviousState] = useState(false);
+    const [nextSate, setNextState] = useState(false);
+
     const showChildrenDrawer = () => {
         setChildrenDrawer(true);
     };
+
     const onChildrenDrawerClose = () => {
         setChildrenDrawer(false);
     };
+
     const showDrawer = () => {
         setOpen(true);
         // document.body.style.overflow = "hidden";
     };
+
     const onClose = () => {
         setOpen(false);
         document.body.style.overflow = "auto";
+    };
+
+    const handleNext = () => {
+        if (categoryRef.current) {
+            setTestScroll(categoryRef.current?.scrollLeft);
+            categoryRef.current.scrollBy({ left: itemWidth + 16, behavior: "smooth" });
+        }
+    };
+
+    const handlePrevious = () => {
+        if (categoryRef.current) {
+            setTestScroll(categoryRef.current?.scrollLeft);
+
+            categoryRef.current.scrollBy({ left: -itemWidth - 16, behavior: "smooth" });
+        }
     };
 
     useEffect(() => {
@@ -65,8 +91,54 @@ function Home(props) {
     }, []);
 
     useEffect(() => {
-        console.log("Current Item: " + navItem)
-    },[navItem])
+        if (categoryRef.current && categoryRef.current.firstChild) {
+            const firstItem = categoryRef.current.firstChild;
+
+            setItemWidth(firstItem.getBoundingClientRect().width);
+        }
+    }, [categories]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/restaurant-categories");
+                if (response.status === 200) {
+                    setCategories(response.data);
+                } else {
+                    console.log("Fail to fetch categories!");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchCategories();
+    }, []);
+    useEffect(() => {
+        const fetchRecommendedList = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/restaurants/recommended");
+                if (response.status === 200) {
+                    setRecommendList(response.data);
+                } else {
+                    console.log("Fail to fetch categories!");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchRecommendedList();
+    }, []);
+
+    useEffect(() => {
+        const getRecommendedList = async () => {
+            const response = await axios.get("http://localhost:8080/api/restaurants/recommended");
+            if (response.status === 200) {
+                setRecommendedList(response.data);
+            }
+        };
+
+        getRecommendedList();
+    }, []);
 
     const carouselRef = React.useRef(null);
 
@@ -78,8 +150,36 @@ function Home(props) {
         carouselRef.current.prev();
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (categoryRef.current?.scrollLeft !== 0) {
+                setPreviousState(true);
+            } else {
+                setPreviousState(false);
+            }
+            if (
+                categoryRef.current?.scrollLeft + categoryRef.current?.clientWidth >=
+                categoryRef.current?.scrollWidth
+            ) {
+                setNextState(false);
+            } else {
+                setNextState(true);
+            }
+        };
+
+        const refCurrent = categoryRef.current;
+
+        // Add the event listener
+        refCurrent?.addEventListener("scroll", handleScroll);
+
+        // Clean up the event listener on component unmount or ref change
+        return () => {
+            refCurrent?.removeEventListener("scroll", handleScroll);
+        };
+    }, [categoryRef.current?.scrollLeft]);
+
     return (
-        <div>
+        <div style={{ position: "relative" }}>
             <Drawer
                 onClose={onClose}
                 width={302}
@@ -188,8 +288,8 @@ function Home(props) {
                     }}
                     mask={false}
                 >
-                    {navItem === "favorite" && <FavoriteList />}
-                    {navItem === "booking" && <BookingHistory />}
+                    {navItem === "favorite" && <FavoriteList customerId={1} />}
+                    {navItem === "booking" && <BookingHistory customerId={4} />}
                     {navItem === "comment" && <ReviewList />}
                     {navItem === "account" && <PersonalInfo />}
                 </Drawer>
@@ -212,6 +312,7 @@ function Home(props) {
                     alt="TheMeal's logo"
                     className="logo__image"
                 ></img>
+
                 <Search />
                 <div onClick={showDrawer}>
                     <HeaderInfo avatar={require("../../assets/images/avatar.png")} />
@@ -241,6 +342,12 @@ function Home(props) {
                 <div className="filter-item">
                     <FilterItem title="Kiểu phục vụ" />
                 </div>
+                <div className="filter-item">
+                    <FilterItem title="Đánh giá" />
+                </div>
+                <div className="filter-item">
+                    <FilterItem title="Thời gian" />
+                </div>
                 <div className="filter-item filter-item--btn ">
                     <FilterItem
                         style={{ backgroundColor: "#00665C", color: "#FFFFFF" }}
@@ -250,137 +357,69 @@ function Home(props) {
                 </div>
             </div>
             <p className="category-title">Danh Mục</p>
-            <ul className="category-list">
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
+            <ul
+                ref={categoryRef}
+                className="category-list"
+            >
+                {categories.map((cate, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className="category-link"
+                        >
+                            <CategoryItem
+                                imgUrl={cate.linkAnh}
+                                name={cate.ten}
+                            />
+                        </div>
+                    );
+                })}
+                <Tooltip
+                    className="left-nav-btn"
+                    title="previous"
                 >
-                    <CategoryItem
-                        imgUrl="https://bepmina.vn/wp-content/uploads/2021/11/cach-nau-lau-bo-nam-scaled.jpeg"
-                        name="Lẩu"
+                    <Button
+                        onClick={handlePrevious}
+                        shape="circle"
+                        disabled={!previousState}
+                        icon={<FaAngleLeft />}
                     />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
+                </Tooltip>
+                <Tooltip
+                    className="right-nav-btn"
+                    title="next"
                 >
-                    <CategoryItem
-                        imgUrl="https://media.mia.vn/uploads/blog-du-lich/quan-lau-mam-cay-dua-soc-trang-cung-mon-ngon-binh-dan-day-suc-hut-04-1664121177.jpeg"
-                        name="Buffet"
+                    <Button
+                        onClick={handleNext}
+                        shape="circle"
+                        icon={<FaAngleRight />}
+                        disabled={
+                            categoryRef.current?.scrollLeft + categoryRef.current?.clientWidth >=
+                            categoryRef.current?.scrollWidth
+                        }
                     />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://sieungon.com/wp-content/uploads/2018/12/bi-quyet-uop-thi-nuong-ngon.jpg"
-                        name="Nướng"
-                    />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://alltop.vn/backend/media/images/posts/2149/Nha_Hang_Chay_Moc_Mien-160520.jpg"
-                        name="Chay"
-                    />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://webtiengtrung.com/wp-content/uploads/2018/07/tu-vung-ve-cac-loai-hai-san-trong-tieng-trung.jpg"
-                        name="Hải sản"
-                    />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://statics.vinpearl.com/quan-nhau-can-tho-1_1632381868.jpg"
-                        name="Quán nhậu"
-                    />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://dichoihanoi.com/wp-content/uploads/2019/08/quan-do-han-ha-noi-10.jpg"
-                        name="Quán Hàn"
-                    />
-                </a>
-                <a
-                    className="category-link"
-                    href="https://facebook.com"
-                >
-                    <CategoryItem
-                        imgUrl="https://digifood.vn/blog/wp-content/uploads/2021/07/nha-hang-nhat-trieu-viet-vuong-@ngocsfood.jpg"
-                        name="Quán Nhật"
-                    />
-                </a>
+                </Tooltip>
             </ul>
             <div className="content">
                 <div className="selections">
                     <SlideCard
                         title="Các nhà hàng đề xuất cho bạn"
                         action="#"
-                        cardList={[
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                        ]}
+                        cardList={recommendList.map((card, index) => {
+                            return (
+                                <RecommendCard
+                                    imgUrl={card.imageUrls["RESTAURANTIMAGE"][0]}
+                                    address="HA NOI"
+                                    tags={["XU HƯỚNG"]}
+                                    name={card.ten}
+                                    key={index}
+                                    point={5}
+                                    category={card.loaiHinh}
+                                    avgPrice={card.khoangGia}
+                                    discountPercent={20}
+                                />
+                            );
+                        })}
                     />
                 </div>
                 <div className="top-restaurant-banner">
@@ -411,58 +450,21 @@ function Home(props) {
                         title="Top nhà hàng nổi bật tại Hà Nội"
                         actionTitle="Xem tất cả"
                         action="#"
-                        cardList={[
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                        ]}
+                        cardList={recommendList.map((res, index) => {
+                            return (
+                                <RecommendCard
+                                    key={index}
+                                    imgUrl={res.imageUrls["RESTAURANTIMAGE"][0]}
+                                    address="HA NOI"
+                                    tags={["XU HƯỚNG"]}
+                                    name={res.ten}
+                                    point={9.2}
+                                    category={res.loaiHinh}
+                                    avgPrice={res.khoangGia}
+                                    discountPercent={20}
+                                />
+                            );
+                        })}
                     />
                 </div>
                 <div className="selections">
@@ -470,58 +472,21 @@ function Home(props) {
                         title="Top nhà hàng nổi bật tại Sài Gòn"
                         actionTitle="Xem tất cả"
                         action="#"
-                        cardList={[
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                            <RecommendCard
-                                imgUrl="https://statics.vincom.com.vn/xu-huong/0-0-0-0-0-nha-hang-hai-san-ha-noi/image18.png"
-                                address="HA NOI"
-                                tags={["XU HƯỚNG"]}
-                                name="THE MEAL LUXURY"
-                                point={9.2}
-                                category={["Hải sản, BBQ"]}
-                                avgPrice={120000}
-                                discountPercent={20}
-                            />,
-                        ]}
+                        cardList={recommendList.map((res, index) => {
+                            return (
+                                <RecommendCard
+                                    key={index}
+                                    imgUrl={res.imageUrls["RESTAURANTIMAGE"][0]}
+                                    address="HA NOI"
+                                    tags={["XU HƯỚNG"]}
+                                    name={res.ten}
+                                    point={9.2}
+                                    category={res.loaiHinh}
+                                    avgPrice={res.khoangGia}
+                                    discountPercent={20}
+                                />
+                            );
+                        })}
                     />
                 </div>
                 <div className="business-model">

@@ -4,11 +4,12 @@ import InputSearch from "./InputSearch";
 import "./Search.css";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useNavigate } from "react-router-dom";
 
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
     const [search1, setSearch1] = useState("");
     const [search2, setSearch2] = useState("");
-
+    const navigate = useNavigate();
     const handleSearch1Change = (value) => {
         setSearch1(value);
     };
@@ -69,6 +70,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
             <button
                 type="submit"
                 className="search-btn"
+                onClick={() => navigate("../Search")}
             >
                 Search
             </button>

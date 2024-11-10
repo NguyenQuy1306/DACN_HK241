@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import {
     Button,
@@ -14,10 +14,15 @@ import {
     Select,
     TreeSelect,
 } from "antd";
+import axios from "axios";
+import moment from "moment";
 
 function PersonalInfo() {
+    const [form] = Form.useForm();
+    const id = 1;
     const [sex, setSex] = useState("Nam");
     const { RangePicker } = DatePicker;
+    const [customerInfo, setCustomerInfo] = useState({});
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -36,6 +41,36 @@ function PersonalInfo() {
             },
         },
     };
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/customer/${id}`);
+                if (response.status === 200) {
+                    setCustomerInfo(response.data);
+                    console.log("CUSTOMER: ", customerInfo);
+                } else {
+                    console.log("Failed to fetch customer information!");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        fetchInfo();
+    }, [id]);
+
+    useEffect(() => {
+        if (customerInfo) {
+            form.setFieldsValue({
+                fname: customerInfo.hoTen?.split(" ").slice(0, 2).join(" "),
+                lname: customerInfo.hoTen?.split(" ")[2],
+                phone: customerInfo.sdt,
+                dob: moment(customerInfo.ngaySinh, "YYYY-MM-DD"),
+                address: customerInfo.diaChi,
+            });
+        }
+    }, [customerInfo, form]);
+
     return (
         <div className={styles.container}>
             <h3 className={styles.header}>Thông tin tài khoản</h3>
@@ -49,13 +84,15 @@ function PersonalInfo() {
                     style={{
                         marginTop: "36px",
                     }}
+                    form={form}
+                    initialValues={customerInfo}
                 >
                     <Row gutter={24}>
                         <Col span={12}>
                             <Form.Item
                                 label="Họ và tên đệm"
                                 name="fname"
-                                labelCol={4}
+                                labelCol={{ span: 8 }}
                                 wrapperCol={8}
                                 rules={[
                                     {
@@ -71,9 +108,9 @@ function PersonalInfo() {
                             <Form.Item
                                 label="Tên"
                                 name="lname"
-                                labelCol={{span:6}}
+                                labelCol={{ span: 6 }}
                                 labelAlign="right"
-                                wrapperCol={{span:10}}
+                                wrapperCol={{ span: 10 }}
                                 rules={[
                                     {
                                         required: true,
@@ -91,7 +128,7 @@ function PersonalInfo() {
                                 label="Số điện thoại"
                                 name="phone"
                                 labelAlign="left"
-                                labelCol={{span:8}}
+                                labelCol={{ span: 8 }}
                                 wrapperCol={8}
                                 rules={[
                                     {
@@ -121,8 +158,8 @@ function PersonalInfo() {
                     <Form.Item
                         label="Địa chỉ"
                         name="address"
-                        labelCol={{span:4}}
-                        wrapperCol={4}
+                        labelCol={{ span: 4 }}
+                        wrapperCol={{ span: 20 }}
                         labelAlign="left"
                         rules={[
                             {

@@ -12,4 +12,6 @@ public interface RestaurantService {
     List<RestaurantInMapsResponse> getRestaurantsInMaps(Double blLat, Double blLng, Double trLat, Double trLng,
             Pageable pageable);
 
+    List<RestaurantInMapsResponse> getRecommendedList();
+
 }

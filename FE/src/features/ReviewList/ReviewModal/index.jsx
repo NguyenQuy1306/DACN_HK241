@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import { Button, Flex, Modal, Rate, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
-function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
+function ReviewModal({ open, handleCancel, handleOk, handleChange, content, rating, updateTime }) {
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].reduce((acc, cur) => {
         return [
             ...acc,
@@ -16,6 +16,7 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
     const desc = ["Thất vọng", "Tệ", "Bình thường", "Tốt", "Tuyệt vời"];
     const [value, setValue] = useState(3);
     console.log(options);
+    const moment = require("moment");
     return (
         <div className={styles.container}>
             <Modal
@@ -24,7 +25,9 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
-                    <p className={styles["update-time"]}>Cập nhật: 12/09/2024</p>,
+                    <p className={styles["update-time"]}>
+                        Cập nhật: {moment(updateTime).format("DD-MM-YYYY HH:mm:ss")}
+                    </p>,
                     <Button
                         key="back"
                         onClick={handleCancel}
@@ -44,7 +47,6 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
                     </Button>,
                     <Button
                         key="link"
-                        href="https://google.com"
                         type="primary"
                         onClick={handleOk}
                     >
@@ -61,7 +63,8 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
                         <Rate
                             tooltips={desc}
                             onChange={setValue}
-                            value={value}
+                            value={rating}
+                            disabled
                         />
                     </Flex>
                 </div>
@@ -70,6 +73,7 @@ function ReviewModal({ open, handleCancel, handleOk, handleChange }) {
                 <TextArea
                     rows={4}
                     placeholder="Hãy để lại nhận xét của bạn về nhà hàng..."
+                    value={content}
                 ></TextArea>
             </Modal>
         </div>

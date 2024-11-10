@@ -18,7 +18,7 @@ function SlideCard({ title, actionTitle, actionUrl, cardList }) {
 
     const sliceCardList = cardList.reduce(
         (acc, cur) => {
-            if (acc[acc.length - 1].length < 3) {
+            if (acc[acc.length - 1].length < 4) {
                 acc[acc.length - 1].push(cur);
             } else {
                 acc.push([]);

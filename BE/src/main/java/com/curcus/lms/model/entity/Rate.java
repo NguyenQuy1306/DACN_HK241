@@ -31,13 +31,13 @@ public class Rate {
     @Column(nullable = false)
     private String NoiDung;
     @Column(nullable = false)
-    private Double DiemKhongGian;
-    @Column(nullable = false)
-    private Double DiemDichVu;
-    @Column(nullable = false)
-    private Double DiemMonAn;
-    @Column(nullable = false)
-    private LocalDateTime ThoiGian;
+    private Double Sao;
+
+    @Column(nullable = false, name = "thoigiancapnhat")
+    private LocalDateTime ThoiGianCapNhat;
+
+    @Column()
+    private LocalDateTime ThoiGianTraiNghiem;
 
     @ManyToOne
     @JoinColumn(name = "MaSoNguoiDung", referencedColumnName = "MaSoNguoiDung")
