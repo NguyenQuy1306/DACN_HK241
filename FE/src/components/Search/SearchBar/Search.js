@@ -7,14 +7,12 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useNavigate } from "react-router-dom";
 
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
-
-    const [search1, setSearch1] = useState("");
-    const [search2, setSearch2] = useState("");
-    const navigate = useNavigate();
-    const handleSearch1Change = (value) => {
-        setSearch1(value);
-    };
-
+  const [search1, setSearch1] = useState("");
+  const [search2, setSearch2] = useState("");
+  const navigate = useNavigate();
+  const handleSearch1Change = (value) => {
+    setSearch1(value);
+  };
 
   const handleSearch2Change = (value) => {
     setSearch2(value);
@@ -34,7 +32,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         display: "flex",
         flexDirection: "row",
         borderRadius: "8px",
-        width: "850px",
+        width: "920px",
         alignItems: "center",
         background: "rgb(255, 255, 255)",
         border: border === "none" ? "none" : border,
@@ -46,7 +44,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
       <InputSearch
         value={search1}
         onChange={handleSearch1Change}
-        width={276}
+        width={376}
         placeholder={"Cuisine"}
         iCon={<LocationOnIcon></LocationOnIcon>}
       />
@@ -64,21 +62,20 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
       <InputSearch
         value={search2}
         onChange={handleSearch2Change}
-        width={430}
+        width={550}
         placeholder={"Restaurant"}
         iCon={<SearchIcon></SearchIcon>}
       />
 
-            <button
-                type="submit"
-                className="search-btn"
-                onClick={() => navigate("../Search")}
-            >
-                Search
-            </button>
-        </form>
-    );
-
+      <button
+        type="submit"
+        className="search-btn"
+        onClick={() => navigate("../Search")}
+      >
+        Search
+      </button>
+    </form>
+  );
 };
 
 export default SearchBox;

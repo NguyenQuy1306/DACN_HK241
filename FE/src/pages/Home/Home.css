@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 6px 6px 4px rgba(0,0,0,0.04);
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .home-header,.main-header  {

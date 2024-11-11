@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import SearchBox from "../../Search/SearchBar/Search";
 import Logo from "../../Logo";
 import HeaderInfo from "../../../features/UserInfo/components/HeaderInfo";
+import ModalHomepage from "../../Modal/ModalHomepage/ModalHomepage";
 const SearchBar = ({ border }) => {
+  const showDrawer = () => {
+    setOpen(true);
+    // document.body.style.overflow = "hidden";
+  };
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <div
@@ -23,10 +30,21 @@ const SearchBar = ({ border }) => {
           <Logo></Logo>
         </div>
         <SearchBox border={border} />
-        <HeaderInfo
-          userName="Nhựt"
-          avatar={require("../../../assets/images/avatar.png")}
-        />
+        <div
+          onClick={showDrawer}
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            right: 0,
+            paddingRight: "5px",
+          }}
+        >
+          <HeaderInfo
+            userName="Nhựt"
+            avatar={require("../../../assets/images/avatar.png")}
+          />
+        </div>
+        <ModalHomepage open={open} setOpen={setOpen}></ModalHomepage>
       </div>
     </>
   );

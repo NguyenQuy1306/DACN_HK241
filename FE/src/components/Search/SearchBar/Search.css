@@ -19,6 +19,7 @@ button.search-btn {
   width: 108px;
   margin-left: 12px;
   height: 38px;
+  margin-right: 5px;
 }
 
 button.search-btn:hover {
