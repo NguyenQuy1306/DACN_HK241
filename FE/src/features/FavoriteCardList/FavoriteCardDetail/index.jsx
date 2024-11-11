@@ -2,13 +2,14 @@ import React from "react";
 import styles from "./style.module.css";
 import { FcLike } from "react-icons/fc";
 import { FaRegComment } from "react-icons/fa";
+import { Rate } from "antd";
 
-function FavoriteCardDetail() {
+function FavoriteCardDetail({ name, address, avgPrice,imgUrl }) {
     return (
         <div className={styles.container}>
             <img
                 alt="Restaurant"
-                src={require("../../../assets/images/dia-chi-an-hai-san-tai-quy-nhon-hai-san-quy-nhon.jpg")}
+                src={imgUrl}
                 className={styles["card-img"]}
             ></img>
             <div className={styles["card-body"]}>
@@ -31,17 +32,24 @@ function FavoriteCardDetail() {
                     />
                 </div>
                 <div className={styles["restaurant-name"]}>
-                    <h3 className={styles.name}>Sumo Yakiniku</h3>
-                    <span className={styles.rating}>7.5</span>
+                    <h3 className={styles.name}>{name}</h3>
                 </div>
+
                 <div className={styles["restaurant-address"]}>
-                    <p className={styles.address}>Tầng 1, TTTM Aeon Mall Hà Đông, Quận Hà Đông, TP Hà Nội</p>
+                    <p className={styles.address}>{address}</p>
                     <div className={styles.comment}>
                         <FaRegComment />
                         <span className={styles["comment-quantity"]}>410</span>
                     </div>
                 </div>
-                <div className={styles["avg-price"]}>Giá trung bình: 160.000đ</div>
+                <div className={styles.rating}>
+                    <Rate
+                        size={16}
+                        disabled
+                        defaultValue={2}
+                    />
+                </div>
+                <div className={styles["avg-price"]}>Giá trung bình: {avgPrice}</div>
             </div>
         </div>
     );

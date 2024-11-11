@@ -4,6 +4,11 @@
     width: 328px;
 }
 
+.container:hover {
+    cursor: pointer;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
 .card-icon {
     background-color: #F9FAFA;
     height: 124px;

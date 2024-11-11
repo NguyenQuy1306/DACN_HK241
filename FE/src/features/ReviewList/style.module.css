@@ -32,9 +32,13 @@
     border-radius: 4px;
 }
 
-.card-wrapper:hover {
-    cursor: pointer;
-    animation: moveOut ease-in-out 0.2s forwards ;
+
+
+.card-wrapper {
+    display: flex;
+    justify-self: space-between;
+    align-items: center;
+    gap: 8px;
 }
 
 @keyframes moveOut {

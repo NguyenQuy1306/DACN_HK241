@@ -42,6 +42,13 @@ public class RestaurantController {
         return restaurantResponse;
     }
 
+    @GetMapping("/recommended")
+
+    public List<RestaurantInMapsResponse> getRecommendedList() {
+        return  restaurantService.getRecommendedList();
+    }
+
+
     @GetMapping("/list-in-boundary")
     public ResponseEntity<ApiResponse<List<RestaurantInMapsResponse>>> getRestaurantsInMaps(
             @RequestParam Double bl_latitude,

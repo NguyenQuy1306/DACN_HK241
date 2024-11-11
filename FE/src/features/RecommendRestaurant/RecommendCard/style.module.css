@@ -42,7 +42,20 @@
 .res-name {
     font-size: 18px;
     font-weight: 700;
+    /* height: 56.25px; */
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limits text to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.body-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 194.55px;
 }
 
 .rating-point {

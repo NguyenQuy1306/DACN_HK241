@@ -1,8 +1,11 @@
-import { Button, Drawer } from "antd";
-import React, { useEffect, useState } from "react";
-import { CiFilter } from "react-icons/ci";
-import { FaCalendarCheck } from "react-icons/fa";
+import { CloseOutlined } from "@mui/icons-material";
+import { Button, Drawer, Tooltip } from "antd";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { CiFilter, CiUser } from "react-icons/ci";
+import { FaAngleLeft, FaAngleRight, FaCalendarCheck } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
+
 import { IoIosStar } from "react-icons/io";
 import { IoBookOutline, IoBookSharp } from "react-icons/io5";
 import {
@@ -11,44 +14,52 @@ import {
   MdOutlineLoyalty,
   MdStars,
 } from "react-icons/md";
+
 import LogoImage from "../../assets/images/logo.png";
 import FilterItem from "../../components/FilterItem";
 import Logo from "../../components/Logo";
 import Search from "../../components/Search/SearchBar/SearchBar";
 import CategoryItem from "../../features/Cetegogy/CategoryItem";
+import FavoriteList from "../../features/FavoriteCardList";
+import PersonalInfo from "../../features/PersonalInfo";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
+import ReviewList from "../../features/ReviewList";
 import SlideCard from "../../features/Selections/components/SlideCard";
 import HeaderInfo from "../../features/UserInfo/components/HeaderInfo";
-import { IoIosHeartEmpty } from "react-icons/io";
-import { TfiComment } from "react-icons/tfi";
-import { CiUser } from "react-icons/ci";
-import { IoStorefrontOutline } from "react-icons/io5";
-import "./Home.css";
-import { CloseOutlined } from "@mui/icons-material";
 import BookingHistory from "./../../features/BookingHistory/index";
-import FavoriteList from "../../features/FavoriteCardList";
-import ReviewList from "../../features/ReviewList";
-import PersonalInfo from "../../features/PersonalInfo";
-import RegisterRestaurant1 from "../RegisterRestaurant1";
-import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 function Home(props) {
 
     const navigate = useNavigate();
+    const categoryRef = useRef();
+    const [itemWidth, setItemWidth] = useState(0);
+    const categoryItemPerPage = 9;
+    const [testScroll, setTestScroll] = useState(0);
+    const [recommendList, setRecommendList] = useState([]);
+    const [startIndex, setStartIndex] = useState(0);
     const [open, setOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [navItem, setNavItem] = useState("");
+    const [recommendedList, setRecommendedList] = useState([]);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [previousState, setPreviousState] = useState(false);
+    const [nextSate, setNextState] = useState(false);
+
     const showChildrenDrawer = () => {
         setChildrenDrawer(true);
     };
+
     const onChildrenDrawerClose = () => {
         setChildrenDrawer(false);
     };
+
     const showDrawer = () => {
         setOpen(true);
         // document.body.style.overflow = "hidden";
     };
+
     const onClose = () => {
         setOpen(false);
         document.body.style.overflow = "auto";
@@ -62,7 +73,9 @@ function Home(props) {
       }
     };
 
+
     window.addEventListener("scroll", handleScroll);
+
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -70,7 +83,9 @@ function Home(props) {
   }, []);
 
 
+
   const carouselRef = React.useRef(null);
+
 
 
   const next = () => {
@@ -113,6 +128,7 @@ function Home(props) {
             <div className="menu-icon">
               <IoBookOutline size={24} />
 
+
             </div>
             <p onClick={() => setNavItem("booking")} className="menu-text">
               Lịch sử đặt bàn
@@ -130,6 +146,7 @@ function Home(props) {
             <div className="menu-icon">
               <TfiComment size={24} />
             </div>
+
             <p onClick={() => setNavItem("comment")} className="menu-text">
               Bình luận
             </p>

@@ -7,9 +7,56 @@ import Input from "../../components/Input";
 import { CiCircleQuestion, CiSearch } from "react-icons/ci";
 import { BsTools } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+    setRestaurantName,
+    setRestaurantAddress,
+    setAvgPrice,
+    resetState,
+} from "../../redux/features/RegisterRestaurantSlice";
+import axios from "axios";
 function RegisterRestaurant2() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const restaurantInfo = useSelector((state) => state.restaurantRegister);
+    const generalInfo = useSelector((state) => state.restaurantRegister);
+    const requestValue = JSON.stringify({
+        HoTenDem: generalInfo?.fname,
+        Ten: generalInfo?.lname,
+        SDT: generalInfo?.phone,
+        Email: generalInfo?.email,
+        TenNhaHang: generalInfo?.restaurantName,
+        DiaChi: generalInfo?.restaurantAddress,
+        KhoangGia: generalInfo?.avgPrice,
+    });
+
+    console.log(requestValue);
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post(
+                "http://localhost:8080/api/register-restaurant",
+                requestValue,
+
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+            if (response.status === 200) {
+                alert("Restaurant was successfully registered");
+                dispatch(resetState());
+                navigate("/register-restaurant");
+            } else {
+                console.log("Failed to register restaurant, try again!");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        navigate("/register-restaurant");
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -44,6 +91,8 @@ function RegisterRestaurant2() {
                             placeholder="Đầu tiên, tên nhà hàng của bạn là gì?"
                             labelColor="#000"
                             otherStyle={{ border: "1px solid #ccc", borderRadius: "4px" }}
+                            value={restaurantInfo.restaurantName}
+                            onChange={(name) => dispatch(setRestaurantName(name))}
                         />
                     </div>
                     <div className={styles["input-wrapper"]}>
@@ -53,6 +102,8 @@ function RegisterRestaurant2() {
                             placeholder="268, Lý Thường Kiệt,..."
                             labelColor="black"
                             otherStyle={{ border: "1px solid #ccc", borderRadius: "4px" }}
+                            value={restaurantInfo.restaurantAddress}
+                            onChange={(name) => dispatch(setRestaurantAddress(name))}
                         />
                     </div>
                     <div className={styles["input-wrapper"]}>
@@ -62,6 +113,8 @@ function RegisterRestaurant2() {
                             placeholder="200000"
                             labelColor="black"
                             otherStyle={{ border: "1px solid #ccc", borderRadius: "4px" }}
+                            value={restaurantInfo.avgPrice}
+                            onChange={(name) => dispatch(setAvgPrice(name))}
                         />
                     </div>
                     <div className={styles["form-action"]}>
@@ -76,16 +129,18 @@ function RegisterRestaurant2() {
                                 Back
                             </p>
                         </div>
-                        <Button
-                            style={{
-                                minWidth: "80px",
-                                border: "1px solid #00665C",
-                                borderRadius: "8px",
-                                color: "#00665C",
-                            }}
-                        >
-                            GỬI
-                        </Button>
+                        <div onClick={() => handleSubmit()}>
+                            <Button
+                                style={{
+                                    minWidth: "80px",
+                                    border: "1px solid #00665C",
+                                    borderRadius: "8px",
+                                    color: "#00665C",
+                                }}
+                            >
+                                GỬI
+                            </Button>
+                        </div>
                     </div>
                 </div>
 

@@ -1,0 +1,23 @@
+.container {
+    border: 1px solid #002925;
+    border-radius: 12px;
+    padding: 6px 12px;
+    width: fit-content;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.pay {
+    padding: 0 4px;
+    color: #002925;
+    margin-bottom: 0;
+    margin-left: 8px;
+}
+
+.logo-img {
+    width: 20px;
+    height: 24px;
+}

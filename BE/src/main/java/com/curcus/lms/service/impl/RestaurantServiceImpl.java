@@ -34,6 +34,24 @@ public class RestaurantServiceImpl implements RestaurantService {
     // }
 
     @Override
+    public List<RestaurantInMapsResponse> getRecommendedList() {
+        try {
+            List<Restaurant> restaurants = restaurantRepository.findAll();
+            int numOfRes = Math.min(restaurants.size(), 10);
+            List<Restaurant> recommendedList = new ArrayList<>();
+            for (int i=0;i<numOfRes;i++) {
+                recommendedList.add(restaurants.get(i));
+            }
+
+            return recommendedList.stream().map(restaurantMapper::toDetailResponse).collect(Collectors.toList());
+
+
+        } catch  (Exception ex){
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
     public List<RestaurantInMapsResponse> getRestaurantsInMaps(Double blLat, Double blLng, Double trLat, Double trLng,
             Pageable pageable) {
 

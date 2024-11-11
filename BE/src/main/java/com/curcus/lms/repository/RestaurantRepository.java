@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
         @Query("SELECT DISTINCT r FROM Restaurant r " +
-                        "JOIN r.danhSachAnhNhaHang ra " +
+                        "JOIN r.DanhSachAnhNhaHang ra " +
                         "WHERE ra.KieuAnh = :restaurantImageType " +
                         "AND r.ViDo BETWEEN :blLat AND :trLat " +
                         "AND r.KinhDo BETWEEN :blLng AND :trLng")

@@ -5,7 +5,7 @@
     position: relative;
 }
 
-.confirm-status, .cancel-status {
+.confirm-status, .cancel-status, .complete-status {
     position: absolute;
     top: 12px;
     right: 0;
@@ -18,6 +18,12 @@
 
 .confirm-status {
     background-color: #B0FFF7;
+}
+
+.complete-status {
+    background-color: rgb(12, 12, 226);
+    color: #fff;
+
 }
 
 .cancel-status {
@@ -37,17 +43,22 @@
 
 .card-content {
     margin-left: 24px;
-    margin-top: 12px;
+    margin-top: 4px;
 }
 
 .restaurant-name {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+    max-width: 400px;
+    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .restaurant-address {
     font-size: 14px;
     color: #272A2F;
+    max-width: 400px;
+    line-height: 1.4;
 }
 
 .time-frame {
@@ -55,20 +66,17 @@
     align-items: center;
     width: 310px;
     justify-content: space-between;
-    margin-top: 36px;
+    margin-top: 16px;
 }
 
 .time-frame__title {
     margin-bottom: 4px;
     font-size: 14px;
+    
 }
 
-.time-frame__day, .time-frame__hour, .time-frame__cus {
-    text-align: center;
-}
 .time-frame__detail {
-    font-weight: 600;
-    text-align: center;
+    font-weight: 700;
 }
 
 .card-actions {

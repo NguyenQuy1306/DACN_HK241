@@ -16,6 +16,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,8 +29,6 @@ public class Restaurant {
     @Column(name = "MaSoNhaHang")
     private Long MaSoNhaHang;
 
-    // @Column(nullable = false)
-    // private String courseThumbnail;
     @Column(nullable = false)
     private String URL;
     @Column(nullable = false)
@@ -59,43 +58,33 @@ public class Restaurant {
     private String TrangThai;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<FavoriteListRestaurant> danhSachNhaHangYeuThich;
+    private Set<FavoriteListRestaurant> DanhSachNhaHangYeuThich;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<TimeActive> danhSachKhungGioHoatDong;
+    private Set<TimeActive> DanhSachKhungGioHoatDong;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<RestaurantHasUtility> danhSachNhahangCoTienIch;
+    private Set<RestaurantHasUtility> DanhSachNhahangCoTienIch;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<RestaurantSpace> danhSachKhongGianNhaHang;
+    private Set<RestaurantSpace> DanhSachKhongGianNhaHang;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<RestaurantHasPaymentMethod> danhSachNhaHangCoPhuongThucThanhToan;
+    private Set<RestaurantHasPaymentMethod> DanhSachNhaHangCoPhuongThucThanhToan;
 
     @OneToMany(mappedBy = "NhaHang")
-    private Set<RestaurantImage> danhSachAnhNhaHang;
+    private Set<RestaurantImage> DanhSachAnhNhaHang;
 
     @ManyToOne
     @JoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")
     private User ChuNhaHang;
 
-    // @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade =
-    // CascadeType.ALL)
-    // Set<Enrollment> enrollment;
+    @ManyToOne
+    @JoinColumn(name = "MaSoDanhMucNhaHang", referencedColumnName = "maSoDanhMucNhaHang")
+    private RestaurantCategory DanhMucNhaHang;
 
-    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
-    // "course")
-    // Set<Section> sections;
 
-    // @Override
-    // public String toString() {
-    // return "Course [courseId=" + courseId + ", title=" + title + ", description="
-    // + description + ", price=" + price
-    // + ", instructor=" + instructor.getUserId() + ", category=" + category + ",
-    // enrollment=" + enrollment
-    // + "]";
-    // }
+
     @Override
     public String toString() {
         return "Restaurant{" +
@@ -116,5 +105,197 @@ public class Restaurant {
                 ", KieuNhaHang='" + KieuNhaHang + '\'' +
                 ", TrangThai='" + TrangThai + '\'' +
                 '}';
+    }
+
+    public Long getMaSoNhaHang() {
+        return MaSoNhaHang;
+    }
+
+    public void setMaSoNhaHang(Long maSoNhaHang) {
+        MaSoNhaHang = maSoNhaHang;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String getTen() {
+        return Ten;
+    }
+
+    public void setTen(String ten) {
+        Ten = ten;
+    }
+
+    public String getDiaChi() {
+        return DiaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        DiaChi = diaChi;
+    }
+
+    public String getLoaiHinh() {
+        return LoaiHinh;
+    }
+
+    public void setLoaiHinh(String loaiHinh) {
+        LoaiHinh = loaiHinh;
+    }
+
+    public String getKhoangGia() {
+        return KhoangGia;
+    }
+
+    public void setKhoangGia(String khoangGia) {
+        KhoangGia = khoangGia;
+    }
+
+    public String getGioHoatDong() {
+        return GioHoatDong;
+    }
+
+    public void setGioHoatDong(String gioHoatDong) {
+        GioHoatDong = gioHoatDong;
+    }
+
+    public String getPhuHop() {
+        return PhuHop;
+    }
+
+    public void setPhuHop(String phuHop) {
+        PhuHop = phuHop;
+    }
+
+    public String getMonDacSac() {
+        return MonDacSac;
+    }
+
+    public void setMonDacSac(String monDacSac) {
+        MonDacSac = monDacSac;
+    }
+
+    public String getMoTaKhongGian() {
+        return MoTaKhongGian;
+    }
+
+    public void setMoTaKhongGian(String moTaKhongGian) {
+        MoTaKhongGian = moTaKhongGian;
+    }
+
+    public String getDiemDacTrung() {
+        return DiemDacTrung;
+    }
+
+    public void setDiemDacTrung(String diemDacTrung) {
+        DiemDacTrung = diemDacTrung;
+    }
+
+    public Double getKinhDo() {
+        return KinhDo;
+    }
+
+    public void setKinhDo(Double kinhDo) {
+        KinhDo = kinhDo;
+    }
+
+    public Double getViDo() {
+        return ViDo;
+    }
+
+    public void setViDo(Double viDo) {
+        ViDo = viDo;
+    }
+
+    public String getLoaiAmThuc() {
+        return LoaiAmThuc;
+    }
+
+    public void setLoaiAmThuc(String loaiAmThuc) {
+        LoaiAmThuc = loaiAmThuc;
+    }
+
+    public String getKieuNhaHang() {
+        return KieuNhaHang;
+    }
+
+    public void setKieuNhaHang(String kieuNhaHang) {
+        KieuNhaHang = kieuNhaHang;
+    }
+
+    public String getTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        TrangThai = trangThai;
+    }
+
+    public Set<FavoriteListRestaurant> getDanhSachNhaHangYeuThich() {
+        return DanhSachNhaHangYeuThich;
+    }
+
+    public void setDanhSachNhaHangYeuThich(Set<FavoriteListRestaurant> danhSachNhaHangYeuThich) {
+        DanhSachNhaHangYeuThich = danhSachNhaHangYeuThich;
+    }
+
+    public Set<TimeActive> getDanhSachKhungGioHoatDong() {
+        return DanhSachKhungGioHoatDong;
+    }
+
+    public void setDanhSachKhungGioHoatDong(Set<TimeActive> danhSachKhungGioHoatDong) {
+        DanhSachKhungGioHoatDong = danhSachKhungGioHoatDong;
+    }
+
+    public Set<RestaurantHasUtility> getDanhSachNhahangCoTienIch() {
+        return DanhSachNhahangCoTienIch;
+    }
+
+    public void setDanhSachNhahangCoTienIch(Set<RestaurantHasUtility> danhSachNhahangCoTienIch) {
+        DanhSachNhahangCoTienIch = danhSachNhahangCoTienIch;
+    }
+
+    public Set<RestaurantSpace> getDanhSachKhongGianNhaHang() {
+        return DanhSachKhongGianNhaHang;
+    }
+
+    public void setDanhSachKhongGianNhaHang(Set<RestaurantSpace> danhSachKhongGianNhaHang) {
+        DanhSachKhongGianNhaHang = danhSachKhongGianNhaHang;
+    }
+
+    public Set<RestaurantHasPaymentMethod> getDanhSachNhaHangCoPhuongThucThanhToan() {
+        return DanhSachNhaHangCoPhuongThucThanhToan;
+    }
+
+    public void setDanhSachNhaHangCoPhuongThucThanhToan(Set<RestaurantHasPaymentMethod> danhSachNhaHangCoPhuongThucThanhToan) {
+        DanhSachNhaHangCoPhuongThucThanhToan = danhSachNhaHangCoPhuongThucThanhToan;
+    }
+
+    public Set<RestaurantImage> getDanhSachAnhNhaHang() {
+        return DanhSachAnhNhaHang;
+    }
+
+    public void setDanhSachAnhNhaHang(Set<RestaurantImage> danhSachAnhNhaHang) {
+        DanhSachAnhNhaHang = danhSachAnhNhaHang;
+    }
+
+    public User getChuNhaHang() {
+        return ChuNhaHang;
+    }
+
+    public void setChuNhaHang(User chuNhaHang) {
+        ChuNhaHang = chuNhaHang;
+    }
+
+    public RestaurantCategory getDanhMucNhaHang() {
+        return DanhMucNhaHang;
+    }
+
+    public void setDanhMucNhaHang(RestaurantCategory danhMucNhaHang) {
+        DanhMucNhaHang = danhMucNhaHang;
     }
 }

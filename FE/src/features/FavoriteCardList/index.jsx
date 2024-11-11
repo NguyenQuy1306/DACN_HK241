@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import { Divider } from "antd";
 import { IoAddCircle } from "react-icons/io5";
 import FavoriteCard from "./FavoriteCard";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function FavoriteCardList() {
+function FavoriteCardList({ customerId }) {
     const navigate = useNavigate();
+    const [favoriteList, setFavorites] = useState([]);
+    useEffect(() => {
+        const fetchFavoriteList = async () => {
+            try {
+                const favorites = await axios.get(`http://localhost:8080/api/favorite-list/${customerId}`);
+                if (favorites.status === 200) {
+                    setFavorites(favorites.data);
+                } else {
+                    console.log("Failed to get favorites list!");
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchFavoriteList();
+    }, [customerId]);
     return (
         <div className={styles.container}>
             <h3 className={styles.header}>Danh sách nhà hàng yêu thích</h3>
-            <p className={styles.quantity}>(1) danh sách</p>
+            <p className={styles.quantity}>({favoriteList.length}) danh sách</p>
             <Divider />
             <div className={styles["add-icon"]}>
                 <div className={styles["icon-wrapper"]}>
@@ -18,11 +36,23 @@ function FavoriteCardList() {
                 </div>
                 <p className={styles["add-text"]}>Tạo danh sách mới</p>
             </div>
-            <div
-                onClick={() => navigate("../favorite-list")}
-                className={styles["card-list"]}
-            >
-                <FavoriteCard />
+            <div className={styles["card-list-wrapper"]}>
+                {favoriteList.map((card, index) => {
+                    return (
+                        <div
+                            onClick={() => navigate(`/favorite-list/${card.maSoDanhSachYeuThich}`,{state: {card}})}
+                            className={styles["card-list"]}
+                            key={index}
+                        >
+                            <FavoriteCard
+                                name={card.ten}
+                                quantity={card.soLuongNhaHang}
+                                updateTime={card.thoiGianCapNhat}
+                                imgUrl = {card.anhNhaHang}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

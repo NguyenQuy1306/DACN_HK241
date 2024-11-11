@@ -12,29 +12,141 @@ import com.curcus.lms.model.entity.RestaurantImage;
 @Getter
 @Setter
 public class RestaurantInMapsResponse implements Serializable {
-    private Long MaSoNhaHang;
-    private String URL;
-    private String Ten;
-    private String DiaChi;
-    private String LoaiHinh;
-    private String KhoangGia;
-    private String GioHoatDong;
-    private String PhuHop;
-    private String MonDacSac;
-    private String MoTaKhongGian;
-    private String DiemDacTrung;
-    private Double ViDo;
-    private Double KinhDo;
-    private Map<String, Set<String>> imageUrls; // Chứa các loại ảnh theo loại
+    private Long maSoNhaHang;
+    private String url;
+    private String ten;
+    private String diaChi;
+    private String loaiHinh;
+    private String khoangGia;
+    private String gioHoatDong;
+    private String phuHop;
+    private String monDacSac;
+    private String moTaKhongGian;
+    private String diemDacTrung;
+    private Double viDo;
+    private Double kinhDo;
+    private Map<String, Set<String>> imageUrls; // Chứa các ảnh theo loại
 
     @Override
     public String toString() {
         return "RestaurantInMapsResponse{" +
-                "MaSoNhaHang=" + MaSoNhaHang +
-                ", URL='" + URL + '\'' +
-                ", Ten='" + Ten + '\'' +
-                ", DiaChi=" + DiaChi +
+                "MaSoNhaHang=" + maSoNhaHang +
+                ", URL='" + url + '\'' +
+                ", Ten='" + ten + '\'' +
+                ", DiaChi=" + diaChi +
                 '}';
+    }
+
+    public Long getMaSoNhaHang() {
+        return maSoNhaHang;
+    }
+
+    public void setMaSoNhaHang(Long maSoNhaHang) {
+        this.maSoNhaHang = maSoNhaHang;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getLoaiHinh() {
+        return loaiHinh;
+    }
+
+    public void setLoaiHinh(String loaiHinh) {
+        this.loaiHinh = loaiHinh;
+    }
+
+    public String getKhoangGia() {
+        return khoangGia;
+    }
+
+    public void setKhoangGia(String khoangGia) {
+        this.khoangGia = khoangGia;
+    }
+
+    public String getGioHoatDong() {
+        return gioHoatDong;
+    }
+
+    public void setGioHoatDong(String gioHoatDong) {
+        this.gioHoatDong = gioHoatDong;
+    }
+
+    public String getPhuHop() {
+        return phuHop;
+    }
+
+    public void setPhuHop(String phuHop) {
+        this.phuHop = phuHop;
+    }
+
+    public String getMonDacSac() {
+        return monDacSac;
+    }
+
+    public void setMonDacSac(String monDacSac) {
+        this.monDacSac = monDacSac;
+    }
+
+    public String getMoTaKhongGian() {
+        return moTaKhongGian;
+    }
+
+    public void setMoTaKhongGian(String moTaKhongGian) {
+        this.moTaKhongGian = moTaKhongGian;
+    }
+
+    public String getDiemDacTrung() {
+        return diemDacTrung;
+    }
+
+    public void setDiemDacTrung(String diemDacTrung) {
+        this.diemDacTrung = diemDacTrung;
+    }
+
+    public Double getViDo() {
+        return viDo;
+    }
+
+    public void setViDo(Double viDo) {
+        this.viDo = viDo;
+    }
+
+    public Double getKinhDo() {
+        return kinhDo;
+    }
+
+    public void setKinhDo(Double kinhDo) {
+        this.kinhDo = kinhDo;
+    }
+
+    public Map<String, Set<String>> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(Map<String, Set<String>> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     @Override
@@ -44,15 +156,15 @@ public class RestaurantInMapsResponse implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         RestaurantInMapsResponse that = (RestaurantInMapsResponse) o;
-        return Objects.equals(MaSoNhaHang, that.MaSoNhaHang) &&
-                Objects.equals(URL, that.URL) &&
-                Objects.equals(Ten, that.Ten) &&
-                Objects.equals(DiaChi, that.DiaChi);
+        return Objects.equals(maSoNhaHang, that.maSoNhaHang) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(ten, that.ten) &&
+                Objects.equals(diaChi, that.diaChi);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(MaSoNhaHang, URL, Ten, DiaChi);
+        return Objects.hash(maSoNhaHang, url, ten, diaChi);
     }
 
 }
