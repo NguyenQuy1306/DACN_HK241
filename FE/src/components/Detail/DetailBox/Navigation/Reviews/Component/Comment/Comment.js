@@ -5,7 +5,8 @@ import { Button } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
 import StorefrontIcon from "@mui/icons-material/Storefront";
-
+import StarRating from "../../StarRating/StarRating";
+import ModalViewImage from "../../../../../../Modal/ModalViewImage/ModalViewImage";
 const Comment = ({ selectedPlace, review }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -14,6 +15,13 @@ const Comment = ({ selectedPlace, review }) => {
       return text.substring(0, limit) + "...";
     }
     return text;
+  };
+
+  const [showImage, setShowImage] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const handleOnClickImage = () => {
+    setCurrentIndex(0);
+    setShowImage(selectedPlace.danhSachAnhNhaHang[0]);
   };
   return (
     <li className="CommentDiv">
@@ -37,12 +45,17 @@ const Comment = ({ selectedPlace, review }) => {
           </div>
           <div className="CommentDiv_blockquote_H1_point">
             <div className="CommentDiv_blockquote_H1_point_H1">
-              <span className="CommentDiv_blockquote_H1_point_H1_span1">
+              {/* <span className="CommentDiv_blockquote_H1_point_H1_span1">
                 {review.rating}
               </span>
               <span className="CommentDiv_blockquote_H1_point_H1_span2">
                 /10
-              </span>
+              </span> */}
+              <StarRating
+                rating={4.5}
+                size={"16"}
+                classname={"y-css-16tusp"}
+              ></StarRating>
             </div>
           </div>
         </div>
@@ -50,6 +63,25 @@ const Comment = ({ selectedPlace, review }) => {
           <div className="CommentDiv_blockquote_H2_comment">
             <div className="CommentDiv_blockquote_H2_comment_H1">
               <p>{review.content}</p>
+            </div>
+            <div
+              className="CommentDiv_blockquote_H2_comment_listImage"
+              onClick={handleOnClickImage}
+            >
+              <img
+                src={
+                  selectedPlace.danhSachAnhNhaHang
+                    ? selectedPlace.danhSachAnhNhaHang[0]
+                    : "https://via.placeholder.com/100"
+                }
+                alt={selectedPlace.name}
+                // style={{ width: "100%", height: "70%", borderRadius: "4px" }}
+              />
+              <div className="CommentDiv_blockquote_H2_comment_listImage_text">
+                <p className="CommentDiv_blockquote_H2_comment_listImage_text_p">
+                  <span>Xem các ảnh</span>
+                </p>
+              </div>
             </div>
           </div>
           <div className="CommentDiv_blockquote_H2_icon">
@@ -109,6 +141,15 @@ const Comment = ({ selectedPlace, review }) => {
             </div>
           ))}
       </blockquote>
+      {showImage && (
+        <ModalViewImage
+          showImage={showImage}
+          allFoodUrl={selectedPlace.danhSachAnhNhaHang}
+          setShowImage={setShowImage}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        ></ModalViewImage>
+      )}
     </li>
   );
 };

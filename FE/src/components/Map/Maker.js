@@ -1,7 +1,7 @@
-import React from 'react';
-import { Paper, Typography } from '@mui/material';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import useStyles from './styles.js';
+import React from "react";
+import { Paper, Typography } from "@mui/material";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import useStyles from "./styles.js";
 
 const Marker = React.memo(({ place, matches }) => {
   const classes = useStyles();
@@ -13,19 +13,27 @@ const Marker = React.memo(({ place, matches }) => {
       lng={Number(place.longitude)}
       key={place.id}
     >
-      {!matches
-        ? <LocationOnOutlinedIcon color="primary" fontSize="small" />
-        : (
-          <Paper elevation={3} className={classes.paper}>
-            <Typography className={classes.typography} variant="subtitle2" gutterBottom>
-              {place.name}
-            </Typography>
-            <img
-              className={classes.pointer}
-              src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
-            />
-          </Paper>
-        )}
+      {!matches ? (
+        <LocationOnOutlinedIcon color="primary" fontSize="small" />
+      ) : (
+        <Paper elevation={3} className={classes.paper}>
+          <Typography
+            className={classes.typography}
+            variant="subtitle2"
+            gutterBottom
+          >
+            {place.name}
+          </Typography>
+          <img
+            className={classes.pointer}
+            src={
+              place.photo
+                ? place.photo.images.large.url
+                : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+            }
+          />
+        </Paper>
+      )}
     </div>
   );
 });

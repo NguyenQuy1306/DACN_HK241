@@ -25,7 +25,7 @@ const List = ({
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
   const data_restaurantsInMaps = useSelector(
-    (state) => state.restaurant.restaurants
+    (state) => state.restaurant.hoveredMarkerIndex
   );
   useEffect(() => {
     setElRefs((refs) =>
@@ -71,6 +71,7 @@ const List = ({
               }
               refProp={elRefs[i]}
               place={place}
+              index={i}
             />
           ))}
         </>

@@ -5,7 +5,7 @@ const HeaderBookingwidget = ({ selectedPlace }) => {
     <div className="HeaderBookingwidgetDiv">
       <div className="HeaderBookingwidgetDiv_H1">
         <h3 className="HeaderBookingwidgetDiv_H1_H3">
-          <span>Find a table</span>
+          <span>Tìm bàn</span>
         </h3>
       </div>
       <p className="HeaderBookingwidgetDiv_p">

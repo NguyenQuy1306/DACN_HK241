@@ -1,40 +1,144 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./CardMenuAvailable.css";
-import { Button } from "@mui/material";
+import { Button, Modal, Box } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import BasicModal from "../ModalMenu/ModalMenu";
+import CloseIcon from "@mui/icons-material/Close";
+import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
+import { useDispatch, useSelector } from "react-redux";
+const { formatCurrency } = require("../../../../../../../helper/helper");
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+  const dispatch = useDispatch();
+  const openBookingWithMenu = useSelector(
+    (state) => state.restaurant.openBookingWithMenu
+  );
+  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  const handleOnClickBookingRestaurantWithAvailableMenu = () => {
+    setOpen(false);
+    dispatch(
+      setOpenBookingWithMenu({ openBookingWithMenu: true, menuChoosed: [menu] })
+    );
+  };
+
+  const { comboId, comboName, comboPrice, comboCreationTime, foods } = menu;
+
+  // Group foods by category
+  const groupedFoods = foods.reduce((acc, food) => {
+    const categoryId = food.danhMuc.maSoDanhMuc;
+    const categoryName = food.danhMuc.ten;
+    //!acc[categoryId] nếu null thì trong acc chưa có category này.
+    // dùng dictionary để lưu trữ
+    if (!acc[categoryId]) {
+      acc[categoryId] = { categoryName, items: [] };
+    }
+    acc[categoryId].items.push(food);
+
+    return acc;
+  }, {});
   return (
-    <div className="CardMenuAvailableDiv">
-      <div className="CardMenuAvailableDiv_H1">
-        <div>
-          <h3 className="CardMenuAvailableDiv_H1_h3">
-            {/* {combo.namSasASasAAe} */}
-            {menu.name}
-          </h3>
-          <span className="CardMenuAvailableDiv_H1_span">
-            <span>
-              <span>€{menu.price} </span>
-              per guest
+    <div>
+      <div className="CardMenuAvailableDiv" onClick={handleOpen}>
+        <div className="CardMenuAvailableDiv_H1">
+          <div>
+            <h3 className="CardMenuAvailableDiv_H1_h3">{comboName}</h3>
+            <span className="CardMenuAvailableDiv_H1_span">
+              <span>{formatCurrency(comboPrice)} đ/ người</span>
             </span>
-          </span>
+          </div>
+          <Button className="CardMenuAvailableDiv_H1_button">
+            <ArrowForwardIosIcon className="CardMenuAvailableDiv_H1_button_icon" />
+          </Button>
         </div>
-        <Button className="CardMenuAvailableDiv_H1_button">
-          <ArrowForwardIosIcon className="CardMenuAvailableDiv_H1_button_icon"></ArrowForwardIosIcon>
-        </Button>
-      </div>
-      <div className="CardMenuAvailableDiv_H2">
-        <div className="CardMenuAvailableDiv_H2_div">
-          <div className="CardMenuAvailableDiv_H2_div_div2">
-            {" "}
-            Có sẵn từ ngày 30/9 đến 1/10
+        <div className="CardMenuAvailableDiv_H2">
+          <div className="CardMenuAvailableDiv_H2_div">
+            <div className="CardMenuAvailableDiv_H2_div_div2">
+              {comboCreationTime}
+            </div>
           </div>
         </div>
+        <Button className="CardMenuAvailableDiv_button">
+          <span className="CardMenuAvailableDiv_button_span">Đặt combo</span>
+        </Button>
       </div>
-      <Button className="CardMenuAvailableDiv_button">
-        {" "}
-        <span className="CardMenuAvailableDiv_button_span">Đặt combo</span>
-      </Button>
+
+      {/* Modal Component */}
+      <Modal open={open} onClose={handleClose}>
+        <div className="CardMenuAvailableDiv_Modal_css">
+          <div className="CardMenuAvailableDiv_Modal">
+            <div className="CardMenuAvailableDiv_Modal_div">
+              <div className="CardMenuAvailableDiv_Modal_div_div">
+                <p className="CardMenuAvailableDiv_Modal_div_div_p">
+                  <div className="CardMenuAvailableDiv_Modal_div_div_p_nameMenu">
+                    {comboName}
+                  </div>
+                  <div className="CardMenuAvailableDiv_Modal_div_div_p_priceMenu">
+                    <span>{formatCurrency(comboPrice)}đ</span>
+                  </div>
+
+                  <p className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu"></p>
+
+                  {Object.values(groupedFoods).map((category, index) => (
+                    <div key={index}>
+                      <h3>{category.categoryName}</h3>
+                      <ul>
+                        {category.items.map((item, itemIndex) => (
+                          <p
+                            key={itemIndex}
+                            className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu_p"
+                          >
+                            {item.ten} - {item.gia} VND
+                          </p>
+                        ))}
+                        {/* {detail.ten} */}
+                      </ul>
+                    </div>
+                  ))}
+                  <div className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu">
+                    <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
+                      {" "}
+                      The dishes listed above are subject to change depending on
+                      availability.
+                    </p>
+                    <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
+                      {" "}
+                      This preset menu is available from 2024-12-31 to
+                      2024-12-31 for dinner on Tuesday, Wednesday and Thursday.{" "}
+                    </p>
+                    <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
+                      {" "}
+                      Please note, it will not be possible to choose from the "à
+                      la carte" menu once at the restaurant.
+                    </p>
+                  </div>
+                  <div className="CardMenuAvailableDiv_Modal_div_div_p_button">
+                    <div className="CardMenuAvailableDiv_Modal_div_div_p_button_div">
+                      <Button
+                        className="CardMenuAvailableDiv_Modal_div_div_p_button_div_css"
+                        onClick={
+                          handleOnClickBookingRestaurantWithAvailableMenu
+                        }
+                      >
+                        <span>Đặt menu này!</span>
+                      </Button>
+                    </div>
+                  </div>
+                </p>
+                <CloseIcon
+                  className="CardMenuAvailableDiv_Modal_div_div_icon"
+                  onClick={handleCloseModal}
+                ></CloseIcon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

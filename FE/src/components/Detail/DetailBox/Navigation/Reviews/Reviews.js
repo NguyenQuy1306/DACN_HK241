@@ -114,7 +114,11 @@ const Reviews = ({ selectedPlace, reviewData }) => {
                 />
               </div> */}
               <div class="y-css-f0t6x4" role="img" aria-label="4 star rating">
-                <StarRating rating={4.5}></StarRating>
+                <StarRating
+                  rating={4}
+                  size={"32"}
+                  classname={"y-css-35tusp"}
+                ></StarRating>
               </div>
             </div>
             <span className="ReviewsDiv_H1_rating_summary_img_count_span2">

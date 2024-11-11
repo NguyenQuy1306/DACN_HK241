@@ -1,6 +1,8 @@
 import React from "react";
 import "./ButtonMenuNavBar.css";
 import { Button } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { getFood } from "../../../../../../../redux/features/foodSlice";
 const ButtonMenuNavBar = ({
   selectedPlace,
   text,
@@ -9,6 +11,8 @@ const ButtonMenuNavBar = ({
   setOnClickMenuNavBar2,
   setOnClickMenuNavBar3,
 }) => {
+  const dispatch = useDispatch();
+
   const handleOnClickMenuNavBar = () => {
     if (text === "Tất cả món ăn") {
       setOnClickMenuNavBar1(false);
@@ -18,6 +22,7 @@ const ButtonMenuNavBar = ({
       setOnClickMenuNavBar1(false);
       setOnClickMenuNavBar2(false);
       setOnClickMenuNavBar3(true);
+      dispatch(getFood({ restaurantId: selectedPlace.maSoNhaHang }));
     } else if (text === "Các combo có sẵn") {
       setOnClickMenuNavBar1(true);
       setOnClickMenuNavBar2(false);

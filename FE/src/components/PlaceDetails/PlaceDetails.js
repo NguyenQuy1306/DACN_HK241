@@ -23,10 +23,19 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "./StarRating/StarRating.js";
-const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setHoveredMarkerIndex } from "../../redux/features/restaurantSlice";
+const PlaceDetails = ({
+  place,
+  selected,
+  refProp,
+  restaurantsImageType,
+  index,
+}) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const handleClickDetailRestaurant = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(place));
@@ -65,12 +74,19 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
     e.stopPropagation();
     setIsFavorited(!isFavorited);
   };
-
+  const handleMouseOver = (index) => {
+    dispatch(setHoveredMarkerIndex(index));
+  };
+  const handleMouseOut = () => {
+    dispatch(setHoveredMarkerIndex(null));
+  };
   return (
     <div>
       <div
         onClick={() => handleClickDetailRestaurant(place.maSoNhaHang)}
         className="PlaceDetailDiv"
+        onMouseOver={() => handleMouseOver(index)}
+        onMouseOut={handleMouseOut}
       >
         <div className="PlaceDetailDiv_H1">
           <div className="PlaceDetailDiv_H1_div">
@@ -116,6 +132,7 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
                 </Button>
               )}
             </div>
+            <div className="PlaceDetailDiv_H1_div_index">{index + 1}</div>
           </div>
           <div className="PlaceDetailDiv_H1_detail">
             <div>
@@ -146,7 +163,11 @@ const PlaceDetails = ({ place, selected, refProp, restaurantsImageType }) => {
                     </h2>
                   </div>
                   <div className="PlaceDetailDiv_H1_detail_name_div1_div">
-                    <StarRating rating={2.6}></StarRating>
+                    <StarRating
+                      rating={2.6}
+                      size={"32"}
+                      classname={"y-css-35tusp"}
+                    ></StarRating>
                     <div className="PlaceDetailDiv_H1_detail_rating">
                       {/* <span className="PlaceDetailDiv_H1_detail_rating_span1">
                     <span>4</span>

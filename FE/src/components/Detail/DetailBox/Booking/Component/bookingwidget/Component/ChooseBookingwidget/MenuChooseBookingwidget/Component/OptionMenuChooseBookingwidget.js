@@ -1,6 +1,7 @@
-import React, { useState, useEffect, createRef } from "react";
+import React from "react";
 import "./OptionMenuChooseBookingwidget.css";
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 const OptionMenuChooseBookingwidget = ({
   selectedPlace,
@@ -9,8 +10,15 @@ const OptionMenuChooseBookingwidget = ({
   onClick2,
   icon,
   choosedOptionByWithMenu,
+  openBookingWithMenu,
 }) => {
-  const handleOnclickButotn = () => {
+  const handleOnclickButton = () => {
+    // Nếu openBookingWithMenu là true và text không phải là "Reservation with menu", dừng hàm tại đây
+    if (openBookingWithMenu && text !== "Reservation with menu") {
+      return;
+    }
+
+    // Điều kiện để thay đổi trạng thái khi text là "Reservation with menu"
     if (text === "Reservation with menu") {
       onClick(true);
       onClick2(false);
@@ -19,17 +27,16 @@ const OptionMenuChooseBookingwidget = ({
       onClick2(true);
     }
   };
+
   return (
     <div className="OptionMenuChooseBookingwidgetDiv">
       <Button
-        // className={`OptionMenuChooseBookingwidgetDiv_button ${
-        //   choosedOptionByWithMenu === true ? "active" : ""
-        // } `}
-
         className={`OptionMenuChooseBookingwidgetDiv_button ${
-          choosedOptionByWithMenu === true ? "active" : ""
+          choosedOptionByWithMenu ? "active" : ""
         } ${text === "Reservation with menu" ? "" : "size"}`}
-        onClick={handleOnclickButotn}
+        onClick={handleOnclickButton}
+        // Vô hiệu hóa nút nếu openBookingWithMenu là true và text là "Reservation without menu"
+        disabled={openBookingWithMenu && text === "Reservation without menu"}
       >
         <span className="OptionMenuChooseBookingwidgetDiv_button_H1">
           <span
@@ -37,7 +44,6 @@ const OptionMenuChooseBookingwidget = ({
               text === "Reservation with menu" ? "" : "active"
             } `}
           >
-            {" "}
             <span className="OptionMenuChooseBookingwidgetDiv_button_H2_H1">
               <span
                 className={`OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1 ${
@@ -46,7 +52,6 @@ const OptionMenuChooseBookingwidget = ({
               >
                 {text === "Reservation with menu" ? (
                   <span className="OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1_H1">
-                    {" "}
                     30 % sale off
                   </span>
                 ) : (
@@ -77,4 +82,5 @@ const OptionMenuChooseBookingwidget = ({
     </div>
   );
 };
+
 export default OptionMenuChooseBookingwidget;

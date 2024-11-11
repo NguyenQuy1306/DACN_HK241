@@ -3,7 +3,7 @@ import "./StepBookingwidget.css";
 import ButtonBookingwidget from "./Component/ButtonBookingwidget";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeFilledSharpIcon from "@mui/icons-material/AccessTimeFilledSharp";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import PersonIcon from "@mui/icons-material/Person";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 
 const StepBookingwidget = ({
@@ -193,11 +193,11 @@ const StepBookingwidget = ({
           <ButtonBookingwidget
             icon={
               !personPicked && (
-                <PersonOutlineOutlinedIcon
+                <PersonIcon
                   style={getIconStyle(
                     activePerson === true && activeTime === true
                   )}
-                ></PersonOutlineOutlinedIcon>
+                ></PersonIcon>
               )
             }
             text={personPicked ? `${personPicked} Guest` : "Guest"}

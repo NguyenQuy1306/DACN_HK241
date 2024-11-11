@@ -4,8 +4,10 @@ import { Button } from "@mui/material";
 import CachedIcon from "@mui/icons-material/Cached";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getRestaurantsInMaps } from "../../redux/features/restaurantSlice";
-
+import {
+  getRestaurantsInMaps,
+  setHoveredMarkerIndex,
+} from "../../redux/features/restaurantSlice";
 const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const dispatch = useDispatch();
   const [markers, setMarkers] = useState([]);
@@ -130,7 +132,15 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
     setCenter({ lat: position.lat, lng: position.lng });
     setHighlightedMarkerIndex(index); // Set the highlighted marker index
   };
-
+  const hoveredMarkerIndex = useSelector(
+    (state) => state.restaurant.hoveredMarkerIndex
+  );
+  const handleMouseOver = (index) => {
+    dispatch(setHoveredMarkerIndex(index));
+  };
+  const handleMouseOut = () => {
+    dispatch(setHoveredMarkerIndex(null));
+  };
   return (
     <div className={classes.mapContainer}>
       <div>
@@ -140,7 +150,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
           <GoogleMap
             mapContainerStyle={{
               width: "545px",
-              height: "570px",
+              height: "610px",
               position: "sticky",
               overflow: "hidden",
             }}
@@ -159,15 +169,19 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                 icon={{
                   className: classes.pointer,
                   url:
+                    hoveredMarkerIndex === index ||
                     highlightedMarkerIndex === index
                       ? "https://cdn-icons-png.flaticon.com/512/8095/8095096.png"
                       : "https://cdn-icons-png.flaticon.com/512/8095/8095099.png",
                   scaledSize:
+                    hoveredMarkerIndex === index ||
                     highlightedMarkerIndex === index
                       ? new window.google.maps.Size(70, 70)
                       : new window.google.maps.Size(45, 45),
                 }}
                 onClick={() => onChildClick(position, index)} // Corrected line
+                onMouseOver={() => handleMouseOver(index)}
+                onMouseOut={handleMouseOut}
               />
             ))}
             {selectedMarker && (

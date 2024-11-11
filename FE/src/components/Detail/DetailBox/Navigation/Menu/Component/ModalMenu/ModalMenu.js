@@ -5,7 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CustomizedTables from "../TableInModalMenu/TableInModalMenu";
 import AddIcon from "@mui/icons-material/Add";
-
+import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
+import { useSelector, useDispatch } from "react-redux";
 import "./ModalMenu.css";
 const style = {
   position: "absolute",
@@ -20,11 +21,27 @@ const style = {
 };
 
 export default function BasicModal({ combo }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCancelCreateMenu = () => {
     setOpen(false);
+  };
+  const handleBookingWithNewMenu = () => {
+    const combo_convert = combo.map(({ item, quantity }) => ({
+      maSoMonAn: item.maSoMonAn,
+      gia: item.gia,
+      soLuong: quantity,
+    }));
+    setOpen(false);
+    dispatch(
+      setOpenBookingWithMenu({
+        openBookingWithMenu: true,
+        menuChoosed: [combo_convert],
+        newMenu: [combo],
+      })
+    );
   };
   return (
     <div>
@@ -46,7 +63,10 @@ export default function BasicModal({ combo }) {
             <CustomizedTables combo={combo}></CustomizedTables>
           </Typography>
           <div className="modal-modal-description_button_div">
-            <Button className="modal-modal-description_button">
+            <Button
+              className="modal-modal-description_button"
+              onClick={handleBookingWithNewMenu}
+            >
               Đặt bàn với menu được tạo
             </Button>
             <Button

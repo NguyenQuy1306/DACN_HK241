@@ -28,7 +28,8 @@ public class OrderTableHasFood {
     @MapsId("MaSoDatBan")
     @JoinColumn(name = "MaSoDatBan")
     private OrderTable DonDatBan;
-
+    @Column(nullable = false)
+    private Short SoLuong;
     @JsonIgnore
     @ManyToOne
     @MapsId("MaSoMonAn")

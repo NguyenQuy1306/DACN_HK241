@@ -127,6 +127,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickDetail}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Menu"}
@@ -135,6 +136,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClicMenu}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Chỉ đường"}
@@ -143,6 +145,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickPath}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Reviews"}
@@ -151,6 +154,7 @@ const Navigation = ({ selectedPlace }) => {
             setOnClickPath={setOnClickPath}
             setOnClickReviews={setOnClickReviews}
             checkOnClick={onClickReviews}
+            selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
         </div>
       </div>
@@ -165,7 +169,11 @@ const Navigation = ({ selectedPlace }) => {
             </div>
             <ul className="NavigationDiv_H2_ul">
               {reviewsData.map((review, index) => (
-                <Comment key={index} review={review} />
+                <Comment
+                  key={index}
+                  review={review}
+                  selectedPlace={selectedPlace}
+                />
               ))}
             </ul>
           </div>

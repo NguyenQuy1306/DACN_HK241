@@ -35,6 +35,8 @@
   font-style: normal;
   line-height: 1.375;
   font-size: 0.8125rem;
+  padding-top: 18px;
+  padding-bottom: 10px;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
