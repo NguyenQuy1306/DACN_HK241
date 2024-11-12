@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class CustomerResponse {
     private Long maSoKhachHang;
-    private String Email;
+    private String email;
     private String HoTen;
     private String SDT;
     private Date NgaySinh;
@@ -28,11 +28,11 @@ public class CustomerResponse {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public String getHoTen() {

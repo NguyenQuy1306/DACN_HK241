@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.curcus.lms.model.entity.Restaurant;
 import com.curcus.lms.model.request.*;
@@ -19,6 +21,8 @@ import com.curcus.lms.service.RestaurantService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+
 import com.curcus.lms.exception.ApplicationException;
 import com.curcus.lms.exception.NotFoundException;
 import com.curcus.lms.exception.ValidationException;
@@ -45,9 +49,8 @@ public class RestaurantController {
     @GetMapping("/recommended")
 
     public List<RestaurantInMapsResponse> getRecommendedList() {
-        return  restaurantService.getRecommendedList();
+        return restaurantService.getRecommendedList();
     }
-
 
     @GetMapping("/list-in-boundary")
     public ResponseEntity<ApiResponse<List<RestaurantInMapsResponse>>> getRestaurantsInMaps(
@@ -103,5 +106,11 @@ public class RestaurantController {
         RestaurantResponse restaurantResponse = new RestaurantResponse();
         restaurantRepository.save(restaurantRequest);
         return restaurantResponse;
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> handleFileUpload(@RequestPart MultipartFile file) {
+        // handle the file
+        return ResponseEntity.ok("File uploaded successfully");
     }
 }

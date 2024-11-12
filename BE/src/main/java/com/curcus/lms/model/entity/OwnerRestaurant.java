@@ -13,6 +13,6 @@ import com.curcus.lms.model.entity.UserRole.Role;
 @Table(name = "ChuNhaHang")
 @PrimaryKeyJoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")
 public class OwnerRestaurant extends User {
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String CCCD;
 }

@@ -30,6 +30,9 @@ public class User {
     private String Email;
 
     @Column(nullable = false)
+    private String MatKhau;
+
+    @Column(nullable = false)
     private String HoTen;
 
     @Column()
@@ -48,7 +51,6 @@ public class User {
 
     @Column(nullable = true)
     private Date NgaySinh;
-
 
     @Column(nullable = true)
     private String GioiTinh;
