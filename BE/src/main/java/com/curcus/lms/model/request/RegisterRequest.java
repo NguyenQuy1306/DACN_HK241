@@ -13,8 +13,6 @@ public class RegisterRequest {
     private String UserRole;
     @NotEmpty(message = "HoTen is mandatory")
     private String HoTen;
-    @NotEmpty(message = "Địa chỉ is mandatory")
-    private String DiaChi;
     @NotEmpty(message = "SDT is mandatory")
     private String SDT;
     @NotEmpty(message = "Email is mandatory")
@@ -22,6 +20,5 @@ public class RegisterRequest {
     private String Email;
     @NotEmpty(message = "Password is mandatory")
     private String MatKhau;
-    @NotEmpty(message = "GioiTinh is mandatory")
-    private String GioiTinh;
+
 }

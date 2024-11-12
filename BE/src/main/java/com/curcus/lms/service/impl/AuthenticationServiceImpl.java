@@ -49,8 +49,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setHoTen(request.getHoTen());
             user.setMatKhau(passwordEncoder.encode(request.getMatKhau()));
             user.setEmail(request.getEmail());
-            user.setDiaChi(request.getDiaChi());
-            user.setGioiTinh(request.getGioiTinh());
             user.setSDT(request.getSDT());
 
             return userMapper.toUserResponse(repository.save(user));

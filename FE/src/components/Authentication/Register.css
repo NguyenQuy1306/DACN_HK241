@@ -1,0 +1,95 @@
+
+.register-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.registerDiv
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 600px; /* Giữ nguyên chiều rộng tổng thể */
+  padding: 10px;
+  margin-top: -20px;
+}
+
+.register-container h2 {
+  text-align: center; 
+  margin-bottom: 20px; 
+}
+
+
+.register-input-group {
+  margin-bottom: 15px;
+  width: 250px; 
+  padding-top: 5px;
+}
+
+
+.register-input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.register-input-group input {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+
+/* Nút đăng ký */
+.register-button {
+  width: 228px !important; /* Giữ nguyên chiều rộng 100% */
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background-color: rgb(0, 77, 69) !important;
+  color: white !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  height: 40px !important;
+}
+
+/* Hiệu ứng cho nút khi hover */
+.register-button:hover {
+  background-color: rgb(0, 54, 49) !important;}
+
+/* Liên kết ở cuối trang */
+.footer-links {
+  text-align: center; /* Căn giữa các liên kết */
+  margin-top: 10px; /* Khoảng cách trên */
+}
+
+.footer-links a {
+  color: #007bff; /* Màu chữ của liên kết */
+  text-decoration: none; /* Không có gạch chân */
+}
+
+.footer-links a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.error-message {
+  color: red; /* Màu đỏ cho thông báo lỗi */
+  margin-top: 10px;
+}
+
+.register-button2
+{
+  width: 228px !important; /* Giữ nguyên chiều rộng 100% */
+  /* padding: 10px !important; */
+  border: none !important;
+  border-radius: 4px !important;
+  background-color: rgb(0, 77, 69) !important;
+  color: white !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  height: 40px !important;
+  margin-top: 10px !important;
+}
+.register-button2:hover {
+  background-color: rgb(0, 54, 49) !important;}

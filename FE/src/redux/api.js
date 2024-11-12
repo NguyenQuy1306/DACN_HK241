@@ -44,6 +44,15 @@ export const getTableForRestaurant = async (params) => {
     throw error.response.data; // Adjust to throw the error response for handling in Redux
   }
 };
+
+export const register = async (params) => {
+  try {
+    const response = await API.post(`/api/v1/auth/register`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 // export const getRecords = () => API.get("api/records");
 // export const getRelays = () => API.get("api/relay");
 // export const controlRelays = (data) => API.post("api/relay", data);

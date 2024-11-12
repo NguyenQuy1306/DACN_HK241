@@ -3,23 +3,17 @@
 {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
-.loginDivBackground
-{
-  background-image: url("https://i.pinimg.com/564x/41/ae/70/41ae70329f22ec53c38c109415206eb3.jpg");
-  background-size:cover;
-  background-position:right;
-  background-attachment: fixed; /*không cuộn theo*/
-  width: 60%;
-  height: 100vh;
-}
+
 .loginDivH1 {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 600px; /* Giữ nguyên chiều rộng tổng thể */
-  padding: 20px;
+  padding: 10px;
+  margin-top: -20px;
 
 }
 
@@ -29,7 +23,8 @@ h2 {
 
 .input-group {
   margin-bottom: 15px;
-  width: 70%; /* Đặt chiều rộng 100% */
+  width: 250px; /* Đặt chiều rộng 100% */
+  padding-top: 5px;
 }
 
 .input-group label {
@@ -46,18 +41,29 @@ h2 {
 }
 
 .login-button {
-  width: 100%; /* Giữ nguyên chiều rộng 100% */
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+  width: 228px !important; /* Giữ nguyên chiều rộng 100% */
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background-color: rgb(0, 77, 69) !important;
+  color: white !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  height: 40px !important;
 }
-
+.input-group-input
+{
+  height: 40px;
+  /* background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) !important;; */
+}
 .login-button:hover {
-  background-color: #2e92fc;
+  background-color: rgb(0, 54, 49) !important;
+}
+.input-group-input_VisibilityIcon 
+{
+  height: 17px !important;
+  width: 17px !important;
+  vertical-align: center !important;
 }
 
 .footer-links {
@@ -69,7 +75,11 @@ h2 {
   color: #4caf50;
   text-decoration: none;
 }
-
+.login-notify
+{
+  margin-top: 5px;
+  color: red;
+}
 .footer-links a:hover {
   text-decoration: underline;
 }

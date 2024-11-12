@@ -34,7 +34,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest request,
             BindingResult bindingResult) {
-        System.out.println("register");
+
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         Map<String, String> errors = new HashMap<>();
 

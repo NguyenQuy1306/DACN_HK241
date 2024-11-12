@@ -35,7 +35,6 @@ public class User {
     @Column(nullable = false)
     private String HoTen;
 
-    @Column()
     private String DiaChi;
 
     public String getDiaChi() {
@@ -49,11 +48,10 @@ public class User {
     @Column(nullable = true, unique = true)
     private String SDT;
 
-    @Column(nullable = true)
     private Date NgaySinh;
 
-    @Column(nullable = true)
-    private String GioiTinh;
+    @Column(nullable = false)
+    private String GioiTinh = "Nam";
 
     @OneToMany(mappedBy = "NguoiDung")
     private Set<UserLikeRate> danhSachNguoiDungThichDanhGia;

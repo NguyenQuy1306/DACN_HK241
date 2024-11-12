@@ -6,12 +6,8 @@ import FavoriteList from "../pages/FavoriteList";
 import FilterIndex from "../components/FilterItem";
 import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
-
-import Login from "../pages/Authentication/Login";
-import Register from "../pages/Authentication/Register";
 import ViewImagepage from "../pages/ViewImagepage";
 export const routes = [
-
   {
     path: "/Search",
     component: Search,
@@ -48,18 +44,9 @@ export const routes = [
     component: ViewImagepage,
   },
 
-  {
-    path: "/Register",
-    component: Register,
-  },
-  {
-    path: "/Login",
-    component: Login,
-  },
   // {
   //   path: "*",
   //   component: NotFound,
   //   layout: null,
   // },
-
 ];
