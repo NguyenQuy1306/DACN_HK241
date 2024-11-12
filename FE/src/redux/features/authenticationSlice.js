@@ -13,6 +13,18 @@ export const register = createAsyncThunk(
   }
 );
 
+export const login = createAsyncThunk(
+  "auth/login",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.login(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
@@ -33,6 +45,19 @@ export const authenticationSlice = createSlice({
         state.register = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.login = [];
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.login = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

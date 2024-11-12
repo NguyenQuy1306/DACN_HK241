@@ -177,9 +177,13 @@ function Register({ setLogin, setRegister }) {
           <Button type="submit" className="register-button">
             Đăng Ký
           </Button>
-          <Button onClick={handleBackToLogin} className="register-button2">
-            Quay Lại Trang Đăng Nhập
-          </Button>
+
+          <p>
+            Bạn đã có tài khoản ?{" "}
+            <Button onClick={handleBackToLogin} className="login-button-other">
+              Đăng nhập
+            </Button>
+          </p>
         </form>
 
         {error && <p className="error-message">{error}</p>}

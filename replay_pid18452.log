@@ -7,12 +7,12 @@ instanceKlass org/hibernate/engine/internal/StatefulPersistenceContext
 ciInstanceKlass java/lang/Cloneable 1 0 7 100 1 100 1 1 1
 instanceKlass org/hibernate/query/sqm/internal/ConcreteSqmSelectQueryPlan$1
 instanceKlass  @bci org/hibernate/query/sqm/internal/ConcreteSqmSelectQueryPlan createJdbcParameterBindings (Lorg/hibernate/query/sqm/internal/ConcreteSqmSelectQueryPlan$CacheableSqmInterpretation;Lorg/hibernate/query/spi/DomainQueryExecutionContext;)Lorg/hibernate/sql/exec/spi/JdbcParameterBindings; 46 <appendix> member <vmtarget> ; # org/hibernate/query/sqm/internal/ConcreteSqmSelectQueryPlan$$Lambda+0x000001f081b5b8b0
-instanceKlass  @bci com/curcus/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 23 <appendix> argL0 ; # com/curcus/lms/model/mapper/OrderTableMapper$$Lambda+0x000001f081b5b680
-instanceKlass  @bci com/curcus/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <appendix> argL0 ; # com/curcus/lms/model/mapper/OrderTableMapper$$Lambda+0x000001f081b5b440
-instanceKlass  @bci com/curcus/lms/service/impl/OrderTableServiceImpl getOrderTableByCustomerId (Ljava/lang/Long;)Ljava/util/List; 25 <appendix> member <vmtarget> ; # com/curcus/lms/service/impl/OrderTableServiceImpl$$Lambda+0x000001f081b5b208
-instanceKlass com/curcus/lms/model/response/OrderTableResponse
-instanceKlass com/curcus/lms/model/mapper/OrderTableMapperImpl
-instanceKlass com/curcus/lms/model/mapper/OrderTableMapper
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 23 <appendix> argL0 ; # com/capstoneproject/lms/model/mapper/OrderTableMapper$$Lambda+0x000001f081b5b680
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <appendix> argL0 ; # com/capstoneproject/lms/model/mapper/OrderTableMapper$$Lambda+0x000001f081b5b440
+instanceKlass  @bci com/capstoneproject/lms/service/impl/OrderTableServiceImpl getOrderTableByCustomerId (Ljava/lang/Long;)Ljava/util/List; 25 <appendix> member <vmtarget> ; # com/capstoneproject/lms/service/impl/OrderTableServiceImpl$$Lambda+0x000001f081b5b208
+instanceKlass com/capstoneproject/lms/model/response/OrderTableResponse
+instanceKlass com/capstoneproject/lms/model/mapper/OrderTableMapperImpl
+instanceKlass com/capstoneproject/lms/model/mapper/OrderTableMapper
 instanceKlass  @bci java/util/function/UnaryOperator identity ()Ljava/util/function/UnaryOperator; 0 <appendix> argL0 ; # java/util/function/UnaryOperator$$Lambda+0x000001f0815db700
 instanceKlass org/springframework/data/jpa/repository/query/AbstractJpaQuery$TupleConverter
 instanceKlass org/hibernate/metamodel/mapping/DiscriminatedAssociationModelPart
@@ -92,15 +92,15 @@ instanceKlass org/hibernate/collection/spi/AbstractPersistentCollection$Iterator
 instanceKlass  @bci org/hibernate/sql/results/graph/collection/internal/AbstractImmediateCollectionInitializer initializeInstance (Lorg/hibernate/sql/results/jdbc/spi/RowProcessingState;)V 81 <appendix> member <vmtarget> ; # org/hibernate/sql/results/graph/collection/internal/AbstractImmediateCollectionInitializer$$Lambda+0x000001f081b46cf0
 instanceKlass org/hibernate/sql/results/internal/LoadingCollectionEntryImpl
 instanceKlass  @bci java/util/stream/Collectors mapping (Ljava/util/function/Function;Ljava/util/stream/Collector;)Ljava/util/stream/Collector; 19 <appendix> member <vmtarget> ; # java/util/stream/Collectors$$Lambda+0x000001f0815db2a0
-instanceKlass  @bci com/curcus/lms/model/mapper/RestaurantMapper mapImageUrls (Ljava/util/Set;)Ljava/util/Map; 11 <appendix> argL0 ; # com/curcus/lms/model/mapper/RestaurantMapper$$Lambda+0x000001f081b46320
-instanceKlass  @bci com/curcus/lms/model/mapper/RestaurantMapper mapImageUrls (Ljava/util/Set;)Ljava/util/Map; 6 <appendix> argL0 ; # com/curcus/lms/model/mapper/RestaurantMapper$$Lambda+0x000001f081b460f0
-instanceKlass  @bci com/curcus/lms/service/impl/RestaurantServiceImpl getRecommendedList ()Ljava/util/List; 78 <appendix> member <vmtarget> ; # com/curcus/lms/service/impl/RestaurantServiceImpl$$Lambda+0x000001f081b45eb8
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/RestaurantMapper mapImageUrls (Ljava/util/Set;)Ljava/util/Map; 11 <appendix> argL0 ; # com/capstoneproject/lms/model/mapper/RestaurantMapper$$Lambda+0x000001f081b46320
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/RestaurantMapper mapImageUrls (Ljava/util/Set;)Ljava/util/Map; 6 <appendix> argL0 ; # com/capstoneproject/lms/model/mapper/RestaurantMapper$$Lambda+0x000001f081b460f0
+instanceKlass  @bci com/capstoneproject/lms/service/impl/RestaurantServiceImpl getRecommendedList ()Ljava/util/List; 78 <appendix> member <vmtarget> ; # com/capstoneproject/lms/service/impl/RestaurantServiceImpl$$Lambda+0x000001f081b45eb8
 instanceKlass org/springframework/http/ResponseEntity$BodyBuilder
 instanceKlass org/springframework/http/ResponseEntity$HeadersBuilder
-instanceKlass  @bci com/curcus/lms/service/impl/RestaurantCategoryImpl getAll ()Ljava/util/List; 37 <appendix> member <vmtarget> ; # com/curcus/lms/service/impl/RestaurantCategoryImpl$$Lambda+0x000001f081b45250
-instanceKlass com/curcus/lms/model/response/RestaurantCategoryResponse
-instanceKlass com/curcus/lms/model/mapper/RestaurantCategoryMapperImpl
-instanceKlass com/curcus/lms/model/mapper/RestaurantCategoryMapper
+instanceKlass  @bci com/capstoneproject/lms/service/impl/RestaurantCategoryImpl getAll ()Ljava/util/List; 37 <appendix> member <vmtarget> ; # com/capstoneproject/lms/service/impl/RestaurantCategoryImpl$$Lambda+0x000001f081b45250
+instanceKlass com/capstoneproject/lms/model/response/RestaurantCategoryResponse
+instanceKlass com/capstoneproject/lms/model/mapper/RestaurantCategoryMapperImpl
+instanceKlass com/capstoneproject/lms/model/mapper/RestaurantCategoryMapper
 instanceKlass org/hibernate/Hibernate
 instanceKlass org/springframework/data/repository/core/support/QueryExecutionResultHandler$ReturnTypeDescriptor
 instanceKlass  @bci org/hibernate/sql/results/jdbc/internal/JdbcValuesSourceProcessingStateStandardImpl finishUp (Z)V 17 <appendix> member <vmtarget> ; # org/hibernate/sql/results/jdbc/internal/JdbcValuesSourceProcessingStateStandardImpl$$Lambda+0x000001f081b445e0
@@ -295,13 +295,13 @@ instanceKlass org/springframework/http/server/ServletServerHttpRequest
 instanceKlass org/springframework/web/context/request/async/WebAsyncTask
 instanceKlass org/springframework/web/servlet/mvc/method/annotation/StreamingResponseBody
 instanceKlass org/springframework/web/method/support/AsyncHandlerMethodReturnValueHandler
-instanceKlass  @bci com/curcus/lms/service/impl/CustomerServiceImpl getCustomerById (Ljava/lang/Long;)Ljava/util/Optional; 57 <appendix> member <vmtarget> ; # com/curcus/lms/service/impl/CustomerServiceImpl$$Lambda+0x000001f081b0e6b0
-instanceKlass  @bci com/curcus/lms/service/impl/CustomerServiceImpl getCustomerById (Ljava/lang/Long;)Ljava/util/Optional; 37 <appendix> member <vmtarget> ; # com/curcus/lms/service/impl/CustomerServiceImpl$$Lambda+0x000001f081b0e478
-instanceKlass com/curcus/lms/model/response/CustomerResponse
-instanceKlass com/curcus/lms/model/mapper/CustomerMapperImpl
+instanceKlass  @bci com/capstoneproject/lms/service/impl/CustomerServiceImpl getCustomerById (Ljava/lang/Long;)Ljava/util/Optional; 57 <appendix> member <vmtarget> ; # com/capstoneproject/lms/service/impl/CustomerServiceImpl$$Lambda+0x000001f081b0e6b0
+instanceKlass  @bci com/capstoneproject/lms/service/impl/CustomerServiceImpl getCustomerById (Ljava/lang/Long;)Ljava/util/Optional; 37 <appendix> member <vmtarget> ; # com/capstoneproject/lms/service/impl/CustomerServiceImpl$$Lambda+0x000001f081b0e478
+instanceKlass com/capstoneproject/lms/model/response/CustomerResponse
+instanceKlass com/capstoneproject/lms/model/mapper/CustomerMapperImpl
 instanceKlass org/mapstruct/factory/Mappers
-instanceKlass com/curcus/lms/model/mapper/CustomerMapper
-instanceKlass  @bci com/curcus/lms/model/entity/User toString ()Ljava/lang/String; 34 <appendix> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$MH+0x000001f081b0d800
+instanceKlass com/capstoneproject/lms/model/mapper/CustomerMapper
+instanceKlass  @bci com/capstoneproject/lms/model/entity/User toString ()Ljava/lang/String; 34 <appendix> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$MH+0x000001f081b0d800
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f081b0d400
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f081b0d000
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f081b0cc00
@@ -1356,7 +1356,7 @@ instanceKlass org/springframework/security/authorization/AuthorizationResult
 instanceKlass org/springframework/security/authorization/AuthorizationManager
 instanceKlass org/springframework/security/access/hierarchicalroles/RoleHierarchy
 instanceKlass org/springframework/security/authorization/AuthorizationEventPublisher
-instanceKlass  @bci com/curcus/lms/config/SecurityConfig securityFilterChain (Lorg/springframework/security/config/annotation/web/builders/HttpSecurity;)Lorg/springframework/security/web/SecurityFilterChain; 1 <appendix> argL0 ; # com/curcus/lms/config/SecurityConfig$$Lambda+0x000001f081a20000
+instanceKlass  @bci com/capstoneproject/lms/config/SecurityConfig securityFilterChain (Lorg/springframework/security/config/annotation/web/builders/HttpSecurity;)Lorg/springframework/security/web/SecurityFilterChain; 1 <appendix> argL0 ; # com/capstoneproject/lms/config/SecurityConfig$$Lambda+0x000001f081a20000
 instanceKlass org/springframework/security/web/DefaultSecurityFilterChain
 instanceKlass io/micrometer/observation/ObservationRegistry
 instanceKlass org/springframework/security/web/authentication/logout/SecurityContextLogoutHandler
@@ -1575,7 +1575,7 @@ instanceKlass org/springdoc/core/providers/ActuatorProvider
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0819d9800
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0819d9400
 # instanceKlass java/lang/invoke/LambdaForm$DMH+0x000001f0819d9000
-instanceKlass com/curcus/lms/config/WebConfig$1
+instanceKlass com/capstoneproject/lms/config/WebConfig$1
 instanceKlass org/springframework/web/servlet/config/annotation/WebMvcConfigurerComposite
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0819d8c00
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0819d8800
@@ -1672,8 +1672,8 @@ instanceKlass org/modelmapper/Converter
 instanceKlass org/modelmapper/internal/InheritingConfiguration
 instanceKlass org/modelmapper/config/Configuration
 instanceKlass org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder
-instanceKlass com/curcus/lms/model/response/ApiResponse
-instanceKlass com/curcus/lms/model/response/RestaurantInMapsResponse
+instanceKlass com/capstoneproject/lms/model/response/ApiResponse
+instanceKlass com/capstoneproject/lms/model/response/RestaurantInMapsResponse
 instanceKlass  @bci org/hibernate/query/sqm/tree/domain/AbstractSqmPath resolvePath (Ljava/lang/String;Lorg/hibernate/query/sqm/SqmPathSource;)Lorg/hibernate/query/sqm/tree/domain/SqmPath; 57 <appendix> member <vmtarget> ; # org/hibernate/query/sqm/tree/domain/AbstractSqmPath$$Lambda+0x000001f0819c75f0
 instanceKlass org/hibernate/query/hql/internal/QualifiedJoinPathConsumer$AttributeJoinDelegate
 instanceKlass org/hibernate/query/hql/internal/QualifiedJoinPathConsumer$ConsumerDelegate
@@ -1686,7 +1686,7 @@ instanceKlass org/antlr/v4/runtime/dfa/DFAState$PredPrediction
 instanceKlass  @bci org/springframework/data/util/ReactiveWrappers isSingleValueType (Ljava/lang/Class;)Z 10 <appendix> argL0 ; # org/springframework/data/util/ReactiveWrappers$$Lambda+0x000001f0819bf788
 instanceKlass org/springframework/core/ReactiveTypeDescriptor
 instanceKlass org/springframework/data/util/ReactiveWrappers$RegistryHolder
-instanceKlass com/curcus/lms/model/response/RestaurantResponse
+instanceKlass com/capstoneproject/lms/model/response/RestaurantResponse
 instanceKlass org/springframework/data/util/Pair
 instanceKlass  @bci org/hibernate/internal/SessionImpl applyQuerySettingsAndHints (Lorg/hibernate/query/Query;)V 15 <appendix> argL0 ; # org/hibernate/internal/SessionImpl$$Lambda+0x000001f0819bcab8
 instanceKlass  @bci org/hibernate/internal/SessionImpl applyQuerySettingsAndHints (Lorg/hibernate/query/Query;)V 10 <appendix> member <vmtarget> ; # org/hibernate/internal/SessionImpl$$Lambda+0x000001f0819b7c08
@@ -2981,50 +2981,50 @@ instanceKlass org/hibernate/persister/collection/SQLLoadableCollection
 instanceKlass org/hibernate/persister/collection/QueryableCollection
 instanceKlass org/hibernate/metamodel/mapping/internal/PluralAttributeMappingImpl$Aware
 instanceKlass org/hibernate/persister/collection/mutation/CollectionMutationTarget
-instanceKlass com/curcus/lms/model/entity/UserLikeRate$HibernateInstantiator$hqQW044f
-instanceKlass com/curcus/lms/model/entity/OrderTableHasFood$HibernateInstantiator$rXs3bRmq
-instanceKlass com/curcus/lms/model/entity/OwnerRestaurant$HibernateInstantiator$h8EwNrfY
-instanceKlass com/curcus/lms/model/entity/Food$HibernateInstantiator$V3mYR75A
-instanceKlass com/curcus/lms/model/entity/FavoriteList$HibernateInstantiator$txcvU3f2
-instanceKlass com/curcus/lms/model/entity/OrderTable$HibernateInstantiator$EtzjGOow
-instanceKlass com/curcus/lms/model/entity/TimeActive$HibernateInstantiator$bYNNvivS
-instanceKlass com/curcus/lms/model/entity/User$HibernateInstantiator$7GUWLefL
-instanceKlass com/curcus/lms/model/entity/RestaurantHasUtility$HibernateInstantiator$lse5otUq
-instanceKlass com/curcus/lms/model/entity/ComboAvailableHasFood$HibernateInstantiator$CB8zw75p
-instanceKlass com/curcus/lms/model/entity/RestaurantSpace$HibernateInstantiator$AkQgZevf
-instanceKlass com/curcus/lms/model/entity/Reply$HibernateInstantiator$meUNjxba
+instanceKlass com/capstoneproject/lms/model/entity/UserLikeRate$HibernateInstantiator$hqQW044f
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasFood$HibernateInstantiator$rXs3bRmq
+instanceKlass com/capstoneproject/lms/model/entity/OwnerRestaurant$HibernateInstantiator$h8EwNrfY
+instanceKlass com/capstoneproject/lms/model/entity/Food$HibernateInstantiator$V3mYR75A
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteList$HibernateInstantiator$txcvU3f2
+instanceKlass com/capstoneproject/lms/model/entity/OrderTable$HibernateInstantiator$EtzjGOow
+instanceKlass com/capstoneproject/lms/model/entity/TimeActive$HibernateInstantiator$bYNNvivS
+instanceKlass com/capstoneproject/lms/model/entity/User$HibernateInstantiator$7GUWLefL
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasUtility$HibernateInstantiator$lse5otUq
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailableHasFood$HibernateInstantiator$CB8zw75p
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantSpace$HibernateInstantiator$AkQgZevf
+instanceKlass com/capstoneproject/lms/model/entity/Reply$HibernateInstantiator$meUNjxba
 instanceKlass org/hibernate/metamodel/internal/StandardEmbeddableInstantiator
 instanceKlass  @bci org/hibernate/metamodel/internal/EntityRepresentationStrategyPojoStandard <init> (Lorg/hibernate/mapping/PersistentClass;Lorg/hibernate/persister/entity/EntityPersister;Lorg/hibernate/metamodel/spi/RuntimeModelCreationContext;)V 134 <appendix> member <vmtarget> ; # org/hibernate/metamodel/internal/EntityRepresentationStrategyPojoStandard$$Lambda+0x000001f0817d7538
 instanceKlass org/hibernate/metamodel/mapping/EmbeddableMappingType
 instanceKlass org/hibernate/metamodel/internal/AbstractEmbeddableRepresentationStrategy
-instanceKlass com/curcus/lms/model/entity/RestaurantHasPaymentMethod$HibernateInstantiator$1ZB3kiV7
-instanceKlass com/curcus/lms/model/entity/PaymentMethod$HibernateInstantiator$6cXu55o0
-instanceKlass com/curcus/lms/model/entity/DiscountByFood$HibernateInstantiator$5AAP9fs3
-instanceKlass com/curcus/lms/model/entity/Admin$HibernateInstantiator$GB3foTc2
-instanceKlass com/curcus/lms/model/entity/RestaurantHasTag$HibernateInstantiator$mLG2qjBE
-instanceKlass com/curcus/lms/model/entity/DiscountByPerson$HibernateInstantiator$l8zRyJHm
-instanceKlass com/curcus/lms/model/entity/ComboAvailable$HibernateInstantiator$KNLxHlR7
-instanceKlass com/curcus/lms/model/entity/TableAvailable$HibernateInstantiator$wDD1cZaC
-instanceKlass com/curcus/lms/model/entity/OrderTableHasComboAvailable$HibernateInstantiator$rH8p3N9J
-instanceKlass com/curcus/lms/model/entity/Utility$HibernateInstantiator$XRWxIcqt
-instanceKlass com/curcus/lms/model/entity/RestaurantImage$HibernateInstantiator$wOa1lYcf
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasPaymentMethod$HibernateInstantiator$1ZB3kiV7
+instanceKlass com/capstoneproject/lms/model/entity/PaymentMethod$HibernateInstantiator$6cXu55o0
+instanceKlass com/capstoneproject/lms/model/entity/DiscountByFood$HibernateInstantiator$5AAP9fs3
+instanceKlass com/capstoneproject/lms/model/entity/Admin$HibernateInstantiator$GB3foTc2
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasTag$HibernateInstantiator$mLG2qjBE
+instanceKlass com/capstoneproject/lms/model/entity/DiscountByPerson$HibernateInstantiator$l8zRyJHm
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailable$HibernateInstantiator$KNLxHlR7
+instanceKlass com/capstoneproject/lms/model/entity/TableAvailable$HibernateInstantiator$wDD1cZaC
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasComboAvailable$HibernateInstantiator$rH8p3N9J
+instanceKlass com/capstoneproject/lms/model/entity/Utility$HibernateInstantiator$XRWxIcqt
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantImage$HibernateInstantiator$wOa1lYcf
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d2400
-instanceKlass com/curcus/lms/model/entity/Tag$HibernateInstantiator$nCk88NYd
-instanceKlass com/curcus/lms/model/entity/OrderTableApplyDiscount$HibernateInstantiator$mXhE6g8X
-instanceKlass com/curcus/lms/model/entity/DiscountByTime$HibernateInstantiator$QaVn9W81
+instanceKlass com/capstoneproject/lms/model/entity/Tag$HibernateInstantiator$nCk88NYd
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableApplyDiscount$HibernateInstantiator$mXhE6g8X
+instanceKlass com/capstoneproject/lms/model/entity/DiscountByTime$HibernateInstantiator$QaVn9W81
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d2000
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d1c00
-instanceKlass com/curcus/lms/model/entity/Rate$HibernateInstantiator$o8Uzrwp7
+instanceKlass com/capstoneproject/lms/model/entity/Rate$HibernateInstantiator$o8Uzrwp7
 instanceKlass  @bci org/hibernate/mapping/Component getColumns ()Ljava/util/List; 20 <appendix> argL0 ; # org/hibernate/mapping/Component$$Lambda+0x000001f0817cd528
-instanceKlass com/curcus/lms/model/entity/FavoriteListRestaurant$HibernateInstantiator$iBngupJH
-instanceKlass com/curcus/lms/model/entity/Discount$HibernateInstantiator$eeQEAl0o
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteListRestaurant$HibernateInstantiator$iBngupJH
+instanceKlass com/capstoneproject/lms/model/entity/Discount$HibernateInstantiator$eeQEAl0o
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d1800
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d1400
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d1000
-instanceKlass com/curcus/lms/model/entity/Category$HibernateInstantiator$tc32kuN9
-instanceKlass com/curcus/lms/model/entity/RestaurantCategory$HibernateInstantiator$jjyOvzhK
+instanceKlass com/capstoneproject/lms/model/entity/Category$HibernateInstantiator$tc32kuN9
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantCategory$HibernateInstantiator$jjyOvzhK
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d0c00
-instanceKlass com/curcus/lms/model/entity/Restaurant$HibernateInstantiator$OsWFXook
+instanceKlass com/capstoneproject/lms/model/entity/Restaurant$HibernateInstantiator$OsWFXook
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d0800
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d0400
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x000001f0817d0000
@@ -3064,7 +3064,7 @@ instanceKlass org/hibernate/metamodel/internal/AbstractPojoInstantiator
 instanceKlass org/hibernate/property/access/spi/SetterMethodImpl
 instanceKlass org/hibernate/property/access/spi/GetterMethodImpl
 instanceKlass org/hibernate/property/access/internal/PropertyAccessEmbeddedImpl
-instanceKlass com/curcus/lms/model/entity/Customer$HibernateInstantiator$OwACieiV
+instanceKlass com/capstoneproject/lms/model/entity/Customer$HibernateInstantiator$OwACieiV
 instanceKlass net/bytebuddy/implementation/MethodCall$TargetHandler$ForConstructingInvocation
 instanceKlass net/bytebuddy/implementation/MethodCall$TargetHandler$Resolved
 instanceKlass net/bytebuddy/implementation/MethodCall$MethodInvoker$ForContextualInvocation
@@ -3990,59 +3990,59 @@ instanceKlass org/hibernate/type/SerializableToBlobType
 instanceKlass org/hibernate/usertype/DynamicParameterizedType
 instanceKlass org/hibernate/usertype/ParameterizedType
 instanceKlass org/hibernate/boot/spi/MetadataContributor
-instanceKlass com/curcus/lms/model/entity/UserLikeRateId$UserLikeRateIdBuilder
-instanceKlass com/curcus/lms/model/entity/UserLikeRate$UserLikeRateBuilder
-instanceKlass com/curcus/lms/model/entity/TimeActiveId$TimeActiveIdBuilder
-instanceKlass com/curcus/lms/model/entity/TimeActive$TimeActiveBuilder
-instanceKlass com/curcus/lms/model/entity/TableAvailableId$TableAvailableIdBuilder
-instanceKlass com/curcus/lms/model/entity/TableAvailable$TableAvailableBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantSpaceId$RestaurantSpaceIdBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantSpace$RestaurantSpaceBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantImage$RestaurantImageBuilder
-instanceKlass com/curcus/lms/model/entity/Utility$UtilityBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasUtilityId$RestaurantHasUtilityIdBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasUtility$RestaurantHasUtilityBuilder
-instanceKlass com/curcus/lms/model/entity/Tag$TagBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasTagId$RestaurantHasTagIdBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasTag$RestaurantHasTagBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasPaymentMethodId$RestaurantHasPaymentMethodIdBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantHasPaymentMethod$RestaurantHasPaymentMethodBuilder
-instanceKlass com/curcus/lms/model/entity/RestaurantCategory$RestaurantCategoryBuilder
+instanceKlass com/capstoneproject/lms/model/entity/UserLikeRateId$UserLikeRateIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/UserLikeRate$UserLikeRateBuilder
+instanceKlass com/capstoneproject/lms/model/entity/TimeActiveId$TimeActiveIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/TimeActive$TimeActiveBuilder
+instanceKlass com/capstoneproject/lms/model/entity/TableAvailableId$TableAvailableIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/TableAvailable$TableAvailableBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantSpaceId$RestaurantSpaceIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantSpace$RestaurantSpaceBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantImage$RestaurantImageBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Utility$UtilityBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasUtilityId$RestaurantHasUtilityIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasUtility$RestaurantHasUtilityBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Tag$TagBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasTagId$RestaurantHasTagIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasTag$RestaurantHasTagBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasPaymentMethodId$RestaurantHasPaymentMethodIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasPaymentMethod$RestaurantHasPaymentMethodBuilder
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantCategory$RestaurantCategoryBuilder
 instanceKlass org/hibernate/annotations/EmbeddableInstantiator
 instanceKlass org/hibernate/boot/model/internal/PropertyPreloadedData
-instanceKlass com/curcus/lms/model/entity/Reply$ReplyBuilder
-instanceKlass com/curcus/lms/model/entity/Rate$RateBuilder
-instanceKlass com/curcus/lms/model/entity/PaymentMethod$PaymentMethodBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableHasFoodId$OrderTableHasFoodIdBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableHasFood$OrderTableHasFoodBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableHasComboAvailableId$OrderTableHasComboAvailableIdBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableHasComboAvailable$OrderTableHasComboAvailableBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableApplyDiscountId$OrderTableApplyDiscountIdBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTableApplyDiscount$OrderTableApplyDiscountBuilder
-instanceKlass com/curcus/lms/model/entity/OrderTable$OrderTableBuilder
-instanceKlass com/curcus/lms/model/entity/Restaurant$RestaurantBuilder
-instanceKlass com/curcus/lms/model/entity/FavoriteListRestaurantId$FavoriteListRestaurantIdBuilder
-instanceKlass com/curcus/lms/model/entity/FavoriteListRestaurant$FavoriteListRestaurantBuilder
-instanceKlass com/curcus/lms/model/entity/FavoriteList$FavoriteListBuilder
-instanceKlass com/curcus/lms/model/entity/Discount$DiscountBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Reply$ReplyBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Rate$RateBuilder
+instanceKlass com/capstoneproject/lms/model/entity/PaymentMethod$PaymentMethodBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasFoodId$OrderTableHasFoodIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasFood$OrderTableHasFoodBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasComboAvailableId$OrderTableHasComboAvailableIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasComboAvailable$OrderTableHasComboAvailableBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableApplyDiscountId$OrderTableApplyDiscountIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableApplyDiscount$OrderTableApplyDiscountBuilder
+instanceKlass com/capstoneproject/lms/model/entity/OrderTable$OrderTableBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Restaurant$RestaurantBuilder
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteListRestaurantId$FavoriteListRestaurantIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteListRestaurant$FavoriteListRestaurantBuilder
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteList$FavoriteListBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Discount$DiscountBuilder
 instanceKlass  @bci org/hibernate/internal/util/collections/JoinedList iterator ()Ljava/util/Iterator; 9 <appendix> argL0 ; # org/hibernate/internal/util/collections/JoinedList$$Lambda+0x000001f08166d558
 instanceKlass  @bci org/hibernate/internal/util/collections/JoinedList <init> (Ljava/util/List;)V 30 <appendix> argL0 ; # org/hibernate/internal/util/collections/JoinedList$$Lambda+0x000001f08166d320
 instanceKlass  @bci org/hibernate/internal/util/collections/JoinedList <init> (Ljava/util/List;)V 16 <appendix> argL0 ; # org/hibernate/internal/util/collections/JoinedList$$Lambda+0x000001f08166d0f0
 instanceKlass  @bci org/hibernate/mapping/Component getSelectables ()Ljava/util/List; 15 <appendix> argL0 ; # org/hibernate/mapping/Component$$Lambda+0x000001f08166c4a8
 instanceKlass org/hibernate/annotations/Struct
 instanceKlass org/hibernate/boot/model/internal/AggregateComponentBinder
-instanceKlass com/curcus/lms/model/entity/Food$FoodBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Food$FoodBuilder
 instanceKlass org/hibernate/boot/model/IdentifierGeneratorDefinition
 instanceKlass org/hibernate/boot/model/IdentifierGeneratorDefinition$Builder
-instanceKlass com/curcus/lms/model/entity/ComboAvailableHasFoodId$ComboAvailableHasFoodIdBuilder
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailableHasFoodId$ComboAvailableHasFoodIdBuilder
 instanceKlass org/hibernate/annotations/Instantiator
 instanceKlass org/hibernate/id/CompositeNestedGeneratedValueGenerator$GenerationPlan
 instanceKlass org/hibernate/id/CompositeNestedGeneratedValueGenerator$GenerationContextLocator
-instanceKlass com/curcus/lms/model/entity/ComboAvailableHasFood$ComboAvailableHasFoodBuilder
-instanceKlass com/curcus/lms/model/entity/ComboAvailable$ComboAvailableBuilder
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailableHasFood$ComboAvailableHasFoodBuilder
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailable$ComboAvailableBuilder
 instanceKlass org/hibernate/annotations/LazyToOne
 instanceKlass org/hibernate/boot/model/internal/ToOneBinder
-instanceKlass com/curcus/lms/model/entity/Category$CategoryBuilder
+instanceKlass com/capstoneproject/lms/model/entity/Category$CategoryBuilder
 instanceKlass org/hibernate/annotations/ForeignKey
 instanceKlass org/hibernate/annotations/FetchProfiles
 instanceKlass org/hibernate/annotations/FetchProfile
@@ -4189,7 +4189,7 @@ instanceKlass jakarta/persistence/EmbeddedId
 instanceKlass org/hibernate/annotations/common/reflection/java/generics/ApproximatingTypeEnvironment
 instanceKlass org/hibernate/annotations/common/reflection/java/generics/TypeUtils
 instanceKlass org/hibernate/annotations/common/reflection/ReflectionUtil
-instanceKlass com/curcus/lms/model/entity/User$UserBuilder
+instanceKlass com/capstoneproject/lms/model/entity/User$UserBuilder
 instanceKlass org/hibernate/annotations/common/reflection/XClass$1
 instanceKlass org/hibernate/boot/spi/AccessType$1
 instanceKlass jakarta/persistence/Access
@@ -4350,38 +4350,38 @@ instanceKlass org/hibernate/boot/model/relational/Namespace
 instanceKlass jakarta/persistence/EntityListeners
 instanceKlass org/hibernate/boot/model/internal/XMLContext$Default
 instanceKlass org/hibernate/boot/model/source/internal/annotations/AnnotationMetadataSourceProcessorImpl$1
-instanceKlass com/curcus/lms/model/entity/Utility
-instanceKlass com/curcus/lms/model/entity/UserLikeRateId
-instanceKlass com/curcus/lms/model/entity/UserLikeRate
-instanceKlass com/curcus/lms/model/entity/TimeActiveId
-instanceKlass com/curcus/lms/model/entity/TimeActive
-instanceKlass com/curcus/lms/model/entity/Tag
-instanceKlass com/curcus/lms/model/entity/TableAvailableId
-instanceKlass com/curcus/lms/model/entity/TableAvailable
-instanceKlass com/curcus/lms/model/entity/RestaurantSpaceId
-instanceKlass com/curcus/lms/model/entity/RestaurantSpace
-instanceKlass com/curcus/lms/model/entity/RestaurantImage
-instanceKlass com/curcus/lms/model/entity/RestaurantHasUtilityId
-instanceKlass com/curcus/lms/model/entity/RestaurantHasUtility
-instanceKlass com/curcus/lms/model/entity/RestaurantHasTagId
-instanceKlass com/curcus/lms/model/entity/RestaurantHasTag
-instanceKlass com/curcus/lms/model/entity/RestaurantHasPaymentMethodId
-instanceKlass com/curcus/lms/model/entity/RestaurantHasPaymentMethod
-instanceKlass com/curcus/lms/model/entity/Reply
-instanceKlass com/curcus/lms/model/entity/Rate
-instanceKlass com/curcus/lms/model/entity/PaymentMethod
-instanceKlass com/curcus/lms/model/entity/OrderTableHasFoodId
-instanceKlass com/curcus/lms/model/entity/OrderTableHasFood
-instanceKlass com/curcus/lms/model/entity/OrderTableHasComboAvailableId
-instanceKlass com/curcus/lms/model/entity/OrderTableHasComboAvailable
-instanceKlass com/curcus/lms/model/entity/OrderTableApplyDiscountId
-instanceKlass com/curcus/lms/model/entity/OrderTableApplyDiscount
-instanceKlass com/curcus/lms/model/entity/Food
-instanceKlass com/curcus/lms/model/entity/Discount
-instanceKlass com/curcus/lms/model/entity/ComboAvailableHasFoodId
-instanceKlass com/curcus/lms/model/entity/ComboAvailableHasFood
-instanceKlass com/curcus/lms/model/entity/ComboAvailable
-instanceKlass com/curcus/lms/model/entity/Category
+instanceKlass com/capstoneproject/lms/model/entity/Utility
+instanceKlass com/capstoneproject/lms/model/entity/UserLikeRateId
+instanceKlass com/capstoneproject/lms/model/entity/UserLikeRate
+instanceKlass com/capstoneproject/lms/model/entity/TimeActiveId
+instanceKlass com/capstoneproject/lms/model/entity/TimeActive
+instanceKlass com/capstoneproject/lms/model/entity/Tag
+instanceKlass com/capstoneproject/lms/model/entity/TableAvailableId
+instanceKlass com/capstoneproject/lms/model/entity/TableAvailable
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantSpaceId
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantSpace
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantImage
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasUtilityId
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasUtility
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasTagId
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasTag
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasPaymentMethodId
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantHasPaymentMethod
+instanceKlass com/capstoneproject/lms/model/entity/Reply
+instanceKlass com/capstoneproject/lms/model/entity/Rate
+instanceKlass com/capstoneproject/lms/model/entity/PaymentMethod
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasFoodId
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasFood
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasComboAvailableId
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableHasComboAvailable
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableApplyDiscountId
+instanceKlass com/capstoneproject/lms/model/entity/OrderTableApplyDiscount
+instanceKlass com/capstoneproject/lms/model/entity/Food
+instanceKlass com/capstoneproject/lms/model/entity/Discount
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailableHasFoodId
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailableHasFood
+instanceKlass com/capstoneproject/lms/model/entity/ComboAvailable
+instanceKlass com/capstoneproject/lms/model/entity/Category
 instanceKlass org/hibernate/annotations/common/reflection/java/JavaAnnotationReader
 instanceKlass org/hibernate/annotations/common/reflection/Filter
 instanceKlass  @bci org/hibernate/annotations/common/reflection/java/TypeEnvironmentMap$ContextScope getOrCompute (Ljava/lang/Object;)Ljava/lang/Object; 3 <appendix> member <vmtarget> ; # org/hibernate/annotations/common/reflection/java/TypeEnvironmentMap$ContextScope$$Lambda+0x000001f08162c050
@@ -7475,17 +7475,17 @@ instanceKlass  @bci org/springframework/data/repository/config/RepositoryBeanDef
 instanceKlass org/springframework/data/repository/config/NamedQueriesBeanDefinitionBuilder
 instanceKlass  @bci org/springframework/data/repository/config/RepositoryBeanDefinitionBuilder build (Lorg/springframework/data/repository/config/RepositoryConfiguration;)Lorg/springframework/beans/factory/support/BeanDefinitionBuilder; 110 <appendix> member <vmtarget> ; # org/springframework/data/repository/config/RepositoryBeanDefinitionBuilder$$Lambda+0x000001f08131b7b0
 instanceKlass  @bci org/springframework/data/repository/config/DefaultRepositoryConfiguration getRepositoryFactoryBeanClassName ()Ljava/lang/String; 18 <appendix> member <vmtarget> ; # org/springframework/data/repository/config/DefaultRepositoryConfiguration$$Lambda+0x000001f08131b598
-instanceKlass com/curcus/lms/model/entity/Restaurant
-instanceKlass com/curcus/lms/repository/RestaurantRepository
-instanceKlass com/curcus/lms/model/entity/RestaurantCategory
-instanceKlass com/curcus/lms/repository/RestaurantCategoryRepository
-instanceKlass com/curcus/lms/model/entity/OrderTable
-instanceKlass com/curcus/lms/repository/OrderTableRepository
-instanceKlass com/curcus/lms/model/entity/FavoriteListRestaurantId
-instanceKlass com/curcus/lms/model/entity/FavoriteListRestaurant
-instanceKlass com/curcus/lms/repository/FavoriteListRestaurantRepository
-instanceKlass com/curcus/lms/model/entity/FavoriteList
-instanceKlass com/curcus/lms/repository/FavoriteListRepository
+instanceKlass com/capstoneproject/lms/model/entity/Restaurant
+instanceKlass com/capstoneproject/lms/repository/RestaurantRepository
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantCategory
+instanceKlass com/capstoneproject/lms/repository/RestaurantCategoryRepository
+instanceKlass com/capstoneproject/lms/model/entity/OrderTable
+instanceKlass com/capstoneproject/lms/repository/OrderTableRepository
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteListRestaurantId
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteListRestaurant
+instanceKlass com/capstoneproject/lms/repository/FavoriteListRestaurantRepository
+instanceKlass com/capstoneproject/lms/model/entity/FavoriteList
+instanceKlass com/capstoneproject/lms/repository/FavoriteListRepository
 instanceKlass java/util/stream/Streams$2
 instanceKlass java/util/stream/Streams$ConcatSpliterator
 instanceKlass  @bci org/springframework/data/util/ReactiveWrappers usesReactiveType (Ljava/lang/Class;)Z 23 <appendix> argL0 ; # org/springframework/data/util/ReactiveWrappers$$Lambda+0x000001f081319850
@@ -7502,7 +7502,7 @@ instanceKlass  @bci org/springframework/data/repository/core/support/DefaultRepo
 instanceKlass  @bci org/springframework/data/repository/core/support/DefaultRepositoryMetadata <init> (Ljava/lang/Class;)V 38 <appendix> member <vmtarget> ; # org/springframework/data/repository/core/support/DefaultRepositoryMetadata$$Lambda+0x000001f081317d58
 instanceKlass  @bci org/springframework/data/util/TypeDiscoverer doGetTypeArguments ()Ljava/util/List; 24 <appendix> argL0 ; # org/springframework/data/util/TypeDiscoverer$$Lambda+0x000001f081317b28
 instanceKlass  @bci org/springframework/data/util/TypeDiscoverer getSuperTypeInformation (Ljava/lang/Class;)Lorg/springframework/data/util/TypeInformation; 77 <appendix> argL0 ; # org/springframework/data/util/TypeDiscoverer$$Lambda+0x000001f0813178e8
-instanceKlass com/curcus/lms/model/entity/User
+instanceKlass com/capstoneproject/lms/model/entity/User
 instanceKlass  @bci org/springframework/data/repository/core/support/AbstractRepositoryMetadata <init> (Ljava/lang/Class;)V 34 <appendix> member <vmtarget> ; # org/springframework/data/repository/core/support/AbstractRepositoryMetadata$$Lambda+0x000001f0813171c0
 instanceKlass org/springframework/util/ConcurrentLruCache$AddTask
 instanceKlass  @bci org/springframework/data/util/TypeDiscoverer <init> (Lorg/springframework/core/ResolvableType;)V 78 <appendix> member <vmtarget> ; # org/springframework/data/util/TypeDiscoverer$$Lambda+0x000001f081316570
@@ -7520,7 +7520,7 @@ instanceKlass org/springframework/data/util/TypeInformation
 instanceKlass org/springframework/data/repository/core/CrudMethods
 instanceKlass org/springframework/data/repository/core/support/AbstractRepositoryMetadata
 instanceKlass org/springframework/data/repository/core/RepositoryMetadata
-instanceKlass com/curcus/lms/repository/CustomerRepository
+instanceKlass com/capstoneproject/lms/repository/CustomerRepository
 instanceKlass  @bci org/springframework/data/jpa/repository/config/JpaRepositoryConfigExtension$LazyJvmAgent isActive (Ljava/lang/ClassLoader;)Z 9 <appendix> member <vmtarget> ; # org/springframework/data/jpa/repository/config/JpaRepositoryConfigExtension$LazyJvmAgent$$Lambda+0x000001f0813132f8
 instanceKlass org/springframework/data/jpa/repository/config/JpaRepositoryConfigExtension$LazyJvmAgent
 instanceKlass  @bci org/springframework/data/repository/config/DefaultRepositoryConfiguration <init> (Lorg/springframework/data/repository/config/RepositoryConfigurationSource;Lorg/springframework/beans/factory/config/BeanDefinition;Lorg/springframework/data/repository/config/RepositoryConfigurationExtension;)V 22 <appendix> member <vmtarget> ; # org/springframework/data/repository/config/DefaultRepositoryConfiguration$$Lambda+0x000001f081312ee8
@@ -7745,31 +7745,31 @@ instanceKlass org/springframework/boot/autoconfigure/template/TemplateAvailabili
 instanceKlass org/springframework/boot/autoconfigure/validation/PrimaryDefaultValidatorPostProcessor
 instanceKlass org/springframework/boot/autoconfigure/condition/ConditionalOnResource
 instanceKlass org/springframework/boot/autoconfigure/condition/ConditionalOnThreading
-instanceKlass com/curcus/lms/service/impl/RestaurantServiceImpl
-instanceKlass com/curcus/lms/service/RestaurantService
-instanceKlass com/curcus/lms/service/impl/RestaurantCategoryImpl
-instanceKlass com/curcus/lms/service/RestaurantCategoryService
-instanceKlass com/curcus/lms/service/impl/OrderTableServiceImpl
-instanceKlass com/curcus/lms/service/OrderTableService
-instanceKlass com/curcus/lms/service/impl/FavoriteListServiceImpl
-instanceKlass com/curcus/lms/service/FavoriteListService
-instanceKlass com/curcus/lms/service/impl/FavoriteListRestaurantImpl
-instanceKlass com/curcus/lms/service/FavoriteListRestaurantService
-instanceKlass com/curcus/lms/service/impl/CustomerServiceImpl
-instanceKlass com/curcus/lms/service/CustomerService
-instanceKlass com/curcus/lms/model/mapper/RestaurantMapper
-instanceKlass com/curcus/lms/handler/GlobalExceptionHandler
-instanceKlass com/curcus/lms/controller/RestaurantController
-instanceKlass com/curcus/lms/controller/RestaurantCategoryController
-instanceKlass com/curcus/lms/controller/OrderTableController
-instanceKlass com/curcus/lms/controller/FavoriteListRestaurantController
-instanceKlass com/curcus/lms/controller/FavoriteListController
-instanceKlass com/curcus/lms/controller/CustomerController
-instanceKlass com/curcus/lms/config/WebConfig
-instanceKlass com/curcus/lms/config/SecurityConfig
-instanceKlass com/curcus/lms/config/OpenAPIConfig
-instanceKlass com/curcus/lms/config/MapperConfig
-instanceKlass com/curcus/lms/config/ApplicationConfig
+instanceKlass com/capstoneproject/lms/service/impl/RestaurantServiceImpl
+instanceKlass com/capstoneproject/lms/service/RestaurantService
+instanceKlass com/capstoneproject/lms/service/impl/RestaurantCategoryImpl
+instanceKlass com/capstoneproject/lms/service/RestaurantCategoryService
+instanceKlass com/capstoneproject/lms/service/impl/OrderTableServiceImpl
+instanceKlass com/capstoneproject/lms/service/OrderTableService
+instanceKlass com/capstoneproject/lms/service/impl/FavoriteListServiceImpl
+instanceKlass com/capstoneproject/lms/service/FavoriteListService
+instanceKlass com/capstoneproject/lms/service/impl/FavoriteListRestaurantImpl
+instanceKlass com/capstoneproject/lms/service/FavoriteListRestaurantService
+instanceKlass com/capstoneproject/lms/service/impl/CustomerServiceImpl
+instanceKlass com/capstoneproject/lms/service/CustomerService
+instanceKlass com/capstoneproject/lms/model/mapper/RestaurantMapper
+instanceKlass com/capstoneproject/lms/handler/GlobalExceptionHandler
+instanceKlass com/capstoneproject/lms/controller/RestaurantController
+instanceKlass com/capstoneproject/lms/controller/RestaurantCategoryController
+instanceKlass com/capstoneproject/lms/controller/OrderTableController
+instanceKlass com/capstoneproject/lms/controller/FavoriteListRestaurantController
+instanceKlass com/capstoneproject/lms/controller/FavoriteListController
+instanceKlass com/capstoneproject/lms/controller/CustomerController
+instanceKlass com/capstoneproject/lms/config/WebConfig
+instanceKlass com/capstoneproject/lms/config/SecurityConfig
+instanceKlass com/capstoneproject/lms/config/OpenAPIConfig
+instanceKlass com/capstoneproject/lms/config/MapperConfig
+instanceKlass com/capstoneproject/lms/config/ApplicationConfig
 instanceKlass org/apache/coyote/UpgradeProtocol
 instanceKlass org/springframework/boot/autoconfigure/web/servlet/ServletWebServerFactoryAutoConfiguration$BeanPostProcessorsRegistrar
 instanceKlass org/springframework/boot/autoconfigure/condition/OnPropertyCondition$Spec
@@ -9465,7 +9465,7 @@ instanceKlass  @bci org/springframework/boot/context/config/ConfigDataEnvironmen
 instanceKlass org/springframework/boot/context/config/ConfigDataActivationContext
 instanceKlass org/springframework/boot/context/config/ConfigDataImporter
 instanceKlass  @bci org/springframework/boot/context/config/ConfigDataEnvironmentContributors <clinit> ()V 0 <appendix> argL0 ; # org/springframework/boot/context/config/ConfigDataEnvironmentContributors$$Lambda+0x000001f08110bcd8
-instanceKlass  @bci com/curcus/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <bsm> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$DMH+0x000001f08110d000
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <bsm> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$DMH+0x000001f08110d000
 instanceKlass java/lang/invoke/MethodHandle$1
 instanceKlass org/springframework/boot/context/config/ConfigDataLocationResolverContext
 instanceKlass org/springframework/boot/context/config/ConfigDataLoaderContext
@@ -10540,7 +10540,7 @@ instanceKlass java/net/InetAddress$1
 instanceKlass jdk/internal/access/JavaNetInetAddressAccess
 instanceKlass jdk/internal/misc/PreviewFeatures
 instanceKlass jdk/internal/misc/MainMethodFinder
-instanceKlass com/curcus/lms/CurcusApplication
+instanceKlass com/capstoneproject/lms/capstoneprojectApplication
 instanceKlass java/io/FileInputStream$1
 instanceKlass java/net/InetAddress
 instanceKlass java/net/SocketAddress
@@ -10743,7 +10743,7 @@ instanceKlass java/lang/ref/Cleaner
 instanceKlass jdk/internal/ref/CleanerFactory$1
 instanceKlass java/util/concurrent/ThreadFactory
 instanceKlass jdk/internal/ref/CleanerFactory
-instanceKlass  @bci com/curcus/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <appendix> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$MH+0x000001f081000800
+instanceKlass  @bci com/capstoneproject/lms/model/mapper/OrderTableMapper getImageUrlOfRestaurant (Ljava/util/Set;)Ljava/lang/String; 13 <appendix> form vmentry <vmtarget> ; # java/lang/invoke/LambdaForm$MH+0x000001f081000800
 instanceKlass  @bci jdk/internal/module/DefaultRoots compute (Ljava/lang/module/ModuleFinder;Ljava/lang/module/ModuleFinder;)Ljava/util/Set; 11 <appendix> argL0 ; # jdk/internal/module/DefaultRoots$$Lambda+0x800000055
 instanceKlass java/lang/invoke/LambdaProxyClassArchive
 instanceKlass java/lang/invoke/InfoFromMemberName
@@ -11857,7 +11857,7 @@ instanceKlass org/springframework/boot/autoconfigure/web/WebProperties$LocaleRes
 instanceKlass org/springframework/validation/DefaultMessageCodesResolver$Format
 instanceKlass org/springframework/boot/web/server/Shutdown
 instanceKlass org/springframework/boot/autoconfigure/web/ServerProperties$ForwardHeadersStrategy
-instanceKlass com/curcus/lms/model/entity/RestaurantImageType
+instanceKlass com/capstoneproject/lms/model/entity/RestaurantImageType
 instanceKlass org/springframework/data/util/ReactiveWrappers$ReactiveLibrary
 instanceKlass org/springframework/util/ConcurrentLruCache$CacheEntryState
 instanceKlass org/springframework/util/ConcurrentLruCache$DrainStatus
@@ -12103,9 +12103,9 @@ instanceKlass org/modelmapper/ConfigurationException
 instanceKlass org/modelmapper/internal/ErrorsException
 instanceKlass org/modelmapper/MappingException
 instanceKlass org/modelmapper/ValidationException
-instanceKlass com/curcus/lms/exception/ApplicationException
-instanceKlass com/curcus/lms/exception/ValidationException
-instanceKlass com/curcus/lms/exception/NotFoundException
+instanceKlass com/capstoneproject/lms/exception/ApplicationException
+instanceKlass com/capstoneproject/lms/exception/ValidationException
+instanceKlass com/capstoneproject/lms/exception/NotFoundException
 instanceKlass java/lang/invoke/WrongMethodTypeException
 instanceKlass java/util/EmptyStackException
 instanceKlass org/antlr/v4/runtime/RecognitionException

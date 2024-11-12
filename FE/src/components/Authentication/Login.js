@@ -6,28 +6,30 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Button } from "@mui/material";
 import logo from "../../assets/images/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/features/authenticationSlice";
 export default function Login({ setLogin, setRegister }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(""); // Thêm state để hiển thị thông báo
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Gọi API giả để lấy danh sách người dùng
-      const response = await axios.get("http://localhost:3001/users");
-      const users = response.data;
+      dispatch(login({ email: email, matKhau: password }));
 
       // Tìm người dùng với email và mật khẩu khớp
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
+      // const user = users.find(
+      //   (user) => user.email === email && user.password === password
+      // );
 
-      if (user) {
-        setMessage("Đăng nhập thành công!");
-      } else {
-        setMessage("Sai email hoặc mật khẩu.");
-      }
+      // if (user) {
+      //   setMessage("Đăng nhập thành công!");
+      // } else {
+      //   setMessage("Sai email hoặc mật khẩu.");
+      // }
     } catch (error) {
       setMessage("Đã xảy ra lỗi, vui lòng thử lại sau.");
     }
@@ -37,6 +39,7 @@ export default function Login({ setLogin, setRegister }) {
     // setLogin(false);
     // setRegister(true);
   };
+
   const handleOnClickRegister = () => {
     setLogin(false);
     setRegister(true);
@@ -48,7 +51,7 @@ export default function Login({ setLogin, setRegister }) {
           <h2 className="logo__name">TheMeal</h2>
           <img src={logo} alt="TheMeal's logo" className="logo__image" />
         </div>
-        <h2>Đăng Nhập</h2>
+        <h4>Đăng nhập để tiếp tục</h4>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Email:</label>
@@ -102,16 +105,24 @@ export default function Login({ setLogin, setRegister }) {
         {/* Hiển thị thông báo nếu có */}
         <div className="footer-links">
           <p>
-            <Button onClick={handleOnClickForgotPassword}>
+            <Button
+              className="login-button-other"
+              onClick={handleOnClickForgotPassword}
+            >
               Quên Mật Khẩu?
             </Button>
           </p>
           <p>
-            <Button>Đổi Mật Khẩu</Button>
+            <Button className="login-button-other">Đổi Mật Khẩu</Button>
           </p>
           <p>
             Bạn chưa có tài khoản?{" "}
-            <Button onClick={handleOnClickRegister}>Đăng ký</Button>
+            <Button
+              className="login-button-other"
+              onClick={handleOnClickRegister}
+            >
+              Đăng ký
+            </Button>
           </p>
         </div>
       </div>

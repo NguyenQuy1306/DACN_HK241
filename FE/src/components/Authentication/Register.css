@@ -52,6 +52,8 @@
   font-size: 16px !important;
   cursor: pointer !important;
   height: 40px !important;
+  margin-bottom: 5px!important;
+
 }
 
 /* Hiệu ứng cho nút khi hover */
@@ -90,6 +92,7 @@
   cursor: pointer !important;
   height: 40px !important;
   margin-top: 10px !important;
+  padding-bottom: 5px!important;
 }
 .register-button2:hover {
   background-color: rgb(0, 54, 49) !important;}

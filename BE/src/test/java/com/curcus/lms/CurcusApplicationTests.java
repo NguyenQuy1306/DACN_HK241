@@ -1,10 +1,10 @@
-package com.curcus.lms;
+package com.capstoneproject.themeal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CurcusApplicationTests {
+class capstoneprojectApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -70,7 +70,15 @@ h2 {
   margin-top: 20px;
   text-align: center;
 }
-
+.login-button-other
+{
+  color: #4caf50 !important;
+  font-size: 12px !important;
+  height: 5px;
+}
+.login-button-other:hover{
+  background-color: rgb(249, 250, 250) !important;
+}
 .footer-links a {
   color: #4caf50;
   text-decoration: none;

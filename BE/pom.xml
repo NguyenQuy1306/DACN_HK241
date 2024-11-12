@@ -17,7 +17,7 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>
-		com.curcus
+		com.capstoneproject
 	</groupId>
 	<artifactId>
 		lms
@@ -26,10 +26,10 @@
 		0.0.1-SNAPSHOT
 	</version>
 	<name>
-		curcus
+		capstoneproject
 	</name>
 	<description>
-		Curcus - LMS project
+		capstoneproject - LMS project
 	</description>
 	<url />
 	<licenses>
@@ -82,7 +82,12 @@
 				spring-boot-starter-mail
 			</artifactId>
 		</dependency>
-
+			<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
+</dependency>
 		<!-- <dependency>
 		<groupId>
 		org.springframework.boot
@@ -461,7 +466,7 @@
 	                    <image>openjdk:17-alpine</image>
 	                </from>
 	                <to>
-                        <image>dinhthai/curcus:3.13</image>
+                        <image>dinhthai/capstoneproject:3.13</image>
                     </to>
 	                <container>
 	                    <ports>

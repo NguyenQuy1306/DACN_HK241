@@ -7,7 +7,8 @@ export const getRestaurants = () => API.get(`api/restaurants`);
 export const getRestaurantsInMaps = async (params) => {
   try {
     const response = await API.get(`api/restaurants/list-in-boundary`, {
-      params,
+      params: params, // Chuyển params đúng cấu trúc
+      withCredentials: true, // Đặt withCredentials bên ngoài params object
     });
     return response.data; // Ensure this matches your ApiResponse structure
   } catch (error) {
@@ -53,6 +54,18 @@ export const register = async (params) => {
     throw error.response.data;
   }
 };
+
+export const login = async (params) => {
+  try {
+    const response = await API.post(`/api/v1/auth/authenticate`, params, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 // export const getRecords = () => API.get("api/records");
 // export const getRelays = () => API.get("api/relay");
 // export const controlRelays = (data) => API.post("api/relay", data);
