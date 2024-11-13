@@ -239,6 +239,7 @@ function Home(props) {
             cardList={recommendList.map((card, index) => {
               return (
                 <RecommendCard
+                  card={card}
                   imgUrl={card.imageUrls["RESTAURANTIMAGE"][0]}
                   address="HA NOI"
                   tags={["XU HƯỚNG"]}

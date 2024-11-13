@@ -31,7 +31,7 @@ const ModalHomepage = ({ open, setOpen }) => {
     setOpen(false);
     document.body.style.overflow = "auto";
   };
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
   return (
     <>

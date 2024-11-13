@@ -8,7 +8,7 @@ export const getRestaurantsInMaps = async (params) => {
   try {
     const response = await API.get(`api/restaurants/list-in-boundary`, {
       params: params, // Chuyển params đúng cấu trúc
-      withCredentials: true, // Đặt withCredentials bên ngoài params object
+      // withCredentials: true,
     });
     return response.data; // Ensure this matches your ApiResponse structure
   } catch (error) {

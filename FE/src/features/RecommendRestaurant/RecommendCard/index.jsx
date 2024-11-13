@@ -3,9 +3,15 @@ import styles from "./style.module.css";
 import DiscountCard from "../DiscountCard";
 import { Rate } from "antd";
 
-function RecommendCard({ imgUrl, address, tags, name, point, category, avgPrice, discountPercent }) {
+function RecommendCard({ imgUrl, address, tags, name, point, category, avgPrice, discountPercent,card}) {
+    const handleClickDetailRestaurant = async (id) => {
+    localStorage.setItem("selectedPlace", JSON.stringify(card));
+    localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    window.open("/DetailRestaurant/${id}", "_blank");
+  };
     return (
-        <div className={styles.container}>
+        <div className={styles.container}         onClick={() => handleClickDetailRestaurant(card)}
+>
             <img
                 src={imgUrl}
                 alt="Restaurant view"

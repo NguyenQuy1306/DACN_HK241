@@ -160,7 +160,7 @@ const Navigation = ({ selectedPlace }) => {
       </div>
       {onClickReviews && (
         <>
-          <Reviews reviewData={reviewsData} />
+          {/* <Reviews reviewData={reviewsData} />
           <div className="NavigationDiv_H2">
             <div className="NavigationDiv_H2_filter">
               <div className="NavigationDiv_H2_filter_H1">
@@ -176,10 +176,10 @@ const Navigation = ({ selectedPlace }) => {
                 />
               ))}
             </ul>
-          </div>
+          </div> */}
         </>
       )}
-      {onClicMenu && <Menu selectedPlace={selectedPlace}></Menu>}
+      {/* {onClicMenu && <Menu selectedPlace={selectedPlace}></Menu>} */}
       {onClickDetail && <About selectedPlace={selectedPlace}></About>}
       {onClickPath && <Direction selectedPlace={selectedPlace}></Direction>}
     </div>
