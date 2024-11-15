@@ -1,7 +1,9 @@
 package com.capstoneproject.themeal.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,10 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
 import com.capstoneproject.themeal.exception.*;
 import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.model.request.AuthenticationRequest;
 import com.capstoneproject.themeal.model.request.RegisterRequest;
+import com.capstoneproject.themeal.model.request.UserSessionRequest;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.repository.UserRepository;
 import com.capstoneproject.themeal.service.AuthenticationService;
@@ -21,16 +25,16 @@ import com.capstoneproject.themeal.service.AuthenticationService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 @SecurityRequirement(name = "bearerAuth")
+
 public class AuthenticationController {
     private final AuthenticationService service;
     private final UserRepository userRepository;
+    private final SessionRegistry sessionRegistry;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest request,
@@ -90,14 +94,13 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<ApiResponse<LoginResponse>> authenticate(
-            @Valid @RequestBody AuthenticationRequest request,
-            BindingResult bindingResult,
-            HttpServletResponse response, HttpSession session) {
-        System.out.println("nguyenquysssd" + request.getEmail() + request.getMatKhau());
+            HttpServletRequest request,
+            @Valid @RequestBody AuthenticationRequest authenticationRequest,
+            BindingResult bindingResult) { // Đặt BindingResult ngay sau @RequestBody
         ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
         Map<String, String> errors = new HashMap<>();
 
-        // Validate input for binding errors
+        // Kiểm tra lỗi xác thực đầu vào
         if (bindingResult.hasErrors()) {
             throw new ValidationException(
                     bindingResult.getAllErrors().stream()
@@ -107,10 +110,20 @@ public class AuthenticationController {
         }
 
         try {
-            // Authenticate user
-            LoginResponse loginResponse = service.authenticate(request, response);
-            session.setAttribute("", loginResponse.getMaSoNguoiDung());
-            session.setAttribute("username", loginResponse.getHoTen());
+            LoginResponse loginResponse = service.authenticate(authenticationRequest);
+            HttpSession existingSession = request.getSession(false);
+            if (existingSession != null) {
+                existingSession.invalidate();
+            }
+
+            // Tạo session mới
+            HttpSession newSession = request.getSession(true);
+
+            newSession.setAttribute("USER_SESSION", loginResponse);
+            newSession.setMaxInactiveInterval(300); // 5 phút
+
+            // Đăng ký session
+            sessionRegistry.registerSession(newSession.getId(), loginResponse.getMaSoNguoiDung());
             apiResponse.ok(loginResponse);
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         } catch (IncorrectPasswordException e) {
@@ -120,5 +133,39 @@ public class AuthenticationController {
             apiResponse.error(ResponseCode.getError(23));
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        ApiResponse<Map<String, String>> apiResponse = new ApiResponse<>();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            sessionRegistry.invalidateSession(session.getId());
+            session.invalidate();
+        }
+        apiResponse.ok(ResponseCode.getError(28));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/session-info")
+    public ResponseEntity<?> getSessionInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
+        if (session != null) {
+            LoginResponse userSession = (LoginResponse) session.getAttribute("USER_SESSION");
+            if (userSession != null) {
+                apiResponse.ok(userSession);
+                return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+            }
+        }
+        apiResponse.error(ResponseCode.getError(26));
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/session-expired")
+    public ResponseEntity<?> sessionExpired() {
+        ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
+        apiResponse.error(ResponseCode.getError(27));
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
     }
 }

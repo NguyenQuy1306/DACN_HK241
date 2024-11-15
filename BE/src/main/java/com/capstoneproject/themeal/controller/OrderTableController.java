@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/order-table")
-@CrossOrigin(origins = "*")
 public class OrderTableController {
     @Autowired
     OrderTableServiceImpl orderTableServiceImpl;

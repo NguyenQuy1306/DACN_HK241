@@ -11,7 +11,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/rate")
-@CrossOrigin("*")
+
 public class RateController {
     @Autowired
     RateServiceImpl rateService;

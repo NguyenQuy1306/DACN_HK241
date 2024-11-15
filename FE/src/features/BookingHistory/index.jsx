@@ -10,7 +10,7 @@ function BookingHistory({ customerId }) {
     useEffect(() => {
         const fetchOrderList = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/order-table/${customerId}`);
+                const response = await axios.get(`http://localhost:8080/api/order-table/${customerId}`,{ withCredentials: true});
                 if (response.status === 200) {
                     setHistoryList(response.data);
                 } else {

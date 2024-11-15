@@ -11,7 +11,7 @@ import com.capstoneproject.themeal.service.impl.RegisterRestaurantImpl;
 
 @RestController
 @RequestMapping("api/register-restaurant")
-@CrossOrigin("*")
+
 public class RegisterRestaurantController {
     @Autowired
     RegisterRestaurantImpl registerRestaurant;

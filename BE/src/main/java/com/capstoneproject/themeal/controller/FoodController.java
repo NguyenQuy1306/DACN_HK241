@@ -27,7 +27,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/food")
-@CrossOrigin(origins = "*")
 public class FoodController {
 
     @Autowired

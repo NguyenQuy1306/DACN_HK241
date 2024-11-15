@@ -13,7 +13,7 @@ function ReviewList() {
     useEffect(() => {
         const fetchRatingList = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/rate/${customerId}`);
+                const response = await axios.get(`http://localhost:8080/api/rate/${customerId}`,{ withCredentials: true});
                 if (response.status === 200) {
                     setRatingList(response.data);
                 } else {

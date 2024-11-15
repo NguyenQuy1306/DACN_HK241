@@ -26,12 +26,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.data.domain.Pageable;
+import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/restaurants")
-@CrossOrigin(origins = "*")
 public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;

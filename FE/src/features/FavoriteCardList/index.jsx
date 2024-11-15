@@ -12,7 +12,9 @@ function FavoriteCardList({ customerId }) {
     useEffect(() => {
         const fetchFavoriteList = async () => {
             try {
-                const favorites = await axios.get(`http://localhost:8080/api/favorite-list/${customerId}`);
+                const favorites = await axios.get(`http://localhost:8080/api/favorite-list/${customerId}`, {
+                    withCredentials: true,
+                  });
                 if (favorites.status === 200) {
                     setFavorites(favorites.data);
                 } else {

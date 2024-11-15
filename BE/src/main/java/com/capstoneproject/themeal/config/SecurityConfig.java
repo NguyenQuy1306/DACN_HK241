@@ -32,6 +32,7 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/api/v1/auth/**", // API for guest access
                         "/api/restaurants/*",
+                        "/api/restaurant-categories",
         };
 
         @Bean
@@ -43,6 +44,7 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated() // Require authentication for all other
                                                                               // requests
                                 )
+                                .cors(cors -> cors.disable())
                                 .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)
                                 .formLogin(form -> form.disable()) // Disable form login
                                 .authenticationProvider(authenticationProvider) // Add custom authentication provider

@@ -1,49 +1,77 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Nhập Link từ react-router-dom
-import axios from "axios"; // Nhập axios để gọi API
-import "./Login.css"; // Đường dẫn đến tệp CSS của bạn
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  login,
+  checkSession,
+  selectUser,
+  selectLoading,
+  selectError,
+  clearError,
+  clearLoglin,
+} from "../../redux/features/authenticationSlice";
 import { Button } from "@mui/material";
 import logo from "../../assets/images/logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/features/authenticationSlice";
+import "./Login.css";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 export default function Login({ setLogin, setRegister }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState(""); // Thêm state để hiển thị thông báo
+  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSessionCheck, setIsSessionCheck] = useState(true);
+
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    dispatch(clearLoglin());
     e.preventDefault();
-    try {
-      // Gọi API giả để lấy danh sách người dùng
-      dispatch(login({ email: email, matKhau: password }));
+    setMessage(""); // Reset the message
+    setIsSessionCheck(false); // Indicate manual login
+    dispatch(login({ email, matKhau: password }));
+  };
 
-      // Tìm người dùng với email và mật khẩu khớp
-      // const user = users.find(
-      //   (user) => user.email === email && user.password === password
-      // );
+  useEffect(() => {
+    // Check session on initial load
+    dispatch(checkSession());
+  }, [dispatch]);
 
-      // if (user) {
-      //   setMessage("Đăng nhập thành công!");
-      // } else {
-      //   setMessage("Sai email hoặc mật khẩu.");
-      // }
-    } catch (error) {
-      setMessage("Đã xảy ra lỗi, vui lòng thử lại sau.");
+  useEffect(() => {
+    if (user) {
+      if (isSessionCheck) {
+        setLogin(false);
+        setRegister(false);
+      } else {
+        toast.success("Đăng nhập thành công", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+        });
+        setLogin(false);
+        setRegister(false);
+      }
     }
-  };
-  const [showPassword, setShowPassword] = useState(false);
-  const handleOnClickForgotPassword = () => {
-    // setLogin(false);
-    // setRegister(true);
-  };
+  }, [user, isSessionCheck, setLogin, setRegister]);
+
+  useEffect(() => {
+    if (error) {
+      setMessage(error); // Display error message
+      dispatch(clearError()); // Reset error after displaying
+    }
+  }, [error, dispatch]);
 
   const handleOnClickRegister = () => {
     setLogin(false);
     setRegister(true);
   };
+
   return (
     <div className="loginDiv">
       <div className="loginDivH1">
@@ -77,7 +105,7 @@ export default function Login({ setLogin, setRegister }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ paddingRight: "30px" }} // Add space for the icon
+              style={{ paddingRight: "30px" }}
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
@@ -86,35 +114,17 @@ export default function Login({ setLogin, setRegister }) {
                 right: "30px",
                 cursor: "pointer",
                 color: "grey",
-                fontSize: "10px !important",
               }}
             >
-              {showPassword ? (
-                <VisibilityIcon className="input-group-input_VisibilityIcon"></VisibilityIcon>
-              ) : (
-                <VisibilityOffIcon className="input-group-input_VisibilityIcon"></VisibilityOffIcon>
-              )}{" "}
-              {/* Replace with your preferred icons */}
+              {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </span>
           </div>
           <Button type="submit" className="login-button">
-            Đăng Nhập
+            {loading ? "Đang xử lý..." : "Đăng Nhập"}
           </Button>
         </form>
-        {message && <p className="login-notify">{message}</p>}{" "}
-        {/* Hiển thị thông báo nếu có */}
+        {message && <p className="login-notify">{message}</p>}
         <div className="footer-links">
-          <p>
-            <Button
-              className="login-button-other"
-              onClick={handleOnClickForgotPassword}
-            >
-              Quên Mật Khẩu?
-            </Button>
-          </p>
-          <p>
-            <Button className="login-button-other">Đổi Mật Khẩu</Button>
-          </p>
           <p>
             Bạn chưa có tài khoản?{" "}
             <Button

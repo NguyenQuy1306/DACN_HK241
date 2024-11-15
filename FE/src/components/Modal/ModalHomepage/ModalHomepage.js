@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Drawer } from "antd";
 import { CloseOutlined, Draw } from "@mui/icons-material";
 import PersonalInfo from "../../../features/PersonalInfo";
@@ -14,9 +14,16 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
 import Login from "../../Authentication/Login";
 import Register from "../../Authentication/Register";
+import {
+  logout,
+  selectUser,
+} from "../../../redux/features/authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 const ModalHomepage = ({ open, setOpen }) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
 
   const showChildrenDrawer = () => {
@@ -33,6 +40,25 @@ const ModalHomepage = ({ open, setOpen }) => {
   };
   const [login, setLogin] = useState(true);
   const [register, setRegister] = useState(false);
+  const [isCLickLogout, setIsClickLogout] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsClickLogout(true);
+  };
+  const user = useSelector(selectUser);
+  useEffect(() => {
+    if (isCLickLogout && !user) {
+      toast.success("Đăng xuất thành công", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+      setLogin(true);
+      setRegister(false);
+      setIsClickLogout(false);
+    }
+  }, [user, isCLickLogout, setIsClickLogout]);
   return (
     <>
       {!login && !register && (
@@ -109,7 +135,9 @@ const ModalHomepage = ({ open, setOpen }) => {
               <div className="menu-icon">
                 <MdOutlineLogout size={24} />
               </div>
-              <p className="menu-text">Đăng xuất</p>
+              <p className="menu-text" onClick={handleLogout}>
+                Đăng xuất
+              </p>
             </li>
           </ul>
           <Drawer
