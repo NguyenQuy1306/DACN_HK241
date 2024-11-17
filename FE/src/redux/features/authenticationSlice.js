@@ -54,6 +54,7 @@ const authenticationSlice = createSlice({
   initialState: {
     user: null,
     registerStatus: "",
+    openModal: false,
     error: null,
     errorCheckSession: null,
     errorRegister: null,
@@ -68,6 +69,10 @@ const authenticationSlice = createSlice({
     },
     clearLoglin(state) {
       state.user = null;
+    },
+    setStatusModalAuthentication(state, action) {
+      const { openModal } = action.payload;
+      state.openModal = openModal;
     },
   },
   extraReducers: (builder) => {
@@ -125,8 +130,12 @@ const authenticationSlice = createSlice({
   },
 });
 
-export const { clearError, clearRegisterStatus, clearLoglin } =
-  authenticationSlice.actions;
+export const {
+  clearError,
+  clearRegisterStatus,
+  clearLoglin,
+  setStatusModalAuthentication,
+} = authenticationSlice.actions;
 
 export const selectUser = (state) => state.authentication.user;
 export const selectLoading = (state) => state.authentication.loading;

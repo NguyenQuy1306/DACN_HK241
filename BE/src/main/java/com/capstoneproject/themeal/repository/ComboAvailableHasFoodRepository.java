@@ -19,4 +19,5 @@ public interface ComboAvailableHasFoodRepository extends JpaRepository<ComboAvai
             "JOIN c.ComboCoSan comboCoSan " + "JOIN comboCoSan.NhaHang nhahang " +
             "WHERE nhahang.MaSoNhaHang = :restaurantId ")
     List<ComboAvailableHasFood> findAllComboAvailable(@Param("restaurantId") Long restaurantId, Pageable pageable);
+
 }

@@ -33,6 +33,10 @@ public class SecurityConfig {
                         "/api/v1/auth/**", // API for guest access
                         "/api/restaurants/*",
                         "/api/restaurant-categories",
+                        "/api/food",
+                        "/api/combo",
+                        "/api/table/restaurant",
+                        "/api/orders"
         };
 
         @Bean

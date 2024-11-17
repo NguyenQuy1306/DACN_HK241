@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.model.entity.TableAvailable;
+import com.capstoneproject.themeal.model.entity.TableAvailableId;
 import com.capstoneproject.themeal.model.mapper.TableAvailableMapper;
 import com.capstoneproject.themeal.model.response.TableAvailableResponse;
 import com.capstoneproject.themeal.repository.TableAvailableRepository;
@@ -54,6 +55,12 @@ public class TableAvailableServiceImpl implements TableAvailableService {
         Exception ex) {
             throw new ApplicationException();
         }
+    }
+
+    @Override
+    public boolean isTableExists(Short tableId, Long restaurantId) {
+        TableAvailableId tableAvailableId = new TableAvailableId(restaurantId, tableId);
+        return tableAvailableRepository.existsById(tableAvailableId);
     }
 
 }

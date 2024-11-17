@@ -100,3 +100,12 @@ export const checkSession = async () => {
     throw error.response?.data || error;
   }
 };
+
+export const createOrder = async (params) => {
+  try {
+    const response = await API.post(`api/orders`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

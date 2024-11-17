@@ -36,7 +36,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui/**",
-            "/webjars/**");
+            "/webjars/**",
+            "/api/food",
+            "/api/combo",
+            "/api/orders",
+            "/api/table/restaurant");
 
     @Autowired
     private SessionRegistry sessionRegistry;

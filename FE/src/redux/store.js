@@ -6,6 +6,7 @@ import foodSlice from "./features/foodSlice";
 import comboSlice from "./features/comboSlice";
 import tableSlice from "./features/tableSlice";
 import authenticationSlice from "./features/authenticationSlice";
+import orderSlice from "./features/orderSlice";
 export default configureStore({
   reducer: {
     restaurant: restaurantSlice,
@@ -14,6 +15,7 @@ export default configureStore({
     table: tableSlice,
     restaurantRegister: restaurantRegisterReducer,
     authentication: authenticationSlice,
+    order: orderSlice,
   },
 });
 

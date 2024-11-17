@@ -35,14 +35,17 @@ export const restaurantSlice = createSlice({
     openBookingWithMenu: false,
     menuChoosed: [],
     newMenu: [],
+    bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
   },
   reducers: {
     setOpenBookingWithMenu: (state, action) => {
-      const { openBookingWithMenu, menuChoosed, newMenu } = action.payload;
+      const { openBookingWithMenu, menuChoosed, newMenu, bookingWithNewCombo } =
+        action.payload;
       state.openBookingWithMenu = openBookingWithMenu;
       state.menuChoosed = menuChoosed || [];
       state.newMenu = newMenu || [];
+      state.bookingWithNewCombo = bookingWithNewCombo;
     },
     setHoveredMarkerIndex: (state, action) => {
       state.hoveredMarkerIndex = action.payload;

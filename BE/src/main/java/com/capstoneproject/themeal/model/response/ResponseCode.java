@@ -50,6 +50,12 @@ public class ResponseCode {
             case 28:
                 map.put("MSG 28", "Logout successful");
                 break;
+            case 29:
+                map.put("MSG 29", "Table not exist");
+                break;
+            case 30:
+                map.put("MSG 30", "Combo not exist");
+                break;
             default:
                 map.put("MSG ?", "Unknown error");
                 break;

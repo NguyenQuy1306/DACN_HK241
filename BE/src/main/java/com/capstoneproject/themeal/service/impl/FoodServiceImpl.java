@@ -30,6 +30,7 @@ public class FoodServiceImpl implements FoodService {
     public List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId) {
         try {
             List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
+            System.out.println("food length:::" + food.size());
             return foodMapper.toFoodFinalResponse(food);
 
         } catch (Exception ex) {
@@ -37,4 +38,19 @@ public class FoodServiceImpl implements FoodService {
         }
     }
 
+    @Override
+    public boolean checkFoodExist(List<Long> listIdFood) {
+        List<Long> existingIds = foodRepository.findExistingFoodIds(listIdFood);
+
+        // Find IDs that are missing
+        List<Long> missingIds = listIdFood.stream()
+                .filter(id -> !existingIds.contains(id))
+                .toList();
+
+        if (!missingIds.isEmpty()) {
+            throw new IllegalArgumentException("Food IDs not found: " + missingIds);
+        }
+        System.out.println("ngueyhsjdfnlkjsdkjlfhsdjlfhn");
+        return true;
+    }
 }

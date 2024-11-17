@@ -17,11 +17,12 @@ import Register from "../../Authentication/Register";
 import {
   logout,
   selectUser,
+  setStatusModalAuthentication,
 } from "../../../redux/features/authenticationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalHomepage = ({ open, setOpen }) => {
+const ModalHomepage = ({ open }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
@@ -35,18 +36,18 @@ const ModalHomepage = ({ open, setOpen }) => {
   };
   const [navItem, setNavItem] = useState("");
   const onClose = () => {
-    setOpen(false);
+    dispatch(setStatusModalAuthentication({ openModal: false }));
     document.body.style.overflow = "auto";
   };
   const [login, setLogin] = useState(true);
   const [register, setRegister] = useState(false);
   const [isCLickLogout, setIsClickLogout] = useState(false);
-
   const handleLogout = () => {
     dispatch(logout());
     setIsClickLogout(true);
   };
   const user = useSelector(selectUser);
+
   useEffect(() => {
     if (isCLickLogout && !user) {
       toast.success("Đăng xuất thành công", {
@@ -85,7 +86,7 @@ const ModalHomepage = ({ open, setOpen }) => {
               <FiEdit2 size={20} />
             </div>
           </div>
-          <h3 className="user-name">Nhựt N.</h3>
+          <h3 className="user-name">{user ? user.hoTen : "null"}</h3>
           <p className="joined-time">Tham gia năm 2024</p>
           <ul className="user-menu">
             <li onClick={showChildrenDrawer} className="user-menu__item">

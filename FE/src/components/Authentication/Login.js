@@ -8,6 +8,7 @@ import {
   selectError,
   clearError,
   clearLoglin,
+  setStatusModalAuthentication,
 } from "../../redux/features/authenticationSlice";
 import { Button } from "@mui/material";
 import logo from "../../assets/images/logo.png";

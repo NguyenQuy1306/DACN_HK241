@@ -22,6 +22,8 @@ const ButtonMenuNavBar = ({
       setOnClickMenuNavBar1(false);
       setOnClickMenuNavBar2(false);
       setOnClickMenuNavBar3(true);
+      console.log("selectedPlace.maSoNhaHang", selectedPlace.maSoNhaHang);
+      console.log("selectedPlace", selectedPlace.maSoNhaHang);
       dispatch(getFood({ restaurantId: selectedPlace.maSoNhaHang }));
     } else if (text === "Các combo có sẵn") {
       setOnClickMenuNavBar1(true);
