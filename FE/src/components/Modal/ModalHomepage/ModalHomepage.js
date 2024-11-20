@@ -31,11 +31,12 @@ const ModalHomepage = ({ open, setOpen }) => {
     setOpen(false);
     document.body.style.overflow = "auto";
   };
-  const [login, setLogin] = useState(true);
+
+  const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
   return (
     <>
-      {!login && !register && (
+      {(login  || register) && (
         <Drawer
           onClose={onClose}
           width={302}
@@ -113,7 +114,7 @@ const ModalHomepage = ({ open, setOpen }) => {
             </li>
           </ul>
           <Drawer
-            title=<CloseOutlined
+            title= {<CloseOutlined
               onClick={onChildrenDrawerClose}
               size={18}
               style={{
@@ -123,7 +124,7 @@ const ModalHomepage = ({ open, setOpen }) => {
                 top: 16,
                 boxShadow: "none",
               }}
-            />
+            />}
             width={816}
             closable={false}
             onClose={onChildrenDrawerClose}
@@ -142,7 +143,7 @@ const ModalHomepage = ({ open, setOpen }) => {
           </Drawer>
         </Drawer>
       )}
-      {login && !register && (
+      {!login && !register && (
         <Drawer
           onClose={onClose}
           width={302}

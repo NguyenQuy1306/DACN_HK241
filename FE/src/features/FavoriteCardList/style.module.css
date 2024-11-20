@@ -25,6 +25,7 @@
 .card-list-wrapper {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .quantity {
@@ -35,4 +36,8 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.icon-wrapper:hover {
+    cursor: pointer;
 }

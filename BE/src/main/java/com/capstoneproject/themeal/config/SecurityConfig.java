@@ -32,6 +32,10 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/api/v1/auth/**", // API for guest access
                         "/api/restaurants/*",
+                        "/api/favorite-list/*",
+                        "/api/favorite-list/add-new-card/*",
+                        "/api/order-table/*",
+                        "/api/restaurant-categories",
         };
 
         @Bean

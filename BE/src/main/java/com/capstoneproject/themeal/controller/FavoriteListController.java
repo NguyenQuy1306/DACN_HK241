@@ -22,4 +22,9 @@ public class FavoriteListController {
     ResponseEntity<List<FavoriteListResponse>> findFavoriteListByCustomerId(@PathVariable Long customerId) {
         return ResponseEntity.ok(favoriteListService.findFavoriteListByCustomerId(customerId));
     }
+
+    @PostMapping("/add-new-card/{customerId}")
+    ResponseEntity<FavoriteListResponse> addNewList(@PathVariable Long customerId) {
+        return ResponseEntity.ok(favoriteListService.addNewList(null,customerId));
+    }
 }

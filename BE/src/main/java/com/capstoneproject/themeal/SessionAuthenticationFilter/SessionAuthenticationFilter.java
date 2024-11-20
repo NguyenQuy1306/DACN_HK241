@@ -22,7 +22,10 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
                 || requestURI.startsWith("/api/v1/auth/authenticate")
                 || requestURI.startsWith("/api/v1/auth/register")
                 || requestURI.startsWith("/api/restaurants/recommended")
-                || requestURI.startsWith("/api/restaurant-categories")) {
+                || requestURI.startsWith("/api/restaurant-categories")
+                || requestURI.startsWith("/api/oder-table")
+                || requestURI.startsWith("/api/favorite-list")) {
+
             filterChain.doFilter(request, response);
             return;
         }

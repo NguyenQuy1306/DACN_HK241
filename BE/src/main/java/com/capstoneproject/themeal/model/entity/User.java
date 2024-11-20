@@ -24,6 +24,7 @@ import java.sql.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "maSoNguoiDung")
     private Long maSoNguoiDung;
 
     @Column(nullable = false, unique = true)

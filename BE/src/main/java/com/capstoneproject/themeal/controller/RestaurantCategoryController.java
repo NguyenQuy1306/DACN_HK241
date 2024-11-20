@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.controller;
 
+import com.capstoneproject.themeal.service.impl.RestaurantCategoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class RestaurantCategoryController {
     @Autowired
-    private RestaurantCategoryService restaurantCategoryService;
+    private RestaurantCategoryImpl restaurantCategoryService;
 
     @GetMapping
     ResponseEntity<List<RestaurantCategoryResponse>> getAllRestaurantCategories() {
+        System.out.println("ĐANG GỌI CONTROLLER LẤY DỮ LIÊ CATEGORY");
         List<RestaurantCategoryResponse> restaurantCategoryResponses = restaurantCategoryService.getAll();
         return new ResponseEntity<>(restaurantCategoryResponses, HttpStatus.OK);
     }
