@@ -29,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/combo")
-@CrossOrigin(origins = "*")
+
 public class ComboAvailableController {
     @Autowired
     private ComboAvailableService comboAvailableService;

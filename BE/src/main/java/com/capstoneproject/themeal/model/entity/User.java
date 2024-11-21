@@ -24,7 +24,7 @@ import java.sql.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long maSoNguoiDung;
+    private Long MaSoNguoiDung;
 
     @Column(nullable = false, unique = true)
     private String Email;
@@ -57,11 +57,11 @@ public class User {
     private Set<UserLikeRate> danhSachNguoiDungThichDanhGia;
 
     public Long getMaSoNguoiDung() {
-        return maSoNguoiDung;
+        return MaSoNguoiDung;
     }
 
     public void setMaSoNguoiDung(Long maSoNguoiDung) {
-        this.maSoNguoiDung = maSoNguoiDung;
+        this.MaSoNguoiDung = maSoNguoiDung;
     }
 
     public String getEmail() {

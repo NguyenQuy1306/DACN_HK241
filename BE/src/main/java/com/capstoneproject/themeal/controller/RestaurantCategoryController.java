@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/restaurant-categories")
-@CrossOrigin(origins = "*")
 public class RestaurantCategoryController {
     @Autowired
     private RestaurantCategoryService restaurantCategoryService;

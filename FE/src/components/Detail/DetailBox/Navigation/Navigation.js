@@ -7,6 +7,7 @@ import Comment from "./Reviews/Component/Comment/Comment";
 import Menu from "./Menu/Menu";
 import About from "./About/About";
 import Direction from "./Direction/Direction";
+import { useDispatch, useSelector } from "react-redux";
 const Navigation = ({ selectedPlace }) => {
   const [onClickDetail, setOnClickDetail] = useState(true);
   const [onClicMenu, setOnClicMenu] = useState(false);
@@ -115,7 +116,8 @@ const Navigation = ({ selectedPlace }) => {
       ],
     },
   ];
-
+  const reviewData = useSelector((state) => state.rate.rate);
+  console.log("reviewData::", reviewData);
   return (
     <div className="NavigationDiv">
       <div className="Navigation_H1">
@@ -160,7 +162,7 @@ const Navigation = ({ selectedPlace }) => {
       </div>
       {onClickReviews && (
         <>
-          <Reviews reviewData={reviewsData} />
+          <Reviews reviewData={reviewData} />
           <div className="NavigationDiv_H2">
             <div className="NavigationDiv_H2_filter">
               <div className="NavigationDiv_H2_filter_H1">
@@ -168,7 +170,7 @@ const Navigation = ({ selectedPlace }) => {
               </div>
             </div>
             <ul className="NavigationDiv_H2_ul">
-              {reviewsData.map((review, index) => (
+              {reviewData.map((review, index) => (
                 <Comment
                   key={index}
                   review={review}

@@ -41,7 +41,7 @@ function FavoriteList() {
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/favorite-restaurants/${listId.id}`);
+                const response = await axios.get(`http://localhost:8080/api/favorite-restaurants/${listId.id}`,{ withCredentials: true});
                 if (response.status === 200) {
                     setRestaurants(response.data);
                 } else {

@@ -17,4 +17,8 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
             "JOIN f.DanhMuc danhmuc " + "JOIN danhmuc.NhaHang nhahang " +
             "WHERE nhahang.MaSoNhaHang = :restaurantId ")
     List<Food> findAllFood(@Param("restaurantId") Long restaurantId, Pageable pageable);
+
+    @Query("SELECT f.MaSoMonAn FROM Food f WHERE f.MaSoMonAn IN :ids")
+    List<Long> findExistingFoodIds(List<Long> ids);
+
 }

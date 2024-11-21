@@ -40,6 +40,7 @@ export default function BasicModal({ combo }) {
         openBookingWithMenu: true,
         menuChoosed: [combo_convert],
         newMenu: [combo],
+        bookingWithNewCombo: true,
       })
     );
   };

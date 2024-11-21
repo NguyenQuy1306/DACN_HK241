@@ -23,7 +23,11 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const handleOnClickBookingRestaurantWithAvailableMenu = () => {
     setOpen(false);
     dispatch(
-      setOpenBookingWithMenu({ openBookingWithMenu: true, menuChoosed: [menu] })
+      setOpenBookingWithMenu({
+        openBookingWithMenu: true,
+        menuChoosed: [menu],
+        bookingWithNewCombo: false,
+      })
     );
   };
 

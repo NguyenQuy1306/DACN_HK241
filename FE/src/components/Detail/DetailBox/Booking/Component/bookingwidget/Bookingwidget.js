@@ -10,7 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenBookingWithMenu } from "../../../../../../redux/features/restaurantSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { Modal } from "@mui/material";
-import { getTableForRestaurant } from "../../../../../../redux/features/tableSlice";
+import {
+  getTableForRestaurant,
+  setChoosedTable,
+} from "../../../../../../redux/features/tableSlice";
 
 const { formatCurrency } = require("../../../../../../helper/helper");
 const Bookingwidget = ({ selectedPlace }) => {
@@ -30,7 +33,11 @@ const Bookingwidget = ({ selectedPlace }) => {
 
   const handleResetFindTable = () => {
     dispatch(
-      setOpenBookingWithMenu({ openBookingWithMenu: false, menuChoosed: [] })
+      setOpenBookingWithMenu({
+        openBookingWithMenu: false,
+        menuChoosed: [],
+        bookingWithNewCombo: false,
+      })
     );
 
     setDate(null);
@@ -110,6 +117,7 @@ const Bookingwidget = ({ selectedPlace }) => {
     setOpen(false);
   };
   const tableAvailable = useSelector((state) => state.table.tables);
+  console.log("tableAvailable", tableAvailable);
   const [timeTableAvailable, setTimeTableAvailable] = useState([]);
   const [personTableAvailable, setPersonTableAvailable] = useState([]);
   useEffect(() => {
@@ -156,6 +164,36 @@ const Bookingwidget = ({ selectedPlace }) => {
       setPersonTableAvailable(personCount);
     }
   }, [time, date, tableAvailable, timeTableAvailable]);
+  // const [foundTables, setFoundTables] = useState([]);
+
+  useEffect(() => {
+    if (date && time && person) {
+      const formattedDate = date
+        .toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .split("/")
+        .reverse()
+        .join("-");
+      const tables = tableAvailable
+        .filter(
+          (item) =>
+            item.ngay === formattedDate && item.gio.slice(0, -3) === time
+        )
+        .map((item) => item.ban)
+        .flat()
+        .filter((table) => table.soNguoi === person);
+
+      // setFoundTables(tables);
+      dispatch(setChoosedTable({ choosedTable: tables[0] }));
+
+      console.log("tablestables", tables);
+    } else {
+      dispatch(setChoosedTable({ choosedTable: null }));
+    }
+  }, [date, time, person, tableAvailable]);
   return (
     <>
       <div className="BookingwidgetDiv">
@@ -292,7 +330,16 @@ const Bookingwidget = ({ selectedPlace }) => {
         )}
         {closeOptionDiv === false && (
           <MenuChooseBookingwidget
+            selectedPlace={selectedPlace}
             openBookingWithMenu={openBookingWithMenu}
+            setDate={setDate}
+            setcloseDateDiv={setcloseDateDiv}
+            setTime={setTime}
+            setcloseTimeDiv={setcloseTimeDiv}
+            setPerson={setPerson}
+            setClosePersonDiv={setClosePersonDiv}
+            setOption={setOption}
+            setCloseOptionDiv={setCloseOptionDiv}
           ></MenuChooseBookingwidget>
         )}
       </div>

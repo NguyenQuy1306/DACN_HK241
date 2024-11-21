@@ -27,7 +27,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/food")
-@CrossOrigin(origins = "*")
 public class FoodController {
 
     @Autowired
@@ -38,7 +37,7 @@ public class FoodController {
 
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
-
+        System.out.println("check call " + restaurantId);
         try {
             List<FoodFinalReponse> foodResponses = foodService.getAllFood(pageable, restaurantId);
             apiResponse.ok(foodResponses);

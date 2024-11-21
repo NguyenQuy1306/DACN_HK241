@@ -20,4 +20,5 @@ public interface TableAvailableRepository extends JpaRepository<TableAvailable, 
 
     @Query("SELECT t FROM TableAvailable t WHERE t.id.MaSoNhaHang = :maSoNhaHang")
     List<TableAvailable> findAllTableForRestaurant(@Param("maSoNhaHang") Long maSoNhaHang);
+
 }

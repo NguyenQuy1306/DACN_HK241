@@ -22,6 +22,8 @@ public class ComboAvailableServiceImpl implements ComboAvailableService {
     @Autowired
     private ComboAvailableHasFoodRepository comboAvailableHasFoodRepository;
     @Autowired
+    private ComboAvailableRepository comboAvailableRepository;
+    @Autowired
     private ComboAvailableMapper comboAvailableMapper;
 
     @Override
@@ -35,6 +37,16 @@ public class ComboAvailableServiceImpl implements ComboAvailableService {
         } catch (Exception ex) {
             throw new ApplicationException();
         }
+    }
+
+    @Override
+    public boolean isComboExists(Long comboId, Long restaurantId) {
+        List<ComboAvailable> comboAvailables = comboAvailableRepository.findAllComboAvailable(restaurantId, comboId);
+        if (comboAvailables.size() > 0) {
+            return true;
+        }
+        return false;
+
     }
 
 }

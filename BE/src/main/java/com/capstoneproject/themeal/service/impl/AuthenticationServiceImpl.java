@@ -58,7 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public LoginResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public LoginResponse authenticate(AuthenticationRequest request) {
 
         var user = repository.timEmail(request.getEmail())
                 .orElseThrow(() -> new NotFoundException("Account does not exist"));

@@ -36,14 +36,14 @@ function RegisterRestaurant2() {
         try {
             const response = await axios.post(
                 "http://localhost:8080/api/register-restaurant",
-                requestValue,
-
+                requestValue, // Dữ liệu gửi lên API
                 {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
+                  withCredentials: true,
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
             if (response.status === 200) {
                 alert("Restaurant was successfully registered");
                 dispatch(resetState());

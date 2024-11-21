@@ -41,6 +41,21 @@ public class ResponseCode {
             case 25:
                 map.put("MSG 25", "Already exists");
                 break;
+            case 26:
+                map.put("MSG 26", "No active session");
+                break;
+            case 27:
+                map.put("MSG 27", "Session has expired");
+                break;
+            case 28:
+                map.put("MSG 28", "Logout successful");
+                break;
+            case 29:
+                map.put("MSG 29", "Table not exist");
+                break;
+            case 30:
+                map.put("MSG 30", "Combo not exist");
+                break;
             default:
                 map.put("MSG ?", "Unknown error");
                 break;
