@@ -53,6 +53,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         System.out.println("Request URI: " + requestURI); // Log the request URI
         if (isPublicUrl(requestURI)) {
+
             filterChain.doFilter(request, response);
             return;
         }

@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -35,15 +36,13 @@ public class FavoriteList {
     private LocalDateTime ThoiGianCapNhat;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MaSoKhachHang", referencedColumnName = "MaSoNguoiDung")
+    @JoinColumn(name = "MaSoKhachHang", referencedColumnName = "maSoNguoiDung")
     private User khachHang; // Correctly reflects a single user association
 
-    public void setKhachHang(User khachHang) {
-        khachHang = khachHang;
-    }
+
 
     @OneToMany(mappedBy = "DanhSachYeuThich")
-    private Set<FavoriteListRestaurant> favoriteListRestaurants;
+    private Set<FavoriteListRestaurant> favoriteListRestaurants = new HashSet<>();
 
     public Long getMaSoDanhSachYeuThich() {
         return MaSoDanhSachYeuThich;
@@ -73,8 +72,8 @@ public class FavoriteList {
         return khachHang;
     }
 
-    public void setKhachHang(Customer khachHang) {
-        khachHang = khachHang;
+    public void setKhachHang(User khachHang) {
+        this.khachHang = khachHang;
     }
 
     public Set<FavoriteListRestaurant> getFavoriteListRestaurants() {
@@ -83,5 +82,14 @@ public class FavoriteList {
 
     public void setFavoriteListRestaurants(Set<FavoriteListRestaurant> favoriteListRestaurants) {
         this.favoriteListRestaurants = favoriteListRestaurants;
+    }
+    @Override
+    public String toString() {
+        return "FavoriteList{" +
+                "MaSoDanhSachYeuThich=" + MaSoDanhSachYeuThich +
+                ", Ten='" + Ten + '\'' +
+                ", ThoiGianCapNhat=" + ThoiGianCapNhat +
+                ", khachHang=" + (khachHang != null ? khachHang.getMaSoNguoiDung() : "null") +
+                '}';
     }
 }

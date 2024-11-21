@@ -12,13 +12,14 @@ const Header = () => {
     >
       <div className="header_style">
         <span style={{ cursor: "pointer" }}>
-          <span
+          <a
+            href="http://localhost:3000/register-restaurant"
             className="text_header"
             onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
           >
             ĐĂNG KÝ NHÀ HÀNG CỦA BẠN
-          </span>
+          </a>
         </span>
         <div className="line_header">
           <hr

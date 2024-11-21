@@ -23,6 +23,7 @@ function Register({ setLogin, setRegister }) {
   const [hoTen, setHoten] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
@@ -105,8 +106,9 @@ function Register({ setLogin, setRegister }) {
         <h2>Đăng Ký Tài Khoản</h2>
         <form onSubmit={handleRegister}>
           <div className="register-input-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
+              id="email"
               type="text"
               placeholder="Nhập email"
               value={email}
@@ -116,8 +118,9 @@ function Register({ setLogin, setRegister }) {
           </div>
 
           <div className="register-input-group">
-            <label>Họ và tên:</label>
+            <label htmlFor="full-name">Họ và tên:</label>
             <input
+              id="full-name"
               type="text"
               placeholder="Nhập họ và tên"
               value={hoTen}
@@ -126,8 +129,9 @@ function Register({ setLogin, setRegister }) {
             />
           </div>
           <div className="register-input-group">
-            <label>Số điện thoại:</label>
+            <label htmlFor="phone">Số điện thoại:</label>
             <input
+              id="phone"
               type="text"
               placeholder="Nhập số điện thoại"
               value={sdt}
@@ -148,7 +152,7 @@ function Register({ setLogin, setRegister }) {
               <option value="A">Admin</option>
             </select>
           </div>
-          <label className="login-label-password">Mật khẩu:</label>
+          <label htmlFor="password" className="login-label-password">Mật khẩu:</label>
           <div
             className="input-group"
             style={{
@@ -158,6 +162,7 @@ function Register({ setLogin, setRegister }) {
             }}
           >
             <input
+              id="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -184,8 +189,9 @@ function Register({ setLogin, setRegister }) {
           </div>
 
           <div className="register-input-group">
-            <label>Xác Nhận Mật Khẩu:</label>
+            <label htmlFor="confirm-password">Xác Nhận Mật Khẩu:</label>
             <input
+              id="confirm-password"
               type="password"
               placeholder="Nhập lại mật khẩu"
               value={confirmPassword}

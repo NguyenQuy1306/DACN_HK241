@@ -12,7 +12,7 @@ import com.capstoneproject.themeal.model.response.FavoriteListResponse;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface FavoriteListMapper {
     FavoriteListMapper INSTANCE = Mappers.getMapper(FavoriteListMapper.class);
 
