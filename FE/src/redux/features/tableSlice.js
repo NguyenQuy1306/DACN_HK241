@@ -17,10 +17,17 @@ export const tableSlice = createSlice({
   name: "table",
   initialState: {
     tables: [],
+    choosedTable: null,
     error: "",
     loading: false,
   },
 
+  reducers: {
+    setChoosedTable(state, action) {
+      const { choosedTable } = action.payload;
+      state.choosedTable = choosedTable;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTableForRestaurant.pending, (state) => {
@@ -37,5 +44,5 @@ export const tableSlice = createSlice({
       });
   },
 });
-
+export const { setChoosedTable } = tableSlice.actions;
 export default tableSlice.reducer;

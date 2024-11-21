@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/favorite-list")
-@CrossOrigin("*")
+
 public class FavoriteListController {
     @Autowired
     FavoriteListServiceImpl favoriteListService;

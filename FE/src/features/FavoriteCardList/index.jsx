@@ -10,6 +10,7 @@ function FavoriteCardList({ customerId }) {
     
     const navigate = useNavigate();
     const [favoriteList, setFavorites] = useState([]);
+
     const handleAddNewCard = async () => {
         try {
             const response = await axios.post(`http://localhost:8080/api/favorite-list/add-new-card/${customerId}`);

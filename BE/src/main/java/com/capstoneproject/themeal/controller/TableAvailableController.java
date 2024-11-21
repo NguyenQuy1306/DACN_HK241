@@ -31,7 +31,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/table")
-@CrossOrigin(origins = "*")
 public class TableAvailableController {
 
     @Autowired

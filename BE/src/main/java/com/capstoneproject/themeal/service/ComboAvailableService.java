@@ -13,4 +13,6 @@ public interface ComboAvailableService {
 
     List<ComboAvailableHasFoodResponse> getAvailableCombos(Pageable pageable, Long restaurantId);
 
+    public boolean isComboExists(Long comboId, Long restaurantId);
+
 }

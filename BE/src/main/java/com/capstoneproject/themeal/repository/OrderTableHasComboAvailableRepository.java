@@ -6,12 +6,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.capstoneproject.themeal.model.entity.OrderTable;
+import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailable;
+import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailableId;
 
 import java.util.List;
 
 @Repository
-public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
-    @Query("SELECT DISTINCT o FROM OrderTable o WHERE o.KhachHang.MaSoNguoiDung = :customerId")
-    List<OrderTable> findByMaSoKhachHang(@Param("customerId") Long customerId);
+public interface OrderTableHasComboAvailableRepository
+        extends JpaRepository<OrderTableHasComboAvailable, OrderTableHasComboAvailableId> {
 
 }

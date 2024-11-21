@@ -12,4 +12,5 @@ public interface FoodService {
 
     List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId);
 
+    public boolean checkFoodExist(List<Long> listIdFood);
 }

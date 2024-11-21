@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.cglib.core.Local;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Getter
@@ -29,13 +32,13 @@ public class OrderTable {
     private Long MaSoDatBan;
 
     @Column(nullable = false)
-    private String SoKhach;
+    private Byte SoKhach;
 
     @Column(nullable = false)
-    private String Ngay;
+    private LocalDate Ngay;
 
     @Column(nullable = false)
-    private String Gio;
+    private LocalTime Gio;
 
     @Column(nullable = false)
     private String TrangThai;
@@ -63,27 +66,27 @@ public class OrderTable {
         MaSoDatBan = maSoDatBan;
     }
 
-    public String getSoKhach() {
+    public Byte getSoKhach() {
         return SoKhach;
     }
 
-    public void setSoKhach(String soKhach) {
+    public void setSoKhach(Byte soKhach) {
         SoKhach = soKhach;
     }
 
-    public String getNgay() {
+    public LocalDate getNgay() {
         return Ngay;
     }
 
-    public void setNgay(String ngay) {
+    public void setNgay(LocalDate ngay) {
         Ngay = ngay;
     }
 
-    public String getGio() {
+    public LocalTime getGio() {
         return Gio;
     }
 
-    public void setGio(String gio) {
+    public void setGio(LocalTime gio) {
         Gio = gio;
     }
 

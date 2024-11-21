@@ -37,4 +37,18 @@ public class FoodServiceImpl implements FoodService {
         }
     }
 
+    @Override
+    public boolean checkFoodExist(List<Long> listIdFood) {
+        List<Long> existingIds = foodRepository.findExistingFoodIds(listIdFood);
+
+        // Find IDs that are missing
+        List<Long> missingIds = listIdFood.stream()
+                .filter(id -> !existingIds.contains(id))
+                .toList();
+
+        if (!missingIds.isEmpty()) {
+            throw new IllegalArgumentException("Food IDs not found: " + missingIds);
+        }
+        return true;
+    }
 }

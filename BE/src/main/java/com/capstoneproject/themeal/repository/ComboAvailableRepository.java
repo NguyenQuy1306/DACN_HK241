@@ -17,4 +17,11 @@ public interface ComboAvailableRepository extends JpaRepository<ComboAvailable, 
             "JOIN c.NhaHang nhahang " +
             "WHERE nhahang.MaSoNhaHang = :restaurantId ")
     List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId, Pageable pageable);
+
+    @Query("SELECT DISTINCT c FROM ComboAvailable c " +
+            "JOIN c.NhaHang nhahang " +
+            "WHERE nhahang.MaSoNhaHang = :restaurantId AND c.MaSoComBoCoSan= :maSoComboCoSan")
+    List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId,
+            @Param("maSoComboCoSan") Long comboId);
+
 }

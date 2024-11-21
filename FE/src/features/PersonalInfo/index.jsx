@@ -45,7 +45,7 @@ function PersonalInfo() {
     useEffect(() => {
         const fetchInfo = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/customer/${id}`);
+                const response = await axios.get(`http://localhost:8080/api/customer/${id}`,{ withCredentials: true});
                 if (response.status === 200) {
                     setCustomerInfo(response.data);
                     console.log("CUSTOMER: ", customerInfo);

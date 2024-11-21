@@ -3,12 +3,15 @@ import SearchBox from "../../Search/SearchBar/Search";
 import Logo from "../../Logo";
 import HeaderInfo from "../../../features/UserInfo/components/HeaderInfo";
 import ModalHomepage from "../../Modal/ModalHomepage/ModalHomepage";
+import { useSelector, useDispatch } from "react-redux";
+import { setStatusModalAuthentication } from "../../../redux/features/authenticationSlice";
 const SearchBar = ({ border }) => {
+  const dispatch = useDispatch();
   const showDrawer = () => {
-    setOpen(true);
+    dispatch(setStatusModalAuthentication({ openModal: true }));
     // document.body.style.overflow = "hidden";
   };
-  const [open, setOpen] = useState(false);
+  const open = useSelector((state) => state.authentication.openModal);
 
   return (
     <>
@@ -44,7 +47,7 @@ const SearchBar = ({ border }) => {
             avatar={require("../../../assets/images/avatar.png")}
           />
         </div>
-        <ModalHomepage open={open} setOpen={setOpen}></ModalHomepage>
+        <ModalHomepage open={open}></ModalHomepage>
       </div>
     </>
   );

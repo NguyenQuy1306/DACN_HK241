@@ -3,6 +3,7 @@ import "./ButtonTavBarReview.css";
 import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { getComboAvailable } from "../../../../../../../redux/features/comboSlice";
+import { getRateInRestaurant } from "../../../../../../../redux/features/rateSlice";
 const ButtonTavBarReview = ({
   selectedPlace,
   text,
@@ -30,8 +31,11 @@ const ButtonTavBarReview = ({
       setOnClicMenu(false);
       setOnClickPath(true);
       setOnClickReviews(false);
-    }
-    if (text === "Reviews") {
+    } else if (text === "Reviews") {
+      dispatch(
+        getRateInRestaurant({ restaurantId: selectedPlace.maSoNhaHang })
+      );
+
       setOnClickDetail(false);
       setOnClicMenu(false);
       setOnClickPath(false);

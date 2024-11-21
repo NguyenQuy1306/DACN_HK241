@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import axios from "axios"; // Import axios
@@ -6,7 +6,12 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/features/authenticationSlice";
+import {
+  register,
+  clearRegisterStatus,
+} from "../../redux/features/authenticationSlice";
+import { toast } from "react-toastify";
+
 function Register({ setLogin, setRegister }) {
   const [sdt, setSdt] = useState("");
   const [email, setEmail] = useState("");
@@ -24,8 +29,12 @@ function Register({ setLogin, setRegister }) {
 
     return passwordRegex.test(password);
   };
+  const registerStatus = useSelector(
+    (state) => state.authentication.registerStatus
+  );
 
   const handleRegister = async (e) => {
+    dispatch(clearRegisterStatus());
     e.preventDefault();
 
     // Kiểm tra email có đuôi @hcm**.edu.vn
@@ -66,7 +75,7 @@ function Register({ setLogin, setRegister }) {
       // if (response.status === 201) {
       //   // `201` nghĩa là đã tạo thành công một tài nguyên mới
       //   setMessage("Đăng ký thành công");
-      //   // navigate("/login"); // Điều hướng đến trang đăng nhập nếu đăng ký thành công
+
       // }
     } catch (err) {
       setError("Đăng ký không thành công. Vui lòng thử lại.");
@@ -79,7 +88,18 @@ function Register({ setLogin, setRegister }) {
     setRegister(false);
   };
   const [showPassword, setShowPassword] = useState(false);
-
+  useEffect(() => {
+    if (registerStatus == "SUCCESS") {
+      toast.success("Đăng ký tài khoản thành công", {
+        position: "top-right",
+        autoClose: 3000, // Time in milliseconds
+        hideProgressBar: false,
+      });
+      dispatch(clearRegisterStatus());
+      setLogin(true);
+      setRegister(false);
+    }
+  });
   return (
     <div className="register-container">
       <div className="registerDiv">

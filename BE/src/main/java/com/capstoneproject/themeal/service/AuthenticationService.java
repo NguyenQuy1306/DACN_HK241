@@ -14,6 +14,6 @@ public interface AuthenticationService {
 
     UserResponse register(RegisterRequest request);
 
-    LoginResponse authenticate(AuthenticationRequest request, HttpServletResponse response);
+    LoginResponse authenticate(AuthenticationRequest request);
 
 }

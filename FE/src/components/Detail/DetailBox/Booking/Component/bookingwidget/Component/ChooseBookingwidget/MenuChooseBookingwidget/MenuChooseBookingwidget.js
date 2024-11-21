@@ -5,11 +5,96 @@ import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlin
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { red } from "@mui/material/colors";
 import { Button } from "@mui/material";
-const MenuChooseBookingwidget = ({ selectedPlace, openBookingWithMenu }) => {
+import {
+  selectUser,
+  setStatusModalAuthentication,
+} from "../../../../../../../../../redux/features/authenticationSlice";
+import { createOrder } from "../../../../../../../../../redux/features/orderSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { setOpenBookingWithMenu } from "../../../../../../../../../redux/features/restaurantSlice";
+const MenuChooseBookingwidget = ({
+  selectedPlace,
+  openBookingWithMenu,
+  setDate = { setDate },
+  setcloseDateDiv,
+  setTime,
+  setcloseTimeDiv,
+  setPerson,
+  setClosePersonDiv,
+  setOption,
+  setCloseOptionDiv,
+}) => {
+  const dispatch = useDispatch();
   const [choosedOptionByWithMenu, setChoosedOptionByWithMenu] = useState(true);
   const [choosedOptionByWithoutMenu, setChoosedOptionByWithoutMenu] =
     useState(false);
-  const handleBooking = () => {};
+  const user = useSelector(selectUser);
+  const choosedTable = useSelector((state) => state.table.choosedTable);
+  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  console.log("menuchoosed", menuChoosed);
+  const bookingWithNewCombo = useSelector(
+    (state) => state.restaurant.bookingWithNewCombo
+  );
+  const handleBooking = () => {
+    // console.log("selectedPlace", selectedPlace);
+    // console.log("choosedTable.maSo.thutuBan", choosedTable.maSo);
+    if (choosedTable == null) {
+      toast.error("Vui lòng chọn bàn trước khi đặt!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+      return;
+    }
+    if (!user) {
+      dispatch(setStatusModalAuthentication({ openModal: true }));
+    } else {
+      console.log(
+        "bookingWithNewCombobookingWithNewCombo",
+        bookingWithNewCombo
+      );
+
+      dispatch(
+        createOrder({
+          customerID: user.maSoNguoiDung,
+          tableId: choosedTable.maSo.thuTuBan,
+          comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
+          restaurantId: selectedPlace.maSoNhaHang,
+          foodOrderRequests: bookingWithNewCombo
+            ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
+                maSoMonAn,
+                soLuong,
+              }))
+            : [],
+        })
+      );
+
+      toast.success("Bạn đã đặt bàn thành công!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
+
+      dispatch(
+        setOpenBookingWithMenu({
+          openBookingWithMenu: false,
+          menuChoosed: [],
+          bookingWithNewCombo: false,
+        })
+      );
+
+      setDate(null);
+      setcloseDateDiv(false);
+      setTime(null);
+      setcloseTimeDiv(true);
+      setPerson(null);
+      setClosePersonDiv(true);
+      setOption(null);
+      setCloseOptionDiv(true);
+    }
+  };
+
   return (
     <div className="MenuChooseBookingwidgetDiv">
       <div className="MenuChooseBookingwidgetDiv_H1">

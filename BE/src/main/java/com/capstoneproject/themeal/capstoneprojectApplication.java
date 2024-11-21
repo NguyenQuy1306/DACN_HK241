@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.capstoneproject.themeal")
 @EnableJpaRepositories(basePackages = "com.capstoneproject.themeal.repository")
-@CrossOrigin(origins = "*")
 public class capstoneprojectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(capstoneprojectApplication.class, args);

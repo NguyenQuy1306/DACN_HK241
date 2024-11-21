@@ -28,7 +28,7 @@ public class Rate {
     @Column(name = "MaSoDanhGia")
     private Long MaSoDanhGia;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3000)
     private String NoiDung;
     @Column(nullable = false)
     private Double Sao;
@@ -49,4 +49,7 @@ public class Rate {
 
     @OneToMany(mappedBy = "DanhGia")
     private Set<UserLikeRate> danhSachNguoiDungThichDanhGia;
+
+    @OneToMany(mappedBy = "DanhGia")
+    private Set<RestaurantImage> DanhSachAnhNhaHang;
 }

@@ -75,7 +75,8 @@ function Home(props) {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/restaurant-categories"
+          "http://localhost:8080/api/restaurant-categories",
+          { withCredentials: true }
         );
         if (response.status === 200) {
           setCategories(response.data);
@@ -92,7 +93,10 @@ function Home(props) {
     const fetchRecommendedList = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/restaurants/recommended"
+          "http://localhost:8080/api/restaurants/recommended",
+          {
+            withCredentials: true,
+          }
         );
         if (response.status === 200) {
           setRecommendList(response.data);
@@ -109,7 +113,8 @@ function Home(props) {
   useEffect(() => {
     const getRecommendedList = async () => {
       const response = await axios.get(
-        "http://localhost:8080/api/restaurants/recommended"
+        "http://localhost:8080/api/restaurants/recommended",
+        { withCredentials: true }
       );
       if (response.status === 200) {
         setRecommendedList(response.data);

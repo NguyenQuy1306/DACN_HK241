@@ -32,6 +32,12 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/api/v1/auth/**", // API for guest access
                         "/api/restaurants/*",
+                        "/api/restaurant-categories",
+                        "/api/food",
+                        "/api/combo",
+                        "/api/table/restaurant",
+                        "/api/orders",
+                        "/api/rate/**"
                         "/api/favorite-list/*",
                         "/api/favorite-list/add-new-card/*",
                         "/api/order-table/*",
@@ -47,6 +53,7 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated() // Require authentication for all other
                                                                               // requests
                                 )
+                                .cors(cors -> cors.disable())
                                 .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)
                                 .formLogin(form -> form.disable()) // Disable form login
                                 .authenticationProvider(authenticationProvider) // Add custom authentication provider
