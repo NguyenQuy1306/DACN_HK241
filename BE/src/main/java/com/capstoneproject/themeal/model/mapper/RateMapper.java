@@ -9,8 +9,14 @@ import com.capstoneproject.themeal.model.entity.Rate;
 import com.capstoneproject.themeal.model.entity.RestaurantImage;
 import com.capstoneproject.themeal.model.entity.RestaurantImageType;
 import com.capstoneproject.themeal.model.response.RateResponse;
+import com.capstoneproject.themeal.model.response.RatesRestaurantResponse;
+import com.capstoneproject.themeal.model.response.UserRateResponse;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper
 public interface RateMapper {
@@ -29,7 +35,25 @@ public interface RateMapper {
 
     @Named("getRestaurantImage")
     default String getRestaurantImage(Set<RestaurantImage> restaurantImages) {
-        return restaurantImages.stream().filter(image -> RestaurantImageType.RESTAURANTIMAGE.equals(image.getKieuAnh()))
-                .map(RestaurantImage::getURL).findFirst().orElse("");
+        return restaurantImages.stream()
+                .filter(image -> RestaurantImageType.RESTAURANTIMAGE.equals(image.getKieuAnh()))
+                .map(RestaurantImage::getURL)
+                .findFirst()
+                .orElse("");
     }
+
+    @Mapping(source = "rate.thoiGianCapNhat", target = "thoiGianCapNhat")
+    @Mapping(source = "rate.noiDung", target = "noiDung")
+    @Mapping(source = "rate.sao", target = "sao")
+    @Mapping(source = "rate.danhSachAnhNhaHang", target = "userImages", qualifiedByName = "mapImageUrls")
+    @Mapping(source = "userRateResponses", target = "userRateResponses")
+    RatesRestaurantResponse toRateRestaurantRepsonse(Rate rate, UserRateResponse userRateResponses);
+
+    @Named("mapImageUrls")
+    default List<String> mapImageUrls(Set<RestaurantImage> danhSachAnhNhaHang) {
+        return danhSachAnhNhaHang.stream()
+                .map(RestaurantImage::getURL)
+                .collect(Collectors.toList());
+    }
+
 }

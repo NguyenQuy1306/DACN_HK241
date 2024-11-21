@@ -10,7 +10,7 @@ import Classification from "./Component/Classification/Classification";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import StarRating from "./StarRating/StarRating";
 const Reviews = ({ selectedPlace, reviewData }) => {
-  const reviews = reviewData.map((review) => review.rating);
+  const reviews = reviewData.map((review) => review.sao);
   const average =
     reviews.length > 0
       ? reviews.reduce((acc, curr) => acc + Number(curr), 0) / reviews.length

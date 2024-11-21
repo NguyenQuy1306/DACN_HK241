@@ -21,7 +21,7 @@ const Comment = ({ selectedPlace, review }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const handleOnClickImage = () => {
     setCurrentIndex(0);
-    setShowImage(selectedPlace.danhSachAnhNhaHang[0]);
+    setShowImage(review.userImages[0]);
   };
   return (
     <li className="CommentDiv">
@@ -34,12 +34,12 @@ const Comment = ({ selectedPlace, review }) => {
             <div className="CommentDiv_blockquote_H1_personalDetail_detail">
               <p>
                 <cite className="CommentDiv_blockquote_H1_personalDetail_detail_cite">
-                  {review.reviewer.name}
+                  {review.userRateResponses.hoTen}
                 </cite>
-                • <span> {review.reviewer.reviewsCount} reviews</span>
+                • <span> {review.userRateResponses.reviewCount} nhận xét</span>
               </p>
               <p>
-                <span>{review.date}</span>
+                <span>{review.thoiGianCapNhat}</span>
               </p>
             </div>
           </div>
@@ -62,27 +62,29 @@ const Comment = ({ selectedPlace, review }) => {
         <div className="CommentDiv_blockquote_H2">
           <div className="CommentDiv_blockquote_H2_comment">
             <div className="CommentDiv_blockquote_H2_comment_H1">
-              <p>{review.content}</p>
+              <p>{review.noiDung}</p>
             </div>
-            <div
-              className="CommentDiv_blockquote_H2_comment_listImage"
-              onClick={handleOnClickImage}
-            >
-              <img
-                src={
-                  selectedPlace.danhSachAnhNhaHang
-                    ? selectedPlace.danhSachAnhNhaHang[0]
-                    : "https://via.placeholder.com/100"
-                }
-                alt={selectedPlace.name}
-                // style={{ width: "100%", height: "70%", borderRadius: "4px" }}
-              />
-              <div className="CommentDiv_blockquote_H2_comment_listImage_text">
-                <p className="CommentDiv_blockquote_H2_comment_listImage_text_p">
-                  <span>Xem các ảnh</span>
-                </p>
+            {review.userImages.length > 0 && (
+              <div
+                className="CommentDiv_blockquote_H2_comment_listImage"
+                onClick={handleOnClickImage}
+              >
+                <img
+                  src={
+                    review.userImages.length > 0
+                      ? review.userImages[0]
+                      : "https://via.placeholder.com/100"
+                  }
+                  alt={selectedPlace.name}
+                  style={{ width: "100%", height: "100%", borderRadius: "4px" }}
+                />
+                <div className="CommentDiv_blockquote_H2_comment_listImage_text">
+                  <p className="CommentDiv_blockquote_H2_comment_listImage_text_p">
+                    <span>Xem các ảnh</span>
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="CommentDiv_blockquote_H2_icon">
             <Button className="CommentDiv_blockquote_H2_icon_button1">
@@ -97,7 +99,7 @@ const Comment = ({ selectedPlace, review }) => {
         </div>
 
         {/* Render each comment in its own CommentDiv_blockquote_H3 */}
-        {review.comments &&
+        {/* {review.comments &&
           review.comments.length > 0 &&
           review.comments.map((comment, index) => (
             <div key={index} className="CommentDiv_blockquote_H3">
@@ -131,20 +133,13 @@ const Comment = ({ selectedPlace, review }) => {
                 </div>
               </div>
 
-              {/* Optional like button for each comment */}
-              {/* <div className="CommentDiv_blockquote_H3_comment_actions">
-                <Button className="CommentDiv_blockquote_H3_comment_button">
-                  <ThumbUpOffAltIcon className="CommentDiv_blockquote_H3_comment_button_icon"></ThumbUpOffAltIcon>
-                  <span>{comment.actions.like} Likes</span>
-                </Button>
-              </div> */}
             </div>
-          ))}
+          ))} */}
       </blockquote>
       {showImage && (
         <ModalViewImage
           showImage={showImage}
-          allFoodUrl={selectedPlace.danhSachAnhNhaHang}
+          allFoodUrl={review.userImages}
           setShowImage={setShowImage}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}

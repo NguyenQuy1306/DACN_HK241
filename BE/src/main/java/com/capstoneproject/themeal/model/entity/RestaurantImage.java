@@ -36,6 +36,10 @@ public class RestaurantImage {
     @JoinColumn(name = "MaSoNhaHang", referencedColumnName = "MaSoNhaHang")
     private Restaurant NhaHang;
 
+    @ManyToOne
+    @JoinColumn(name = "MaSoDanhGia", referencedColumnName = "MaSoDanhGia")
+    private Rate DanhGia;
+
     @Column(nullable = false, columnDefinition = "VARCHAR")
     private String URL;
 

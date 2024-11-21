@@ -109,3 +109,15 @@ export const createOrder = async (params) => {
     throw error.response?.data || error;
   }
 };
+
+export const getRateInRestaurant = async (params) => {
+  try {
+    console.log("aaaaaaa", `/api/rate/${params.restaurantId}/restaurant`);
+    const response = await API.get(
+      `/api/rate/${params.restaurantId}/restaurant`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

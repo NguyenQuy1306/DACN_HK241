@@ -36,7 +36,9 @@ public class SecurityConfig {
                         "/api/food",
                         "/api/combo",
                         "/api/table/restaurant",
-                        "/api/orders"
+                        "/api/orders",
+                        "/api/rate/**"
+
         };
 
         @Bean

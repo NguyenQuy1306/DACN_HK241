@@ -24,23 +24,23 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/v1/auth/authenticate",
             "/api/v1/auth/register",
             "/api/restaurant",
-            "/api/restaurants/*",
+            "/api/restaurants/.*", // Match any restaurant-related URL
             "/api/auth/reset-password",
             "/api/restaurants/recommended",
             "/api/restaurant-categories",
             "/v2/api-docs",
             "/v3/api-docs",
-            "/v3/api-docs/**",
             "/swagger-resources",
-            "/swagger-resources/**",
+            "/swagger-resources/.*",
             "/configuration/ui",
             "/configuration/security",
-            "/swagger-ui/**",
-            "/webjars/**",
+            "/swagger-ui/.*",
+            "/webjars/.*",
             "/api/food",
             "/api/combo",
             "/api/orders",
-            "/api/table/restaurant");
+            "/api/table/restaurant",
+            "/api/rate/.*/restaurant");
 
     @Autowired
     private SessionRegistry sessionRegistry;
@@ -74,7 +74,9 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isPublicUrl(String requestURI) {
         System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
-        return PUBLIC_URLS.stream().anyMatch(requestURI::startsWith) || requestURI.contains("/swagger");
+        boolean isPublic = PUBLIC_URLS.stream()
+                .anyMatch(pattern -> requestURI.matches(pattern)) || requestURI.contains("/swagger");
+        return isPublic;
     }
 
     private boolean isValidSession(HttpSession session) {

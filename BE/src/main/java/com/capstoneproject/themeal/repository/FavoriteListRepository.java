@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface FavoriteListRepository extends JpaRepository<FavoriteList, Long> {
-    @Query("SELECT l FROM FavoriteList l WHERE l.khachHang.maSoNguoiDung =:customerId")
+    @Query("SELECT l FROM FavoriteList l WHERE l.khachHang.MaSoNguoiDung =:customerId")
     List<FavoriteList> findByMaSoKhachHang(@Param("customerId") Long customerId);
 }
