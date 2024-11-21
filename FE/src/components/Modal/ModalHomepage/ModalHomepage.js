@@ -39,7 +39,8 @@ const ModalHomepage = ({ open }) => {
     dispatch(setStatusModalAuthentication({ openModal: false }));
     document.body.style.overflow = "auto";
   };
-  const [login, setLogin] = useState(true);
+
+  const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
   const [isCLickLogout, setIsClickLogout] = useState(false);
   const handleLogout = () => {
@@ -62,7 +63,7 @@ const ModalHomepage = ({ open }) => {
   }, [user, isCLickLogout, setIsClickLogout]);
   return (
     <>
-      {!login && !register && (
+      {(login  || register) && (
         <Drawer
           onClose={onClose}
           width={302}
@@ -142,7 +143,7 @@ const ModalHomepage = ({ open }) => {
             </li>
           </ul>
           <Drawer
-            title=<CloseOutlined
+            title= {<CloseOutlined
               onClick={onChildrenDrawerClose}
               size={18}
               style={{
@@ -152,7 +153,7 @@ const ModalHomepage = ({ open }) => {
                 top: 16,
                 boxShadow: "none",
               }}
-            />
+            />}
             width={816}
             closable={false}
             onClose={onChildrenDrawerClose}
@@ -171,7 +172,7 @@ const ModalHomepage = ({ open }) => {
           </Drawer>
         </Drawer>
       )}
-      {login && !register && (
+      {!login && !register && (
         <Drawer
           onClose={onClose}
           width={302}

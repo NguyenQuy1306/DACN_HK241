@@ -19,7 +19,7 @@ public class RestaurantCategoryImpl implements RestaurantCategoryService {
 
     @Override
     public List<RestaurantCategoryResponse> getAll() {
-        System.out.println(restaurantCategoryRepository.findAll());
+
         return restaurantCategoryRepository.findAll().stream()
                 .map(RestaurantCategoryMapper.INSTANCE::toRestaurantCategoryResponse).collect(Collectors.toList());
     }

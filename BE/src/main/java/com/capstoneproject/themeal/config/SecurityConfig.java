@@ -38,7 +38,10 @@ public class SecurityConfig {
                         "/api/table/restaurant",
                         "/api/orders",
                         "/api/rate/**"
-
+                        "/api/favorite-list/*",
+                        "/api/favorite-list/add-new-card/*",
+                        "/api/order-table/*",
+                        "/api/restaurant-categories",
         };
 
         @Bean

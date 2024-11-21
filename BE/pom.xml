@@ -46,7 +46,7 @@
 	</scm>
 	<properties>
 		<java.version>
-			17
+			23
 		</java.version>
 	</properties>
 	<dependencies>
@@ -463,7 +463,7 @@
 	            <version>3.2.1</version>
 	            <configuration>
 	                <from>
-	                    <image>openjdk:17-alpine</image>
+	                    <image>openjdk:23-alpine</image>
 	                </from>
 	                <to>
                         <image>dinhthai/capstoneproject:3.13</image>

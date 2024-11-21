@@ -7,4 +7,5 @@ import com.capstoneproject.themeal.model.response.FavoriteListResponse;
 
 public interface FavoriteListService {
     List<FavoriteListResponse> findFavoriteListByCustomerId(Long customerId);
+    FavoriteListResponse addNewList(String name, Long customerId);
 }

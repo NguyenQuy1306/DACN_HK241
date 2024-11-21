@@ -76,26 +76,30 @@
 .category-list {
     display: flex;
     margin: 0 auto;
-    width: 1242px;
     align-items: center;
     overflow: hidden;
     gap: 0;
-    justify-content: start;
+    justify-content: center;
+    position: relative;
     margin-bottom: 24px;
     padding: 8px 0;
+    width: fit-content;
+    max-width: 1043px;
 }
 
 .left-nav-btn {
     position: absolute;
-    top: 1042px;
-    left: 212px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     
 }
 
 .right-nav-btn {
     position: absolute;
-    top: 1042px;
-    right: 212px;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
     
 }
 
