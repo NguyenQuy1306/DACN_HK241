@@ -18,12 +18,16 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ setLogin, setRegister }) {
+export default function Login({
+  setLogin,
+  setRegister,
+  setIsClickLogout,
+  isCLickLogout,
+}) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isSessionCheck, setIsSessionCheck] = useState(true);
 
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -35,7 +39,7 @@ export default function Login({ setLogin, setRegister }) {
     dispatch(clearLoglin());
     e.preventDefault();
     setMessage(""); // Reset the message
-    setIsSessionCheck(false); // Indicate manual login
+    setIsClickLogout(false); // Indicate manual login
     dispatch(login({ email, matKhau: password }));
   };
 
@@ -46,20 +50,21 @@ export default function Login({ setLogin, setRegister }) {
 
   useEffect(() => {
     if (user) {
-      if (isSessionCheck) {
-        setLogin(false);
-        setRegister(false);
+      if (!isCLickLogout) {
+        setLogin(true);
+        setRegister(true);
       } else {
         toast.success("Đăng nhập thành công", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
         });
-        setLogin(false);
-        setRegister(false);
+        setLogin(true);
+        setRegister(true);
+        setIsClickLogout(false);
       }
     }
-  }, [user, isSessionCheck, setLogin, setRegister]);
+  }, [user, isCLickLogout, setLogin, setRegister, setIsClickLogout]);
 
   useEffect(() => {
     if (error) {

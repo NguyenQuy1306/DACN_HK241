@@ -43,6 +43,7 @@ const ModalHomepage = ({ open }) => {
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
   const [isCLickLogout, setIsClickLogout] = useState(false);
+
   const handleLogout = () => {
     dispatch(logout());
     setIsClickLogout(true);
@@ -63,7 +64,7 @@ const ModalHomepage = ({ open }) => {
   }, [user, isCLickLogout, setIsClickLogout]);
   return (
     <>
-      {(login  || register) && (
+      {login && register && (
         <Drawer
           onClose={onClose}
           width={302}
@@ -143,17 +144,19 @@ const ModalHomepage = ({ open }) => {
             </li>
           </ul>
           <Drawer
-            title= {<CloseOutlined
-              onClick={onChildrenDrawerClose}
-              size={18}
-              style={{
-                position: "absolute",
-                cursor: "pointer",
-                right: 24,
-                top: 16,
-                boxShadow: "none",
-              }}
-            />}
+            title={
+              <CloseOutlined
+                onClick={onChildrenDrawerClose}
+                size={18}
+                style={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  right: 24,
+                  top: 16,
+                  boxShadow: "none",
+                }}
+              />
+            }
             width={816}
             closable={false}
             onClose={onChildrenDrawerClose}
@@ -172,7 +175,7 @@ const ModalHomepage = ({ open }) => {
           </Drawer>
         </Drawer>
       )}
-      {!login && !register && (
+      {login && !register && (
         <Drawer
           onClose={onClose}
           width={302}
@@ -186,7 +189,12 @@ const ModalHomepage = ({ open }) => {
             right: childrenDrawer ? 630 : 0,
           }}
         >
-          <Login setLogin={setLogin} setRegister={setRegister}></Login>
+          <Login
+            setLogin={setLogin}
+            setRegister={setRegister}
+            setIsClickLogout={setIsClickLogout}
+            isCLickLogout={isCLickLogout}
+          ></Login>
         </Drawer>
       )}
       {register && !login && (
@@ -203,7 +211,12 @@ const ModalHomepage = ({ open }) => {
             right: childrenDrawer ? 630 : 0,
           }}
         >
-          <Register setLogin={setLogin} setRegister={setRegister} />
+          <Register
+            setLogin={setLogin}
+            setRegister={setRegister}
+            setIsClickLogout={setIsClickLogout}
+            isCLickLogout={isCLickLogout}
+          />
         </Drawer>
       )}
     </>

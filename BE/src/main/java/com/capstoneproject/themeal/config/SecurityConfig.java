@@ -37,8 +37,8 @@ public class SecurityConfig {
                         "/api/combo",
                         "/api/table/restaurant",
                         "/api/orders",
-                        "/api/rate/**"
-                        "/api/favorite-list/*",
+                        "/api/rate/**",
+                        "/api/favorite-list/**",
                         "/api/favorite-list/add-new-card/*",
                         "/api/order-table/*",
                         "/api/restaurant-categories",

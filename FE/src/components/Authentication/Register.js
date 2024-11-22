@@ -12,7 +12,7 @@ import {
 } from "../../redux/features/authenticationSlice";
 import { toast } from "react-toastify";
 
-function Register({ setLogin, setRegister }) {
+function Register({ setLogin, setRegister, setIsClickLogout }) {
   const [sdt, setSdt] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ function Register({ setLogin, setRegister }) {
   const [hoTen, setHoten] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
@@ -152,7 +152,9 @@ function Register({ setLogin, setRegister }) {
               <option value="A">Admin</option>
             </select>
           </div>
-          <label htmlFor="password" className="login-label-password">Mật khẩu:</label>
+          <label htmlFor="password" className="login-label-password">
+            Mật khẩu:
+          </label>
           <div
             className="input-group"
             style={{
