@@ -51,6 +51,10 @@ const ModalHomepage = ({ open }) => {
   const user = useSelector(selectUser);
 
   useEffect(() => {
+    if (open && !user) {
+      setLogin(true);
+      setRegister(false);
+    }
     if (isCLickLogout && !user) {
       toast.success("Đăng xuất thành công", {
         position: "top-right",
@@ -61,7 +65,7 @@ const ModalHomepage = ({ open }) => {
       setRegister(false);
       setIsClickLogout(false);
     }
-  }, [user, isCLickLogout, setIsClickLogout]);
+  }, [user, open, isCLickLogout, setIsClickLogout, setLogin, setRegister]);
   return (
     <>
       {login && register && (

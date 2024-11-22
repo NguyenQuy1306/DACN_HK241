@@ -11,7 +11,7 @@ import BasicModal from "./Component/ModalMenu/ModalMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { getFood } from "../../../../../redux/features/foodSlice";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { setActiveTabMenu } from "../../../../../redux/features/navigationSlice";
 const { formatCurrency } = require("../../../../../helper/helper");
 
 const Menu = ({ selectedPlace }) => {
@@ -20,51 +20,7 @@ const Menu = ({ selectedPlace }) => {
   const foodDatafromAPI = useSelector((state) => state.food.food);
   const menuDatafromAPI = useSelector((state) => state.combo.combo);
   // console.log("menuDatafromAPI::: ", menuDatafromAPI);
-  const menuAvailable = [
-    {
-      name: "Instant MICHELIN",
-      price: 69000,
-      availability: "Available from Jan 05 to Jan 05",
-      type: "Temporary",
-      details: [
-        {
-          category: "Các món soup",
-          items: [
-            "SÚP MĂNG TÂY CUA",
-            "SÚP CUA VI CUA",
-            "SÚP HẢI SẢN",
-            "SÚP BÍ ĐỎ",
-            "SÚP NẤM TƯƠI",
-          ],
-        },
-        {
-          category: "Các món khai vị",
-          items: [
-            "GỎI CUỐN TÔM THỊT",
-            "NEM CUỐN RAU",
-            "CHẢ GIÒ HẢI SẢN",
-            "BÁNH XÈO NHỎ",
-            "NEM NƯỚNG NHA TRANG",
-          ],
-        },
-        {
-          category: "Các món nướng",
-          items: [
-            "GỎI CUỐN TÔM THỊT",
-            "NEM CUỐN RAU",
-            "CHẢ GIÒ HẢI SẢN",
-            "BÁNH XÈO NHỎ",
-            "NEM NƯỚNG NHA TRANG",
-          ],
-        },
-      ],
-    },
-  ];
-
-  const [onClickMenuNavBar1, setOnClickMenuNavBar1] = useState(true);
-  const [onClickMenuNavBar2, setOnClickMenuNavBar2] = useState(false);
-  const [onClickMenuNavBar3, setOnClickMenuNavBar3] = useState(false);
-
+  const activeTabMenu = useSelector((state) => state.navigation.activeTabMenu);
   const handleOnClickImageMenu = () => {
     const location_id = localStorage.getItem("selectedPlaceId");
     navigate(`/DetailRestaurant/${location_id}/menuImages`);
@@ -128,33 +84,21 @@ const Menu = ({ selectedPlace }) => {
           <div className="MenuNavBarDiv_H1_H2">
             <ButtonMenuNavBar
               text={"Các combo có sẵn"}
-              clicked={onClickMenuNavBar1}
-              setOnClickMenuNavBar1={setOnClickMenuNavBar1}
-              setOnClickMenuNavBar2={setOnClickMenuNavBar2}
-              setOnClickMenuNavBar3={setOnClickMenuNavBar3}
               selectedPlace={selectedPlace}
             />
             <ButtonMenuNavBar
               text={"Tất cả món ăn"}
-              clicked={onClickMenuNavBar2}
-              setOnClickMenuNavBar1={setOnClickMenuNavBar1}
-              setOnClickMenuNavBar2={setOnClickMenuNavBar2}
-              setOnClickMenuNavBar3={setOnClickMenuNavBar3}
               selectedPlace={selectedPlace}
             />
             <ButtonMenuNavBar
               text={"Tạo combo mới"}
-              clicked={onClickMenuNavBar3}
-              setOnClickMenuNavBar1={setOnClickMenuNavBar1}
-              setOnClickMenuNavBar2={setOnClickMenuNavBar2}
-              setOnClickMenuNavBar3={setOnClickMenuNavBar3}
               selectedPlace={selectedPlace}
             />
           </div>
         </div>
       </div>
 
-      {onClickMenuNavBar1 && (
+      {activeTabMenu === "Các combo có sẵn" && (
         <div className="MenuNavBar_menu">
           <div className="MenuNavBar_menu_H1">
             <h3 className="MenuNavBar_menu_H1_h3">
@@ -178,7 +122,7 @@ const Menu = ({ selectedPlace }) => {
         </div>
       )}
 
-      {onClickMenuNavBar2 && (
+      {activeTabMenu === "Tất cả món ăn" && (
         <div className="MenuNavBar_allfood">
           {selectedPlace.danhSachAnhMenu.map((menuImage, index) => {
             if (index < 8) {
@@ -220,7 +164,7 @@ const Menu = ({ selectedPlace }) => {
         </div>
       )}
 
-      {onClickMenuNavBar3 && (
+      {activeTabMenu === "Tạo combo mới" && (
         <>
           <div className="MenuNavBar_createMenu">
             <Button

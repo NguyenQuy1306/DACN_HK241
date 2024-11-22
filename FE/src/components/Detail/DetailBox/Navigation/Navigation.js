@@ -8,11 +8,8 @@ import Menu from "./Menu/Menu";
 import About from "./About/About";
 import Direction from "./Direction/Direction";
 import { useDispatch, useSelector } from "react-redux";
+import { setActiveTab } from "../../../../redux/features/navigationSlice";
 const Navigation = ({ selectedPlace }) => {
-  const [onClickDetail, setOnClickDetail] = useState(true);
-  const [onClicMenu, setOnClicMenu] = useState(false);
-  const [onClickPath, setOnClickPath] = useState(false);
-  const [onClickReviews, setOnClickReviews] = useState(false);
   const reviewsData = [
     {
       reviewer: {
@@ -117,6 +114,8 @@ const Navigation = ({ selectedPlace }) => {
     },
   ];
   const reviewData = useSelector((state) => state.rate.rate);
+  const activeTab = useSelector((state) => state.navigation.activeTab);
+
   console.log("reviewData::", reviewData);
   return (
     <div className="NavigationDiv">
@@ -124,43 +123,23 @@ const Navigation = ({ selectedPlace }) => {
         <div className="Navigation_H2">
           <ButtonTavBarReview
             text={"Chi tiết"}
-            setOnClickDetail={setOnClickDetail}
-            setOnClicMenu={setOnClicMenu}
-            setOnClickPath={setOnClickPath}
-            setOnClickReviews={setOnClickReviews}
-            checkOnClick={onClickDetail}
             selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Menu"}
-            setOnClickDetail={setOnClickDetail}
-            setOnClicMenu={setOnClicMenu}
-            setOnClickPath={setOnClickPath}
-            setOnClickReviews={setOnClickReviews}
-            checkOnClick={onClicMenu}
             selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Chỉ đường"}
-            setOnClickDetail={setOnClickDetail}
-            setOnClicMenu={setOnClicMenu}
-            setOnClickPath={setOnClickPath}
-            setOnClickReviews={setOnClickReviews}
-            checkOnClick={onClickPath}
             selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
           <ButtonTavBarReview
             text={"Reviews"}
-            setOnClickDetail={setOnClickDetail}
-            setOnClicMenu={setOnClicMenu}
-            setOnClickPath={setOnClickPath}
-            setOnClickReviews={setOnClickReviews}
-            checkOnClick={onClickReviews}
             selectedPlace={selectedPlace}
           ></ButtonTavBarReview>
         </div>
       </div>
-      {onClickReviews && (
+      {activeTab === "Reviews" && (
         <>
           <Reviews reviewData={reviewData} />
           <div className="NavigationDiv_H2">
@@ -181,9 +160,13 @@ const Navigation = ({ selectedPlace }) => {
           </div>
         </>
       )}
-      {onClicMenu && <Menu selectedPlace={selectedPlace}></Menu>}
-      {onClickDetail && <About selectedPlace={selectedPlace}></About>}
-      {onClickPath && <Direction selectedPlace={selectedPlace}></Direction>}
+      {activeTab === "Menu" && <Menu selectedPlace={selectedPlace}></Menu>}
+      {activeTab === "Chi tiết" && (
+        <About selectedPlace={selectedPlace}></About>
+      )}
+      {activeTab === "Chỉ đường" && (
+        <Direction selectedPlace={selectedPlace}></Direction>
+      )}
     </div>
   );
 };

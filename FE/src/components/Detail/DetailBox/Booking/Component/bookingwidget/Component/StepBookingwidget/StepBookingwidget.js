@@ -65,7 +65,7 @@ const StepBookingwidget = ({
       setclosePersonDiv(true);
       setcloseTimeDiv(true);
       setcloseOptionDiv(false);
-      setLastClicked("Offer");
+      setLastClicked("Menu");
       setActiveOffer(true);
     }
     if (optionPicked) {
@@ -123,7 +123,7 @@ const StepBookingwidget = ({
         setLastClicked(type);
       }
       setActiveOffer(false);
-    } else if (type === "Offer" && datePicked && timePicked && personPicked) {
+    } else if (type === "Menu" && datePicked && timePicked && personPicked) {
       if (activeOffer === false) {
         setActiveOffer(!activeOffer);
       }
@@ -217,7 +217,7 @@ const StepBookingwidget = ({
               ? "active"
               : ""
           } ${
-            lastClicked === "Offer" &&
+            lastClicked === "Menu" &&
             activeOffer === true &&
             activePerson === true &&
             activeTime === true
@@ -235,7 +235,7 @@ const StepBookingwidget = ({
                 )}
               ></AcUnitOutlinedIcon>
             }
-            text={"Offer"}
+            text={"Menu"}
             colorText={
               activeOffer === true &&
               activePerson === true &&
@@ -243,7 +243,7 @@ const StepBookingwidget = ({
                 ? "white"
                 : "black"
             }
-            onClick={() => handleOnClickButtonwidget("Offer")}
+            onClick={() => handleOnClickButtonwidget("Menu")}
           ></ButtonBookingwidget>
         </div>
       </div>

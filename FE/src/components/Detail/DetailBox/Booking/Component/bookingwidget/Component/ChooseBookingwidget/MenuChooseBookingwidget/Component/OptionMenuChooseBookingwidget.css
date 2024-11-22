@@ -17,6 +17,7 @@
   border-radius: 0.5rem !important;
   text-transform: none !important;
   color: black !important;
+  
 }
 .OptionMenuChooseBookingwidgetDiv_button.active {
   border: 1px solid rgb(0, 102, 92) !important;
@@ -52,7 +53,7 @@
 }
 .OptionMenuChooseBookingwidgetDiv_button_H2_H1 {
   font-size: 0.8125rem;
-  font-weight: 300;
+  font-weight: 700;
   font-style: normal;
   line-height: 1.38462;
   display: block;

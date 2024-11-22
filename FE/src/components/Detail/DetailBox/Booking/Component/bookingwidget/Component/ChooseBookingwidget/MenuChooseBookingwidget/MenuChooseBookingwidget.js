@@ -13,6 +13,10 @@ import { createOrder } from "../../../../../../../../../redux/features/orderSlic
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setOpenBookingWithMenu } from "../../../../../../../../../redux/features/restaurantSlice";
+import { useNavigate } from "react-router-dom";
+import { setActiveTab } from "../../../../../../../../../redux/features/navigationSlice";
+import { getComboAvailable } from "../../../../../../../../../redux/features/comboSlice";
+import { setActiveTabMenu } from "../../../../../../../../../redux/features/navigationSlice";
 const MenuChooseBookingwidget = ({
   selectedPlace,
   openBookingWithMenu,
@@ -25,6 +29,7 @@ const MenuChooseBookingwidget = ({
   setOption,
   setCloseOptionDiv,
 }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [choosedOptionByWithMenu, setChoosedOptionByWithMenu] = useState(true);
   const [choosedOptionByWithoutMenu, setChoosedOptionByWithoutMenu] =
@@ -37,8 +42,13 @@ const MenuChooseBookingwidget = ({
     (state) => state.restaurant.bookingWithNewCombo
   );
   const handleBooking = () => {
-    // console.log("selectedPlace", selectedPlace);
-    // console.log("choosedTable.maSo.thutuBan", choosedTable.maSo);
+    if (choosedOptionByWithMenu && menuChoosed.length <= 0) {
+      dispatch(getComboAvailable({ restaurantId: selectedPlace.maSoNhaHang }));
+      dispatch(setActiveTab("Menu"));
+      dispatch(setActiveTabMenu("Các combo có sẵn"));
+      return;
+    }
+
     if (choosedTable == null) {
       toast.error("Vui lòng chọn bàn trước khi đặt!", {
         position: "top-right",
@@ -47,14 +57,10 @@ const MenuChooseBookingwidget = ({
       });
       return;
     }
+
     if (!user) {
       dispatch(setStatusModalAuthentication({ openModal: true }));
     } else {
-      console.log(
-        "bookingWithNewCombobookingWithNewCombo",
-        bookingWithNewCombo
-      );
-
       dispatch(
         createOrder({
           customerID: user.maSoNguoiDung,
@@ -100,11 +106,11 @@ const MenuChooseBookingwidget = ({
       <div className="MenuChooseBookingwidgetDiv_H1">
         <div className="MenuChooseBookingwidgetDiv_H1_option">
           <h3 className="MenuChooseBookingwidgetDiv_H1_option_h3">
-            <span>Select an option</span>
+            <span>Tuỳ chọn</span>
           </h3>
           <div className="MenuChooseBookingwidgetDiv_H1_option_choosen">
             <OptionMenuChooseBookingwidget
-              text={"Reservation with menu"}
+              text={"Đặt bàn với menu có sẵn"}
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
               choosedOptionByWithMenu={choosedOptionByWithMenu}
@@ -118,7 +124,7 @@ const MenuChooseBookingwidget = ({
               }
             ></OptionMenuChooseBookingwidget>
             <OptionMenuChooseBookingwidget
-              text={"Reservation without menu"}
+              text={"Đặt bàn không kèm theo menu"}
               onClick={setChoosedOptionByWithMenu}
               onClick2={setChoosedOptionByWithoutMenu}
               choosedOptionByWithMenu={choosedOptionByWithoutMenu}
@@ -138,7 +144,7 @@ const MenuChooseBookingwidget = ({
             className="MenuChooseBookingwidgetDiv_H1_divButton_Button"
             onClick={handleBooking}
           >
-            <span>CONTINUE</span>
+            <span>Tiếp tục</span>
           </Button>
         </div>
       </div>

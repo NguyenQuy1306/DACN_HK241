@@ -10,7 +10,7 @@ const ButtonBookingwidget = ({ icon, text, onClick, colorText, sizeText }) => {
         style={{
           color: colorText,
           fontSize: "0.8125rem",
-          fontWeight: "400",
+          fontWeight: "650",
           marginTop: "3px",
         }}
       >

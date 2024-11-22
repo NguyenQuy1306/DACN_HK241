@@ -13,13 +13,13 @@ const OptionMenuChooseBookingwidget = ({
   openBookingWithMenu,
 }) => {
   const handleOnclickButton = () => {
-    // Nếu openBookingWithMenu là true và text không phải là "Reservation with menu", dừng hàm tại đây
-    if (openBookingWithMenu && text !== "Reservation with menu") {
+    // Nếu openBookingWithMenu là true và text không phải là "Đặt bàn với menu có sẵn", dừng hàm tại đây
+    if (openBookingWithMenu && text !== "Đặt bàn với menu có sẵn") {
       return;
     }
 
-    // Điều kiện để thay đổi trạng thái khi text là "Reservation with menu"
-    if (text === "Reservation with menu") {
+    // Điều kiện để thay đổi trạng thái khi text là "Đặt bàn với menu có sẵn"
+    if (text === "Đặt bàn với menu có sẵn") {
       onClick(true);
       onClick2(false);
     } else {
@@ -33,33 +33,33 @@ const OptionMenuChooseBookingwidget = ({
       <Button
         className={`OptionMenuChooseBookingwidgetDiv_button ${
           choosedOptionByWithMenu ? "active" : ""
-        } ${text === "Reservation with menu" ? "" : "size"}`}
+        } ${text === "Đặt bàn với menu có sẵn" ? "" : "size"}`}
         onClick={handleOnclickButton}
-        // Vô hiệu hóa nút nếu openBookingWithMenu là true và text là "Reservation without menu"
-        disabled={openBookingWithMenu && text === "Reservation without menu"}
+        // Vô hiệu hóa nút nếu openBookingWithMenu là true và text là "Đặt bàn không kèm theo menu"
+        disabled={openBookingWithMenu && text === "Đặt bàn không kèm theo menu"}
       >
         <span className="OptionMenuChooseBookingwidgetDiv_button_H1">
           <span
             className={`OptionMenuChooseBookingwidgetDiv_button_H2 ${
-              text === "Reservation with menu" ? "" : "active"
+              text === "Đặt bàn với menu có sẵn" ? "" : "active"
             } `}
           >
             <span className="OptionMenuChooseBookingwidgetDiv_button_H2_H1">
               <span
                 className={`OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1 ${
-                  text === "Reservation with menu" ? "" : "active"
+                  text === "Đặt bàn với menu có sẵn" ? "" : "active"
                 } `}
               >
-                {text === "Reservation with menu" ? (
+                {text === "Đặt bàn với menu có sẵn" ? (
                   <span className="OptionMenuChooseBookingwidgetDiv_button_H2_H1_H1_H1">
-                    30 % sale off
+                    {/* 30 % sale off */}
                   </span>
                 ) : (
                   text
                 )}
               </span>
-              {text === "Reservation with menu" && text}
-              {text === "Reservation with menu" && (
+              {text === "Đặt bàn với menu có sẵn" && text}
+              {text === "Đặt bàn với menu có sẵn" && (
                 <div className="OptionMenuChooseBookingwidgetDiv_button_H2_H1_div">
                   <div className="OptionMenuChooseBookingwidgetDiv_button_H2_H1_div_H1">
                     <div className="OptionMenuChooseBookingwidgetDiv_button_H2_H1_div_H1_H1">
@@ -72,7 +72,7 @@ const OptionMenuChooseBookingwidget = ({
           </span>
           <span
             className={`OptionMenuChooseBookingwidgetDiv_button_H3 ${
-              text === "Reservation with menu" ? "" : "active"
+              text === "Đặt bàn với menu có sẵn" ? "" : "active"
             } `}
           >
             {icon}

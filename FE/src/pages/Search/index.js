@@ -129,7 +129,7 @@ const Search = () => {
                                     choosed={chooseRelevance}
                                   ></SortDetail>
                                   <SortDetail
-                                    text="Offer"
+                                    text="Menu"
                                     setChooseRelevance={setChooseRelevance}
                                     setChoosePrice={setChoosePrice}
                                     setChoosePopularity={setChoosePopularity}
