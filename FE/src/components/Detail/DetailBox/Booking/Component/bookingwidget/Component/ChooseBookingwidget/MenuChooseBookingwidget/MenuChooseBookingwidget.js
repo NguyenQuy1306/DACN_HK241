@@ -37,7 +37,7 @@ const MenuChooseBookingwidget = ({
   const user = useSelector(selectUser);
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
-  console.log("menuchoosed", menuChoosed);
+  // console.log("menuchoosed", menuChoosed);
   const bookingWithNewCombo = useSelector(
     (state) => state.restaurant.bookingWithNewCombo
   );

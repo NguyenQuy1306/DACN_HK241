@@ -9,6 +9,7 @@ import authenticationSlice from "./features/authenticationSlice";
 import orderSlice from "./features/orderSlice";
 import rateSlice from "./features/rateSlice";
 import navigationSlice from "./features/navigationSlice";
+import searchSlice from "./features/searchSlice";
 export default configureStore({
   reducer: {
     restaurant: restaurantSlice,
@@ -20,6 +21,7 @@ export default configureStore({
     order: orderSlice,
     rate: rateSlice,
     navigation: navigationSlice,
+    search: searchSlice,
   },
 });
 

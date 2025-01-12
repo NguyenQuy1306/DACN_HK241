@@ -5,18 +5,29 @@ import "./Search.css";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useNavigate } from "react-router-dom";
+import {
+  handleModal,
+  openModalSearch2,
+} from "../../../redux/features/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
-  const navigate = useNavigate();
+  const [openSearch2, setOpenSearch2] = useState(false);
+
+  const SetOpenSearch2 = (value) => {
+    setOpenSearch2(value);
+  };
+
   const handleSearch1Change = (value) => {
     setSearch1(value);
   };
-
+  const dispatch = useDispatch();
   const handleSearch2Change = (value) => {
     setSearch2(value);
   };
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevents the default form submission behavior (page refresh)
@@ -24,7 +35,11 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
     console.log("Search 2:", search2);
     // Implement your search logic here
   };
-
+  const open = useSelector(openModalSearch2);
+  const handleOnCloseSearch2 = () => {
+    setOpenSearch2(false);
+    dispatch(handleModal({ openModalSearch2: false }));
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -32,7 +47,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         display: "flex",
         flexDirection: "row",
         borderRadius: "8px",
-        width: "920px",
+        width: "940px",
         alignItems: "center",
         background: "rgb(255, 255, 255)",
         border: border === "none" ? "none" : border,
@@ -41,11 +56,16 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         height: "2.88rem",
       }}
     >
+      {/* <CustomDropdown options={options} placeholder="Select an option" /> */}
+      {openSearch2 && open && (
+        <div className="overlay" onClick={handleOnCloseSearch2}></div>
+      )}
       <InputSearch
         value={search1}
         onChange={handleSearch1Change}
-        width={376}
-        placeholder={"Cuisine"}
+        width={200}
+        placeholder={"Khu vực"}
+        // getOpen={SetOpenSearch2}
         iCon={<LocationOnIcon></LocationOnIcon>}
       />
       <div>
@@ -59,21 +79,24 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
           }}
         ></hr>
       </div>
-      <InputSearch
-        value={search2}
-        onChange={handleSearch2Change}
-        width={550}
-        placeholder={"Restaurant"}
-        iCon={<SearchIcon></SearchIcon>}
-      />
+      <div className="InputSearch2Div">
+        <InputSearch
+          value={search2}
+          onChange={handleSearch2Change}
+          width={600}
+          getOpen={SetOpenSearch2}
+          placeholder={"Bàn muốn đặt chỗ đến đâu"}
+          iCon={<SearchIcon></SearchIcon>}
+        />
 
-      <button
-        type="submit"
-        className="search-btn"
-        onClick={() => navigate("../Search")}
-      >
-        Search
-      </button>
+        <button
+          type="submit"
+          className="search-btn"
+          onClick={() => navigate("../Search")}
+        >
+          Search
+        </button>
+      </div>
     </form>
   );
 };

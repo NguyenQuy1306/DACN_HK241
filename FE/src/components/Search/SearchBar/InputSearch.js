@@ -2,6 +2,13 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
+import ModalSearch from "../../Modal/ModalSearch/ModalSearch";
+import {
+  handleModal,
+  openModalSearch2,
+} from "../../../redux/features/searchSlice";
+import "./InputSearch.css";
+import { useDispatch, useSelector } from "react-redux";
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -11,76 +18,84 @@ function sleep(duration) {
   });
 }
 
-export default function InputSearch({ width, placeholder, iCon }) {
+export default function InputSearch({ width, placeholder, iCon, getOpen }) {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
-
   React.useEffect(() => {
     let active = true;
-
     if (!loading) {
       return undefined;
     }
-
     (async () => {
-      await sleep(1e3); // For demo purposes.
-
+      await sleep(0);
       if (active) {
-        setOptions([...topFilms]);
+        setOptions([...provinces]);
       }
     })();
-
     return () => {
       active = false;
     };
   }, [loading]);
-
+  const openOf2 = useSelector(openModalSearch2);
   React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
+    if (openOf2 == false) {
+      // console.log("jdhfjhsdf");
+      setOpen(false);
     }
-  }, [open]);
+  }, [openOf2]);
+
+  const handleInputClick = () => {
+    setOpen(true);
+    dispatch(handleModal({ openModalSearch2: true }));
+    if (placeholder === "Bàn muốn đặt chỗ đến đâu") {
+      getOpen(true); // Pass the 'open' state value to the parent
+    }
+  };
 
   return (
-    <Autocomplete
-      sx={{ width: width, height: 37 }}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      isOptionEqualToValue={(option, value) => option.title === value.title}
-      getOptionLabel={(option) => option.title}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          // label="Asynchronous"
-          slotProps={{
-            input: {
+    <div className={`InputSearchDiv ${open ? "active" : ""}`}>
+      {/* {open && placeholder === "Bàn muốn đặt chỗ đến đâu" && (
+        <div className="overlay" onClick={handleCloseModal}></div>
+      )} */}
+      {open && placeholder === "Bàn muốn đặt chỗ đến đâu" && (
+        <div className="modalSearch_dropdown">
+          <ModalSearch />
+        </div>
+      )}
+      <Autocomplete
+        sx={{ width: width }}
+        open={placeholder === "Khu vực" ? open : false}
+        onClose={placeholder === "Khu vực" ? () => setOpen(false) : undefined}
+        options={placeholder === "Khu vực" ? options : []}
+        getOptionLabel={(option) => option.title}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            onClick={handleInputClick}
+            placeholder={placeholder}
+            InputProps={{
               ...params.InputProps,
-              placeholder: placeholder,
               startAdornment: (
                 <>
                   {iCon}
                   {params.InputProps.startAdornment}
                 </>
               ),
-              style: open
-                ? {
-                    border: "2px solid #1c6359",
-                    height: "42px",
-                    top: "-2px",
-                    left: "-3px",
-                  }
-                : {
-                    border: "none",
-                    height: "37px",
-                  },
+              style:
+                open && placeholder === "Khu vực"
+                  ? {
+                      border: "2px solid #1c6359",
+                      height: "42px",
+                      top: "-2px",
+                      left: "-3px",
+                    }
+                  : {
+                      border: "none",
+                      height: "37px",
+                      borderRadius: "0px !important",
+                    },
               endAdornment: (
                 <React.Fragment>
                   {loading ? (
@@ -89,67 +104,83 @@ export default function InputSearch({ width, placeholder, iCon }) {
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
-            },
-          }}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                border: "none", // Remove border from the outer fieldset (default border)
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "none", // Remove border from the outer fieldset (default border)
+                },
               },
-            },
-          }}
-        />
-      )}
-    />
+            }}
+          />
+        )}
+      />
+    </div>
   );
 }
 
-const topFilms = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "12 Angry Men", year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: "Pulp Fiction", year: 1994 },
-  {
-    title: "The Lord of the Rings: The Return of the King",
-    year: 2003,
-  },
-  { title: "The Good, the Bad and the Ugly", year: 1966 },
-  { title: "Fight Club", year: 1999 },
-  {
-    title: "The Lord of the Rings: The Fellowship of the Ring",
-    year: 2001,
-  },
-  {
-    title: "Star Wars: Episode V - The Empire Strikes Back",
-    year: 1980,
-  },
-  { title: "Forrest Gump", year: 1994 },
-  { title: "Inception", year: 2010 },
-  {
-    title: "The Lord of the Rings: The Two Towers",
-    year: 2002,
-  },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: "Goodfellas", year: 1990 },
-  { title: "The Matrix", year: 1999 },
-  { title: "Seven Samurai", year: 1954 },
-  {
-    title: "Star Wars: Episode IV - A New Hope",
-    year: 1977,
-  },
-  { title: "City of God", year: 2002 },
-  { title: "Se7en", year: 1995 },
-  { title: "The Silence of the Lambs", year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: "Life Is Beautiful", year: 1997 },
-  { title: "The Usual Suspects", year: 1995 },
-  { title: "Léon: The Professional", year: 1994 },
-  { title: "Spirited Away", year: 2001 },
-  { title: "Saving Private Ryan", year: 1998 },
-  { title: "Once Upon a Time in the West", year: 1968 },
-  { title: "American History X", year: 1998 },
-  { title: "Interstellar", year: 2014 },
+const provinces = [
+  { title: "An Giang" },
+  { title: "Bà Rịa – Vũng Tàu" },
+  { title: "Bắc Giang" },
+  { title: "Bắc Kạn" },
+  { title: "Bạc Liêu" },
+  { title: "Bắc Ninh" },
+  { title: "Bến Tre" },
+  { title: "Bình Định" },
+  { title: "Bình Dương" },
+  { title: "Bình Phước" },
+  { title: "Bình Thuận" },
+  { title: "Cà Mau" },
+  { title: "Cần Thơ" },
+  { title: "Cao Bằng" },
+  { title: "Đà Nẵng" },
+  { title: "Đắk Lắk" },
+  { title: "Đắk Nông" },
+  { title: "Điện Biên" },
+  { title: "Đồng Nai" },
+  { title: "Đồng Tháp" },
+  { title: "Gia Lai" },
+  { title: "Hà Giang" },
+  { title: "Hà Nam" },
+  { title: "Hà Nội" },
+  { title: "Hà Tĩnh" },
+  { title: "Hải Dương" },
+  { title: "Hải Phòng" },
+  { title: "Hậu Giang" },
+  { title: "Hòa Bình" },
+  { title: "Hưng Yên" },
+  { title: "Khánh Hòa" },
+  { title: "Kiên Giang" },
+  { title: "Kon Tum" },
+  { title: "Lai Châu" },
+  { title: "Lâm Đồng" },
+  { title: "Lạng Sơn" },
+  { title: "Lào Cai" },
+  { title: "Long An" },
+  { title: "Nam Định" },
+  { title: "Nghệ An" },
+  { title: "Ninh Bình" },
+  { title: "Ninh Thuận" },
+  { title: "Phú Thọ" },
+  { title: "Phú Yên" },
+  { title: "Quảng Bình" },
+  { title: "Quảng Nam" },
+  { title: "Quảng Ngãi" },
+  { title: "Quảng Ninh" },
+  { title: "Quảng Trị" },
+  { title: "Sóc Trăng" },
+  { title: "Sơn La" },
+  { title: "Tây Ninh" },
+  { title: "Thái Bình" },
+  { title: "Thái Nguyên" },
+  { title: "Thanh Hóa" },
+  { title: "Thừa Thiên Huế" },
+  { title: "Tiền Giang" },
+  { title: "TP Hồ Chí Minh" },
+  { title: "Trà Vinh" },
+  { title: "Tuyên Quang" },
+  { title: "Vĩnh Long" },
+  { title: "Vĩnh Phúc" },
+  { title: "Yên Bái" },
 ];
