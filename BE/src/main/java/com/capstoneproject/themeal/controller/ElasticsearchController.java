@@ -19,7 +19,8 @@ public class ElasticsearchController {
     private ElasticSearchQuery elasticSearchQuery;
 
     @PostMapping("/createOrUpdateDocument")
-    public ResponseEntity<ApiResponse<Object>> createOrUpdateDocument(@RequestBody RestaurantElasticsearch restaurantElasticsearch) throws IOException {
+    public ResponseEntity<ApiResponse<Object>> createOrUpdateDocument(
+            @RequestBody RestaurantElasticsearch restaurantElasticsearch) throws IOException {
         ApiResponse<Object> objectApiResponse = new ApiResponse<>();
         String response = elasticSearchQuery.createOrUpdateDocument(restaurantElasticsearch);
         objectApiResponse.ok(response);
@@ -28,10 +29,10 @@ public class ElasticsearchController {
 
     @GetMapping("/getDocument")
     public ResponseEntity<ApiResponse<RestaurantElasticsearch>> getDocumentById(
-            @RequestParam
-            String restaurantId) throws
+            @RequestParam String restaurantId) throws
 
-            IOException {
+    IOException {
+        System.out.println("nguyênnnnnn2");
         RestaurantElasticsearch restaurantElasticsearch = elasticSearchQuery.getDocumentById(restaurantId);
         ApiResponse<RestaurantElasticsearch> apiResponse = new ApiResponse<>();
         apiResponse.ok(restaurantElasticsearch);
