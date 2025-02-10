@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
 import "./MenuChooseBookingwidget.css";
 import OptionMenuChooseBookingwidget from "./Component/OptionMenuChooseBookingwidget";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
@@ -17,6 +17,11 @@ import { useNavigate } from "react-router-dom";
 import { setActiveTab } from "../../../../../../../../../redux/features/navigationSlice";
 import { getComboAvailable } from "../../../../../../../../../redux/features/comboSlice";
 import { setActiveTabMenu } from "../../../../../../../../../redux/features/navigationSlice";
+import { setShouldScroll } from "../../../../../../../../../redux/features/navigationSlice";
+import {
+  openModalPayment,
+  setOpenModalPayment,
+} from "../../../../../../../../../redux/features/tableSlice";
 const MenuChooseBookingwidget = ({
   selectedPlace,
   openBookingWithMenu,
@@ -41,11 +46,18 @@ const MenuChooseBookingwidget = ({
   const bookingWithNewCombo = useSelector(
     (state) => state.restaurant.bookingWithNewCombo
   );
+  const openModalPayment = useSelector((state) => state.table.openModalPayment);
   const handleBooking = () => {
     if (choosedOptionByWithMenu && menuChoosed.length <= 0) {
       dispatch(getComboAvailable({ restaurantId: selectedPlace.maSoNhaHang }));
       dispatch(setActiveTab("Menu"));
       dispatch(setActiveTabMenu("Các combo có sẵn"));
+      dispatch(setShouldScroll(true));
+      toast.success("Hãy chọn combo!", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
       return;
     }
 
@@ -61,46 +73,57 @@ const MenuChooseBookingwidget = ({
     if (!user) {
       dispatch(setStatusModalAuthentication({ openModal: true }));
     } else {
-      dispatch(
-        createOrder({
-          customerID: user.maSoNguoiDung,
-          tableId: choosedTable.maSo.thuTuBan,
-          comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
-          restaurantId: selectedPlace.maSoNhaHang,
-          foodOrderRequests: bookingWithNewCombo
-            ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
-                maSoMonAn,
-                soLuong,
-              }))
-            : [],
-        })
-      );
-
-      toast.success("Bạn đã đặt bàn thành công!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
-
-      dispatch(
-        setOpenBookingWithMenu({
-          openBookingWithMenu: false,
-          menuChoosed: [],
-          bookingWithNewCombo: false,
-        })
-      );
-
-      setDate(null);
-      setcloseDateDiv(false);
-      setTime(null);
-      setcloseTimeDiv(true);
-      setPerson(null);
-      setClosePersonDiv(true);
-      setOption(null);
-      setCloseOptionDiv(true);
+      dispatch(setOpenModalPayment(true));
     }
   };
+  // useEffect(() => {
+  //   if (openModalPayment) {
+  //     dispatch(
+  //       createOrder({
+  //         customerID: user.maSoNguoiDung,
+  //         tableId: choosedTable.maSo.thuTuBan,
+  //         comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
+  //         restaurantId: selectedPlace.maSoNhaHang,
+  //         foodOrderRequests: bookingWithNewCombo
+  //           ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
+  //               maSoMonAn,
+  //               soLuong,
+  //             }))
+  //           : [],
+  //       })
+  //     );
 
+  //     toast.success("Bạn đã đặt bàn thành công!", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //     });
+
+  //     dispatch(
+  //       setOpenBookingWithMenu({
+  //         openBookingWithMenu: false,
+  //         menuChoosed: [],
+  //         bookingWithNewCombo: false,
+  //       })
+  //     );
+
+  //     setDate(null);
+  //     setcloseDateDiv(false);
+  //     setTime(null);
+  //     setcloseTimeDiv(true);
+  //     setPerson(null);
+  //     setClosePersonDiv(true);
+  //     setOption(null);
+  //     setCloseOptionDiv(true);
+  //   }
+  // }, [
+  //   choosedTable,
+  //   user,
+  //   menuChoosed,
+  //   selectedPlace,
+  //   bookingWithNewCombo,
+  //   openModalPayment,
+  // ]);
   return (
     <div className="MenuChooseBookingwidgetDiv">
       <div className="MenuChooseBookingwidgetDiv_H1">

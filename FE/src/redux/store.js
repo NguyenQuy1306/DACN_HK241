@@ -10,6 +10,7 @@ import orderSlice from "./features/orderSlice";
 import rateSlice from "./features/rateSlice";
 import navigationSlice from "./features/navigationSlice";
 import searchSlice from "./features/searchSlice";
+import paymentSlice from "./features/paymentSlice";
 export default configureStore({
   reducer: {
     restaurant: restaurantSlice,
@@ -22,6 +23,7 @@ export default configureStore({
     rate: rateSlice,
     navigation: navigationSlice,
     search: searchSlice,
+    payment: paymentSlice,
   },
 });
 

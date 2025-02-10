@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BE/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/BE/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/ElasticsearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/ElasticsearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

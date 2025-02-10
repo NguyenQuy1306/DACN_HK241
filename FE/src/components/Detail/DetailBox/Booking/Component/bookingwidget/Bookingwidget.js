@@ -120,6 +120,7 @@ const Bookingwidget = ({ selectedPlace }) => {
   console.log("tableAvailable", tableAvailable);
   const [timeTableAvailable, setTimeTableAvailable] = useState([]);
   const [personTableAvailable, setPersonTableAvailable] = useState([]);
+  const openModalPayment = useSelector((state) => state.table.openModalPayment);
   useEffect(() => {
     if (date) {
       const formattedDate = date
@@ -190,9 +191,11 @@ const Bookingwidget = ({ selectedPlace }) => {
       dispatch(setChoosedTable({ choosedTable: tables[0] }));
 
       console.log("tablestables", tables);
-    } else {
-      dispatch(setChoosedTable({ choosedTable: null }));
     }
+    // else {
+    //   // if()
+    //   dispatch(setChoosedTable({ choosedTable: null }));
+    // }
   }, [date, time, person, tableAvailable]);
   return (
     <>

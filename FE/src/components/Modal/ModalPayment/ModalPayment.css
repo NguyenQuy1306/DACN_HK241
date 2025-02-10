@@ -1,0 +1,61 @@
+
+.ModalPayment-section
+{
+    border-radius: 5px;
+    margin: 1.5rem auto auto;
+    max-width: calc(-3rem + 100vw);
+    max-height: calc(-3rem + 100vh);
+    width: 50rem;
+    height: auto;
+}
+.ModalPayment-section {
+    background-color: white; /* Ensure the background is visible */
+    width: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensure it stays above other elements */
+    z-index: 1301; /* MUI modals usually have a z-index of 1300 */
+  }
+  
+.ModalPayment-div1
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+}
+.ModalPayment-button-close
+{
+    position: relative;
+    border: 0px;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: normal;
+    padding: 0px 0.125rem;
+    min-width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    color: rgb(0, 102, 92);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.ModalPayment-button-close-icon
+{
+color: black !important;
+}
+.ModalPayment-div2-header
+{
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+    flex-direction: row;
+}

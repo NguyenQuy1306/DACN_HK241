@@ -18,6 +18,7 @@ export const tableSlice = createSlice({
   initialState: {
     tables: [],
     choosedTable: null,
+    openModalPayment: false,
     error: "",
     loading: false,
   },
@@ -26,6 +27,9 @@ export const tableSlice = createSlice({
     setChoosedTable(state, action) {
       const { choosedTable } = action.payload;
       state.choosedTable = choosedTable;
+    },
+    setOpenModalPayment(state, action) {
+      state.openModalPayment = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,5 +48,7 @@ export const tableSlice = createSlice({
       });
   },
 });
-export const { setChoosedTable } = tableSlice.actions;
+export const openModalPayment = (state) => state.table.openModalPayment;
+export const { setChoosedTable, setOpenModalPayment } = tableSlice.actions;
+
 export default tableSlice.reducer;
