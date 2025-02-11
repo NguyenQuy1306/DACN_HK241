@@ -54,6 +54,15 @@ export const getComboAvailable = async (params) => {
   }
 };
 
+export const createComboByUser = async (params) => {
+  try {
+    const response = await API.post(`api/combo`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 // Table APIs
 export const getTableForRestaurant = async (params) => {
   try {

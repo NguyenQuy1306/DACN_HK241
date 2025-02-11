@@ -5,17 +5,44 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Typography, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setOpenModalPayment } from "../../../redux/features/tableSlice";
+import { setPaymentStatus } from "../../../redux/features/paymentSlice";
 import "./ModalPayment.css";
-
+import { selectUser } from "../../../redux/features/authenticationSlice";
+import CustomizedTables from "../../Detail/DetailBox/Navigation/Menu/Component/TableInModalMenu/TableInModalMenu";
 const ModalPayment = ({ open, selectedPlace }) => {
   const dispatch = useDispatch();
   const choosedTable = useSelector((state) => state.table.choosedTable);
-
   console.log("choosedTable in modalpayment:", choosedTable);
   console.log("Modal open:", open); // Debugging
-
+  const user = useSelector(selectUser);
+  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  if (menuChoosed.length > 0) {
+    console.log("menuchoosed", menuChoosed);
+  }
+  console.log("user", user);
   if (!open) return null; // Nếu `open` là false, không hiển thị modal
-
+  const handleOnClickPayment = () => {
+    //call api payOS
+    // after success payOS
+    dispatch(setPaymentStatus("success"));
+    dispatch(setOpenModalPayment(false));
+  };
+  const getCurrentDate = () => {
+    return new Date().toISOString().split("T")[0];
+  };
+  const currentTime = new Date().toLocaleTimeString("en-GB").replace(/:/g, ":");
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const today = getCurrentDate();
   return (
     <Modal open={open} onClose={() => dispatch(setOpenModalPayment(false))}>
       <section className="ModalPayment-section">
@@ -48,27 +75,23 @@ const ModalPayment = ({ open, selectedPlace }) => {
           {selectedPlace?.address || "No address available"}
         </div>
         <div className="ModalPayment-div2-bookdetail">
-          <h3>
-            <span>Booking details</span>
-          </h3>
-
-          <Box sx={{ maxWidth: 400, fontFamily: "Arial" }}>
+          <Box sx={{ maxWidth: 500, fontFamily: "Arial" }}>
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: "#1f3c88", mb: 1 }}
             >
-              Booking Details
+              Chi tiết đặt bàn
             </Typography>
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
             >
-              <Typography sx={{ fontWeight: "bold" }}>Ngày đặt</Typography>
+              <Typography sx={{ fontWeight: "bold" }}>Ngày đến</Typography>
               <Typography>{choosedTable?.ngay || "N/A"}</Typography>
             </Box>
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
             >
-              <Typography sx={{ fontWeight: "bold" }}>Giờ đặt</Typography>
+              <Typography sx={{ fontWeight: "bold" }}>Giờ ăn</Typography>
               <Typography>{choosedTable?.gio || "N/A"}</Typography>
             </Box>
             <Box
@@ -77,13 +100,81 @@ const ModalPayment = ({ open, selectedPlace }) => {
               <Typography sx={{ fontWeight: "bold" }}>Số khách</Typography>
               <Typography>{choosedTable?.soNguoi || "N/A"}</Typography>
             </Box>
-            {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography sx={{ fontWeight: "bold" }}>Mã số</Typography>
-              <Typography>{choosedTable?.maSo.maSoNhaHang || "N/A"}</Typography>
-            </Box> */}
           </Box>
+          <Box sx={{ maxWidth: 500, fontFamily: "Arial", display: "flex" }}>
+            <Box sx={{ width: 200 }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", color: "#1f3c88", mb: 1 }}
+              >
+                Khách đặt
+              </Typography>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                {/* <Typography sx={{ fontWeight: "bold" }}>Ngày đặt</Typography> */}
+                <Typography>{user?.hoTen || "N/A"}</Typography>
+              </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                {/* <Typography sx={{ fontWeight: "bold" }}>Giờ đặt</Typography> */}
+                <Typography>{user?.email || "N/A"}</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ width: 300 }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", color: "#1f3c88", mb: 1 }}
+                >
+                  Đơn hàng#
+                </Typography>
+                <Typography>{user?.email || "N/A"}</Typography>
+              </Box>
+
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", color: "#1f3c88", mb: 1 }}
+                >
+                  Ngày đặt
+                </Typography>
+                <Typography>{today || "N/A"}</Typography>
+              </Box>
+
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold", color: "#1f3c88", mb: 1 }}
+                >
+                  Giờ đặt
+                </Typography>
+                <Typography>{currentTime || "N/A"}</Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          {menuChoosed.length > 0 && (
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Menu của bạn
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                {/* <CustomizedTables
+                  combo={menuChoosed[0].foods}
+                ></CustomizedTables> */}
+              </Typography>
+            </Box>
+          )}
           <div>
-            <Button className="ModalPayment-div2-button">
+            <Button
+              className="ModalPayment-div2-button"
+              onClick={handleOnClickPayment}
+            >
               <span>Thanh toán</span>
             </Button>
           </div>

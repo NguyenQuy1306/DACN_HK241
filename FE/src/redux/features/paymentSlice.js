@@ -30,5 +30,5 @@ export const paymentSlice = createSlice({
   //   },
 });
 export const paymentStatus = (state) => state.payment.paymentStatus;
-export const { setPaymentStatus } = paymentSlice.setPaymentStatus;
+export const { setPaymentStatus } = paymentSlice.actions;
 export default paymentSlice.reducer;

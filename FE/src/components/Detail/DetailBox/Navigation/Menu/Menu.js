@@ -216,7 +216,10 @@ const Menu = ({ selectedPlace }) => {
                   />
                 </ThemeProvider>
               </div>
-              <BasicModal combo={newCombo}></BasicModal>
+              <BasicModal
+                combo={newCombo}
+                selectedPlace={selectedPlace}
+              ></BasicModal>
             </div>
           </div>
         </>

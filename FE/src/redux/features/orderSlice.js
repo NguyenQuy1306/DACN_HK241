@@ -5,7 +5,7 @@ export const createOrder = createAsyncThunk(
   "/order",
   async (params, { rejectWithValue }) => {
     try {
-      console.log("params::;", params.foodOrderRequests);
+      console.log("params::;", params);
       const response = await api.createOrder(params);
       return response.payload;
     } catch (error) {

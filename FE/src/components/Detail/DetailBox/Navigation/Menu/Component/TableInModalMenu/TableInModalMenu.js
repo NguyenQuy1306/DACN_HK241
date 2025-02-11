@@ -31,7 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({ combo }) {
   let totalPrice = 0;
-
+  console.log("commbo", combo);
   for (let i = 0; i < combo.length; i++) {
     totalPrice += combo[i].item.gia * combo[i].quantity;
   }

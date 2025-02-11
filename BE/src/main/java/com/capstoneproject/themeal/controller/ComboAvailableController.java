@@ -13,11 +13,13 @@ import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
+import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
 import com.capstoneproject.themeal.model.request.*;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.repository.FoodRepository;
 import com.capstoneproject.themeal.service.ComboAvailableService;
 import com.capstoneproject.themeal.service.FoodService;
+import com.capstoneproject.themeal.service.OrderTableService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +34,8 @@ import java.util.List;
 
 public class ComboAvailableController {
     @Autowired
+    private OrderTableService orderTableService;
+    @Autowired
     private ComboAvailableService comboAvailableService;
 
     @GetMapping("")
@@ -45,6 +49,29 @@ public class ComboAvailableController {
             List<ComboAvailableHasFoodResponse> foodResponses = comboAvailableService.getAvailableCombos(pageable,
                     restaurantId);
             apiResponse.ok(foodResponses);
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<ApiResponse<OrderTableHasFood>> createComboByUser(@RequestParam Long maSoNguoiDung,
+            @RequestBody ComboRequest comboRequest) {
+
+        ApiResponse<OrderTableHasFood> apiResponse = new ApiResponse<>();
+        try {
+            // OrderTableHasFood comboAvailableHasFoodResponse =
+            // orderTableService.saveOrderTable(maSoNhaHang,
+            // comboRequest);
+            // apiResponse.ok(comboAvailableHasFoodResponse);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
             return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);

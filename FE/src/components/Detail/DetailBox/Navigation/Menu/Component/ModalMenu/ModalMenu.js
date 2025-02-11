@@ -8,6 +8,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
 import { useSelector, useDispatch } from "react-redux";
 import "./ModalMenu.css";
+import { createComboByUser } from "../../../../../../../redux/features/comboSlice";
+import {
+  selectUser,
+  setStatusModalAuthentication,
+} from "../../../../../../../redux/features/authenticationSlice";
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,21 +25,33 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ combo }) {
+export default function BasicModal({ combo, selectedPlace }) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const user = useSelector(selectUser);
   const handleCancelCreateMenu = () => {
     setOpen(false);
   };
   const handleBookingWithNewMenu = () => {
+    if (!user) {
+      dispatch(setStatusModalAuthentication({ openModal: true }));
+      setOpen(false);
+      return;
+    }
     const combo_convert = combo.map(({ item, quantity }) => ({
       maSoMonAn: item.maSoMonAn,
       gia: item.gia,
       soLuong: quantity,
     }));
     setOpen(false);
+    // dispatch(
+    //   createComboByUser({
+    //     maSoNhaHang: selectedPlace.maSoNhaHang,
+    //     comboRequest: combo_convert,
+    //   })
+    // );
     dispatch(
       setOpenBookingWithMenu({
         openBookingWithMenu: true,
@@ -72,7 +89,7 @@ export default function BasicModal({ combo }) {
             </Button>
             <Button
               className="modal-modal-description_button_cancel"
-              onClick={() => handleCancelCreateMenu()}
+              onClick={handleCancelCreateMenu}
             >
               Huỷ bỏ
             </Button>

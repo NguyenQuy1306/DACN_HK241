@@ -22,6 +22,7 @@ import {
   openModalPayment,
   setOpenModalPayment,
 } from "../../../../../../../../../redux/features/tableSlice";
+import { setPaymentStatus } from "../../../../../../../../../redux/features/paymentSlice";
 const MenuChooseBookingwidget = ({
   selectedPlace,
   openBookingWithMenu,
@@ -42,17 +43,23 @@ const MenuChooseBookingwidget = ({
   const user = useSelector(selectUser);
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  const paymentStatus = useSelector((state) => state.payment.paymentStatus);
   // console.log("menuchoosed", menuChoosed);
+  console.log("paymentStatus", paymentStatus);
   const bookingWithNewCombo = useSelector(
     (state) => state.restaurant.bookingWithNewCombo
   );
   const openModalPayment = useSelector((state) => state.table.openModalPayment);
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (choosedOptionByWithMenu && menuChoosed.length <= 0) {
-      dispatch(getComboAvailable({ restaurantId: selectedPlace.maSoNhaHang }));
-      dispatch(setActiveTab("Menu"));
-      dispatch(setActiveTabMenu("Các combo có sẵn"));
-      dispatch(setShouldScroll(true));
+      await Promise.all([
+        // dispatch(
+        //   getComboAvailable({ restaurantId: selectedPlace.maSoNhaHang })
+        // ),
+        dispatch(setActiveTab("Menu")),
+        dispatch(setActiveTabMenu("Các combo có sẵn")),
+        dispatch(setShouldScroll(true)),
+      ]);
       toast.success("Hãy chọn combo!", {
         position: "top-left",
         autoClose: 3000,
@@ -76,54 +83,50 @@ const MenuChooseBookingwidget = ({
       dispatch(setOpenModalPayment(true));
     }
   };
-  // useEffect(() => {
-  //   if (openModalPayment) {
-  //     dispatch(
-  //       createOrder({
-  //         customerID: user.maSoNguoiDung,
-  //         tableId: choosedTable.maSo.thuTuBan,
-  //         comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
-  //         restaurantId: selectedPlace.maSoNhaHang,
-  //         foodOrderRequests: bookingWithNewCombo
-  //           ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
-  //               maSoMonAn,
-  //               soLuong,
-  //             }))
-  //           : [],
-  //       })
-  //     );
+  useEffect(() => {
+    if (!openModalPayment && paymentStatus === "success") {
+      // console.log("call useeffect in booking");
+      dispatch(
+        createOrder({
+          customerID: user.maSoNguoiDung,
+          tableId: choosedTable.maSo.thuTuBan,
+          comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
+          restaurantId: selectedPlace.maSoNhaHang,
+          foodOrderRequests: bookingWithNewCombo
+            ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
+                maSoMonAn,
+                soLuong,
+              }))
+            : [],
+        })
+      );
 
-  //     toast.success("Bạn đã đặt bàn thành công!", {
-  //       position: "top-right",
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //     });
+      toast.success("Bạn đã đặt bàn thành công!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
 
-  //     dispatch(
-  //       setOpenBookingWithMenu({
-  //         openBookingWithMenu: false,
-  //         menuChoosed: [],
-  //         bookingWithNewCombo: false,
-  //       })
-  //     );
+      dispatch(
+        setOpenBookingWithMenu({
+          openBookingWithMenu: false,
+          menuChoosed: [],
+          bookingWithNewCombo: false,
+        })
+      );
 
-  //     setDate(null);
-  //     setcloseDateDiv(false);
-  //     setTime(null);
-  //     setcloseTimeDiv(true);
-  //     setPerson(null);
-  //     setClosePersonDiv(true);
-  //     setOption(null);
-  //     setCloseOptionDiv(true);
-  //   }
-  // }, [
-  //   choosedTable,
-  //   user,
-  //   menuChoosed,
-  //   selectedPlace,
-  //   bookingWithNewCombo,
-  //   openModalPayment,
-  // ]);
+      setDate(null);
+      setcloseDateDiv(false);
+      setTime(null);
+      setcloseTimeDiv(true);
+      setPerson(null);
+      setClosePersonDiv(true);
+      setOption(null);
+      setCloseOptionDiv(true);
+
+      dispatch(setPaymentStatus(""));
+    }
+  }, [openModalPayment, paymentStatus]);
   return (
     <div className="MenuChooseBookingwidgetDiv">
       <div className="MenuChooseBookingwidgetDiv_H1">
