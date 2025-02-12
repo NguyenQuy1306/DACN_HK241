@@ -31,10 +31,15 @@ export const comboSlice = createSlice({
   initialState: {
     combo: [],
     comboCreateReponse: [],
+    comboType: "",
     error: "",
     loading: false,
   },
-
+  reducers: {
+    setComboType: (state, action) => {
+      state.comboType = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getComboAvailable.pending, (state) => {
@@ -64,5 +69,6 @@ export const comboSlice = createSlice({
       });
   },
 });
-
+export const comboType = (state) => state.combo.comboType;
+export const { setComboType } = comboSlice.actions;
 export default comboSlice.reducer;

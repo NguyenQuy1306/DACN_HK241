@@ -6,6 +6,7 @@ import BasicModal from "../ModalMenu/ModalMenu";
 import CloseIcon from "@mui/icons-material/Close";
 import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setComboType } from "../../../../../../../redux/features/comboSlice";
 const { formatCurrency } = require("../../../../../../../helper/helper");
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
@@ -35,6 +36,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
         bookingWithNewCombo: false,
       })
     );
+    dispatch(setComboType("availableCombo"));
   };
 
   const { comboId, comboName, comboPrice, comboCreationTime, foods } = menu;

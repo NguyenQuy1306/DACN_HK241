@@ -8,7 +8,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
 import { useSelector, useDispatch } from "react-redux";
 import "./ModalMenu.css";
-import { createComboByUser } from "../../../../../../../redux/features/comboSlice";
+import {
+  createComboByUser,
+  setComboType,
+} from "../../../../../../../redux/features/comboSlice";
 import {
   selectUser,
   setStatusModalAuthentication,
@@ -28,11 +31,21 @@ const style = {
 export default function BasicModal({ combo, selectedPlace }) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setOpen(true);
+    dispatch(setComboType("newCombo"));
+  };
+  const handleOnclose = () => {
+    dispatch(setComboType(""));
+  };
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(setComboType(""));
+  };
   const user = useSelector(selectUser);
   const handleCancelCreateMenu = () => {
     setOpen(false);
+    dispatch(setComboType(""));
   };
   const handleBookingWithNewMenu = () => {
     if (!user) {
@@ -42,16 +55,11 @@ export default function BasicModal({ combo, selectedPlace }) {
     }
     const combo_convert = combo.map(({ item, quantity }) => ({
       maSoMonAn: item.maSoMonAn,
+      ten: item.ten,
       gia: item.gia,
       soLuong: quantity,
     }));
     setOpen(false);
-    // dispatch(
-    //   createComboByUser({
-    //     maSoNhaHang: selectedPlace.maSoNhaHang,
-    //     comboRequest: combo_convert,
-    //   })
-    // );
     dispatch(
       setOpenBookingWithMenu({
         openBookingWithMenu: true,
@@ -63,7 +71,11 @@ export default function BasicModal({ combo, selectedPlace }) {
   };
   return (
     <div>
-      <Button onClick={handleOpen} className="modal-modal-description_button">
+      <Button
+        onClick={handleOpen}
+        onClose={handleOnclose}
+        className="modal-modal-description_button"
+      >
         <AddIcon className="modal-modal-description_button_icon"></AddIcon>
         <span className="odal-modal-description_button_span"> Tạo menu </span>
       </Button>

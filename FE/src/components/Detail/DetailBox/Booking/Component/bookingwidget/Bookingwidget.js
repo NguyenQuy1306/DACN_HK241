@@ -14,6 +14,7 @@ import {
   getTableForRestaurant,
   setChoosedTable,
 } from "../../../../../../redux/features/tableSlice";
+import { setComboType } from "../../../../../../redux/features/comboSlice";
 
 const { formatCurrency } = require("../../../../../../helper/helper");
 const Bookingwidget = ({ selectedPlace }) => {
@@ -39,6 +40,7 @@ const Bookingwidget = ({ selectedPlace }) => {
         bookingWithNewCombo: false,
       })
     );
+    dispatch(setComboType(""));
 
     setDate(null);
     setcloseDateDiv(false);
