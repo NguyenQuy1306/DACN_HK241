@@ -5,7 +5,7 @@ import "./KeyWord.css";
 const KeyWord = ({ text }) => {
   return (
     <div className="KeyWordDiv">
-      <SearchIcon></SearchIcon>
+      <SearchIcon className="KeyWordDivIcon"></SearchIcon>
       <a>{text}</a>
     </div>
   );

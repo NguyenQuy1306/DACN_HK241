@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/elas")
@@ -55,4 +56,14 @@ public class ElasticsearchController {
         apiResponse.ok(restaurantElasticsearchList);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/searchByKeyword")
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> searchByKeyword(@RequestParam String param)
+            throws IOException {
+        ApiResponse<List<Map<String, Object>>> apiResponse = new ApiResponse<>();
+        List<Map<String, Object>> restaurantElasticsearchs = elasticSearchQuery.searchByKeyword(param);
+        apiResponse.ok(restaurantElasticsearchs);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
 }

@@ -165,7 +165,7 @@ const PlaceDetails = ({
                   <div className="PlaceDetailDiv_H1_detail_name_div1_div">
                     <StarRating
                       rating={2.6}
-                      size={"32"}
+                      size={"20"}
                       classname={"y-css-35tusp"}
                     ></StarRating>
                     <div className="PlaceDetailDiv_H1_detail_rating">

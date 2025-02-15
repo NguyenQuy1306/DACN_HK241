@@ -26,7 +26,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/v2/api-docs", "/v3/api-docs", "/swagger-resources", "/swagger-resources/.*",
             "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
             "/api/food", "/api/combo", "/api/orders", "/api/table/restaurant",
-            "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*",
+            "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
 
             "/elas/getDocument",
             "/api/rate/.*/restaurant");
