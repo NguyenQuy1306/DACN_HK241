@@ -10,7 +10,7 @@ import {
   openModalSearch2,
 } from "../../../redux/features/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import InputSearchType from "./InputSearchType";
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
@@ -80,12 +80,12 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         ></hr>
       </div>
       <div className="InputSearch2Div">
-        <InputSearch
+        <InputSearchType
           value={search2}
           onChange={handleSearch2Change}
           width={600}
           getOpen={SetOpenSearch2}
-          placeholder={"Bàn muốn đặt chỗ đến đâu"}
+          placeholder={"Bạn muốn đặt chỗ đến đâu"}
           iCon={<SearchIcon></SearchIcon>}
         />
 

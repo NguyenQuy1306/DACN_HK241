@@ -4,10 +4,32 @@ import KeyWord from "./Keyword/KeyWord";
 import { Button, Modal, Box } from "@mui/material";
 import PlaceDetailSearch from "../../PlaceDetailSearch/PlaceDetailSearch";
 import "./ModalSearch.css";
+import { useDispatch, useSelector } from "react-redux";
+import { searchKeyword } from "../../../redux/features/searchSlice";
+const extractMatchingFragment = (text, keyword) => {
+  let parts = text.split(/[,;]+/);
+  for (let part of parts) {
+    if (part.includes(keyword)) {
+      return part.trim();
+    }
+  }
+  return "";
+};
+
 const ModalSearch = ({ open }) => {
   const selectedPlace = JSON.parse(localStorage.getItem("selectedPlace"));
-  console.log(selectedPlace);
-
+  const dispatch = useDispatch();
+  const keywords = useSelector((state) => state.search.keyword);
+  const paramketyword = useSelector((state) => state.search.paramKeyword);
+  const keywords_conver =
+    keywords.length > 0
+      ? keywords.map((item) => {
+          const monDacSacValue = item?.monDacSac[0] ? item.monDacSac[0] : "";
+          return extractMatchingFragment(monDacSacValue, paramketyword);
+        })
+      : [];
+  console.log("keyword", keywords);
+  console.log("keywords_convernver", keywords_conver);
   return (
     // <Modal>
     <div className="ModalSearchDiv">
@@ -17,10 +39,12 @@ const ModalSearch = ({ open }) => {
             Từ khoá
           </h4>
           <div className="ModalSearchDivWrapperSearch_KeyWord_listKeyWord">
-            <KeyWord text={"Lẩu"}></KeyWord>
-            <KeyWord text={"Nướng"}></KeyWord>
-            <KeyWord text={"Cơm"}></KeyWord>
-            <KeyWord text={"Thái market"}></KeyWord>
+            {keywords_conver
+              .filter(Boolean)
+              .slice(0, 6)
+              .map((item) => (
+                <KeyWord text={item}></KeyWord>
+              ))}
           </div>
         </div>
         <div className="ModalSearchDivWrapperSearch_Recommendation">

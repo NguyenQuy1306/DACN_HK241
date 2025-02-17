@@ -8,13 +8,14 @@
     border-bottom: 1px solid rgb(236, 237, 239);
     padding: 8px; /* Thêm padding để hover có hiệu ứng đầy đủ */
     font-size: 90%;
-    height: 20px;
+    height: 35px;
 }
 
 .KeyWordDiv:hover {  /* Bỏ dấu cách */
     background-color: hsl(174, 100%, 20%);
+    color: white;
 }
 .KeyWordDivIcon
 {
-    font-size: medium !important;
+    font-size:larger!important;
 }
