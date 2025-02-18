@@ -42,14 +42,14 @@ const Bookingwidget = ({ selectedPlace }) => {
     );
     dispatch(setComboType(""));
 
-    setDate(null);
-    setcloseDateDiv(false);
-    setTime(null);
-    setcloseTimeDiv(true);
-    setPerson(null);
-    setClosePersonDiv(true);
-    setOption(null);
-    setCloseOptionDiv(true);
+    // setDate(null);
+    // setcloseDateDiv(false);
+    // setTime(null);
+    // setcloseTimeDiv(true);
+    // setPerson(null);
+    // setClosePersonDiv(true);
+    // setOption(null);
+    // setCloseOptionDiv(true);
   };
   useEffect(() => {
     if (selectedPlace && selectedPlace.maSoNhaHang) {
@@ -58,18 +58,18 @@ const Bookingwidget = ({ selectedPlace }) => {
       );
     }
   }, [dispatch, selectedPlace?.maSoNhaHang]);
-  useEffect(() => {
-    if (openBookingWithMenu) {
-      setDate(null);
-      setcloseDateDiv(false);
-      setTime(null);
-      setcloseTimeDiv(true);
-      setPerson(null);
-      setClosePersonDiv(true);
-      setOption(null);
-      setCloseOptionDiv(true);
-    }
-  }, [openBookingWithMenu]);
+  // useEffect(() => {
+  //   if (openBookingWithMenu) {
+  //     setDate(null);
+  //     setcloseDateDiv(false);
+  //     setTime(null);
+  //     setcloseTimeDiv(true);
+  //     setPerson(null);
+  //     setClosePersonDiv(true);
+  //     setOption(null);
+  //     setCloseOptionDiv(true);
+  //   }
+  // }, [openBookingWithMenu]);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
   let totalCost = 0;
   if (

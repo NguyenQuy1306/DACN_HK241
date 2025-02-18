@@ -21,7 +21,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
     (state) => state.restaurant.openBookingWithMenu
   );
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
-  console.log("convert menyu", menu);
+
   // const combo_convert = menu.map(({ item, quantity }) => ({
   //   maSoMonAn: item.maSoMonAn,
   //   gia: item.gia,
