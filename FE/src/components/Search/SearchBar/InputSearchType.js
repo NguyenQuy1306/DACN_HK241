@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "./InputSearch.css";
 
-const InputSearchType = ({ width, placeholder, iCon, getOpen }) => {
+const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = React.useState("");
   const openOf2 = useSelector(openModalSearch2);
@@ -23,6 +23,7 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen }) => {
     try {
       dispatch(searchKeyword({ param: query }));
       dispatch(saveKeyword(query));
+      setValue(query);
     } catch (error) {
       console.error("Error fetching keywords:", error);
     }

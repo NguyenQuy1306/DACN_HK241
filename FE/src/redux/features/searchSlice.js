@@ -21,6 +21,7 @@ export const searchSlice = createSlice({
     openModalSearch1: false,
     keyword: [],
     paramKeyword: "",
+    paramKeywordSearch: "",
     error: "",
     loading: false,
   },
@@ -36,6 +37,9 @@ export const searchSlice = createSlice({
     },
     saveKeyword(state, action) {
       state.paramKeyword = action.payload;
+    },
+    saveParamKeywordSearch(state, action) {
+      state.paramKeywordSearch = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -54,7 +58,12 @@ export const searchSlice = createSlice({
       });
   },
 });
-export const { handleModal, handleModal1, saveKeyword } = searchSlice.actions;
+export const {
+  handleModal,
+  handleModal1,
+  saveKeyword,
+  saveParamKeywordSearch,
+} = searchSlice.actions;
 export const openModalSearch2 = (state) => state.search.openModalSearch2;
 export const openModalSearch1 = (state) => state.search.openModalSearch1;
 export const paramKeyword = (state) => state.search.paramKeyword;

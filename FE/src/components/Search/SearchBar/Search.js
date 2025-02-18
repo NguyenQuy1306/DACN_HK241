@@ -11,11 +11,12 @@ import {
 } from "../../../redux/features/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import InputSearchType from "./InputSearchType";
+import { saveParamKeywordSearch } from "../../../redux/features/searchSlice";
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
   const [openSearch2, setOpenSearch2] = useState(false);
-
+  const [inputValue, setInputValue] = useState("");
   const SetOpenSearch2 = (value) => {
     setOpenSearch2(value);
   };
@@ -39,6 +40,10 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const handleOnCloseSearch2 = () => {
     setOpenSearch2(false);
     dispatch(handleModal({ openModalSearch2: false }));
+  };
+  const handleClickSearch = () => {
+    navigate(`../SearchResult/${"buffet"}`);
+    dispatch(saveParamKeywordSearch(inputValue));
   };
   return (
     <form
@@ -87,12 +92,13 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
           getOpen={SetOpenSearch2}
           placeholder={"Bạn muốn đặt chỗ đến đâu"}
           iCon={<SearchIcon></SearchIcon>}
+          setValue={setInputValue}
         />
 
         <button
           type="submit"
           className="search-btn"
-          onClick={() => navigate("../Search")}
+          onClick={() => handleClickSearch()}
         >
           Search
         </button>

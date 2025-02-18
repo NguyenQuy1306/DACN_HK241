@@ -4,14 +4,14 @@ import "./ResultSearch.css";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import Result1 from "./Result1";
-const ResultSearch = () => {
+const ResultSearch = ({ keyword }) => {
   const handleBackHome = (event) => {
     console.log("Back homepage");
   };
 
   return (
     <>
-      <Result1></Result1>
+      <Result1 keyword={keyword}></Result1>
       {/* <div
         style={{
           height: "45px",

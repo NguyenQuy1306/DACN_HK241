@@ -3,15 +3,18 @@ import "antd/dist/reset.css";
 import "./ResultSearch.css";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-const handleBackHome = (event) => {
-  console.log("Back homepage");
-};
-const Result1 = () => {
+import { useNavigate } from "react-router-dom";
+
+const Result1 = ({ keyword }) => {
+  const navigate = useNavigate();
+  const handleBackHome = (event) => {
+    navigate("../Home");
+  };
   return (
     <>
       <div
         style={{
-          height: "24px",
+          height: "25px",
           display: "block",
           width: "100%",
           // zIndex: 20, // ghi lên khi cuộn
@@ -37,8 +40,22 @@ const Result1 = () => {
               ></ArrowForwardIosOutlinedIcon>
             </li>
             <li>
-              <span className="text-container">
-                The 10 Best Restaurants in Paris
+              <span style={{ fontWeight: "bold" }}>Từ khoá: </span>
+              <span className="text-container">"{keyword}" </span>
+              <span
+                style={{
+                  marginLeft: "3px",
+                  borderLeft: "3px solid hsl(174, 100%, 20%)",
+                  fontWeight: "bold",
+                  color: "  rgb(138, 147, 155)",
+                }}
+              >
+                {" "}
+                Tìm thấy:
+              </span>
+              <span style={{ color: " hsl(174, 100%, 20%)" }}>
+                {" "}
+                (56) điểm đến
               </span>
             </li>
           </ol>
