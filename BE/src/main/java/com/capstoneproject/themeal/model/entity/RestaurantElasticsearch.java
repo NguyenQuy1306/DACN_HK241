@@ -6,7 +6,10 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import jakarta.persistence.PostLoad;
 
-@Document(indexName = "restaurants", createIndex = true)
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@Document(indexName = "restaurants")
 public class RestaurantElasticsearch {
     @Id
     private Long MaSoNhaHang;
@@ -16,6 +19,9 @@ public class RestaurantElasticsearch {
 
     @Field(type = FieldType.Text, name = "DiaChi")
     private String DiaChi;
+
+    @Field(type = FieldType.Text, name = "Quan") // New field for District
+    private String Quan;
 
     @Field(type = FieldType.Text, name = "LoaiHinh")
     private String LoaiHinh;
@@ -48,6 +54,18 @@ public class RestaurantElasticsearch {
         }
     }
 
+    // Method to extract District from address
+    private String extractDistrictFromAddress(String address) {
+        if (address != null) {
+            Pattern pattern = Pattern.compile("Q\\.?\\s*(\\d+)");
+            Matcher matcher = pattern.matcher(address);
+            if (matcher.find()) {
+                return "quận " + matcher.group(1); // Extracts district number
+            }
+        }
+        return null;
+    }
+
     // Getters and Setters
     public Long getMaSoNhaHang() {
         return MaSoNhaHang;
@@ -71,6 +89,15 @@ public class RestaurantElasticsearch {
 
     public void setDiaChi(String diaChi) {
         DiaChi = diaChi;
+        this.Quan = extractDistrictFromAddress(diaChi); // Extract and store district
+    }
+
+    public String getQuan() {
+        return Quan;
+    }
+
+    public void setQuan(String quan) {
+        this.Quan = quan;
     }
 
     public String getLoaiHinh() {
