@@ -46,6 +46,7 @@ public class SecurityConfig {
                         "/elas/searchDocument",
                         "/elas/getDocument",
                         "/elas/searchByKeyword",
+                        "/elas/searchWithKeyword",
         };
 
         @Bean

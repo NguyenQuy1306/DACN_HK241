@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {
   handleModal,
   openModalSearch2,
+  searchWithKeyword,
 } from "../../../redux/features/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import InputSearchType from "./InputSearchType";
@@ -42,8 +43,17 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
     dispatch(handleModal({ openModalSearch2: false }));
   };
   const handleClickSearch = () => {
-    navigate(`../SearchResult/${"buffet"}`);
+    navigate(`../SearchResult/${inputValue}`);
     dispatch(saveParamKeywordSearch(inputValue));
+    dispatch(
+      searchWithKeyword({
+        param: inputValue,
+        // lon: myCoords.longitude,
+        // lat: myCoords.latitude,
+        lon: 106.6983125,
+        lat: 10.7802256,
+      })
+    );
   };
   return (
     <form

@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import restaurantRegisterReducer from "./features/RegisterRestaurantSlice";
+import storage from "redux-persist/lib/storage"; // Lưu vào localStorage
 
 import restaurantSlice from "./features/restaurantSlice";
 import foodSlice from "./features/foodSlice";
@@ -11,7 +12,17 @@ import rateSlice from "./features/rateSlice";
 import navigationSlice from "./features/navigationSlice";
 import searchSlice from "./features/searchSlice";
 import paymentSlice from "./features/paymentSlice";
-export default configureStore({
+import persistSlice from "./features/persistSlice";
+import { persistStore, persistReducer } from "redux-persist";
+
+const persistConfig = {
+  key: "root",
+  storage, // Sử dụng localStorage để lưu Redux state
+};
+
+// Tạo persistedReducer cho searchSlice
+const persistedSearchReducer = persistReducer(persistConfig, persistSlice);
+export const store = configureStore({
   reducer: {
     restaurant: restaurantSlice,
     food: foodSlice,
@@ -24,7 +35,8 @@ export default configureStore({
     navigation: navigationSlice,
     search: searchSlice,
     payment: paymentSlice,
+    persist: persistedSearchReducer,
   },
 });
-
+export const persistor = persistStore(store);
 export const host = process.env.REACT_APP_BASE_URL || "http://localhost:8080";

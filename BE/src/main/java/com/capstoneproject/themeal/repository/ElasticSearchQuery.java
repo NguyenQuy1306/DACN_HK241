@@ -11,9 +11,17 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.RestaurantElasticsearch;
+import com.capstoneproject.themeal.model.mapper.RestaurantMapper;
+import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.GeoLocation;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.GeoDistanceQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.MultiMatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Operator;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
@@ -27,13 +35,17 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Highlight;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch.core.termvectors.Filter;
 import co.elastic.clients.json.JsonData;
 
 @Repository
 public class ElasticSearchQuery {
         @Autowired
         private ElasticsearchClient elasticsearchClient;
-
+        @Autowired
+        private RestaurantRepository restaurantRepository;
+        @Autowired
+        private RestaurantMapper restaurantMapper;
         private final String indexName = "restaurants";
 
         public String createOrUpdateDocument(RestaurantElasticsearch restaurantElasticsearch) throws IOException {
@@ -141,5 +153,50 @@ public class ElasticSearchQuery {
                 }
 
                 return keywords;
+        }
+
+        public List<RestaurantInMapsResponse> searchWithKeyword(String param, Double lat, Double lon)
+                        throws IOException {
+                System.out.println("param:: " + param + " lon:: " + lon + " lat:: " + lat);
+                List<RestaurantInMapsResponse> restaurantInMapsResponses = new ArrayList<>();
+                Query query = MultiMatchQuery.of(q -> q.query(param)
+                                .fields("ten", "monDacSac", "moTaKhongGian", "phuHop", "quan", "diemDacTrung")
+                                .operator(Operator.And))._toQuery();
+
+                Query query2 = GeoDistanceQuery.of(q -> q
+                                .field("location")
+                                .distance("1km")
+                                .location(new GeoLocation.Builder()
+                                                .coords(List.of(lon, lat))
+                                                .build()))
+                                ._toQuery();
+                SortOptions sortByDistance = SortOptions.of(s -> s
+                                .geoDistance(g -> g
+                                                .field("location") // Ensure this field has a `geo_point` mapping
+                                                .location(new GeoLocation.Builder()
+                                                                .coords(List.of(lon, lat))
+                                                                .build())
+                                                .order(SortOrder.Asc) // Sort closest first
+                                ));
+                Query finalQuery = BoolQuery.of(b -> b.must(query).filter(query2))._toQuery();
+                SearchRequest searchRequest = SearchRequest
+                                .of(q -> q.index(indexName).query(finalQuery).sort(sortByDistance));
+                SearchResponse<Void> searchResponse = elasticsearchClient.search(searchRequest, Void.class);
+                for (Hit<Void> object : searchResponse.hits().hits()) {
+                        if (object != null && object.id() != null) {
+
+                                Restaurant restaurant = restaurantRepository
+                                                .findById(Long.parseLong(object.id())).orElse(null);
+                                if (restaurant == null) {
+                                        throw new IllegalArgumentException(
+                                                        "Restaurant IDs not found: " + object.id());
+                                }
+                                System.out.println("object.id(): " + object.id());
+                                restaurantInMapsResponses.add(restaurantMapper.toDetailResponse(restaurant));
+
+                        }
+                }
+
+                return restaurantInMapsResponses;
         }
 }

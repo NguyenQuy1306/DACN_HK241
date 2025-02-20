@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
+import { create } from "@mui/material/styles/createTransitions";
 
 export const searchKeyword = createAsyncThunk(
   "/search/keyword",
@@ -12,7 +13,18 @@ export const searchKeyword = createAsyncThunk(
     }
   }
 );
-
+export const searchWithKeyword = createAsyncThunk(
+  "/search/withKeyword",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.searchByKeyword(params);
+      console.log("responseresponse: ", response);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const searchSlice = createSlice({
   name: "search",
   initialState: {
@@ -20,6 +32,7 @@ export const searchSlice = createSlice({
     openModalSearch2: false,
     openModalSearch1: false,
     keyword: [],
+    restaurantsSearch: [],
     paramKeyword: "",
     paramKeywordSearch: "",
     error: "",
@@ -53,6 +66,19 @@ export const searchSlice = createSlice({
         state.keyword = action.payload;
       })
       .addCase(searchKeyword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(searchWithKeyword.pending, (state) => {
+        state.loading = true;
+        state.restaurantsSearch = [];
+      })
+      .addCase(searchWithKeyword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantsSearch = action.payload;
+      })
+      .addCase(searchWithKeyword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

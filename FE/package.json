@@ -31,6 +31,7 @@
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.6",
+    "redux-persist": "^6.0.0",
     "rss": "file:",
     "web-vitals": "^2.1.4"
   },

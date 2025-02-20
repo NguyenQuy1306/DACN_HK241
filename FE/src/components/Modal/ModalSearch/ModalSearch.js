@@ -92,8 +92,7 @@ const ModalSearch = ({ open }) => {
           return extractMatchingFragment(monDacSacValue, paramketyword);
         })
       : [];
-  console.log("keyword", keywords);
-  console.log("keywords_convernver", keywords_conver);
+
   return (
     // <Modal>
     <div className="ModalSearchDiv">

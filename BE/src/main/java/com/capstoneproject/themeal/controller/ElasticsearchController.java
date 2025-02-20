@@ -1,7 +1,11 @@
 package com.capstoneproject.themeal.controller;
 
+import com.capstoneproject.themeal.exception.NotFoundException;
+import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.entity.RestaurantElasticsearch;
 import com.capstoneproject.themeal.model.response.ApiResponse;
+import com.capstoneproject.themeal.model.response.ResponseCode;
+import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 import com.capstoneproject.themeal.repository.ElasticSearchQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,6 +68,29 @@ public class ElasticsearchController {
         List<Map<String, Object>> restaurantElasticsearchs = elasticSearchQuery.searchByKeyword(param);
         apiResponse.ok(restaurantElasticsearchs);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/searchWithKeyword")
+    public ResponseEntity<ApiResponse<List<RestaurantInMapsResponse>>> getMethodName(@RequestParam String param,
+            @RequestParam Double lon, @RequestParam Double lat) {
+        ApiResponse<List<RestaurantInMapsResponse>> apiResponse = new ApiResponse<>();
+
+        try {
+            List<RestaurantInMapsResponse> restaurantInMapsResponses = elasticSearchQuery.searchWithKeyword(param, lat,
+                    lon);
+            apiResponse.ok(restaurantInMapsResponses);
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+
     }
 
 }
