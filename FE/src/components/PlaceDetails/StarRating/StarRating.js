@@ -1,6 +1,6 @@
 import React from "react";
 
-const StarRating = ({ rating, totalStars = 5 }) => {
+const StarRating = ({ rating, totalStars = 5, size }) => {
   const filledStars = Math.floor(rating);
   const halfStar = rating % 1 >= 0.5 ? 1 : 0;
   const emptyStars = totalStars - filledStars - halfStar;
@@ -11,8 +11,8 @@ const StarRating = ({ rating, totalStars = 5 }) => {
       {[...Array(filledStars)].map((_, index) => (
         <svg
           key={`filled-${index}`}
-          width="20"
-          height="20"
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           fill="rgba(255,100,61,1)"
         >
@@ -23,8 +23,8 @@ const StarRating = ({ rating, totalStars = 5 }) => {
       {/* Half star */}
       {halfStar === 1 && (
         <svg
-          width="20"
-          height="20"
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           fill="rgba(255,100,61,1)"
         >
@@ -45,8 +45,8 @@ const StarRating = ({ rating, totalStars = 5 }) => {
       {[...Array(emptyStars)].map((_, index) => (
         <svg
           key={`empty-${index}`}
-          width="20"
-          height="20"
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           fill="rgba(200,201,202,0.48)"
         >

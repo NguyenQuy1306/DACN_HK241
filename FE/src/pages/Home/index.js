@@ -11,7 +11,8 @@ import CategoryItem from "../../features/Cetegogy/CategoryItem";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
 import SlideCard from "../../features/Selections/components/SlideCard";
 import "./Home.css";
-
+import { useDispatch } from "react-redux";
+import { saveMyCoords } from "../../redux/features/persistSlice";
 function Home(props) {
   const categoryRef = useRef();
   const [itemWidth, setItemWidth] = useState(0);
@@ -25,7 +26,17 @@ function Home(props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [previousState, setPreviousState] = useState(false);
   const [nextSate, setNextState] = useState(false);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        dispatch(saveMyCoords(position.coords));
+      },
+      (error) => {
+        console.error("Error fetching geolocation:", error);
+      }
+    );
+  }, [dispatch]);
   const handleNext = () => {
     if (categoryRef.current) {
       setTestScroll(categoryRef.current?.scrollLeft);

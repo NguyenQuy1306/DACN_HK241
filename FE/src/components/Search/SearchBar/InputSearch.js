@@ -3,6 +3,12 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import ModalSearch from "../../Modal/ModalSearch/ModalSearch";
+import debounce from "lodash.debounce";
+import {
+  searchKeyword,
+  saveKeyword,
+} from "../../../redux/features/searchSlice";
+
 import {
   handleModal,
   openModalSearch2,
@@ -18,11 +24,12 @@ function sleep(duration) {
   });
 }
 
-export default function InputSearch({ width, placeholder, iCon, getOpen }) {
+const InputSearch = ({ width, placeholder, iCon, getOpen }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+
   React.useEffect(() => {
     let active = true;
     if (!loading) {
@@ -49,7 +56,7 @@ export default function InputSearch({ width, placeholder, iCon, getOpen }) {
   const handleInputClick = () => {
     setOpen(true);
     dispatch(handleModal({ openModalSearch2: true }));
-    if (placeholder === "Bàn muốn đặt chỗ đến đâu") {
+    if (placeholder === "Bạn muốn đặt chỗ đến đâu") {
       getOpen(true); // Pass the 'open' state value to the parent
     }
   };
@@ -59,7 +66,7 @@ export default function InputSearch({ width, placeholder, iCon, getOpen }) {
       {/* {open && placeholder === "Bàn muốn đặt chỗ đến đâu" && (
         <div className="overlay" onClick={handleCloseModal}></div>
       )} */}
-      {open && placeholder === "Bàn muốn đặt chỗ đến đâu" && (
+      {open && placeholder === "Bạn muốn đặt chỗ đến đâu" && (
         <div className="modalSearch_dropdown">
           <ModalSearch />
         </div>
@@ -117,7 +124,7 @@ export default function InputSearch({ width, placeholder, iCon, getOpen }) {
       />
     </div>
   );
-}
+};
 
 const provinces = [
   { title: "An Giang" },
@@ -184,3 +191,4 @@ const provinces = [
   { title: "Vĩnh Phúc" },
   { title: "Yên Bái" },
 ];
+export default InputSearch;

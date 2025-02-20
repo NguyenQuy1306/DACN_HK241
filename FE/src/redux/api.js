@@ -128,3 +128,21 @@ export const getRateInRestaurant = async (params) => {
         throw error.response?.data || error;
     }
 };
+
+export const getKeywords = async (params) => {
+  try {
+    const response = await API.get(`/elas/searchByKeyword`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const searchByKeyword = async (params) => {
+  try {
+    const response = await API.get(`/elas/searchWithKeyword`, { params });
+    console.log("responseresponse: ", response);
+    return response.data;
+  } catch (error) {
+    return error.response?.data || error;
+  }
+};

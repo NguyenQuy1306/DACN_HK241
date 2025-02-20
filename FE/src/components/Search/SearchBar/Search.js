@@ -8,14 +8,16 @@ import { useNavigate } from "react-router-dom";
 import {
   handleModal,
   openModalSearch2,
+  searchWithKeyword,
 } from "../../../redux/features/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import InputSearchType from "./InputSearchType";
+import { saveParamKeywordSearch } from "../../../redux/features/searchSlice";
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
   const [openSearch2, setOpenSearch2] = useState(false);
-
+  const [inputValue, setInputValue] = useState("");
   const SetOpenSearch2 = (value) => {
     setOpenSearch2(value);
   };
@@ -39,6 +41,19 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const handleOnCloseSearch2 = () => {
     setOpenSearch2(false);
     dispatch(handleModal({ openModalSearch2: false }));
+  };
+  const handleClickSearch = () => {
+    navigate(`../SearchResult/${inputValue}`);
+    dispatch(saveParamKeywordSearch(inputValue));
+    dispatch(
+      searchWithKeyword({
+        param: inputValue,
+        // lon: myCoords.longitude,
+        // lat: myCoords.latitude,
+        lon: 106.6983125,
+        lat: 10.7802256,
+      })
+    );
   };
   return (
     <form
@@ -80,19 +95,20 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         ></hr>
       </div>
       <div className="InputSearch2Div">
-        <InputSearch
+        <InputSearchType
           value={search2}
           onChange={handleSearch2Change}
           width={600}
           getOpen={SetOpenSearch2}
-          placeholder={"Bàn muốn đặt chỗ đến đâu"}
+          placeholder={"Bạn muốn đặt chỗ đến đâu"}
           iCon={<SearchIcon></SearchIcon>}
+          setValue={setInputValue}
         />
 
         <button
           type="submit"
           className="search-btn"
-          onClick={() => navigate("../Search")}
+          onClick={() => handleClickSearch()}
         >
           Search
         </button>
