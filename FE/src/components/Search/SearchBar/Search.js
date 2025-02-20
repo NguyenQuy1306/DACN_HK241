@@ -44,6 +44,10 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
     dispatch(handleModal({ openModalSearch2: false }));
   };
   const handleClickSearch = () => {
+    if (inputValue == "") {
+      navigate(`../Search`);
+      return;
+    }
     navigate(`../SearchResult/${inputValue}`);
     dispatch(saveParamKeywordSearch(inputValue));
     dispatch(handleModal({ openModalSearch2: false }));

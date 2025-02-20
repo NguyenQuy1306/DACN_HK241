@@ -7,52 +7,57 @@ import FilterIndex from "../components/FilterItem";
 import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 import ViewImagepage from "../pages/ViewImagepage";
-import DashboardOwner from "../pages/Dashboard_Owner";
+import SearchResult from "../pages/SearchResult";
 export const routes = [
-    {
-        path: "/Search",
-        component: Search,
-        layout: MainLayout,
-    },
-    {
-        path: "/owner/dashboard",
-        component: DashboardOwner,
-        layout: MainLayout,
-    },
-    {
-        path: "/DetailRestaurant/:id",
-        component: DetailRestaurant,
-        layout: MainLayout,
-    },
-    {
-        path: "/Home",
-        component: Home,
-        layout: MainLayout,
-    },
-    {
-        path: "/favorite-list/:id",
-        component: FavoriteList,
-        layout: MainLayout,
-    },
-    {
-        path: "/register-restaurant",
-        component: RegisterRestaurant1,
-        layout: MainLayout,
-    },
-    {
-        path: "/register-restaurant2",
-        component: RegisterRestaurant2,
-        layout: MainLayout,
-    },
+  {
+    path: "/SearchResult/:keyword",
+    component: SearchResult,
+    layout: MainLayout,
+  },
+  {
+    path: "/Search",
+    component: Search,
+    layout: MainLayout,
+  },
+  {
+    path: "/Search",
+    component: Search,
+    layout: MainLayout,
+  },
+  {
+    path: "/DetailRestaurant/:id",
+    component: DetailRestaurant,
+    layout: MainLayout,
+  },
+  {
+    path: "/Home",
+    component: Home,
+    layout: MainLayout,
+  },
+  {
+    path: "/favorite-list/:id",
+    component: FavoriteList,
+    layout: MainLayout,
+  },
+  {
+    path: "/register-restaurant",
+    component: RegisterRestaurant1,
+    layout: MainLayout,
+  },
+  {
+    path: "/register-restaurant2",
+    component: RegisterRestaurant2,
+    layout: MainLayout,
+  },
 
-    {
-        path: "/DetailRestaurant/:id/menuImages",
-        component: ViewImagepage,
-    },
+  {
+    path: "/DetailRestaurant/:id/menuImages",
+    component: ViewImagepage,
+  },
 
-    // {
-    //   path: "*",
-    //   component: NotFound,
-    //   layout: null,
-    // },
+  // {
+  //   path: "*",
+  //   component: NotFound,
+  //   layout: null,
+  // },
 ];
