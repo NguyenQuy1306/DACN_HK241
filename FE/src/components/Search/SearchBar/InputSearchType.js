@@ -5,6 +5,7 @@ import debounce from "lodash.debounce";
 import {
   searchKeyword,
   saveKeyword,
+  searchWithKeyword,
 } from "../../../redux/features/searchSlice";
 import {
   handleModal,
@@ -23,6 +24,15 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
     try {
       dispatch(searchKeyword({ param: query }));
       dispatch(saveKeyword(query));
+      dispatch(
+        searchWithKeyword({
+          param: query,
+          // lon: myCoords.longitude,
+          // lat: myCoords.latitude,
+          lon: 106.6983125,
+          lat: 10.7802256,
+        })
+      );
       setValue(query);
     } catch (error) {
       console.error("Error fetching keywords:", error);

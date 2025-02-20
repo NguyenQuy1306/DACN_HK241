@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SortDetail from "../../components/Sort/SortDetail";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-
+import { openModalSearch2 } from "../../redux/features/searchSlice";
 const RestaurantCard = ({ restaurant }) => {
   const toRadians = (degrees) => (degrees * Math.PI) / 180;
   const myCoords = useSelector((state) => state.persist.myCoords);
@@ -109,6 +109,14 @@ const RestaurantGrid = () => {
   const restaurantSearch = useSelector(
     (state) => state.search.restaurantsSearch
   );
+  const openOf2 = useSelector(openModalSearch2);
+  const [temp_restaurantSearch, setTempRestaurantSearch] = useState([]);
+  useEffect(() => {
+    if (!openOf2) {
+      setTempRestaurantSearch(restaurantSearch.slice());
+    }
+  }, [openOf2, restaurantSearch]);
+  console.log("temp_restaurantSearch", temp_restaurantSearch);
   const myCoords = useSelector((state) => state.persist.myCoords);
 
   // Function to calculate distance
@@ -142,7 +150,7 @@ const RestaurantGrid = () => {
   };
 
   // Sort restaurants by distance
-  const sortedRestaurants = [...restaurantSearch].sort((a, b) => {
+  const sortedRestaurants = [...temp_restaurantSearch].sort((a, b) => {
     const distanceA =
       calculateDistance(
         { longitude: 106.6983125, latitude: 10.7802256 },

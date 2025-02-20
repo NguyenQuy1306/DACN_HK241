@@ -7,6 +7,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useNavigate } from "react-router-dom";
 import {
   handleModal,
+  handleModal1,
   openModalSearch2,
   searchWithKeyword,
 } from "../../../redux/features/searchSlice";
@@ -45,6 +46,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const handleClickSearch = () => {
     navigate(`../SearchResult/${inputValue}`);
     dispatch(saveParamKeywordSearch(inputValue));
+    dispatch(handleModal({ openModalSearch2: false }));
     dispatch(
       searchWithKeyword({
         param: inputValue,
