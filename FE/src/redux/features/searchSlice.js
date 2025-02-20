@@ -33,6 +33,7 @@ export const searchSlice = createSlice({
     openModalSearch1: false,
     keyword: [],
     restaurantsSearch: [],
+    restaurantSearchContinuous: [],
     paramKeyword: "",
     paramKeywordSearch: "",
     error: "",
