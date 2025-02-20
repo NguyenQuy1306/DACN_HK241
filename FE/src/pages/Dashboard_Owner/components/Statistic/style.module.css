@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.grow-up-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.quantity {
+    margin: 0;
+    font-size: 24px;
+    
+}
+
+.title {
+    margin: 0;
+    font-size: 14px;
+    color: #7E8299;
+}
+
+.rate {
+    margin: 0;
+}
+
+.compare {
+    margin: 0;
+}

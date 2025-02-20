@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    margin-bottom: 12px;  
+    justify-content: space-between;
+}
+
+.name {
+    margin: 0;
+    font-size: 14px;
+}
+
+.price {
+    padding: 4px;
+    color: brown;
+    margin: 0;
+}
+
+.order {
+    font-size: 24px;
+}
+
+.rate-wrap {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.trending-info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.quantity {
+    margin: 0;
+}
+
+.rate {
+
+}

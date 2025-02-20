@@ -14,6 +14,6 @@ import lombok.*;
 @Table(name = "KhachHang")
 @PrimaryKeyJoinColumn(name = "MaSoKhachHang", referencedColumnName = "MaSoNguoiDung")
 public class Customer extends User {
-    // @Column(nullable = false)
+    @Column(nullable = true)
     private Long DiemTichLuy;
 }

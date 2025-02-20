@@ -1,0 +1,26 @@
+.container {
+    background-color: white;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+}
+
+.user-name {
+    margin: 0;
+}
+
+.time {
+    margin: 0;
+}
+
+.container {
+    border-radius: 12px;
+}
+
+.comment-body {
+    padding: 16px;
+}

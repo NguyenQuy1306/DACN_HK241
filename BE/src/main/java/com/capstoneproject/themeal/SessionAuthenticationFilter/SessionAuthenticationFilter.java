@@ -29,6 +29,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*",
 
             "/elas/getDocument",
+            "api/payments/*",
             "/api/rate/.*/restaurant");
 
     @Autowired
