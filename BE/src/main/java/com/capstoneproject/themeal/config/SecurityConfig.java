@@ -48,6 +48,7 @@ public class SecurityConfig {
                         "/elas/getDocument",
                         "/elas/searchByKeyword",
                         "/elas/searchWithKeyword",
+                        "/api/payments/create-payment-link",
         };
 
         @Bean

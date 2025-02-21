@@ -5,7 +5,11 @@ import { Button, Modal, Box } from "@mui/material";
 import PlaceDetailSearch from "../../PlaceDetailSearch/PlaceDetailSearch";
 import "./ModalSearch.css";
 import { useDispatch, useSelector } from "react-redux";
-import { searchKeyword } from "../../../redux/features/searchSlice";
+import {
+  openModalSearch2,
+  searchKeyword,
+} from "../../../redux/features/searchSlice";
+import { calculateDistance } from "../../../pages/SearchResult";
 const extractMatchingFragment = (text, keyword) => {
   let parts = text.split(/[,;]+/);
   for (let part of parts) {
@@ -92,7 +96,33 @@ const ModalSearch = ({ open }) => {
           return extractMatchingFragment(monDacSacValue, paramketyword);
         })
       : [];
+  const restaurantSearch = useSelector(
+    (state) => state.search.restaurantsSearch
+  );
+  const openOf2 = useSelector(openModalSearch2);
+  const [temp_restaurantSearch, setTempRestaurantSearch] = useState([]);
 
+  useEffect(() => {
+    if (openOf2) {
+      setTempRestaurantSearch(restaurantSearch.slice());
+    }
+  }, [openOf2, restaurantSearch]);
+
+  // Sort restaurants by distance
+  const sortedRestaurants = [...temp_restaurantSearch].sort((a, b) => {
+    const distanceA =
+      calculateDistance(
+        { longitude: 106.6983125, latitude: 10.7802256 },
+        { lat: a.viDo, lng: a.kinhDo }
+      ) || Infinity;
+    const distanceB =
+      calculateDistance(
+        { longitude: 106.6983125, latitude: 10.7802256 },
+        { lat: b.viDo, lng: b.kinhDo }
+      ) || Infinity;
+    return distanceA - distanceB; // Sort ascending
+  });
+  console.log("sortedRestaurants in onchange:: ", sortedRestaurants);
   return (
     // <Modal>
     <div className="ModalSearchDiv">
@@ -115,26 +145,16 @@ const ModalSearch = ({ open }) => {
             Gợi ý
           </h4>
           <div className="ModalSearchDivWrapperSearch_Recommendation_listRecommendation">
-            <PlaceDetailSearch
-              place={selectedPlace}
-              restaurantsImageType={
-                selectedPlace.danhSachAnhNhaHang
-                  ? selectedPlace.danhSachAnhNhaHang
-                  : "https://via.placeholder.com/100"
-              }
-            >
-              {" "}
-            </PlaceDetailSearch>
-            <PlaceDetailSearch
-              place={selectedPlace}
-              restaurantsImageType={
-                selectedPlace.danhSachAnhNhaHang
-                  ? selectedPlace.danhSachAnhNhaHang
-                  : "https://via.placeholder.com/100"
-              }
-            >
-              {" "}
-            </PlaceDetailSearch>
+            {sortedRestaurants.map((item) => (
+              <PlaceDetailSearch
+                place={item}
+                restaurantsImageType={
+                  item.imageUrls.RESTAURANTIMAGE
+                    ? item.imageUrls.RESTAURANTIMAGE
+                    : "https://via.placeholder.com/100"
+                }
+              ></PlaceDetailSearch>
+            ))}
           </div>
         </div>
       </div>

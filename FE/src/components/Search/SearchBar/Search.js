@@ -39,6 +39,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
     // Implement your search logic here
   };
   const open = useSelector(openModalSearch2);
+
   const handleOnCloseSearch2 = () => {
     setOpenSearch2(false);
     dispatch(handleModal({ openModalSearch2: false }));

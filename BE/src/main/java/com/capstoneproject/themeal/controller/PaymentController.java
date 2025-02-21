@@ -13,7 +13,6 @@ import java.time.Instant;
 @RestController
 @RequestMapping("/api/payments")
 
-
 public class PaymentController {
     private final PayOS payOS;
 
@@ -41,7 +40,7 @@ public class PaymentController {
                     .amount(100000)
                     .description("Thanh toán đơn hàng")
                     .returnUrl(domain + "/home") // Đường dẫn trả về
-                    .cancelUrl(domain + "/cancel") // Đường dẫn hủy
+                    .cancelUrl(domain + "/home") // Đường dẫn hủy
                     .item(itemData)
                     .build();
 

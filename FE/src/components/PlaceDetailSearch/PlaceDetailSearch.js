@@ -121,7 +121,7 @@ const PlaceDetailSearch = ({
                   <div className="PlaceDetailSearch_H1_detail_name_div1_name">
                     <h2>
                       <a className="PlaceDetailSearch_H1_detail_name_div1_name_a">
-                        {place.name}
+                        {place.ten}
                       </a>
                     </h2>
                   </div>

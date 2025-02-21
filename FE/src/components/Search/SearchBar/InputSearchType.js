@@ -49,7 +49,18 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
       getOpen(true);
     }
   };
-
+  const handleOnChangeSearch = (e) => {
+    setInputValue(e.target.value);
+    dispatch(
+      searchWithKeyword({
+        param: e.target.value,
+        // lon: myCoords.longitude,
+        // lat: myCoords.latitude,
+        lon: 106.6983125,
+        lat: 10.7802256,
+      })
+    );
+  };
   return (
     <div className={`InputSearchDiv ${openOf2 ? "active" : ""}`}>
       {openOf2 && placeholder === "Bạn muốn đặt chỗ đến đâu" && (
@@ -62,7 +73,7 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
         onClick={handleInputClick}
         placeholder={placeholder}
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => handleOnChangeSearch(e)}
         InputProps={{
           startAdornment: iCon,
           style: { border: "none", height: "37px" },
