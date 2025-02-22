@@ -6,7 +6,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import StarRating from "../../StarRating/StarRating";
-import ModalViewImage from "../../../../../../Modal/ModalViewImage/ModalViewImage";
+import ModalViewImage from "../../../../../../../components/Modal/ModalViewImage/ModalViewImage";
 const Comment = ({ selectedPlace, review }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 

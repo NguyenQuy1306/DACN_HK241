@@ -3,7 +3,7 @@ import "./DetailBox.css";
 import TitleDetail from "./Title/TitleDetail";
 import Booking from "./Booking/Booking";
 import Navigation from "./Navigation/Navigation";
-import ModalPayment from "../../Modal/ModalPayment/ModalPayment";
+import ModalPayment from "../../../components/Modal/ModalPayment/ModalPayment";
 import { useSelector } from "react-redux";
 
 const DetailBox = ({ selectedPlace }) => {
