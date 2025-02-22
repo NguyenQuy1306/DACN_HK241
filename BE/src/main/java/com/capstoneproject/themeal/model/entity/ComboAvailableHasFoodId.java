@@ -16,4 +16,5 @@ import jakarta.persistence.Embeddable;
 public class ComboAvailableHasFoodId implements Serializable {
     private Long MaSoComBoCoSan;
     private Long MaSoMonAn;
+
 }

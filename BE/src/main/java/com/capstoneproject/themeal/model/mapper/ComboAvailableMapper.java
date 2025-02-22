@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
 import com.capstoneproject.themeal.model.entity.ComboAvailableHasFood;
+import com.capstoneproject.themeal.model.entity.Customer;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.RestaurantImage;
+import com.capstoneproject.themeal.model.request.ComboRequest;
 import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
+import com.capstoneproject.themeal.model.response.CustomerResponse;
 import com.capstoneproject.themeal.model.response.FoodResponse;
 import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 
@@ -70,4 +73,13 @@ public abstract class ComboAvailableMapper {
                                 })
                                 .collect(Collectors.toList());
         }
+
+        // @Mapping(source = "maSoNguoiDung", target = "maSoKhachHang")
+        // @Mapping(source = "hoTen", target = "hoTen")
+        // @Mapping(source = "email", target = "email")
+        // @Mapping(source = "SDT", target = "SDT")
+        // @Mapping(source = "gioiTinh", target = "gioiTinh")
+        // @Mapping(source = "ngaySinh", target = "ngaySinh")
+        // @Mapping(source = "diaChi", target = "diaChi")
+        // ComboAvailable toComboAvailable(ComboRequest comboRequest)
 }

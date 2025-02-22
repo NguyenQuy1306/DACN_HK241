@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ViewImagepage.css";
 import { Button } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ButtonFilter from "../../components/Filter/Button/Button";
+import ButtonFilter from "../../components/Button/ButtonFilter/ButtonFilter";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";

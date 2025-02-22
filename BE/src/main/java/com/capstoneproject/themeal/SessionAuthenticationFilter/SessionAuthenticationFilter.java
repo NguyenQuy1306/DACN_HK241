@@ -20,38 +20,27 @@ import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
 @Component
 public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final List<String> PUBLIC_URLS = Arrays.asList(
-            "/api/v1/auth/authenticate",
-            "/api/v1/auth/register",
-            "/api/restaurant",
-            "/api/restaurants/.*", // Match any restaurant-related URL
-            "/api/auth/reset-password",
-            "/api/restaurants/recommended",
-            "/api/restaurant-categories",
-            "/v2/api-docs",
-            "/v3/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/.*",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui/.*",
-            "/webjars/.*",
-            "/api/food",
-            "/api/combo",
-            "/api/orders",
-            "/api/table/restaurant",
-            "/api/rate/.*/restaurant");
+    private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
+            "/api/restaurant", "/api/restaurants/.*", // Match any restaurant-related URL
+            "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
+            "/v2/api-docs", "/v3/api-docs", "/swagger-resources", "/swagger-resources/.*",
+            "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
+            "/api/food", "/api/combo", "/api/orders", "/api/table/restaurant",
+            "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
+            "/elas/searchWithKeyword",
+            "/elas/getDocument",
+            "api/payments/*",
+            "/api/rate/.*/restaurant", "/api/payments/create-payment-link");
 
     @Autowired
     private SessionRegistry sessionRegistry;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
-        System.out.println("Request URI: " + requestURI); // Log the request URI
+        System.out.println("Request URIIIIa: " + requestURI); // Log the request URI
         if (isPublicUrl(requestURI)) {
 
             filterChain.doFilter(request, response);
@@ -59,9 +48,9 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         }
 
         HttpSession session = request.getSession(false);
-        System.out.println("fixbugai1111112323232");
+        System.out.println("fixbugai11111123232323333");
         if (!isValidSession(session)) {
-            System.out.println("Request URIaaa: " + requestURI);
+            System.out.println("Request URIaaaqqq: " + requestURI);
             sendUnauthorizedResponse(response);
             return;
         }
@@ -75,8 +64,8 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isPublicUrl(String requestURI) {
         System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
-        boolean isPublic = PUBLIC_URLS.stream()
-                .anyMatch(pattern -> requestURI.matches(pattern)) || requestURI.contains("/swagger");
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern -> requestURI.matches(pattern))
+                || requestURI.contains("/swagger");
         return isPublic;
     }
 

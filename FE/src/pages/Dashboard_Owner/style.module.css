@@ -1,0 +1,99 @@
+.noti {
+    display: flex;
+    gap: 8px;
+}
+
+.container {
+    display: flex;
+    gap: 16px;
+    background-color: #F3F2F7;
+}
+
+.dash_header {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.icon_wrap {
+    padding: 11px 14px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.icon_wrap:hover {
+    cursor: pointer;
+}
+
+.icon-wrap--notification, .icon-wrap--message {
+    background-color: #CDE3F9;
+}
+
+.icon-wrap--setting {
+    background-color: #FFE1D5;
+}
+
+.line-title, .bar-title {
+    margin-top: 8px;
+    text-align: center;
+}
+
+
+.search-wrap {
+    padding: 8px;
+    flex: 1;
+}
+
+.statistic-wrap {
+    padding: 8px;
+}
+
+.order-statistic {
+    flex: 1;
+    padding: 16px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.chart-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+}
+
+.comment-wrap {
+    display: flex;
+    gap: 8px;
+}
+
+.trending-wrap {
+    display: flex;
+    margin-top: 16px;
+    gap: 16px;
+    
+}
+
+.trending {
+    background-color: white;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.trending, .doughnut {
+    flex: 1;
+    
+}
+
+.doughnut-title {
+    text-align: center;
+    padding: 8px;
+}
+
+.doughnut {
+    background-color: white;
+    border-radius: 12px;
+
+}
+

@@ -38,10 +38,17 @@ public class SecurityConfig {
                         "/api/table/restaurant",
                         "/api/orders",
                         "/api/rate/**",
+                        "/api/payments/*",
                         "/api/favorite-list/**",
                         "/api/favorite-list/add-new-card/*",
                         "/api/order-table/*",
                         "/api/restaurant-categories",
+                        "/elas/createOrUpdateDocument",
+                        "/elas/searchDocument",
+                        "/elas/getDocument",
+                        "/elas/searchByKeyword",
+                        "/elas/searchWithKeyword",
+                        "/api/payments/create-payment-link",
         };
 
         @Bean
@@ -49,9 +56,9 @@ public class SecurityConfig {
                 http
                                 .authorizeRequests(authz -> authz
                                                 .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
-                                                                                             // white-listed URLs
+                                                // white-listed URLs
                                                 .anyRequest().authenticated() // Require authentication for all other
-                                                                              // requests
+                                // requests
                                 )
                                 .cors(cors -> cors.disable())
                                 .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)

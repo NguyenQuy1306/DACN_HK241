@@ -1,0 +1,17 @@
+.header-nav {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.logo {
+    width: 27px;
+    margin-left: 12px;
+}
+
+.logo-name {
+    font-family: 'Kaushan Script',serif;
+    margin: 0;
+    color: #00665C;
+    font-size: 24px;
+}

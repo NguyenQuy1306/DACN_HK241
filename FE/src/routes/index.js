@@ -7,7 +7,18 @@ import FilterIndex from "../components/FilterItem";
 import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 import ViewImagepage from "../pages/ViewImagepage";
+import SearchResult from "../pages/SearchResult";
 export const routes = [
+  {
+    path: "/SearchResult/:keyword",
+    component: SearchResult,
+    layout: MainLayout,
+  },
+  {
+    path: "/Search",
+    component: Search,
+    layout: MainLayout,
+  },
   {
     path: "/Search",
     component: Search,

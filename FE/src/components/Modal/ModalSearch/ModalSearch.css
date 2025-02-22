@@ -1,0 +1,52 @@
+.ModalSearch
+{
+    display: block;
+    /* position: absolute; */
+    top: 34px;
+    left: 1px;
+    display: none;
+    width: 100%;
+    min-height: 200px;
+    z-index: 99;
+    margin-top: 50px;
+    border-radius: 5px;
+}
+.ModalSearchDivWrapperSearch
+{
+    position: relative;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+    border-radius: 5px;
+}
+.ModalSearchDivWrapperSearch_KeyWord .ModalSearchDivWrapperSearch_Recommendation
+{
+    margin: 12px 0;
+}
+.ModalSearchDivWrapperSearch_Recommendation_Header .ModalSearchDivWrapperSearch_KeyWord_header
+{
+    text-transform: uppercase;
+    padding: 8px 12px;
+    margin: 0;
+    font: normal 500 18px "pasgo-fonts-medium", sans-serif;
+    color: #000;
+}
+.ModalSearchDivWrapperSearch_KeyWord_listKeyWord
+{
+    display: grid;
+    grid-gap: 8px;
+    padding: 8px 12px;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: #fff;
+    min-height: 100px;
+}
+.ModalSearchDivWrapperSearch_Recommendation_listRecommendation
+{
+    background: #fff;
+    min-height: 100px;
+}
+
+  

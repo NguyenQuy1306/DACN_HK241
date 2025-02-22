@@ -1,0 +1,46 @@
+.InputSearchDiv
+{
+    display: flex;
+    flex-direction: column;
+    /* width: 200px; */
+}
+.modalSearch_position
+{
+position: absolute;
+  top: 20%;
+  left: 600px;
+  width: 550px;
+  z-index: 10;
+}
+
+  
+  .InputSearchDiv.active {
+    z-index: 101;
+    position: relative;
+  }
+
+  .InputSearchDiv {
+    position: relative;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 120vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 20;
+  }
+  
+  .modalSearch_dropdown {
+    position: absolute;
+    top: 100%; /* Bên dưới TextField */
+    left: 0;
+    width: 120%;
+    background: white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 20;
+  }
+  

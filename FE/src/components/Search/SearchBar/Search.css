@@ -6,7 +6,6 @@ button.search-btn {
   font-style: normal;
   padding: 8px 12px;
   font-weight: 400;
-  font-family: RalewayX, arial, sans-serif;
   transition: background-color ease 62.5ms, box-shadow ease 62.5ms;
   cursor: pointer;
   text-transform: uppercase;
@@ -19,10 +18,21 @@ button.search-btn {
   width: 108px;
   margin-left: 12px;
   height: 38px;
-  margin-right: 5px;
+  /* margin-right: 5px; */
+  z-index: 20 ;
+ 
 }
 
 button.search-btn:hover {
-  background-color: #144d46;
+  background-color: #144d46 !important;
 
+}
+
+.InputSearch2Div
+{
+  display: flex;
+  flex-direction: row;
+  z-index: 20;
+  background-color: white;
+  border-radius: 0.4rem;
 }

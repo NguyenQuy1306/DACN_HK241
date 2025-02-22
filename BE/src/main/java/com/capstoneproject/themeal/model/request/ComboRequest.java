@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.TableAvailableId;
+import com.capstoneproject.themeal.model.response.FoodResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
@@ -21,8 +23,8 @@ import lombok.Setter;
 @Setter
 public class ComboRequest implements Serializable {
 
-    private Long MaSoComBoCoSan;
     private String Ten;
     private Long Gia;
     private LocalDateTime ThoiGianTao;
+    private List<FoodResponse> foods;
 }

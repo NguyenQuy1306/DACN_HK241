@@ -6,7 +6,9 @@ import com.capstoneproject.themeal.model.entity.OrderTable;
 import com.capstoneproject.themeal.model.entity.PaymentMethod;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.User;
+import com.capstoneproject.themeal.model.request.ComboRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
+import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
 
 public interface OrderTableService {
@@ -19,4 +21,8 @@ public interface OrderTableService {
     public void saveOrderTableHasFood(OrderTable orderTable, FoodOrderRequest foodOrderRequests);
 
     public OrderTableResponse mapping(OrderTable orderTable);
+
+    // public ComboAvailableHasFoodResponse createCombo(Long maSoNhaHang,
+    // ComboRequest comboRequest);
+
 }

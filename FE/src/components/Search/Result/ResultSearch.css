@@ -2,7 +2,7 @@ ol {
   max-width: unset;
   margin: 0;
   padding: 0;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   white-space: nowrap;
   list-style: none;
   -ms-overflow-style: none;
@@ -10,6 +10,7 @@ ol {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  height: fit-content;
 }
 
 ol li {
@@ -31,6 +32,8 @@ ol li {
 
 .text-container {
   display: inline-block;
+  color: rgb(138, 147, 155);
+
 }
 .ResultSearch2 {
   margin-top: 1rem;

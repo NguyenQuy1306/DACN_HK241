@@ -50,6 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setEmail(request.getEmail());
             user.setSDT(request.getSDT());
 
+            
             return userMapper.toUserResponse(repository.save(user));
 
         } catch (ApplicationException e) {

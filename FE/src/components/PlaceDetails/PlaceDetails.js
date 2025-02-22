@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Chip,
-} from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import Rating from "@mui/material/Rating";
+import { Button } from "@mui/material";
 import useStyles from "./styles.js";
 import "./PlaceDetails.css";
 // import images from "../../data/ImageData.js";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import Tags from "../Detail/DetailBox/Title/Tags/Tags.js";
+import Tags from "../../features/Detail/DetailBox/Title/Tags/Tags.js";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "./StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -165,7 +152,7 @@ const PlaceDetails = ({
                   <div className="PlaceDetailDiv_H1_detail_name_div1_div">
                     <StarRating
                       rating={2.6}
-                      size={"32"}
+                      size={"20"}
                       classname={"y-css-35tusp"}
                     ></StarRating>
                     <div className="PlaceDetailDiv_H1_detail_rating">

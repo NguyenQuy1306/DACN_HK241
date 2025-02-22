@@ -8,6 +8,7 @@ import {
   getRestaurantsInMaps,
   setHoveredMarkerIndex,
 } from "../../redux/features/restaurantSlice";
+import { saveMyCoords } from "../../redux/features/searchSlice";
 const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const dispatch = useDispatch();
   const [markers, setMarkers] = useState([]);
@@ -35,6 +36,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const { ne, sw } = bounds;
       try {
         // Dispatch action to fetch restaurant data
+
         dispatch(
           getRestaurantsInMaps({
             bl_latitude: sw.lat,

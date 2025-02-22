@@ -1,21 +1,26 @@
 package com.capstoneproject.themeal.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.capstoneproject.themeal.exception.ApplicationException;
-import com.capstoneproject.themeal.model.entity.*;
+import com.capstoneproject.themeal.model.entity.ComboAvailable;
+import com.capstoneproject.themeal.model.entity.ComboAvailableHasFood;
+import com.capstoneproject.themeal.model.entity.ComboAvailableHasFoodId;
+import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.mapper.ComboAvailableMapper;
-import com.capstoneproject.themeal.model.request.*;
-import com.capstoneproject.themeal.model.response.*;
-import com.capstoneproject.themeal.repository.*;
+import com.capstoneproject.themeal.model.request.ComboRequest;
+import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
+import com.capstoneproject.themeal.model.response.FoodResponse;
+import com.capstoneproject.themeal.repository.ComboAvailableHasFoodRepository;
+import com.capstoneproject.themeal.repository.ComboAvailableRepository;
+import com.capstoneproject.themeal.repository.FoodRepository;
 import com.capstoneproject.themeal.service.ComboAvailableService;
-
-import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 @Service
 public class ComboAvailableServiceImpl implements ComboAvailableService {
