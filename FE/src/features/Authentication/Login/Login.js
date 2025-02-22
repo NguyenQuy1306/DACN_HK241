@@ -77,7 +77,9 @@ export default function Login({
     setLogin(false);
     setRegister(true);
   };
-
+  const handleOnClickLogo = () => {
+    navigate(`../Home`);
+  };
   return (
     <div className="loginDiv">
       <div className="loginDivH1">
