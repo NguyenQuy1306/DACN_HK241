@@ -30,7 +30,6 @@ function RegisterRestaurant2() {
         KhoangGia: generalInfo?.avgPrice,
     });
 
-    console.log(requestValue);
 
     const handleSubmit = async () => {
         try {

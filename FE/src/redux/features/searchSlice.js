@@ -18,7 +18,6 @@ export const searchWithKeyword = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const response = await api.searchByKeyword(params);
-      console.log("responseresponse: ", response);
       return response.payload;
     } catch (error) {
       return rejectWithValue(error.response.data);

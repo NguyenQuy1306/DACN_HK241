@@ -85,7 +85,6 @@ const PlaceDetailSearch = ({
             <div>
               <div className="PlaceDetailSearch_H1_detail_listTag">
                 <Tags></Tags>
-                {/* {place.loaiHinh} */}
                 <div className="heart_favorite">
                   {isFavorited ? (
                     <FavoriteRoundedIcon
@@ -116,10 +115,6 @@ const PlaceDetailSearch = ({
                       classname={"y-css-35tusp"}
                     ></StarRating>
                     <div className="PlaceDetailSearch_H1_detail_rating">
-                      {/* <span className="PlaceDetailSearch_H1_detail_rating_span1">
-                    <span>4</span>
-                    <StarBorderIcon className="PlaceDetailSearch_H1_detail_rating_span1_icon"></StarBorderIcon>
-                  </span> */}
                       <span className="PlaceDetailSearch_H1_detail_rating_span2">
                         <ChatBubbleOutlineOutlinedIcon className="PlaceDetailSearch_H1_detail_rating_span2_icon"></ChatBubbleOutlineOutlinedIcon>
                         <span>123</span>
@@ -132,7 +127,6 @@ const PlaceDetailSearch = ({
                 </div>
               </div>
               <p className="PlaceDetailSearch_H1_detail_p">
-                {/* <span>Chỉ từ </span> */}
                 <span className="PlaceDetailSearch_H1_detail_p123">
                   {place.khoangGia} đ/người
                 </span>

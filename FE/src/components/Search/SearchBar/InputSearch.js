@@ -48,7 +48,6 @@ const InputSearch = ({ width, placeholder, iCon, getOpen }) => {
   const openOf2 = useSelector(openModalSearch2);
   React.useEffect(() => {
     if (openOf2 == false) {
-      // console.log("jdhfjhsdf");
       setOpen(false);
     }
   }, [openOf2]);
