@@ -9,9 +9,9 @@ import {
   clearError,
   clearLoglin,
   setStatusModalAuthentication,
-} from "../../redux/features/authenticationSlice";
+} from "../../../redux/features/authenticationSlice";
 import { Button } from "@mui/material";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import "./Login.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";

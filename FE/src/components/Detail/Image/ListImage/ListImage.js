@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ListImage.css";
 import { CardMedia } from "@mui/material";
-import AImage from "../AnImage/AImage";
+import AImage from "./component/AnImage/AImage";
 import images from "../../../../data/ImageData";
 const ListImage = ({ place, startIndex, endIndex }) => {
   const images = place.danhSachAnhNhaHang.slice(startIndex, endIndex);

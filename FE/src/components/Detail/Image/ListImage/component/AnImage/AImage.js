@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import placeholderImage from "../../../../assets/images/nhin-ben-ngoai (1).jpg";
 
 import "./AImage.css";
 const AImage = (image) => {
-  // console.log("imageurlll::: ", image);
   return (
     <div className="div_AImage">
       <picture>

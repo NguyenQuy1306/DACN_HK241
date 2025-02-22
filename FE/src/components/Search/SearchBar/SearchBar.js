@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchBox from "../../Search/SearchBar/Search";
 import Logo from "../../Logo";
 import HeaderInfo from "../../../features/UserInfo/components/HeaderInfo";
-import ModalHomepage from "../../Modal/ModalHomepage/ModalHomepage";
+import Authentication from "../../../features/Authentication/Authentication";
 import { useSelector, useDispatch } from "react-redux";
 import { setStatusModalAuthentication } from "../../../redux/features/authenticationSlice";
 const SearchBar = ({ border }) => {
@@ -47,7 +47,7 @@ const SearchBar = ({ border }) => {
             avatar={require("../../../assets/images/avatar.png")}
           />
         </div>
-        <ModalHomepage open={open}></ModalHomepage>
+        <Authentication open={open}></Authentication>
       </div>
     </>
   );

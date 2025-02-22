@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Drawer } from "antd";
 import { CloseOutlined, Draw } from "@mui/icons-material";
-import PersonalInfo from "../../../features/PersonalInfo";
-import ReviewList from "../../../features/ReviewList";
-import BookingHistory from "./../../../features/BookingHistory/index";
-import FavoriteList from "../../../features/FavoriteCardList";
+import PersonalInfo from "../PersonalInfo";
+import ReviewList from "../ReviewList";
+import BookingHistory from "../BookingHistory/index";
+import FavoriteList from "../FavoriteCardList";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosHeartEmpty, IoIosStar } from "react-icons/io";
 import { IoBookOutline, IoStorefrontOutline } from "react-icons/io5";
@@ -12,17 +12,17 @@ import { TfiComment } from "react-icons/tfi";
 import { CiUser } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
-import Login from "../../Authentication/Login";
-import Register from "../../Authentication/Register";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 import {
   logout,
   selectUser,
   setStatusModalAuthentication,
-} from "../../../redux/features/authenticationSlice";
+} from "../../redux/features/authenticationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalHomepage = ({ open }) => {
+const Authentication = ({ open }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
@@ -86,7 +86,7 @@ const ModalHomepage = ({ open }) => {
             <img
               className="user-avatar"
               alt="User"
-              src={require("../../../assets/images/avatar.png")}
+              src={require("../../assets/images/avatar.png")}
             ></img>
             <div className="edit-avatar-icon">
               <FiEdit2 size={20} />
@@ -227,4 +227,4 @@ const ModalHomepage = ({ open }) => {
   );
 };
 
-export default ModalHomepage;
+export default Authentication;

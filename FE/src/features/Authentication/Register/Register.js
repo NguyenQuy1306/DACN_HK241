@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   register,
   clearRegisterStatus,
-} from "../../redux/features/authenticationSlice";
+} from "../../../redux/features/authenticationSlice";
 import { toast } from "react-toastify";
 
 function Register({ setLogin, setRegister, setIsClickLogout }) {

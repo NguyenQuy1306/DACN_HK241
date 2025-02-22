@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 const DetailBox = ({ selectedPlace }) => {
   const openModalPayment = useSelector((state) => state.table.openModalPayment);
-  console.log("openModalPaymentâsa ", openModalPayment);
   return (
     <div className="DetailBoxDiv">
       <TitleDetail selectedPlace={selectedPlace} />
