@@ -54,8 +54,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
     const result = await response.data;
 
-    console.log(result);
-
     setPayOSConfig((oldConfig) => ({
       ...oldConfig,
       CHECKOUT_URL: result.checkoutUrl,

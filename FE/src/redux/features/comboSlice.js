@@ -17,7 +17,6 @@ export const createComboByUser = createAsyncThunk(
   "/createCombo",
   async (params, { rejectWithValue }) => {
     try {
-      console.log("params createComboByusaer:L ", params);
       const response = await api.createComboByUser(params);
       return response.payload;
     } catch (error) {

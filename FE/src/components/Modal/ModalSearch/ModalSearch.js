@@ -45,13 +45,6 @@ const getSubStringWithKeyword = (inputString) => {
   return words.slice(start, end).join(" ");
 };
 
-const inputString =
-  "Sườn non bò Mỹ rút xương sốt Bulgogi, Dẻ sườn bò Mỹ <em>nướng</em> sốt bào ngư, Chóp vai bò Mỹ <em>nướng</em> sốt Shoyu";
-const keyword = "nướng";
-
-const result = getSubStringWithKeyword(inputString, keyword);
-console.log("TiếnTiếnTiếnTiến ", result); // Ví dụ có thể trả về "Tiếp khách tại công"
-
 const ModalSearch = ({ open }) => {
   const selectedPlace = JSON.parse(localStorage.getItem("selectedPlace"));
   const dispatch = useDispatch();
@@ -83,11 +76,9 @@ const ModalSearch = ({ open }) => {
           return listTemp;
         })
       : [];
-  console.log("format_keywordResult:: ", format_keywordResult);
   const extractedResults = format_keywordResult
     .filter((item) => typeof item === "string" && item.trim() !== "") // Ensure valid strings
     .map((item) => getSubStringWithKeyword(item, paramketyword));
-  console.log("extractedResults:: ", extractedResults);
 
   const keywords_conver =
     keywords.length > 0
@@ -122,7 +113,6 @@ const ModalSearch = ({ open }) => {
       ) || Infinity;
     return distanceA - distanceB; // Sort ascending
   });
-  console.log("sortedRestaurants in onchange:: ", sortedRestaurants);
   return (
     // <Modal>
     <div className="ModalSearchDiv">
@@ -145,8 +135,9 @@ const ModalSearch = ({ open }) => {
             Gợi ý
           </h4>
           <div className="ModalSearchDivWrapperSearch_Recommendation_listRecommendation">
-            {sortedRestaurants.map((item) => (
+            {sortedRestaurants.map((item, i) => (
               <PlaceDetailSearch
+                index={i}
                 place={item}
                 restaurantsImageType={
                   item.imageUrls.RESTAURANTIMAGE

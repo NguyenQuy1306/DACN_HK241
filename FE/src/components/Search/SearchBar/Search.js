@@ -33,10 +33,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submission behavior (page refresh)
-    console.log("Search 1:", search1);
-    console.log("Search 2:", search2);
-    // Implement your search logic here
+    event.preventDefault();
   };
   const open = useSelector(openModalSearch2);
 
