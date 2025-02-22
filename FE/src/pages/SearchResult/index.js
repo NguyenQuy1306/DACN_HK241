@@ -40,8 +40,16 @@ export const calculateDistance = (myCoords, restaurantCoords) => {
 };
 
 const RestaurantCard = ({ restaurant }) => {
+  const handleClickDetailRestaurant = async (id) => {
+    localStorage.setItem("selectedPlace", JSON.stringify(restaurant));
+    localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    window.open("/DetailRestaurant/${id}", "_blank");
+  };
   return (
-    <div className={styles.restaurantCard}>
+    <div
+      className={styles.restaurantCard}
+      onClick={() => handleClickDetailRestaurant(restaurant.maSoNhaHang)}
+    >
       <div className={styles.imageContainer}>
         <img
           src={
