@@ -163,7 +163,7 @@ const RestaurantGrid = () => {
           </div>
         </div>
       </div>
-      <ResultSearch keyword={keyword} />
+      <ResultSearch keyword={keyword} count={restaurantSearch.length} />
       <div className={styles.container}>
         <div className={styles.grid}>
           {sortedRestaurants.map((restaurant, index) => (

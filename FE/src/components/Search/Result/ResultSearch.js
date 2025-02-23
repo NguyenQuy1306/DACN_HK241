@@ -4,14 +4,15 @@ import "./ResultSearch.css";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import Result1 from "./Result1";
-const ResultSearch = ({ keyword }) => {
+import { useSelector } from "react-redux";
+const ResultSearch = ({ keyword, count }) => {
   const handleBackHome = (event) => {
     console.log("Back homepage");
   };
 
   return (
     <>
-      <Result1 keyword={keyword}></Result1>
+      <Result1 keyword={keyword} count={count}></Result1>
       {/* <div
         style={{
           height: "45px",

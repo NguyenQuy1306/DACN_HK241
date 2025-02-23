@@ -6,6 +6,7 @@ import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getRestaurantsInMaps,
+  saveBounds,
   setHoveredMarkerIndex,
 } from "../../redux/features/restaurantSlice";
 import { saveMyCoords } from "../../redux/features/searchSlice";
@@ -43,6 +44,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
             bl_longitude: sw.lng,
             tr_longitude: ne.lng,
             tr_latitude: ne.lat,
+            page: 0,
+            size: 10,
           })
         );
       } catch (error) {
@@ -113,6 +116,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const ne = map.getBounds().getNorthEast().toJSON();
       const sw = map.getBounds().getSouthWest().toJSON();
       setBounds({ ne, sw });
+      dispatch(saveBounds({ ne, sw }));
     }
   };
 

@@ -18,7 +18,8 @@ export const getRestaurantsInMaps = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const response = await api.getRestaurantsInMaps(params);
-      return response.payload;
+      console.log("-metadata", response);
+      return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -30,11 +31,13 @@ export const restaurantSlice = createSlice({
   initialState: {
     restaurants: [],
     restaurantsImages: [],
+    bounds: null,
     error: "",
     loading: false,
     openBookingWithMenu: false,
     menuChoosed: [],
     newMenu: [],
+    metadata: null,
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
   },
@@ -50,16 +53,21 @@ export const restaurantSlice = createSlice({
     setHoveredMarkerIndex: (state, action) => {
       state.hoveredMarkerIndex = action.payload;
     },
+    saveBounds: (state, action) => {
+      state.bounds = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getRestaurantsInMaps.pending, (state) => {
         state.loading = true;
         state.restaurants = [];
+        state.metadata = null;
       })
       .addCase(getRestaurantsInMaps.fulfilled, (state, action) => {
         state.loading = false;
-        state.restaurants = action.payload;
+        state.restaurants = action.payload.payload;
+        state.metadata = action.payload.metadata.pagination;
       })
       .addCase(getRestaurantsInMaps.rejected, (state, action) => {
         state.loading = false;
@@ -67,7 +75,7 @@ export const restaurantSlice = createSlice({
       });
   },
 });
-export const { setOpenBookingWithMenu, setHoveredMarkerIndex } =
+export const { setOpenBookingWithMenu, setHoveredMarkerIndex, saveBounds } =
   restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

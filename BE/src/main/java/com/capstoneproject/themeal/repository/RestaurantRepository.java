@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
@@ -19,7 +20,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
                         "WHERE ra.KieuAnh = :restaurantImageType " +
                         "AND r.ViDo BETWEEN :blLat AND :trLat " +
                         "AND r.KinhDo BETWEEN :blLng AND :trLng")
-        List<Restaurant> findRestaurantsInBoundary(
+        Page<Restaurant> findRestaurantsInBoundary(
                         @Param("blLat") double blLat,
                         @Param("blLng") double blLng,
                         @Param("trLat") double trLat,

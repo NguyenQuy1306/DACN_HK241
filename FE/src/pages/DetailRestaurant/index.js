@@ -3,16 +3,19 @@ import SearchBar from "../../components/Search/SearchBar/SearchBar";
 import Result1 from "../../components/Search/Result/Result1";
 import ListImage from "../../features/Detail/Image/ImageBox";
 import DetailBox from "../../features/Detail/DetailBox/DetailBox";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const DetailRestaurant = () => {
   const [selectedPlace, setSelectedPlace] = useState(
     JSON.parse(localStorage.getItem("selectedPlace"))
   );
+  const metadata = useSelector((state) => state.restaurant.metadata);
+
   return (
     <>
       <SearchBar></SearchBar>
-      <Result1></Result1>
+      <Result1 keyword={"12"} count={12}></Result1>
+
       <ListImage></ListImage>
       <DetailBox selectedPlace={selectedPlace}></DetailBox>
     </>

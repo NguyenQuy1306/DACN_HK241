@@ -13,7 +13,7 @@ import com.capstoneproject.themeal.model.request.*;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.RestaurantService;
-
+import org.springframework.data.domain.Page;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
@@ -53,33 +53,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<RestaurantInMapsResponse> getRestaurantsInMaps(Double blLat, Double blLng, Double trLat, Double trLng,
+    public Page<RestaurantInMapsResponse> getRestaurantsInMaps(Double blLat, Double blLng, Double trLat, Double trLng,
             Pageable pageable) {
 
         try {
-            List<Restaurant> restaurants = restaurantRepository.findRestaurantsInBoundary(blLat, blLng, trLat, trLng,
+            Page<Restaurant> restaurants = restaurantRepository.findRestaurantsInBoundary(blLat, blLng, trLat, trLng,
                     RestaurantImageType.RESTAURANTIMAGE, pageable);
-            // restaurants.forEach(restaurant -> {
-            // System.out.println("Nhà hàng ID: " + restaurant.getDanhSachAnhNhaHang());
-            // System.out.println("Danh sách phương thức thanh toán:");
 
-            // // Kiểm tra nếu danhSachNhaHangCoPhuongThucThanhToan không rỗng
-            // if (restaurant.getDanhSachNhaHangCoPhuongThucThanhToan() != null) {
-            // restaurant.getDanhSachNhaHangCoPhuongThucThanhToan()
-            // .forEach(paymentMethod -> System.out.println(paymentMethod.toString()) // Tùy
-            // chỉnh cách in
-            // // của phương thức
-            // // thanh toán nếu cần
-            // );
-            // } else {
-            // System.out.println("Không có phương thức thanh toán nào.");
-            // }
+            return restaurants.map(restaurantMapper::toDetailResponse);
 
-            // System.out.println("-------------");
-            // });
-            return restaurants.stream()
-                    .map(restaurantMapper::toDetailResponse)
-                    .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new ApplicationException();
         }

@@ -12,9 +12,11 @@ import SortDetail from "../../components/Sort/SortDetail";
 import { Button } from "@mui/material";
 // import { useDispatch, useSelector } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
-
+import Pagination from "../../components/Pagination/Pagination";
 import "./Search.css";
+import { getRestaurantsInMaps } from "../../redux/features/restaurantSlice";
 const Search = () => {
+  const dispatch = useDispatch();
   const data_restaurantsImagesType = useSelector(
     (state) => state.restaurant.restaurantsImages
   );
@@ -28,6 +30,7 @@ const Search = () => {
   const [places, setPlaces] = useState([]);
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Function to handle place changes
   const onPlaceChanged = (autocomplete) => {
@@ -41,9 +44,26 @@ const Search = () => {
   const [choosePopularity, setChoosePopularity] = useState(false);
   const [chooseNewRestaurant, setChooseNewRestaurant] = useState(false);
   const [openSort, SetOpenSort] = useState(false);
+  const metadata = useSelector((state) => state.restaurant.metadata);
   const handleOnCloseSort = () => {
     SetOpenSort(!openSort);
   };
+  const bounds = useSelector((state) => state.restaurant.bounds);
+  useEffect(() => {
+    if (bounds) {
+      const { ne, sw } = bounds;
+      dispatch(
+        getRestaurantsInMaps({
+          bl_latitude: sw.lat,
+          bl_longitude: sw.lng,
+          tr_longitude: ne.lng,
+          tr_latitude: ne.lat,
+          page: currentPage,
+          size: 10,
+        })
+      );
+    }
+  }, [currentPage]);
   return (
     <>
       <SearchBar></SearchBar>
@@ -80,7 +100,10 @@ const Search = () => {
           <div>bbbádaaa</div>
         </div>
       </div>
-      <ResultSearch></ResultSearch>
+      <ResultSearch
+        keyword={""}
+        count={metadata ? metadata.totalItems : 0}
+      ></ResultSearch>
 
       <div className="listRestaurantDiv">
         <div className="listRestaurantDiv_H1">
@@ -192,6 +215,12 @@ const Search = () => {
               rating={rating}
               setRating={setRating}
             />
+            <div className="pagination_search">
+              <Pagination
+                count={metadata ? metadata.totalPages : 1}
+                setCurrentPage={setCurrentPage}
+              ></Pagination>
+            </div>
           </div>
           <div className="listRestaurantDiv_H1_right">
             <Map

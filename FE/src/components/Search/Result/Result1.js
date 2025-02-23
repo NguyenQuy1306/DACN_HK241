@@ -5,14 +5,12 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-const Result1 = ({ keyword }) => {
+const Result1 = ({ keyword, count }) => {
   const navigate = useNavigate();
   const handleBackHome = (event) => {
     navigate("../Home");
   };
-  const restaurantSearch = useSelector(
-    (state) => state.search.restaurantsSearch
-  );
+
   return (
     <>
       <div
@@ -58,7 +56,7 @@ const Result1 = ({ keyword }) => {
               </span>
               <span style={{ color: " hsl(174, 100%, 20%)" }}>
                 {" "}
-                ({restaurantSearch.length}) điểm đến
+                ({count}) điểm đến
               </span>
             </li>
           </ol>
