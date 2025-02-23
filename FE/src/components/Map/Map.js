@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getRestaurantsInMaps,
   saveBounds,
+  saveCurrentPage,
   setHoveredMarkerIndex,
 } from "../../redux/features/restaurantSlice";
 import { saveMyCoords } from "../../redux/features/searchSlice";
@@ -37,6 +38,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const { ne, sw } = bounds;
       try {
         // Dispatch action to fetch restaurant data
+        dispatch(saveCurrentPage(0));
 
         dispatch(
           getRestaurantsInMaps({

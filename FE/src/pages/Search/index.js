@@ -33,7 +33,7 @@ const Search = () => {
   const [places, setPlaces] = useState([]);
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const currentPage = useSelector((state) => state.restaurant.currentPage);
 
   // Function to handle place changes
   const onPlaceChanged = (autocomplete) => {
@@ -52,21 +52,33 @@ const Search = () => {
     SetOpenSort(!openSort);
   };
   const bounds = useSelector((state) => state.restaurant.bounds);
+  const time = useSelector((state) => state.restaurant.time);
+  const date = useSelector((state) => state.restaurant.date);
+  const people = useSelector((state) => state.restaurant.people);
   useEffect(() => {
-    if (bounds) {
-      const { ne, sw } = bounds;
-      dispatch(
-        getRestaurantsInMaps({
-          bl_latitude: sw.lat,
-          bl_longitude: sw.lng,
-          tr_longitude: ne.lng,
-          tr_latitude: ne.lat,
-          page: currentPage,
-          size: 10,
-        })
-      );
+    if (!bounds) return;
+
+    const { ne, sw } = bounds;
+
+    const params = {
+      bl_latitude: sw.lat,
+      bl_longitude: sw.lng,
+      tr_longitude: ne.lng,
+      tr_latitude: ne.lat,
+      page: currentPage,
+      size: 10,
+    };
+
+    // Chỉ thêm các tham số `date`, `time`, `people` nếu chúng có giá trị
+    if (time && date && people) {
+      params.date = date;
+      params.people = people;
+      params.time = time;
     }
-  }, [currentPage]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch(getRestaurantsInMaps(params));
+  }, [currentPage, bounds, time, date, people]);
+
   return (
     <>
       <SearchBar></SearchBar>

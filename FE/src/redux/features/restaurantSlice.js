@@ -39,6 +39,9 @@ export const restaurantSlice = createSlice({
     menuChoosed: [],
     newMenu: [],
     currentPage: 0,
+    time: null,
+    date: null,
+    people: null,
     metadata: null,
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
@@ -60,6 +63,12 @@ export const restaurantSlice = createSlice({
     },
     saveCurrentPage: (state, action) => {
       state.currentPage = action.payload;
+    },
+    saveFilterTable: (state, action) => {
+      const { time, date, people } = action.payload;
+      state.time = time;
+      state.date = date;
+      state.people = people;
     },
   },
   extraReducers: (builder) => {
@@ -85,6 +94,7 @@ export const {
   setHoveredMarkerIndex,
   saveBounds,
   saveCurrentPage,
+  saveFilterTable,
 } = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

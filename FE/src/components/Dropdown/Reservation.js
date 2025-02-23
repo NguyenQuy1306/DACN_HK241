@@ -7,7 +7,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import "./ant.css";
-import { getRestaurantsInMaps } from "../../redux/features/restaurantSlice";
+import {
+  getRestaurantsInMaps,
+  saveCurrentPage,
+  saveFilterTable,
+} from "../../redux/features/restaurantSlice";
 const { Option } = Select;
 
 const Reservation = () => {
@@ -52,12 +56,21 @@ const Reservation = () => {
     if (selectedDate && selectedPersons && selectedTime && bounds) {
       const { ne, sw } = bounds;
       dispatch(
+        saveFilterTable({
+          time: selectedTime,
+          date: selectedDate,
+          people: selectedPersons,
+        })
+      );
+      console.log("whatthefukkk");
+      dispatch(saveCurrentPage(0));
+      dispatch(
         getRestaurantsInMaps({
           bl_latitude: sw.lat,
           bl_longitude: sw.lng,
           tr_longitude: ne.lng,
           tr_latitude: ne.lat,
-          page: currentPage,
+          page: 0,
           date: selectedDate,
           people: selectedPersons,
           time: selectedTime,
@@ -65,7 +78,7 @@ const Reservation = () => {
         })
       );
     }
-  }, [selectedDate, selectedTime, selectedPersons, currentPage]);
+  }, [selectedDate, selectedTime, selectedPersons]);
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
     setIsDateSelectOpen(false);
@@ -99,6 +112,24 @@ const Reservation = () => {
     setSelectedDate(null);
     setSelectedPersons(null);
     setSelectedTime(null);
+
+    const { ne, sw } = bounds;
+    saveFilterTable({
+      time: null,
+      date: null,
+      people: null,
+    });
+    dispatch(saveCurrentPage(0));
+    dispatch(
+      getRestaurantsInMaps({
+        bl_latitude: sw.lat,
+        bl_longitude: sw.lng,
+        tr_longitude: ne.lng,
+        tr_latitude: ne.lat,
+        page: 0,
+        size: 10,
+      })
+    );
   };
   useEffect(() => {
     if (
