@@ -26,9 +26,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.data.domain.Page;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +63,10 @@ public class RestaurantController {
             @RequestParam Double bl_longitude,
             @RequestParam Double tr_latitude,
             @RequestParam Double tr_longitude, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalDate date,
+            @RequestParam(required = false) Byte people) {
 
         ApiResponse<List<RestaurantInMapsResponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(page, size);
@@ -68,7 +74,8 @@ public class RestaurantController {
         try {
             Page<RestaurantInMapsResponse> restaurantInMapsResponses = restaurantService.getRestaurantsInMaps(
                     bl_latitude,
-                    bl_longitude, tr_latitude, tr_longitude, pageable);
+                    bl_longitude, tr_latitude, tr_longitude, time, date, people, pageable);
+
             MetadataResponse metadata = new MetadataResponse(
                     restaurantInMapsResponses.getTotalElements(),
                     restaurantInMapsResponses.getTotalPages(),

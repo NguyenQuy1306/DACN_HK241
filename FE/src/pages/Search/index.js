@@ -14,7 +14,10 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
 import "./Search.css";
-import { getRestaurantsInMaps } from "../../redux/features/restaurantSlice";
+import {
+  getRestaurantsInMaps,
+  saveCurrentPage,
+} from "../../redux/features/restaurantSlice";
 const Search = () => {
   const dispatch = useDispatch();
   const data_restaurantsImagesType = useSelector(
@@ -218,7 +221,6 @@ const Search = () => {
             <div className="pagination_search">
               <Pagination
                 count={metadata ? metadata.totalPages : 1}
-                setCurrentPage={setCurrentPage}
               ></Pagination>
             </div>
           </div>

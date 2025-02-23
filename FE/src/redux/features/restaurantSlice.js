@@ -17,8 +17,9 @@ export const getRestaurantsInMaps = createAsyncThunk(
   "/restaurants/list-in-boundary",
   async (params, { rejectWithValue }) => {
     try {
+      console.log("-params", params);
+
       const response = await api.getRestaurantsInMaps(params);
-      console.log("-metadata", response);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -37,6 +38,7 @@ export const restaurantSlice = createSlice({
     openBookingWithMenu: false,
     menuChoosed: [],
     newMenu: [],
+    currentPage: 0,
     metadata: null,
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
@@ -55,6 +57,9 @@ export const restaurantSlice = createSlice({
     },
     saveBounds: (state, action) => {
       state.bounds = action.payload;
+    },
+    saveCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -75,7 +80,11 @@ export const restaurantSlice = createSlice({
       });
   },
 });
-export const { setOpenBookingWithMenu, setHoveredMarkerIndex, saveBounds } =
-  restaurantSlice.actions;
+export const {
+  setOpenBookingWithMenu,
+  setHoveredMarkerIndex,
+  saveBounds,
+  saveCurrentPage,
+} = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

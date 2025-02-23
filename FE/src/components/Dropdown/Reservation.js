@@ -4,9 +4,10 @@ import "antd/dist/reset.css";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import "./ant.css";
+import { getRestaurantsInMaps } from "../../redux/features/restaurantSlice";
 const { Option } = Select;
 
 const Reservation = () => {
@@ -16,10 +17,55 @@ const Reservation = () => {
   const [isDateSelectOpen, setIsDateSelectOpen] = useState(false);
   const [isTimeSelectOpen, setIsTimeSelectOpen] = useState(false);
   const [isPersonSelectOpen, setIsPersonSelectOpen] = useState(false);
-
-  const availableTimes = ["15:00", "15:30", "16:00", "19:30", "20:00"];
-  const availablePersons = [1, 2, 3, 4, 5];
-
+  const dispatch = useDispatch();
+  const availableTimes = [
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+    "22:00",
+  ];
+  const availablePersons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const bounds = useSelector((state) => state.restaurant.bounds);
+  const currentPage = useSelector((state) => state.restaurant.currentPage);
+  useEffect(() => {
+    if (selectedDate && selectedPersons && selectedTime && bounds) {
+      const { ne, sw } = bounds;
+      dispatch(
+        getRestaurantsInMaps({
+          bl_latitude: sw.lat,
+          bl_longitude: sw.lng,
+          tr_longitude: ne.lng,
+          tr_latitude: ne.lat,
+          page: currentPage,
+          date: selectedDate,
+          people: selectedPersons,
+          time: selectedTime,
+          size: 10,
+        })
+      );
+    }
+  }, [selectedDate, selectedTime, selectedPersons, currentPage]);
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
     setIsDateSelectOpen(false);

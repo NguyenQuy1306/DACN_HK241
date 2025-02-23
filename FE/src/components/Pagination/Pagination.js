@@ -1,17 +1,22 @@
 import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
-export default function PaginationOutlined({ count, setCurrentPage }) {
+import { useDispatch, useSelector } from "react-redux";
+import { saveCurrentPage } from "../../redux/features/restaurantSlice";
+export default function PaginationOutlined({ count }) {
+  const dispatch = useDispatch();
   const handlePageChange = (event, page) => {
-    setCurrentPage(page - 1); // Convert to zero-based index if needed
+    dispatch(saveCurrentPage(page - 1));
   };
+  const currentPage = useSelector((state) => state.restaurant.currentPage);
+
   return (
     <Stack spacing={2}>
       <Pagination
         count={count}
         shape="rounded"
         onChange={handlePageChange}
+        page={currentPage + 1}
         sx={{
           "& .MuiPaginationItem-root": {
             color: "black",
