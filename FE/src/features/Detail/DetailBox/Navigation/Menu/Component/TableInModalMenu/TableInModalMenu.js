@@ -31,8 +31,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables({ combo }) {
+  console.log("combocombo", combo);
   let totalPrice = 0;
   const comboType = useSelector((state) => state.combo.comboType);
+  console.log("comboType", comboType);
 
   let listFood = [];
   if (comboType === "newCombo") {

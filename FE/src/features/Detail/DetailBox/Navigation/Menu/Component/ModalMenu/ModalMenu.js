@@ -80,35 +80,36 @@ export default function BasicModal({ combo, selectedPlace }) {
       soLuong: quantity,
     }));
     setOpen(false);
-    // dispatch(
-    //     setOpenBookingWithMenu({
-    //         openBookingWithMenu: true,
-    //         menuChoosed: [combo_convert],
-    //         newMenu: [combo],
-    //         bookingWithNewCombo: true,
-    //     }),
-    // );
-    setIsCreatingLink(true);
-    // exit();
-    const response = await axios.get(
-      "http://localhost:8080/api/payments/create-payment-link",
-      {
-        withCredentials: true,
-      }
+    dispatch(
+      setOpenBookingWithMenu({
+        openBookingWithMenu: true,
+        menuChoosed: [combo_convert],
+        newMenu: [combo],
+        bookingWithNewCombo: true,
+      })
     );
-    if (response.status !== 200) {
-      console.log("Server doesn't response");
-    }
+    dispatch(setComboType("newCombo"));
+    // setIsCreatingLink(true);
+    // // exit();
+    // const response = await axios.get(
+    //   "http://localhost:8080/api/payments/create-payment-link",
+    //   {
+    //     withCredentials: true,
+    //   }
+    // );
+    // if (response.status !== 200) {
+    //   console.log("Server doesn't response");
+    // }
 
-    const result = await response.data;
+    // const result = await response.data;
 
-    setPayOSConfig((oldConfig) => ({
-      ...oldConfig,
-      CHECKOUT_URL: result.checkoutUrl,
-      RETURN_URL: result.returnUrl,
-    }));
+    // setPayOSConfig((oldConfig) => ({
+    //   ...oldConfig,
+    //   CHECKOUT_URL: result.checkoutUrl,
+    //   RETURN_URL: result.returnUrl,
+    // }));
 
-    window.location.href = result;
+    // window.location.href = result;
 
     setIsOpen(true);
     setIsCreatingLink(false);

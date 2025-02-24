@@ -12,7 +12,7 @@ import {
 } from "../../../redux/features/searchSlice";
 import "./InputSearch.css";
 
-const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
+const InputSearchType = ({ width, placeholder, iCon, setValue }) => {
   const [isPending, startTransition] = useTransition();
   const dispatch = useDispatch();
   const openOf2 = useSelector(openModalSearch2);
@@ -66,14 +66,11 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
   // ✅ Handle Input Click (Open Modal)
   const handleInputClick = () => {
     dispatch(handleModal({ openModalSearch2: true }));
-    if (placeholder === "Bạn muốn đặt chỗ đến đâu") {
-      getOpen(true);
-    }
   };
 
   return (
     <div className={`InputSearchDiv ${openOf2 ? "active" : ""}`}>
-      {openOf2 && placeholder === "Bạn muốn đặt chỗ đến đâu" && (
+      {openOf2 && (
         <div className="modalSearch_dropdown">
           <ModalSearch />
         </div>

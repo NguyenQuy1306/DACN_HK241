@@ -5,7 +5,12 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeFilledSharpIcon from "@mui/icons-material/AccessTimeFilledSharp";
 import PersonIcon from "@mui/icons-material/Person";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectUser,
+  setStatusModalAuthentication,
+} from "../../../../../../../../redux/features/authenticationSlice";
+import { setOpenModalPayment } from "../../../../../../../../redux/features/tableSlice";
 const StepBookingwidget = ({
   selectedPlace,
   datePicked,
@@ -64,6 +69,15 @@ const StepBookingwidget = ({
       setcloseTimeDiv(true);
       setclosePersonDiv(true);
       setcloseTimeDiv(true);
+
+      if (openBookingWithMenu) {
+        if (!user) {
+          dispatch(setStatusModalAuthentication({ openModal: true }));
+        } else {
+          console.log("truetrue");
+          dispatch(setOpenModalPayment(true));
+        }
+      }
       setcloseOptionDiv(false);
       setLastClicked("Menu");
       setActiveOffer(true);
@@ -75,6 +89,11 @@ const StepBookingwidget = ({
       // setCloseOptionDiv(true);
     }
   }, [datePicked, timePicked, personPicked]);
+  const openBookingWithMenu = useSelector(
+    (state) => state.restaurant.openBookingWithMenu
+  );
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const handleOnClickButtonwidget = (type) => {
     // Set last clicked button
     if (type === "Date") {
@@ -91,7 +110,7 @@ const StepBookingwidget = ({
       setclosePersonDiv(true);
       setcloseOptionDiv(true);
 
-      setLastClicked(type);
+      // setLastClicked(type);
     } else if (type === "Time" && datePicked) {
       if (activeTime === false) {
         setActiveTime(!activeTime);
@@ -107,7 +126,7 @@ const StepBookingwidget = ({
       setActivePerson(false);
       setActiveOffer(false);
 
-      setLastClicked(type);
+      // setLastClicked(type);
     } else if (type === "Guest" && datePicked && timePicked) {
       setPerson(null);
       setOption(null);
@@ -119,17 +138,17 @@ const StepBookingwidget = ({
         setActivePerson(!activePerson);
         setcloseTimeDiv(true);
       }
-      if (activeTime === true) {
-        setLastClicked(type);
-      }
+      // if (activeTime === true) {
+      //   setLastClicked(type);
+      // }
       setActiveOffer(false);
     } else if (type === "Menu" && datePicked && timePicked && personPicked) {
       if (activeOffer === false) {
         setActiveOffer(!activeOffer);
       }
-      if (activeTime === true && activePerson === true) {
-        setLastClicked(type);
-      }
+      // if (activeTime === true && activePerson === true) {
+      //   setLastClicked(type);
+      // }
     }
   };
 

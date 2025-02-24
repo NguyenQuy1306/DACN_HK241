@@ -17,11 +17,7 @@ import { saveParamKeywordSearch } from "../../../redux/features/searchSlice";
 const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
-  const [openSearch2, setOpenSearch2] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const SetOpenSearch2 = (value) => {
-    setOpenSearch2(value);
-  };
 
   const handleSearch1Change = (value) => {
     setSearch1(value);
@@ -38,7 +34,6 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
   const open = useSelector(openModalSearch2);
 
   const handleOnCloseSearch2 = () => {
-    setOpenSearch2(false);
     dispatch(handleModal({ openModalSearch2: false }));
   };
   const handleClickSearch = () => {
@@ -76,15 +71,12 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
       }}
     >
       {/* <CustomDropdown options={options} placeholder="Select an option" /> */}
-      {openSearch2 && open && (
-        <div className="overlay" onClick={handleOnCloseSearch2}></div>
-      )}
+      {open && <div className="overlay" onClick={handleOnCloseSearch2}></div>}
       <InputSearch
         value={search1}
         onChange={handleSearch1Change}
         width={200}
         placeholder={"Khu vực"}
-        // getOpen={SetOpenSearch2}
         iCon={<LocationOnIcon></LocationOnIcon>}
       />
       <div>
@@ -103,7 +95,6 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
           value={search2}
           onChange={handleSearch2Change}
           width={600}
-          getOpen={SetOpenSearch2}
           placeholder={"Bạn muốn đặt chỗ đến đâu"}
           iCon={<SearchIcon></SearchIcon>}
           setValue={setInputValue}

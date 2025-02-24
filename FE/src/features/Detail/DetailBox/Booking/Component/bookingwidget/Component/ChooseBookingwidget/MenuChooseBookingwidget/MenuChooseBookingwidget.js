@@ -15,7 +15,10 @@ import { toast } from "react-toastify";
 import { setOpenBookingWithMenu } from "../../../../../../../../../redux/features/restaurantSlice";
 import { useNavigate } from "react-router-dom";
 import { setActiveTab } from "../../../../../../../../../redux/features/navigationSlice";
-import { getComboAvailable } from "../../../../../../../../../redux/features/comboSlice";
+import {
+  getComboAvailable,
+  setComboType,
+} from "../../../../../../../../../redux/features/comboSlice";
 import { setActiveTabMenu } from "../../../../../../../../../redux/features/navigationSlice";
 import { setShouldScroll } from "../../../../../../../../../redux/features/navigationSlice";
 import {
@@ -111,6 +114,7 @@ const MenuChooseBookingwidget = ({
           bookingWithNewCombo: false,
         })
       );
+      dispatch(setComboType(""));
 
       setDate(null);
       setcloseDateDiv(false);
