@@ -7,7 +7,7 @@ import SearchBar from "../../components/Search/SearchBar/SearchBar";
 import Reservation from "../../components/Dropdown/Reservation";
 import Filter from "../../components/Filter/Filter";
 import ResultSearch from "../../components/Search/Result/ResultSearch";
-
+import ButtonBooking from "../../components/Button/ButtonBooking/ButtonBooking";
 // Function to convert degrees to radians
 const toRadians = (degrees) => (degrees * Math.PI) / 180;
 
@@ -96,7 +96,7 @@ const RestaurantCard = ({ restaurant }) => {
           <span className={styles.restaurantCategory}>
             {restaurant.category}
           </span>
-          <button className={styles.bookButton}>Đặt chỗ</button>
+          <ButtonBooking text={"Đặt chỗ"}></ButtonBooking>
         </div>
       </div>
     </div>

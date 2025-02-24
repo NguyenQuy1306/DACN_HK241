@@ -80,10 +80,10 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const transformedMarkers = data_restaurantsInMaps.map((place) => ({
         lat: parseFloat(place.viDo) || 0,
         lng: parseFloat(place.kinhDo) || 0,
-        name: place.ten,
+        ten: place.ten,
         photo: place.photo || null,
         rating: place.rating || null,
-        address: place.diaChi,
+        diaChi: place.diaChi,
         khoangGia: place.khoangGia,
         gioHoatDong: place.gioHoatDong,
         monDacSac: place.monDacSac,
@@ -217,7 +217,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                       ? selectedMarker.danhSachAnhNhaHang[0]
                       : "https://via.placeholder.com/100"
                   }
-                  alt={selectedMarker.name}
+                  alt={selectedMarker.ten}
                   style={{ width: "100%", height: "70%", borderRadius: "4px" }}
                 />
                 <div style={{ display: "flex" }}>
@@ -230,7 +230,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                       marginRight: "5px",
                     }}
                   >
-                    {selectedMarker.name}
+                    {selectedMarker.ten}
                   </div>
                   ★ {selectedMarker.rating}
                 </div>
@@ -243,7 +243,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                     maxWidth: "100%",
                   }}
                 >
-                  {selectedMarker.address}
+                  {selectedMarker.diaChi}
                 </div>
 
                 {/* Tip of the talk bubble */}

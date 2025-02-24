@@ -1,0 +1,13 @@
+.bookButton {
+  padding: 0.25rem 1rem !important; 
+  border: 1px solid #f44336 !important;
+  color: #f44336 !important;
+  border-radius: 9999px !important;
+  font-size: 0.875rem !important;
+  background-color: white !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.bookButton:hover {
+  background-color: #fef2f2 !important;
+}

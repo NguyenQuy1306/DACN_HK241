@@ -104,7 +104,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
         {/* Địa chỉ nhà hàng */}
         <Typography variant="subtitle1" fontWeight="bold">
-          Nhà hàng: {selectedPlace?.address || "Không có thông tin"}
+          Nhà hàng: {selectedPlace?.diaChi || "Không có thông tin"}
         </Typography>
 
         <Divider sx={{ my: 2 }} />

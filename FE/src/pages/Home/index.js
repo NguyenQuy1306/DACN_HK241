@@ -144,7 +144,7 @@ function Home(props) {
   const prev = () => {
     carouselRef.current.prev();
   };
-
+  console.log("recommenlist", recommendList);
   useEffect(() => {
     const handleScroll = () => {
       if (categoryRef.current?.scrollLeft !== 0) {
@@ -255,14 +255,10 @@ function Home(props) {
             cardList={recommendList.map((card, index) => {
               return (
                 <RecommendCard
-                  imgUrl={card.imageUrls["RESTAURANTIMAGE"][0]}
-                  address="HA NOI"
                   tags={["XU HƯỚNG"]}
-                  name={card.ten}
                   key={index}
                   point={5}
-                  category={card.loaiHinh}
-                  avgPrice={card.khoangGia}
+                  place={card}
                   discountPercent={20}
                 />
               );
@@ -298,13 +294,9 @@ function Home(props) {
               return (
                 <RecommendCard
                   key={index}
-                  imgUrl={res.imageUrls["RESTAURANTIMAGE"][0]}
-                  address="HA NOI"
                   tags={["XU HƯỚNG"]}
-                  name={res.ten}
                   point={9.2}
-                  category={res.loaiHinh}
-                  avgPrice={res.khoangGia}
+                  place={res}
                   discountPercent={20}
                 />
               );
@@ -320,14 +312,10 @@ function Home(props) {
               return (
                 <RecommendCard
                   key={index}
-                  imgUrl={res.imageUrls["RESTAURANTIMAGE"][0]}
-                  address="HA NOI"
                   tags={["XU HƯỚNG"]}
-                  name={res.ten}
                   point={9.2}
-                  category={res.loaiHinh}
-                  avgPrice={res.khoangGia}
                   discountPercent={20}
+                  place={res}
                 />
               );
             })}

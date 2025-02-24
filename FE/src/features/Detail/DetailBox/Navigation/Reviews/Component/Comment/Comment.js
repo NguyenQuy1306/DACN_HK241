@@ -75,7 +75,7 @@ const Comment = ({ selectedPlace, review }) => {
                       ? review.userImages[0]
                       : "https://via.placeholder.com/100"
                   }
-                  alt={selectedPlace.name}
+                  alt={selectedPlace.ten}
                   style={{ width: "100%", height: "100%", borderRadius: "4px" }}
                 />
                 <div className="CommentDiv_blockquote_H2_comment_listImage_text">

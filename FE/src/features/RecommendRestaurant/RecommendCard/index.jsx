@@ -2,27 +2,33 @@ import React from "react";
 import styles from "./style.module.css";
 import DiscountCard from "../DiscountCard";
 import { Rate } from "antd";
-
-function RecommendCard({ imgUrl, address, tags, name, point, category, avgPrice, discountPercent }) {
+import ButtonBooking from "../../../components/Button/ButtonBooking/ButtonBooking";
+function RecommendCard({ place,tags,point ,discountPercent}) {
+    const handleOnclickToDetail=(id)=>{
+        localStorage.setItem("selectedPlace", JSON.stringify(place));
+        localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+        window.open("/DetailRestaurant/${id}", "_blank");
+    }
+    console.log("place",place)
     return (
-        <div className={styles.container}>
+        <div className={styles.container} onClick={()=>handleOnclickToDetail(place.maSoNhaHang)}>
             <img
-                src={imgUrl}
+                src={place.imageUrls["RESTAURANTIMAGE"]? place.imageUrls["RESTAURANTIMAGE"][0]  : "https://placehold.co/400x300"}
                 alt="Restaurant view"
                 className={styles["card-img"]}
             ></img>
 
             <div className={styles.body}>
                 <ul className={styles.tags}>
-                    <li className={styles.address}>{address}</li>
+                    <li className={styles.address}>{place.diaChi}</li>
                     {tags.map((tag) => (
                         <li className={styles.tag}>{tag}</li>
                     ))}
                 </ul>
-                <div className={styles['body-card-wrapper']}>
+                <div  className={styles['body-card-wrapper']}>
                     <div  className={styles['body-card-wrapper__content']}>
                         <div className={styles["res-title"]}>
-                            <h3 className={styles["res-name"]}>{name}</h3>
+                            <h3 className={styles["res-name"]}>{place.ten}</h3>
                         </div>
                         <span className={styles["rating-point"]}>
                             <Rate
@@ -33,16 +39,16 @@ function RecommendCard({ imgUrl, address, tags, name, point, category, avgPrice,
                                 value={point}
                             />
                         </span>
-                        <p className={styles.categories}>{category}</p>
+                        <p className={styles.categories}>{place.loaiHinh}</p>
                         <div className={styles.price}>
                             <p className={styles["price-title"]}>Giá trung bình:</p>
-                            <span className={styles["avg-price"]}>{`${avgPrice}đ`}</span>
+                            <span className={styles["avg-price"]}>{`${place.khoangGia}đ`}</span>
                         </div>
                     </div>
                     <div  className={styles['body-card-wrapper__action']}>
                         <DiscountCard percent={discountPercent} />
                         <div className={styles["booking"]}>
-                            <a href="https://thefork.com">ĐẶT BÀN NGAY</a>
+                       <ButtonBooking text={"Đặt bàn ngay"}></ButtonBooking>
                         </div>
                     </div>
                 </div>

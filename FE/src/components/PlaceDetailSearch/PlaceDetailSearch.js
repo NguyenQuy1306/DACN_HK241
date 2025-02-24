@@ -122,7 +122,7 @@ const PlaceDetailSearch = ({
                     </div>
                   </div>
                   <p className="PlaceDetailSearch_H1_detail_name_div1_p">
-                    {place.address}
+                    {place.diaChi}
                   </p>
                 </div>
               </div>

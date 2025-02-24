@@ -52,10 +52,10 @@ const Direction = ({ selectedPlace }) => {
         <div className="DirectionDiv_h1_div">
           <div className="DirectionDiv_h1_div_div">
             <span className="DirectionDiv_h1_div_span1">
-              {selectedPlace.address}
+              {selectedPlace.diaChi}
             </span>{" "}
             <CopyAddressButton
-              address={selectedPlace.address}
+              address={selectedPlace.diaChi}
             ></CopyAddressButton>
           </div>
           <span className="DirectionDiv_h1_div_span2">
