@@ -1,38 +1,69 @@
-import * as React from "react";
+import React, { useState, useMemo, useTransition, useCallback } from "react";
 import TextField from "@mui/material/TextField";
 import ModalSearch from "../../Modal/ModalSearch/ModalSearch";
 import debounce from "lodash.debounce";
+import { useDispatch, useSelector } from "react-redux";
 import {
   searchKeyword,
   saveKeyword,
-} from "../../../redux/features/searchSlice";
-import {
+  searchWithKeyword,
   handleModal,
   openModalSearch2,
 } from "../../../redux/features/searchSlice";
-import { useDispatch, useSelector } from "react-redux";
 import "./InputSearch.css";
 
 const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
+  const [isPending, startTransition] = useTransition();
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = React.useState("");
   const openOf2 = useSelector(openModalSearch2);
+  const [inputValue, setInputValue] = useState("");
 
-  const fetchKeyword = debounce(async (query) => {
-    if (!query) return;
-    try {
-      dispatch(searchKeyword({ param: query }));
-      dispatch(saveKeyword(query));
-      setValue(query);
-    } catch (error) {
-      console.error("Error fetching keywords:", error);
-    }
-  }, 300);
+  const fetchKeywordImmediate = useCallback(
+    debounce((query) => {
+      if (!query) return;
+      try {
+        dispatch(saveKeyword(query));
+        startTransition(() => {
+          dispatch(
+            searchWithKeyword({
+              param: query,
+              lon: 106.6983125,
+              lat: 10.7802256,
+            })
+          );
+        });
+        setValue(query);
+      } catch (error) {
+        console.error("Error fetching keywords:", error);
+      }
+    }, 0), // 🔥 Executes immediately
+    [dispatch, setValue]
+  );
 
-  React.useEffect(() => {
-    fetchKeyword(inputValue);
-  }, [inputValue]);
+  // ✅ Delayed debounce (500ms)
+  const fetchKeywordDelayed = useCallback(
+    debounce((query) => {
+      if (!query) return;
+      try {
+        dispatch(saveKeyword(query));
+        startTransition(() => {
+          dispatch(searchKeyword({ param: query }));
+        });
+      } catch (error) {
+        console.error("Error fetching keywords:", error);
+      }
+    }, 500), // 🔥 Executes after 500ms
+    [dispatch]
+  );
 
+  const handleOnChangeSearch = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    fetchKeywordImmediate(value);
+    fetchKeywordDelayed(value);
+  };
+
+  // ✅ Handle Input Click (Open Modal)
   const handleInputClick = () => {
     dispatch(handleModal({ openModalSearch2: true }));
     if (placeholder === "Bạn muốn đặt chỗ đến đâu") {
@@ -52,7 +83,7 @@ const InputSearchType = ({ width, placeholder, iCon, getOpen, setValue }) => {
         onClick={handleInputClick}
         placeholder={placeholder}
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={handleOnChangeSearch}
         InputProps={{
           startAdornment: iCon,
           style: { border: "none", height: "37px" },

@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Chip,
-} from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import Rating from "@mui/material/Rating";
+import { Button } from "@mui/material";
 import useStyles from "./styles.js";
 import "./PlaceDetailSearch.css";
-// import images from "../../data/ImageData.js";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import Tags from "../Detail/DetailBox/Title/Tags/Tags.js";
+import Tags from "../../features/Detail/DetailBox/Title/Tags/Tags.js";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "../PlaceDetails/StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -101,7 +85,6 @@ const PlaceDetailSearch = ({
             <div>
               <div className="PlaceDetailSearch_H1_detail_listTag">
                 <Tags></Tags>
-                {/* {place.loaiHinh} */}
                 <div className="heart_favorite">
                   {isFavorited ? (
                     <FavoriteRoundedIcon
@@ -121,7 +104,7 @@ const PlaceDetailSearch = ({
                   <div className="PlaceDetailSearch_H1_detail_name_div1_name">
                     <h2>
                       <a className="PlaceDetailSearch_H1_detail_name_div1_name_a">
-                        {place.name}
+                        {place.ten}
                       </a>
                     </h2>
                   </div>
@@ -132,10 +115,6 @@ const PlaceDetailSearch = ({
                       classname={"y-css-35tusp"}
                     ></StarRating>
                     <div className="PlaceDetailSearch_H1_detail_rating">
-                      {/* <span className="PlaceDetailSearch_H1_detail_rating_span1">
-                    <span>4</span>
-                    <StarBorderIcon className="PlaceDetailSearch_H1_detail_rating_span1_icon"></StarBorderIcon>
-                  </span> */}
                       <span className="PlaceDetailSearch_H1_detail_rating_span2">
                         <ChatBubbleOutlineOutlinedIcon className="PlaceDetailSearch_H1_detail_rating_span2_icon"></ChatBubbleOutlineOutlinedIcon>
                         <span>123</span>
@@ -148,7 +127,6 @@ const PlaceDetailSearch = ({
                 </div>
               </div>
               <p className="PlaceDetailSearch_H1_detail_p">
-                {/* <span>Chỉ từ </span> */}
                 <span className="PlaceDetailSearch_H1_detail_p123">
                   {place.khoangGia} đ/người
                 </span>

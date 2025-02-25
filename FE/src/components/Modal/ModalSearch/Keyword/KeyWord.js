@@ -29,7 +29,6 @@ const KeyWord = ({ text }) => {
     navigate(`../SearchResult/${text}`);
     dispatch(handleModal({ openModalSearch2: false }));
   };
-  console.log("myCoords", myCoords);
   return (
     <div className="KeyWordDiv" onClick={() => handleOnClickKeyword(text)}>
       <SearchIcon className="KeyWordDivIcon"></SearchIcon>

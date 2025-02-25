@@ -5,7 +5,11 @@ import { Button, Modal, Box } from "@mui/material";
 import PlaceDetailSearch from "../../PlaceDetailSearch/PlaceDetailSearch";
 import "./ModalSearch.css";
 import { useDispatch, useSelector } from "react-redux";
-import { searchKeyword } from "../../../redux/features/searchSlice";
+import {
+  openModalSearch2,
+  searchKeyword,
+} from "../../../redux/features/searchSlice";
+import { calculateDistance } from "../../../pages/SearchResult";
 const extractMatchingFragment = (text, keyword) => {
   let parts = text.split(/[,;]+/);
   for (let part of parts) {
@@ -41,13 +45,6 @@ const getSubStringWithKeyword = (inputString) => {
   return words.slice(start, end).join(" ");
 };
 
-const inputString =
-  "Sườn non bò Mỹ rút xương sốt Bulgogi, Dẻ sườn bò Mỹ <em>nướng</em> sốt bào ngư, Chóp vai bò Mỹ <em>nướng</em> sốt Shoyu";
-const keyword = "nướng";
-
-const result = getSubStringWithKeyword(inputString, keyword);
-console.log("TiếnTiếnTiếnTiến ", result); // Ví dụ có thể trả về "Tiếp khách tại công"
-
 const ModalSearch = ({ open }) => {
   const selectedPlace = JSON.parse(localStorage.getItem("selectedPlace"));
   const dispatch = useDispatch();
@@ -79,11 +76,9 @@ const ModalSearch = ({ open }) => {
           return listTemp;
         })
       : [];
-  console.log("format_keywordResult:: ", format_keywordResult);
   const extractedResults = format_keywordResult
     .filter((item) => typeof item === "string" && item.trim() !== "") // Ensure valid strings
     .map((item) => getSubStringWithKeyword(item, paramketyword));
-  console.log("extractedResults:: ", extractedResults);
 
   const keywords_conver =
     keywords.length > 0
@@ -92,7 +87,32 @@ const ModalSearch = ({ open }) => {
           return extractMatchingFragment(monDacSacValue, paramketyword);
         })
       : [];
+  const restaurantSearch = useSelector(
+    (state) => state.search.restaurantsSearch
+  );
+  const openOf2 = useSelector(openModalSearch2);
+  const [temp_restaurantSearch, setTempRestaurantSearch] = useState([]);
 
+  useEffect(() => {
+    if (openOf2) {
+      setTempRestaurantSearch(restaurantSearch.slice());
+    }
+  }, [openOf2, restaurantSearch]);
+
+  // Sort restaurants by distance
+  const sortedRestaurants = [...temp_restaurantSearch].sort((a, b) => {
+    const distanceA =
+      calculateDistance(
+        { longitude: 106.6983125, latitude: 10.7802256 },
+        { lat: a.viDo, lng: a.kinhDo }
+      ) || Infinity;
+    const distanceB =
+      calculateDistance(
+        { longitude: 106.6983125, latitude: 10.7802256 },
+        { lat: b.viDo, lng: b.kinhDo }
+      ) || Infinity;
+    return distanceA - distanceB; // Sort ascending
+  });
   return (
     // <Modal>
     <div className="ModalSearchDiv">
@@ -115,26 +135,17 @@ const ModalSearch = ({ open }) => {
             Gợi ý
           </h4>
           <div className="ModalSearchDivWrapperSearch_Recommendation_listRecommendation">
-            <PlaceDetailSearch
-              place={selectedPlace}
-              restaurantsImageType={
-                selectedPlace.danhSachAnhNhaHang
-                  ? selectedPlace.danhSachAnhNhaHang
-                  : "https://via.placeholder.com/100"
-              }
-            >
-              {" "}
-            </PlaceDetailSearch>
-            <PlaceDetailSearch
-              place={selectedPlace}
-              restaurantsImageType={
-                selectedPlace.danhSachAnhNhaHang
-                  ? selectedPlace.danhSachAnhNhaHang
-                  : "https://via.placeholder.com/100"
-              }
-            >
-              {" "}
-            </PlaceDetailSearch>
+            {sortedRestaurants.map((item, i) => (
+              <PlaceDetailSearch
+                index={i}
+                place={item}
+                restaurantsImageType={
+                  item.imageUrls.RESTAURANTIMAGE
+                    ? item.imageUrls.RESTAURANTIMAGE
+                    : "https://via.placeholder.com/100"
+                }
+              ></PlaceDetailSearch>
+            ))}
           </div>
         </div>
       </div>

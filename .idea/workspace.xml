@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/ComboAvailableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/ComboAvailableController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/ComboAvailableHasFoodId.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/ComboAvailableHasFoodId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/ComboAvailableMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/ComboAvailableMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/ComboRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/ComboRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/OrderTableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/OrderTableService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/ComboAvailableServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/ComboAvailableServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/OrderTableServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/OrderTableServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

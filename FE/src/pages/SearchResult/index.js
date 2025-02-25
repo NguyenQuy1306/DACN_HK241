@@ -1,55 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { Star, Navigation2 } from "lucide-react";
-import styles from "./RestaurantCard.module.css"; // Import the CSS module
-import List from "../../components/List/List";
-import Map from "../../components/Map/Map";
+import styles from "./RestaurantCard.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { openModalSearch2 } from "../../redux/features/searchSlice";
+import SearchBar from "../../components/Search/SearchBar/SearchBar";
 import Reservation from "../../components/Dropdown/Reservation";
 import Filter from "../../components/Filter/Filter";
 import ResultSearch from "../../components/Search/Result/ResultSearch";
-import SearchBar from "../../components/Search/SearchBar/SearchBar";
-import SortIcon from "@mui/icons-material/Sort";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CloseIcon from "@mui/icons-material/Close";
-import SortDetail from "../../components/Sort/SortDetail";
-import { Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+
+// Function to convert degrees to radians
+const toRadians = (degrees) => (degrees * Math.PI) / 180;
+
+// Function to calculate distance
+export const calculateDistance = (myCoords, restaurantCoords) => {
+  if (
+    !myCoords?.latitude ||
+    !myCoords?.longitude ||
+    !restaurantCoords?.lat ||
+    !restaurantCoords?.lng
+  ) {
+    return null;
+  }
+
+  const R = 6371; // Earth's radius in km
+  const lat1 = toRadians(myCoords.latitude);
+  const lon1 = toRadians(myCoords.longitude);
+  const lat2 = toRadians(restaurantCoords.lat);
+  const lon2 = toRadians(restaurantCoords.lng);
+
+  const dLat = lat2 - lat1;
+  const dLon = lon2 - lon1;
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.max(Math.round(R * c * 100) / 100, 0.01); // Return distance with 2 decimal places
+};
 
 const RestaurantCard = ({ restaurant }) => {
-  const toRadians = (degrees) => (degrees * Math.PI) / 180;
-  const myCoords = useSelector((state) => state.persist.myCoords);
-
-  const calculateDistance = (myCoords, restaurantCoords) => {
-    if (
-      !myCoords?.latitude ||
-      !myCoords?.longitude ||
-      !restaurantCoords?.lat ||
-      !restaurantCoords?.lng
-    ) {
-      return null;
-    }
-
-    const R = 6371; // Earth's radius in km
-    const lat1 = toRadians(myCoords.latitude);
-    const lon1 = toRadians(myCoords.longitude);
-    const lat2 = toRadians(restaurantCoords.lat);
-    const lon2 = toRadians(restaurantCoords.lng);
-
-    const dLat = lat2 - lat1;
-    const dLon = lon2 - lon1;
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-
-    // Return with 2 decimal places, minimum 0.01 km
-    return Math.max(Math.round(distance * 100) / 100, 0.01);
+  const handleClickDetailRestaurant = async (id) => {
+    localStorage.setItem("selectedPlace", JSON.stringify(restaurant));
+    localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    window.open("/DetailRestaurant/${id}", "_blank");
   };
-
   return (
-    <div className={styles.restaurantCard}>
+    <div
+      className={styles.restaurantCard}
+      onClick={() => handleClickDetailRestaurant(restaurant.maSoNhaHang)}
+    >
       <div className={styles.imageContainer}>
         <img
           src={
@@ -109,40 +109,17 @@ const RestaurantGrid = () => {
   const restaurantSearch = useSelector(
     (state) => state.search.restaurantsSearch
   );
-  const myCoords = useSelector((state) => state.persist.myCoords);
+  const openOf2 = useSelector(openModalSearch2);
+  const [temp_restaurantSearch, setTempRestaurantSearch] = useState([]);
 
-  // Function to calculate distance
-  const toRadians = (degrees) => (degrees * Math.PI) / 180;
-
-  const calculateDistance = (myCoords, restaurantCoords) => {
-    if (
-      !myCoords?.latitude ||
-      !myCoords?.longitude ||
-      !restaurantCoords?.lat ||
-      !restaurantCoords?.lng
-    ) {
-      return null;
+  useEffect(() => {
+    if (!openOf2) {
+      setTempRestaurantSearch(restaurantSearch.slice());
     }
-
-    const R = 6371; // Earth's radius in km
-    const lat1 = toRadians(myCoords.latitude);
-    const lon1 = toRadians(myCoords.longitude);
-    const lat2 = toRadians(restaurantCoords.lat);
-    const lon2 = toRadians(restaurantCoords.lng);
-
-    const dLat = lat2 - lat1;
-    const dLon = lon2 - lon1;
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return Math.max(Math.round(R * c * 100) / 100, 0.01); // Return distance with 2 decimal places
-  };
+  }, [openOf2, restaurantSearch]);
 
   // Sort restaurants by distance
-  const sortedRestaurants = [...restaurantSearch].sort((a, b) => {
+  const sortedRestaurants = [...temp_restaurantSearch].sort((a, b) => {
     const distanceA =
       calculateDistance(
         { longitude: 106.6983125, latitude: 10.7802256 },
@@ -198,4 +175,6 @@ const RestaurantGrid = () => {
   );
 };
 
+// Export components
+export { RestaurantGrid, RestaurantCard };
 export default RestaurantGrid;
