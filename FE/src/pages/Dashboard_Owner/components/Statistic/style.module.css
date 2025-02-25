@@ -2,6 +2,13 @@
     display: flex;
     gap: 16px;
     align-items: center;
+    min-height: 130px;
+    justify-content: center;
+    border: 1px solid rgb(28,69,28);
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+    padding: 0;
+    border-radius: 8px;
+    background-color: #fff;
 }
 
 .grow-up-info {
@@ -9,6 +16,8 @@
     align-items: center;
     gap: 4px;
 }
+
+
 
 .quantity {
     margin: 0;

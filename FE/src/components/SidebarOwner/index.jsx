@@ -61,9 +61,9 @@ const items = [
 const SidebarOwner = ({ collapsed }) => {
     return (
         <div
-            style={{
-                width: 256,
-            }}
+        // style={{
+        //     width: 256,
+        // }}
         >
             <Menu
                 defaultSelectedKeys={["1"]}
@@ -72,7 +72,7 @@ const SidebarOwner = ({ collapsed }) => {
                 theme="night"
                 inlineCollapsed={collapsed}
                 items={items}
-                style={{ backgroundColor: "#1c451c", color: "#fff", height: "100%" }}
+                style={{ backgroundColor: "#1c451c", color: "#fff", height: "100%", fontSize: 16 }}
             />
         </div>
     );

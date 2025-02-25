@@ -1,5 +1,4 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Divider, Input, Row, Select } from "antd";
+import { Col, Divider, Input, Row, Select } from "antd";
 import {
     ArcElement,
     BarElement,
@@ -14,10 +13,7 @@ import {
 } from "chart.js";
 import React, { useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
-import { IoMdSettings } from "react-icons/io";
-import { IoNotifications } from "react-icons/io5";
 import food from "../../assets/images/food.png";
-import logo from "../../assets/images/logo.png";
 import money from "../../assets/images/money.png";
 import order from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
@@ -122,79 +118,73 @@ function Dashboard_Owner() {
         <div className={styles.container}>
             <SidebarOwner collapsed={collapsed} />
             <div className={styles["dashboard-body"]}>
-                    
-                <Select
-                    defaultValue="Ngày"
-                    style={{
-                        width: 120,
-                        marginLeft: "10px",
-                    }}
-                    onChange={handleChange}
-                    options={[
-                        {
-                            value: "ngay",
-                            label: "Ngày",
-                        },
-                        {
-                            value: "thang",
-                            label: "Tháng",
-                        },
-                        {
-                            value: "nam",
-                            label: "Năm",
-                        },
-                    ]}
-                />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
+                    <Select
+                        defaultValue="Ngày"
+                        style={{
+                            width: 120,
+                            marginLeft: "10px",
+                        }}
+                        onChange={handleChange}
+                        options={[
+                            {
+                                value: "ngay",
+                                label: "Ngày",
+                            },
+                            {
+                                value: "thang",
+                                label: "Tháng",
+                            },
+                            {
+                                value: "nam",
+                                label: "Năm",
+                            },
+                        ]}
+                    />
+                </div>
                 <Row
                     gutter={16}
                     className={styles["statistic-wrap"]}
                 >
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={food}
-                                title="Tổng đơn đặt"
-                                quantity={100}
-                                up={true}
-                                rate={3}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={food}
+                            title="Tổng đơn đặt"
+                            quantity={100}
+                            up={true}
+                            rate={3}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={ship}
-                                title="Khung giờ đặt nhiều nhất"
-                                quantity={"17 - 20"}
-                                up={true}
-                                compare=""
-                            />
-                        </Card>
+                        <Statistic
+                            img={ship}
+                            title="Khung giờ đặt nhiều nhất"
+                            quantity={"17 - 20"}
+                            up={true}
+                            compare=""
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={order}
-                                title="Tổng đơn bị hủy"
-                                quantity={8}
-                                up={false}
-                                rate={12}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={order}
+                            title="Tổng đơn bị hủy"
+                            quantity={8}
+                            up={false}
+                            rate={12}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={money}
-                                title="Tổng doanh thu (VND)"
-                                quantity={32000000}
-                                up={true}
-                                rate={13}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={money}
+                            title="Tổng doanh thu (VND)"
+                            quantity={32000000}
+                            up={true}
+                            rate={13}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                 </Row>
                 <Divider />
@@ -216,17 +206,17 @@ function Dashboard_Owner() {
                 </div>
                 <Divider />
 
-                <h2>Nhận xét của khách hàng</h2>
+                <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
 
                 <div className={styles["comment-wrap"]}>
-                    <CommentCard />
-                    <CommentCard />
                     <CommentCard />
                     <CommentCard />
                 </div>
                 <div className={styles["trending-wrap"]}>
                     <div className={styles.trending}>
-                        <h3 style={{ paddingLeft: "16px", marginTop: "12px", fontSize: "20px" }}>
+                        <h3
+                            style={{ paddingLeft: "16px", marginTop: "12px", fontSize: "20px", color: "rgb(28,69,28)" }}
+                        >
                             Top 10 món ăn bán chạy nhất
                         </h3>
                         <Divider />

@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./style.module.css";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+import React from "react";
+import styles from "./style.module.css";
 function CommentCard() {
     return (
         <div className={styles.container}>
@@ -16,6 +16,7 @@ function CommentCard() {
                 </div>
                 <p>9/10</p>
             </div>
+            
 
             <div className={styles["comment-body"]}>Ngon lắm, nhiều món đa dạng, đồ tươi, giá bình dân</div>
         </div>

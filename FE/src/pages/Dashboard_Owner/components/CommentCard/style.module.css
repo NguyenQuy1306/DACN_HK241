@@ -1,5 +1,8 @@
 .container {
     background-color: white;
+    min-height: 130px;
+    width: 400px;
+    border: 1px solid rgb(28,69,28);
 }
 
 .comment-header {
