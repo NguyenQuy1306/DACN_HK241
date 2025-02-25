@@ -13,6 +13,25 @@
     display: flex;
     align-items: center;
     margin-top: 12px;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-body {
+    flex: 1;
+}
+
+.logo-name {
+    margin: 0;
+}
+
+.logo {
+    width: 48px;
 }
 
 .icon_wrap {

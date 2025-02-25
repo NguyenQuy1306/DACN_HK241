@@ -1,33 +1,31 @@
-import React from "react";
-import styles from "./style.module.css";
-import { IoNotifications } from "react-icons/io5";
-import { FaMessage } from "react-icons/fa6";
-import { IoMdSettings } from "react-icons/io";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { Card, Col, Row, Select } from "antd";
-import { Input, Divider } from "antd";
-import TrendingItem from "./components/TrendingItem";
-import Statistic from "./components/Statistic";
-import ship from "../../assets/images/ship.png";
-import food from "../../assets/images/food.png";
-import order from "../../assets/images/order.png";
-import money from "../../assets/images/money.png";
-
-import { Bar, Line, Doughnut } from "react-chartjs-2";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Divider, Input, Row, Select } from "antd";
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
     ArcElement,
-    Tooltip,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
     Legend,
+    LinearScale,
     LineElement,
     PointElement,
+    Title,
+    Tooltip,
 } from "chart.js";
-import CommentCard from "./components/CommentCard";
+import React, { useState } from "react";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { IoMdSettings } from "react-icons/io";
+import { IoNotifications } from "react-icons/io5";
+import food from "../../assets/images/food.png";
+import logo from "../../assets/images/logo.png";
+import money from "../../assets/images/money.png";
+import order from "../../assets/images/order.png";
+import ship from "../../assets/images/ship.png";
 import SidebarOwner from "../../components/SidebarOwner";
+import CommentCard from "./components/CommentCard";
+import Statistic from "./components/Statistic";
+import TrendingItem from "./components/TrendingItem";
+import styles from "./style.module.css";
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -116,42 +114,15 @@ const handleChange = (value) => {
 };
 
 function Dashboard_Owner() {
+    const [collapsed, setCollapsed] = useState(false);
+    const toggleCollapsed = () => {
+        setCollapsed(!collapsed);
+    };
     return (
         <div className={styles.container}>
-            <SidebarOwner />
-            <div>
-                <div className={styles["dash_header"]}>
-                    <div className={styles["search-wrap"]}>
-                        <Search
-                            placeholder="Search"
-                            allowClear
-                            enterButton
-                            size="large"
-                            onSearch={onSearch}
-                        />
-                    </div>
-
-                    <div className={styles.noti}>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--notification"]}`}>
-                            <IoNotifications
-                                size={22}
-                                color="#4C95DD"
-                            />
-                        </div>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--message"]}`}>
-                            <FaMessage
-                                size={20}
-                                color="#4C95DD"
-                            />
-                        </div>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--setting"]}`}>
-                            <IoMdSettings
-                                size={24}
-                                color="#E66430"
-                            />
-                        </div>
-                    </div>
-                </div>
+            <SidebarOwner collapsed={collapsed} />
+            <div className={styles["dashboard-body"]}>
+                    
                 <Select
                     defaultValue="Ngày"
                     style={{
