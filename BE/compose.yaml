@@ -21,9 +21,9 @@ services:
       - ./target:/app/target
       - ./logs:/app/logs
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/curcus
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/themeal
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=Ngocquynguyen1
+      - SPRING_DATASOURCE_PASSWORD=Nhut3030
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
@@ -112,8 +112,8 @@ services:
       - DATABASE_HOST=172.17.0.1  # IP mặc định của host trong Docker network
       - DATABASE_PORT=5432  # Cổng PostgreSQL local
       - DATABASE_USER=postgres  # User PostgreSQL local
-      - DATABASE_PASSWORD=Ngocquynguyen1  # Password PostgreSQL local
-      - DATABASE_DBNAME=curcus  # Database cần theo dõi
+      - DATABASE_PASSWORD=Nhut3030  # Password PostgreSQL local
+      - DATABASE_DBNAME=themeal  # Database cần theo dõi
       - DATABASE_SERVER_ID=1
       - DATABASE_SERVER_NAME=pgserver  # Tên server trong Kafka topic
       - DATABASE_INCLUDE_SCHEMA=true

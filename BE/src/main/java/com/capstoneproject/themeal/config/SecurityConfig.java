@@ -39,6 +39,7 @@ public class SecurityConfig {
                         "/api/orders",
                         "/api/rate/**",
                         "/api/payments/*",
+                        "api/payments/create-payment-link",
                         "/api/favorite-list/**",
                         "/api/favorite-list/add-new-card/*",
                         "/api/order-table/*",
