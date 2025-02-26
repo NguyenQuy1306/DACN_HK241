@@ -27,6 +27,5 @@ public class CreateOrderRequest implements Serializable {
     private Long comboId; // Optional field
     private Long restaurantId;
     private List<FoodOrderRequest> foodOrderRequests;
-    // Getters and setters
 
 }

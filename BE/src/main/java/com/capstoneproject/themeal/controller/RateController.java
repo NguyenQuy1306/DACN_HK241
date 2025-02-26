@@ -42,7 +42,6 @@ public class RateController {
         try {
             List<RatesRestaurantResponse> ratesRestaurantResponses = rateService.getRatesInRestaurant(
                     restaurantId);
-            System.out.println("ratesRestaurantResponses:::" + ratesRestaurantResponses.size());
             apiResponse.ok(ratesRestaurantResponses);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));

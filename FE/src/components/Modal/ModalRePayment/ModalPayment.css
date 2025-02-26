@@ -1,0 +1,79 @@
+.ModalPayement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ModalPayment-section {
+    background-color: #fff;
+    width: 650px;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .ModalPayment-button-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .ModalPayment-button-close-icon {
+    font-size: 28px;
+    color: #555;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .ModalPayment-button-close-icon:hover {
+    color: #e74c3c;
+  }
+  
+  .ModalPayment-div2-title span {
+    font-size: 22px;
+    font-weight: bold;
+    color: #008080;
+  }
+  
+  .ModalPayment-div2-bookdetail {
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .ModalPayment-div2-button {
+    width: 100% !important;
+    padding: 12px !important;
+    background-color: #00a389 !important;
+    color: white !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease-in-out !important;
+    margin-top: 16px !important;
+  }
+  
+  .ModalPayment-div2-button:hover {
+    background-color: #008066 !important;
+  }
+  

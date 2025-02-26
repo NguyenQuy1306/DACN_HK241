@@ -1,9 +1,13 @@
 package com.capstoneproject.themeal.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.exception.NotFoundException;
+import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
 import com.capstoneproject.themeal.model.entity.ComboAvailableHasFood;
 import com.capstoneproject.themeal.model.entity.ComboAvailableHasFoodId;
@@ -20,17 +24,30 @@ import com.capstoneproject.themeal.model.entity.TableAvailableId;
 import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.model.mapper.OrderTableMapper;
 import com.capstoneproject.themeal.model.request.ComboRequest;
+import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
+import com.capstoneproject.themeal.model.response.ApiResponse;
 import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
 import com.capstoneproject.themeal.model.response.FoodResponse;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
+import com.capstoneproject.themeal.model.response.ResponseCode;
 import com.capstoneproject.themeal.repository.ComboAvailableRepository;
 import com.capstoneproject.themeal.repository.FoodRepository;
 import com.capstoneproject.themeal.repository.OrderTableHasComboAvailableRepository;
 import com.capstoneproject.themeal.repository.OrderTableHasFoodRepository;
 import com.capstoneproject.themeal.repository.OrderTableRepository;
+import com.capstoneproject.themeal.repository.RestaurantRepository;
 import com.capstoneproject.themeal.repository.TableAvailableRepository;
+import com.capstoneproject.themeal.repository.UserRepository;
+import com.capstoneproject.themeal.service.ComboAvailableService;
+import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.OrderTableService;
+import com.capstoneproject.themeal.service.TableAvailableService;
+
+import jakarta.transaction.Transactional;
+import vn.payos.type.CheckoutResponseData;
+import vn.payos.type.ItemData;
+import vn.payos.type.PaymentData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +67,17 @@ public class OrderTableServiceImpl implements OrderTableService {
         private FoodRepository foodRepository;
         @Autowired
         private OrderTableHasFoodRepository orderTableHasFoodRepository;
+        @Autowired
+        private UserRepository userRepository;
+        @Autowired
+        private RestaurantRepository restaurantRepository;
+        @Autowired
+        private ComboAvailableService comboAvailableService;
+        @Autowired
+        private FoodService foodService;
+
+        @Autowired
+        private TableAvailableService tableAvailableService;
 
         @Override
         public List<OrderTableResponse> getOrderTableByCustomerId(Long customerId) {
@@ -59,7 +87,8 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
 
         @Override
-        public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId) {
+        public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
+                        String statusOrder) {
                 TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
                 TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                                 .orElseThrow(() -> new NotFoundException("Table not found"));
@@ -68,7 +97,7 @@ public class OrderTableServiceImpl implements OrderTableService {
                                 .SoKhach(tableAvailable.getSoNguoi())
                                 .Ngay(tableAvailable.getNgay())
                                 .Gio(tableAvailable.getGio())
-                                .TrangThai("Hoàn thành")
+                                .TrangThai(statusOrder)
                                 .KhachHang(user)
                                 .NhaHang(restaurant)
                                 .build();
@@ -112,34 +141,88 @@ public class OrderTableServiceImpl implements OrderTableService {
                 orderTableHasFoodRepository.save(orderTableHasFood);
         }
 
-        // @Override
-        // public OrderTableHasFood createCombo(Long maSoNhaHang, ComboRequest
-        // comboRequest) {
-        // ComboAvailableHasFoodResponse comboAvailableHasFoodResponses = new
-        // ComboAvailableHasFoodResponse();
-        // ComboAvailable comboAvailable = ComboAvailable.builder()
-        // .Ten(comboRequest.getTen())
-        // .Gia(comboRequest.getGia())
-        // .ThoiGianTao(comboRequest.getThoiGianTao()).build();
-        // ComboAvailable comboAvailable2 =
-        // comboAvailableRepository.save(comboAvailable);
-        // List<Long> listIdFood = new ArrayList<Long>();
+        @Override
+        public void validateOrderRequest(CreateOrderRequest request) {
+                if (!tableAvailableService.isTableExists(request.getTableId(), request.getRestaurantId())) {
+                        throw new ValidationException("Table does not exist");
+                }
+                if (request.getComboId() != null
+                                && !comboAvailableService.isComboExists(request.getComboId(),
+                                                request.getRestaurantId())) {
+                        throw new ValidationException("Combo does not exist");
+                }
+                if (!request.getFoodOrderRequests().isEmpty()) {
+                        List<Long> listIdFood = request.getFoodOrderRequests().stream()
+                                        .map(FoodOrderRequest::getMaSoMonAn)
+                                        .toList();
+                        foodService.checkFoodExist(listIdFood);
+                }
+        }
 
-        // listIdFood = comboRequest.getFoods().stream().map(FoodResponse::getMaSoMonAn)
-        // .collect(Collectors.toList());
-        // ComboAvailableHasFoodId comboAvailableHasFoodId = new
-        // ComboAvailableHasFoodId();
-        // List<ComboAvailableHasFood> comboAvailableHasFoods = listIdFood.stream()
-        // .map(id -> {
-        // ComboAvailableHasFoodId comboId = new ComboAvailableHasFoodId(
-        // comboAvailable2.getMaSoComBoCoSan(),
-        // id);
-        // Food food = foodRepository.findById(id).orElse(null);
-        // return new ComboAvailableHasFood(comboId, comboAvailable2, food);
-        // })
-        // .collect(Collectors.toList());
-        // comboAvailableHasFoodRepository.saveAll(comboAvailableHasFoods);
-        // return comboAvailableHasFoodResponses;
+        @Transactional
+        public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder) {
+                Long customerID = request.getCustomerID();
+                Short tableId = request.getTableId();
+                Long comboId = request.getComboId();
+                Long restaurantId = request.getRestaurantId();
+                List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
+                // Check exist table with id
+                boolean isExisTable = tableAvailableService.isTableExists(tableId, restaurantId);
+                if (!isExisTable) {
+                        throw new NotFoundException(
+                                        "Table IDs not found: " + tableId);
+                }
+                // Check exist Combo with id
+                if (comboId != null) {
+                        boolean isExisCombo = comboAvailableService.isComboExists(comboId, restaurantId);
 
-        // }
+                        if (!isExisCombo) {
+                                throw new NotFoundException(
+                                                "Combo IDs not found: " + comboId);
+                        }
+                }
+                // Check exist Food with id
+
+                if (foodOrderRequests.size() > 0) {
+                        List<Long> listIdFood = foodOrderRequests.stream()
+                                        .map(FoodOrderRequest::getMaSoMonAn)
+                                        .toList();
+
+                        foodService.checkFoodExist(listIdFood);
+                }
+                PaymentMethod paymentMethod = new PaymentMethod();
+                User customer = userRepository.findById(customerID)
+                                .orElseThrow(() -> new NotFoundException("Customer not found"));
+                // create Restaurant entity
+                Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                                .orElseThrow(() -> new NotFoundException("Restaurant not found"));
+                // Create OderTalbe entity
+                OrderTable orderTable = this.saveOrderTable(customer, paymentMethod, restaurant,
+                                tableId, statusOrder);
+                // Create OderTableHasCombo entity if Menu is not null
+                if (comboId != null) {
+                        this.saveOrderTableHasComboAvailable(comboId, orderTable);
+                }
+                if (foodOrderRequests.size() > 0) {
+                        for (FoodOrderRequest foodOrderRequest : foodOrderRequests) {
+                                this.saveOrderTableHasFood(orderTable, foodOrderRequest);
+                        }
+                }
+
+                return this.mapping(orderTable);
+
+        }
+
+        @Transactional
+        public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess) {
+                OrderTable order = orderTableRepository.findById(orderId)
+                                .orElseThrow(() -> new NotFoundException("Order not found"));
+                if (isSuccess) {
+                        order.setTrangThai("SUCCESS");
+                } else {
+                        order.setTrangThai("FAILED");
+                }
+                orderTableRepository.save(order);
+        }
+
 }

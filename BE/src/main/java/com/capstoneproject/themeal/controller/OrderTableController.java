@@ -70,67 +70,10 @@ public class OrderTableController {
     public ResponseEntity<ApiResponse<OrderTableResponse>> createOrder(
             @RequestBody CreateOrderRequest request) {
 
-        Long customerID = request.getCustomerID();
-        Short tableId = request.getTableId();
-        Long comboId = request.getComboId();
-        Long restaurantId = request.getRestaurantId();
-        List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
-        System.out.println("calling myfren " + foodOrderRequests.size());
-        System.out.println("calling customerID " + customerID);
-        System.out.println("calling tableId " + tableId);
-        System.out.println("calling restaurantId " + restaurantId);
-
         ApiResponse<OrderTableResponse> apiResponse = new ApiResponse<>();
         try {
-            // Check exist table with id
-            boolean isExisTable = tableAvailableService.isTableExists(tableId, restaurantId);
-            if (!isExisTable) {
-                apiResponse.error(ResponseCode.getError(29));
-                return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            // Check exist Combo with id
-            if (comboId != null) {
-                boolean isExisCombo = comboAvailableService.isComboExists(comboId, restaurantId);
-
-                if (!isExisCombo) {
-                    apiResponse.error(ResponseCode.getError(30));
-                    return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-            // Check exist Food with id
-
-            if (foodOrderRequests.size() > 0) {
-                List<Long> listIdFood = foodOrderRequests.stream()
-                        .map(FoodOrderRequest::getMaSoMonAn)
-                        .toList();
-                System.out.println("calling listIdFood " + listIdFood);
-
-                foodService.checkFoodExist(listIdFood);
-                System.out.println("calling tableId2222222 " + tableId);
-
-            }
-            // Create User entity
-            // PaymentMethod paymentMethod = paymentMethodRepository.findById(restaurantId)
-            // .orElseThrow(() -> new ResourceNotFoundException("Payment Method not
-            // found"));
-            PaymentMethod paymentMethod = new PaymentMethod();
-            User customer = userRepository.findById(customerID)
-                    .orElseThrow(() -> new NotFoundException("Customer not found"));
-            // create Restaurant entity
-            Restaurant restaurant = restaurantRepository.findById(restaurantId)
-                    .orElseThrow(() -> new NotFoundException("Restaurant not found"));
-            // Create OderTalbe entity
-            OrderTable orderTable = orderTableService.saveOrderTable(customer, paymentMethod, restaurant, tableId);
-            // Create OderTableHasCombo entity if Menu is not null
-            if (comboId != null) {
-                orderTableService.saveOrderTableHasComboAvailable(comboId, orderTable);
-            }
-            if (foodOrderRequests.size() > 0) {
-                for (FoodOrderRequest foodOrderRequest : foodOrderRequests) {
-                    orderTableService.saveOrderTableHasFood(orderTable, foodOrderRequest);
-                }
-            }
-            apiResponse.ok(orderTableService.mapping(orderTable));
+            OrderTableResponse orderOrderTableResponse = orderTableService.createOrder(request, "PEDNING");
+            apiResponse.ok(orderOrderTableResponse);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
             return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);

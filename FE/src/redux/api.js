@@ -146,3 +146,46 @@ export const searchByKeyword = async (params) => {
     return error.response?.data || error;
   }
 };
+
+export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
+  try {
+    const queryParams = deposit ? `?deposit=${deposit}` : "";
+    const queryParams2 = RETURN_URL
+      ? `&returnUrl=${encodeURIComponent(RETURN_URL)}`
+      : "";
+    const response = await API.get(
+      `api/payments/create-payment-link${queryParams}${queryParams2}`,
+      {
+        data: request || {}, // Ensure request is included properly
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const getOrder = async (params) => {
+  try {
+    const response = await API.get(`/api/payments/getOrderById`, { params });
+    return response;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const cancelOrder = async (params) => {
+  try {
+    const response = await API.post(`/api/payments/${params.orderId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const paymentCallback = async (params) => {
+  try {
+    console.log("paymentCallback", params);
+    const response = await API.post(`/api/payments/payment-callback`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

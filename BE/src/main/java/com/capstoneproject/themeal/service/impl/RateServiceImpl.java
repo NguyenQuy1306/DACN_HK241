@@ -41,8 +41,6 @@ public class RateServiceImpl implements RateService {
     public List<RatesRestaurantResponse> getRatesInRestaurant(Long restaurantId) {
         List<Rate> rates = rateRepository.getRatesByRestaurantId(restaurantId);
         List<UserRateResponse> userRateResponses = rateRepository.getUserRateById(restaurantId);
-        System.out.println("userRateResponses:::" + userRateResponses.size());
-        System.out.println("rates:::" + rates.size());
 
         return rates.stream()
                 .map(rate -> {

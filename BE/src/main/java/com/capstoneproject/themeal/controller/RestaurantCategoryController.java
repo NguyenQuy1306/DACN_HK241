@@ -25,7 +25,6 @@ public class RestaurantCategoryController {
 
     @GetMapping
     ResponseEntity<List<RestaurantCategoryResponse>> getAllRestaurantCategories() {
-        System.out.println("ĐANG GỌI CONTROLLER LẤY DỮ LIÊ CATEGORY");
         List<RestaurantCategoryResponse> restaurantCategoryResponses = restaurantCategoryService.getAll();
         return new ResponseEntity<>(restaurantCategoryResponses, HttpStatus.OK);
     }

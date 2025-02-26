@@ -9,7 +9,7 @@ function RecommendCard({ place,tags,point ,discountPercent}) {
         localStorage.setItem("selectedPlaceId", JSON.stringify(id));
         window.open("/DetailRestaurant/${id}", "_blank");
     }
-    console.log("place",place)
+
     return (
         <div className={styles.container} onClick={()=>handleOnclickToDetail(place.maSoNhaHang)}>
             <img

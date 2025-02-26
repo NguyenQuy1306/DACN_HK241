@@ -1,20 +1,34 @@
 package com.capstoneproject.themeal.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.capstoneproject.themeal.model.request.CreateOrderRequest;
+import com.capstoneproject.themeal.model.request.PaymentCallbackRequest;
+import com.capstoneproject.themeal.service.OrderTableService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import vn.payos.PayOS;
 import vn.payos.type.CheckoutResponseData;
 import vn.payos.type.ItemData;
 import vn.payos.type.PaymentData;
+import vn.payos.type.PaymentLinkData;
 
 import java.time.Instant;
+import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments")
 
 public class PaymentController {
+    @Autowired
+    private OrderTableService orderTableService;
     private final PayOS payOS;
+    private static final String WEBHOOK_URL = "https://ff74-14-169-38-181.ngrok-free.app/webhook/payos_transfer_handler";
 
     public PaymentController() {
         String clientId = "c52168d1-0b63-47b4-ab92-09a6138f05b5";
@@ -24,32 +38,129 @@ public class PaymentController {
     }
 
     @GetMapping("/create-payment-link")
-    public ResponseEntity<?> createPaymentLink() {
+    public ResponseEntity<?> createPaymentLink(
+            @RequestParam(required = false) Integer deposit,
+            @RequestBody(required = false) CreateOrderRequest request, @RequestParam String returnUrl) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode response = objectMapper.createObjectNode();
+
         try {
-            String domain = "http://localhost:3000"; // Đường dẫn FE
-            Long orderCode = Instant.now().getEpochSecond(); // Mã đơn hàng
 
-            ItemData itemData = ItemData.builder()
-                    .name("Mỳ tôm Hảo Hảo ly")
-                    .quantity(1)
-                    .price(100000)
-                    .build();
-
+            int amount = deposit != null ? deposit : 10000;
+            String currentTimeString = String.valueOf(String.valueOf(new Date().getTime()));
+            long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
+            String domain = "http://localhost:3000";
+            long now = Instant.now().getEpochSecond(); // Lấy Unix Timestamp hiện tại (giây)
+            long expirationTime = now + (5 * 60); // Hết hạn sau 15 phút (900 giây)
             PaymentData paymentData = PaymentData.builder()
                     .orderCode(orderCode)
-                    .amount(100000)
-                    .description("Thanh toán đơn hàng")
-                    .returnUrl(domain + "/home") // Đường dẫn trả về
-                    .cancelUrl(domain + "/home") // Đường dẫn hủy
-                    .item(itemData)
+                    .amount(amount)
+                    .description("Đặt cọc bàn ăn")
+                    .returnUrl(returnUrl)
+                    .cancelUrl(returnUrl)
+                    .expiredAt(expirationTime)
+                    .item(ItemData.builder()
+                            .name("Đặt cọc")
+                            .quantity(1)
+                            .price(amount)
+                            .build())
+
                     .build();
 
-            CheckoutResponseData result = payOS.createPaymentLink(paymentData);
+            CheckoutResponseData data = payOS.createPaymentLink(paymentData);
+            response.put("error", 0);
+            response.put("message", "success");
+            response.set("data", objectMapper.valueToTree(data));
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
-            return ResponseEntity.ok(result.getCheckoutUrl()); // Trả về URL thanh toán
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", -1);
+            response.put("message", "fail");
+            response.set("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(path = "/getOrderById")
+    public ObjectNode getOrderById(@RequestParam Long orderId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode response = objectMapper.createObjectNode();
+        try {
+            PaymentLinkData order = payOS.getPaymentLinkInformation(orderId);
+
+            response.set("data", objectMapper.valueToTree(order));
+            response.put("error", 0);
+            response.put("message", "ok");
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", -1);
+            response.put("message", e.getMessage());
+            response.set("data", null);
+            return response;
+        }
+
+    }
+
+    @PostMapping(path = "/{orderId}")
+    public ObjectNode cancelOrder(@PathVariable("orderId") int orderId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode response = objectMapper.createObjectNode();
+        try {
+            PaymentLinkData order = payOS.cancelPaymentLink(orderId, null);
+            response.set("data", objectMapper.valueToTree(order));
+            response.put("error", 0);
+            response.put("message", "ok");
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", -1);
+            response.put("message", e.getMessage());
+            response.set("data", null);
+            return response;
+        }
+    }
+
+    @PostMapping(path = "/confirm-webhook")
+    public ObjectNode confirmWebhook(@RequestBody Map<String, String> requestBody) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode response = objectMapper.createObjectNode();
+        try {
+            String str = payOS.confirmWebhook(requestBody.get("webhookUrl"));
+            response.set("data", objectMapper.valueToTree(str));
+            response.put("error", 0);
+            response.put("message", "ok");
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", -1);
+            response.put("message", e.getMessage());
+            response.set("data", null);
+            return response;
+        }
+    }
+
+    @PostMapping("/payment-callback")
+    public ResponseEntity<String> handlePaymentCallback(
+            @RequestBody PaymentCallbackRequest callbackRequest) {
+        try {
+            Long orderCode = callbackRequest.getOrderCode();
+            String status = callbackRequest.getStatus();
+
+            if ("PAID".equalsIgnoreCase(status)) {
+                // Update order status
+
+                orderTableService.updateOrderStatusAfterPayment(orderCode, true);
+                return ResponseEntity.ok("Payment processed successfully");
+            } else {
+                orderTableService.updateOrderStatusAfterPayment(orderCode, false);
+
+                return ResponseEntity.badRequest().body("Payment failed");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Lỗi khi tạo liên kết thanh toán: " + e.getMessage());
+                    .body("Error processing payment");
         }
     }
 }

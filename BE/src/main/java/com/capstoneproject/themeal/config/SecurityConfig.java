@@ -49,6 +49,9 @@ public class SecurityConfig {
                         "/elas/searchByKeyword",
                         "/elas/searchWithKeyword",
                         "/api/payments/create-payment-link",
+                        "/api/payments/payment-callback",
+                        "/api/payments/.*",
+                        "/api/payments/getOrderById",
         };
 
         @Bean

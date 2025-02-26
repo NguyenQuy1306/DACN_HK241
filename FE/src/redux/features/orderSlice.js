@@ -6,6 +6,7 @@ export const createOrder = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const response = await api.createOrder(params);
+
       return response.payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -16,7 +17,7 @@ export const createOrder = createAsyncThunk(
 export const orderSlice = createSlice({
   name: "order",
   initialState: {
-    order: [],
+    order: null,
     error: "",
     loading: false,
   },

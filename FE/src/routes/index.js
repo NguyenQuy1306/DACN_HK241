@@ -8,7 +8,13 @@ import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 import ViewImagepage from "../pages/ViewImagepage";
 import SearchResult from "../pages/SearchResult";
+import ResultPayment from "../pages/ResultPayment/ResultPayment";
 export const routes = [
+  {
+    path: "/DetailRestaurant/:id/ResultPayment",
+    component: ResultPayment,
+    layout: MainLayout,
+  },
   {
     path: "/SearchResult/:keyword",
     component: SearchResult,

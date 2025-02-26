@@ -11,9 +11,12 @@ import CategoryItem from "../../features/Cetegogy/CategoryItem";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
 import SlideCard from "../../features/Selections/components/SlideCard";
 import "./Home.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveMyCoords } from "../../redux/features/persistSlice";
+import { paymentCallback } from "../../redux/features/paymentSlice";
+import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment";
 function Home(props) {
+  const [pendingPayment, setPendingPayment] = useState(null);
   const categoryRef = useRef();
   const [itemWidth, setItemWidth] = useState(0);
   const categoryItemPerPage = 9;
@@ -26,6 +29,7 @@ function Home(props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [previousState, setPreviousState] = useState(false);
   const [nextSate, setNextState] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -46,7 +50,14 @@ function Home(props) {
       });
     }
   };
-
+  const handleCloseModal = () => setOpenModal(false);
+  const handleContinuePayment = () => {
+    if (pendingPayment) {
+      window.location.href = pendingPayment.checkoutUrl;
+    }
+  };
+  const paymentStatus = useSelector((state) => state.payment.paymentStatus);
+  console.log("paymentstatus", paymentStatus);
   const handlePrevious = () => {
     if (categoryRef.current) {
       setTestScroll(categoryRef.current?.scrollLeft);
@@ -133,6 +144,36 @@ function Home(props) {
     };
 
     getRecommendedList();
+  }, []);
+
+  const checkPendingPayment = () => {
+    const pendingOrderString = localStorage.getItem("pendingOrder");
+
+    if (!pendingOrderString) return; // Nếu không có đơn hàng nào, thoát
+
+    const pendingOrder = JSON.parse(pendingOrderString); // Chuyển về object
+    console.log("pendingOrder.orderCode:", pendingOrder.orderCode);
+
+    const elapsedTime = Date.now() - pendingOrder.timeStamp;
+
+    if (elapsedTime >= 180000) {
+      // Nếu đã quá hạn 3 phút
+      localStorage.removeItem("pendingOrder");
+      dispatch(
+        paymentCallback({
+          status: "FAIL",
+          orderCode: pendingOrder.orderCode,
+        })
+      );
+    } else {
+      setPendingPayment(pendingOrder);
+      setOpenModal(true);
+    }
+  };
+
+  // Gọi hàm khi trang home load
+  useEffect(() => {
+    checkPendingPayment();
   }, []);
 
   const carouselRef = React.useRef(null);
@@ -422,6 +463,12 @@ function Home(props) {
           </div>
         </div>
       </div>
+      <ModalRePayment
+        open={openModal}
+        handleClose={handleCloseModal}
+        pendingPayment={pendingPayment}
+        handleContinuePayment={handleContinuePayment}
+      ></ModalRePayment>
     </div>
   );
 }

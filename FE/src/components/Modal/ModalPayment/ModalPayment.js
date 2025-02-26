@@ -12,63 +12,161 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomizedTables from "../../../features/Detail/DetailBox/Navigation/Menu/Component/TableInModalMenu/TableInModalMenu";
 import axios from "axios";
+import { createOrder } from "../../../redux/features/orderSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { createPaymentLink } from "../../../redux/features/paymentSlice";
+import useScript from "react-script-hook";
+import { useSearchParams } from "react-router-dom";
 
+import "react-toastify/dist/ReactToastify.css";
 const ModalPayment = ({ open, selectedPlace }) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+  // State hooks
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState(null);
+  const [openDialogLoading, setOpenDialogLoading] = useState(false);
 
-  const [payOSConfig, setPayOSConfig] = useState({
-    RETURN_URL: window.location.origin, // required
-    ELEMENT_ID: "embedded-payment-container", // required
-    CHECKOUT_URL: null, // required
-    embedded: true, // Nếu dùng giao diện nhúng
-    onSuccess: (event) => {
-      //TODO: Hành động sau khi người dùng thanh toán đơn hàng thành công
-      setIsOpen(false);
-      setMessage("Thanh toan thanh cong");
-      window.location.href = "http://localhost:3000/home";
-    },
-  });
-
-  const dispatch = useDispatch();
+  // Redux state
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const user = useSelector((state) => state.authentication.user);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  const bookingWithNewCombo = useSelector(
+    (state) => state.restaurant.bookingWithNewCombo
+  );
 
-  if (!open) return null;
+  // Load script PayOS
+  const [loading, error] = useScript({
+    src: process.env.REACT_APP_PAYOS_SCRIPT,
+    checkForExisting: true,
+  });
 
-  const handleOnClickPayment = async () => {
-    setIsCreatingLink(true);
-    // exit();
-    const response = await axios.get(
-      "http://localhost:8080/api/payments/create-payment-link",
-      {
-        withCredentials: true,
-      }
-    );
-    if (response.status !== 200) {
-      console.log("Server doesn't response");
+  console.log("checkoutUrlcheckoutUrl", checkoutUrl);
+
+  const RETURN_URL = `${window.location.href}/ResultPayment/`;
+  const CANCEL_URL = `${window.location.href}/ResultPayment/`;
+
+  const payOSConfig = {
+    RETURN_URL: RETURN_URL,
+    ELEMENT_ID: "config_root",
+    CHECKOUT_URL: checkoutUrl,
+    onExit: (eventData) => {
+      console.log("Payment exit:", eventData);
+    },
+    onSuccess: (eventData) => {
+      console.log("Payment success:", eventData);
+      window.location.href = `${RETURN_URL}?orderCode=${eventData.orderCode}`;
+      window.open("/DetailRestaura12121", "_blank");
+    },
+    onCancel: (eventData) => {
+      console.log("Payment cancelled:", eventData);
+      window.location.href = `${CANCEL_URL}?orderCode=${eventData.orderCode}`;
+    },
+  };
+  console.log("payOSConfig.CHECKOUT_URL", payOSConfig.CHECKOUT_URL);
+
+  // usePayOS hook
+  const { open: openPayOS } = usePayOS(payOSConfig);
+
+  useEffect(() => {
+    if (message) {
+      console.log("Người dùng đã hoàn thành thanh toán!");
     }
+  }, [message]);
 
-    const result = await response.data;
+  useEffect(() => {
+    if (checkoutUrl) {
+      console.log("useeffect", openPayOS());
+      openPayOS();
+    }
+  }, [checkoutUrl]);
+  useEffect(() => {
+    const status = searchParams.get("status");
 
-    setPayOSConfig((oldConfig) => ({
-      ...oldConfig,
-      CHECKOUT_URL: result.checkoutUrl,
-      RETURN_URL: result.returnUrl,
-    }));
+    if (status === "PAID") {
+      openPayOS();
+    }
+  }, [searchParams]);
+  const createPaymentLinkHandle = async (callbackFunction) => {
+    try {
+      setOpenDialogLoading(true);
+      setIsCreatingLink(true);
 
-    window.location.href = result;
+      const orderPayload = {
+        customerID: user?.maSoNguoiDung,
+        tableId: choosedTable?.maSo?.thuTuBan,
+        comboId: menuChoosed[0]?.comboId || null,
+        restaurantId: selectedPlace?.maSoNhaHang,
+        foodOrderRequests: bookingWithNewCombo
+          ? menuChoosed.map(({ maSoMonAn, soLuong }) => ({
+              maSoMonAn,
+              soLuong,
+            }))
+          : [],
+      };
 
-    setIsOpen(true);
-    setIsCreatingLink(false);
-    // dispatch(setPaymentStatus("success"));
-    dispatch(setOpenModalPayment(false));
+      const orderResponse = await dispatch(createOrder(orderPayload)).unwrap();
+
+      if (!orderResponse || orderResponse.error) {
+        throw new Error("Tạo đơn hàng thất bại!");
+      }
+
+      const deposit = 10000;
+      const response = await dispatch(
+        createPaymentLink({ request: orderPayload, deposit, RETURN_URL })
+      ).unwrap();
+      console.log("responseresponse", response.data);
+      if (!response || response.error) {
+        throw new Error("Tạo link thanh toán thất bại!");
+      }
+
+      localStorage.setItem(
+        "pendingOrder",
+        JSON.stringify({
+          orderCode: orderResponse.maSoDatBan,
+          orderCodePayOs: response.data.paymentLinkId,
+          timeStamp: Date.now(),
+          checkoutUrl: response.data.checkoutUrl,
+          restaurantName: selectedPlace.ten,
+        })
+      );
+      callbackFunction(response.data);
+    } catch (error) {
+      console.error("Lỗi khi tạo link thanh toán:", error);
+      toast.error("Có lỗi xảy ra, vui lòng thử lại.");
+    } finally {
+      setOpenDialogLoading(false);
+      setIsCreatingLink(false);
+    }
   };
 
-  const getCurrentDate = () => new Date().toLocaleDateString("vi-VN");
+  const openPaymentDialog = async (checkoutResponse) => {
+    if (checkoutResponse) {
+      let url = checkoutResponse.checkoutUrl;
+      // if (checkoutResponse.checkoutUrl.startsWith("https://dev.pay.payos.vn")) {
+      //   url = checkoutResponse.checkoutUrl.replace(
+      //     "https://dev.pay.payos.vn",
+      //     "https://next.dev.pay.payos.vn"
+      //   );
+      // }
+      // if (checkoutResponse.checkoutUrl.startsWith("https://pay.payos.vn")) {
+      //   url = checkoutResponse.checkoutUrl.replace(
+      //     "https://pay.payos.vn",
+      //     "https://next.pay.payos.vn"
+      //   );
+      // }
+      console.log("urlurl", url);
+      dispatch(setPaymentStatus("success"));
+      dispatch(setOpenModalPayment(false));
+      setCheckoutUrl(url);
+      window.location.href = url;
+    }
+  };
+
+  if (!open) return null;
 
   return (
     <Modal
@@ -78,6 +176,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
     >
       <section className="ModalPayment-section">
         {/* Nút đóng modal */}
+        {/* <div id="config_root"></div> */}
+
         <Button
           className="ModalPayment-button-close"
           onClick={() => dispatch(setOpenModalPayment(false))}
@@ -168,7 +268,9 @@ const ModalPayment = ({ open, selectedPlace }) => {
         {/* Nút Thanh toán */}
         <Button
           className="ModalPayment-div2-button"
-          onClick={handleOnClickPayment}
+          onClick={() =>
+            createPaymentLinkHandle(openPaymentDialog, setOpenDialogLoading)
+          }
         >
           Thanh toán ngay
         </Button>
