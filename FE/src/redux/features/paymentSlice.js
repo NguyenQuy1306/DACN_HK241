@@ -69,7 +69,7 @@ export const paymentSlice = createSlice({
       state.paymentStatus = action.payload;
     },
     saveDeposit: (state, action) => {
-      state.saveDeposit = action.payload;
+      state.deposit = action.payload;
     },
   },
   extraReducers: (builder) => {

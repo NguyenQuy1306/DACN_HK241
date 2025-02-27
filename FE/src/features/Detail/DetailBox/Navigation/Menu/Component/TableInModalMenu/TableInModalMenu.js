@@ -58,6 +58,7 @@ export default function CustomizedTables({ combo }) {
   }
   React.useEffect(() => {
     if (totalPrice > 0) {
+      console.log("saveDeposit", totalPrice);
       dispatch(saveDeposit(totalPrice));
     }
   }, [totalPrice]);

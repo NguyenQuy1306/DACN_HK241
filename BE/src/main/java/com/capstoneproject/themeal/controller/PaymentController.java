@@ -5,9 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.capstoneproject.themeal.exception.ApplicationException;
+import com.capstoneproject.themeal.exception.NotFoundException;
+import com.capstoneproject.themeal.model.entity.ComboAvailable;
+import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.request.PaymentCallbackRequest;
+import com.capstoneproject.themeal.repository.ComboAvailableHasFoodRepository;
+import com.capstoneproject.themeal.repository.ComboAvailableRepository;
 import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.OrderTableService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +41,10 @@ public class PaymentController {
     private static final String WEBHOOK_URL = "https://ff74-14-169-38-181.ngrok-free.app/webhook/payos_transfer_handler";
     @Autowired
     private FoodService foodService;
+    @Autowired
+    private ComboAvailableRepository comboAvailableRepository;
+    @Autowired
+    private ComboAvailableHasFoodRepository comboAvailableHasFoodRepository;
 
     public PaymentController() {
         String clientId = "c52168d1-0b63-47b4-ab92-09a6138f05b5";
@@ -43,13 +53,13 @@ public class PaymentController {
         this.payOS = new PayOS(clientId, apiKey, checksumKey);
     }
 
-    @GetMapping("/create-payment-link")
+    @PostMapping("/create-payment-link")
     public ResponseEntity<?> createPaymentLink(
             @RequestParam(required = false) Integer deposit,
             @RequestBody(required = false) CreateOrderRequest request, @RequestParam String returnUrl) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
-        System.out.println("reate-payment-link2323");
+        System.out.println("reate-payment-link2323" + deposit);
         try {
 
             int amount = deposit != null ? deposit : 10000;
@@ -58,7 +68,6 @@ public class PaymentController {
             String domain = "http://localhost:3000";
             long now = Instant.now().getEpochSecond(); // Lấy Unix Timestamp hiện tại (giây)
             long expirationTime = now + (5 * 60); // Hết hạn sau 15 phút (900 giây)
-
             PaymentData paymentData = PaymentData.builder()
                     .orderCode(orderCode)
                     .amount(amount)
@@ -67,27 +76,52 @@ public class PaymentController {
                     .cancelUrl(returnUrl)
                     .expiredAt(expirationTime)
                     .build();
-            List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
-            if (foodOrderRequests.size() > 0) {
-                List<Long> listIdFood = foodOrderRequests.stream()
-                        .map(FoodOrderRequest::getMaSoMonAn)
-                        .toList();
+            if (request.getFoodOrderRequests() != null) {
+                List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
+                if (foodOrderRequests.size() > 0) {
+                    List<Long> listIdFood = foodOrderRequests.stream()
+                            .map(FoodOrderRequest::getMaSoMonAn)
+                            .toList();
 
-                foodService.checkFoodExist(listIdFood);
-            }
-            if (foodOrderRequests.size() > 0) {
-                for (FoodOrderRequest foodOrderRequest : foodOrderRequests) {
-                    ItemData itemData = (ItemData.builder()
-                            .name(foodOrderRequest.getTen())
-                            .quantity(foodOrderRequest.getSoLuong() != null ? foodOrderRequest.getSoLuong().intValue()
-                                    : 0)
-                            .price(foodOrderRequest.getGia() != null ? foodOrderRequest.getGia().intValue() : 0)
+                    foodService.checkFoodExist(listIdFood);
+                }
+                if (foodOrderRequests.size() > 0) {
+                    System.out.println("odOrderRequests.size()" + foodOrderRequests.size());
 
-                            .build());
-                    paymentData.addItem(itemData);
+                    for (FoodOrderRequest foodOrderRequest : foodOrderRequests) {
+                        ItemData itemData = (ItemData.builder()
+                                .name(foodOrderRequest.getTen())
+                                .quantity(
+                                        foodOrderRequest.getSoLuong() != null ? foodOrderRequest.getSoLuong().intValue()
+                                                : 0)
+                                .price(foodOrderRequest.getGia() != null ? foodOrderRequest.getGia().intValue() : 0)
+
+                                .build());
+                        paymentData.addItem(itemData);
+                    }
+                } else if (request.getComboId() != null) {
+                    System.out.println("reate-payment-getComboId" + request.getComboId());
+
+                    // ComboAvailable comboAvailable =
+                    // comboAvailableRepository.findById(request.getComboId())
+                    // .orElseThrow(() -> new NotFoundException("Combo not found"));
+                    List<Food> lFoods = comboAvailableHasFoodRepository.findFoodWithComboId(request.getComboId());
+                    if (lFoods.size() > 0) {
+                        for (Food food : lFoods) {
+                            ItemData itemData = (ItemData.builder()
+                                    .name(food.getTen())
+                                    .quantity(1))
+                                    .price(food.getGia() != null ? food.getGia().intValue() : 0)
+
+                                    .build();
+                            paymentData.addItem(itemData);
+                        }
+                    }
+                } else {
+                    throw new ApplicationException("Lỗi parameter foodOrderRequest");
                 }
             }
-
+            System.out.println("paymentData.size" + paymentData.getItems().size());
             CheckoutResponseData data = payOS.createPaymentLink(paymentData);
             response.put("error", 0);
             response.put("message", "success");

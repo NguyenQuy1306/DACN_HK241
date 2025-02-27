@@ -95,7 +95,7 @@ export default function ResultPayment() {
       ) : (
         <Box>
           <OrderTableDemo data={order} />
-          <PaymentFieldsTableDemo data={order?.webhook_snapshot} />
+          {/* <PaymentFieldsTableDemo data={order?.webhook_snapshot} /> */}
         </Box>
       )}
     </Box>

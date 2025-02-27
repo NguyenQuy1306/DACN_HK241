@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
 import com.capstoneproject.themeal.model.entity.ComboAvailableHasFood;
 import com.capstoneproject.themeal.model.entity.ComboAvailableHasFoodId;
+import com.capstoneproject.themeal.model.entity.Food;
 
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,5 +20,11 @@ public interface ComboAvailableHasFoodRepository extends JpaRepository<ComboAvai
             "JOIN c.ComboCoSan comboCoSan " + "JOIN comboCoSan.NhaHang nhahang " +
             "WHERE nhahang.MaSoNhaHang = :restaurantId ")
     List<ComboAvailableHasFood> findAllComboAvailable(@Param("restaurantId") Long restaurantId, Pageable pageable);
+
+    @Query("SELECT DISTINCT c FROM Food c " +
+            "JOIN c.danhSachComboCoSanCoMonan danhSachComboCoSanCoMonan "
+            + "JOIN danhSachComboCoSanCoMonan.ComboCoSan comboCoSan " +
+            "WHERE comboCoSan.MaSoComBoCoSan = :comboId ")
+    List<Food> findFoodWithComboId(@Param("comboId") Long comboId);
 
 }

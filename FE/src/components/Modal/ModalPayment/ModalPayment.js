@@ -90,34 +90,29 @@ const ModalPayment = ({ open, selectedPlace }) => {
       openPayOS();
     }
   }, [searchParams]);
-  const createPaymentLinkHandle = async (callbackFunction, deposit) => {
+  console.log("dêrerere", deposit);
+  const createPaymentLinkHandle = async (callbackFunction) => {
     try {
       setOpenDialogLoading(true);
       setIsCreatingLink(true);
-
+      console.log("menuChoosed in createpaymentlink", menuChoosed);
+      //foodOrderRequests chỉ giành cho newCombo còn comboId giành cho availableCombo
       const orderPayload = {
         customerID: user?.maSoNguoiDung,
         tableId: choosedTable?.maSo?.thuTuBan,
         comboId: menuChoosed[0]?.comboId || null,
         restaurantId: selectedPlace?.maSoNhaHang,
-        foodOrderRequests: menuChoosed[0].foods
-          ? menuChoosed[0].foods.map((food) => ({
-              maSoMonAn: food.maSoMonAn,
-              soLuong: food.soLuong ?? 1,
-              gia: food.gia,
-              ten: food.ten,
-            }))
-          : [],
+        foodOrderRequests:
+          menuChoosed[0] && !menuChoosed[0].foods
+            ? menuChoosed[0].map((food) => ({
+                maSoMonAn: food.maSoMonAn,
+                soLuong: food.soLuong ?? 1,
+                gia: food.gia,
+                ten: food.ten,
+              }))
+            : [],
       };
-      console.log(
-        "menuChoosed[0]",
-        menuChoosed[0].foods.map((food) => ({
-          maSoMonAn: food.maSoMonAn,
-          soLuong: food.soLuong ?? 1,
-          gia: food.gia,
-          ten: food.ten,
-        }))
-      );
+
       console.log("orderPayload", orderPayload);
       const orderResponse = await dispatch(createOrder(orderPayload)).unwrap();
 
@@ -125,6 +120,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
         throw new Error("Tạo đơn hàng thất bại!");
       }
       console.log("menuChoosed", menuChoosed);
+      console.log("depositdeposit", deposit);
       // const deposit = 10000;
       const response = await dispatch(
         createPaymentLink({ request: orderPayload, deposit, RETURN_URL })
@@ -279,7 +275,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
         {/* Nút Thanh toán */}
         <Button
           className="ModalPayment-div2-button"
-          onClick={() => createPaymentLinkHandle(openPaymentDialog, deposit)}
+          onClick={() => createPaymentLinkHandle(openPaymentDialog)}
         >
           Thanh toán ngay
         </Button>

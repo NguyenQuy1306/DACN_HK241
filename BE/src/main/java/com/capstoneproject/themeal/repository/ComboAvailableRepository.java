@@ -13,15 +13,15 @@ import org.springframework.data.domain.Pageable;
 
 @Repository
 public interface ComboAvailableRepository extends JpaRepository<ComboAvailable, Long> {
-    @Query("SELECT DISTINCT c FROM ComboAvailable c " +
-            "JOIN c.NhaHang nhahang " +
-            "WHERE nhahang.MaSoNhaHang = :restaurantId ")
-    List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId, Pageable pageable);
+        @Query("SELECT DISTINCT c FROM ComboAvailable c " +
+                        "JOIN c.NhaHang nhahang " +
+                        "WHERE nhahang.MaSoNhaHang = :restaurantId ")
+        List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId, Pageable pageable);
 
-    @Query("SELECT DISTINCT c FROM ComboAvailable c " +
-            "JOIN c.NhaHang nhahang " +
-            "WHERE nhahang.MaSoNhaHang = :restaurantId AND c.MaSoComBoCoSan= :maSoComboCoSan")
-    List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId,
-            @Param("maSoComboCoSan") Long comboId);
+        @Query("SELECT DISTINCT c FROM ComboAvailable c " +
+                        "JOIN c.NhaHang nhahang " +
+                        "WHERE nhahang.MaSoNhaHang = :restaurantId AND c.MaSoComBoCoSan= :maSoComboCoSan")
+        List<ComboAvailable> findAllComboAvailable(@Param("restaurantId") Long restaurantId,
+                        @Param("maSoComboCoSan") Long comboId);
 
 }

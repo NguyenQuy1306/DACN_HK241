@@ -26,7 +26,7 @@ function TableHeader() {
 }
 
 export default function OrderTableDemo({ data }) {
-  // console.log("dataid121", data)
+  console.log("dataid121", data)
   // console.log("dataid", data.id)
   return (
     <Box component={"div"}>

@@ -153,18 +153,20 @@ export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
     const queryParams2 = RETURN_URL
       ? `&returnUrl=${encodeURIComponent(RETURN_URL)}`
       : "";
-    console.log("requestrequest", request);
-    const response = await API.get(
+
+    console.log("requestrequest", request, "deposit", deposit);
+
+    const response = await API.post(
       `api/payments/create-payment-link${queryParams}${queryParams2}`,
-      {
-        data: request || {}, // Ensure request is included properly
-      }
+      request // Gửi request body đúng cách
     );
+
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
   }
 };
+
 export const getOrder = async (params) => {
   try {
     const response = await API.get(`/api/payments/getOrderById`, { params });
