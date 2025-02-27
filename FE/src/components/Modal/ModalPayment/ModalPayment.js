@@ -29,8 +29,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
   const [isCreatingLink, setIsCreatingLink] = useState(false);
   const [checkoutUrl, setCheckoutUrl] = useState(null);
   const [openDialogLoading, setOpenDialogLoading] = useState(false);
-
   // Redux state
+  const deposit = useSelector((state) => state.payment.deposit);
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const user = useSelector((state) => state.authentication.user);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
@@ -90,7 +90,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
       openPayOS();
     }
   }, [searchParams]);
-  const createPaymentLinkHandle = async (callbackFunction) => {
+  const createPaymentLinkHandle = async (callbackFunction, deposit) => {
     try {
       setOpenDialogLoading(true);
       setIsCreatingLink(true);
@@ -100,21 +100,32 @@ const ModalPayment = ({ open, selectedPlace }) => {
         tableId: choosedTable?.maSo?.thuTuBan,
         comboId: menuChoosed[0]?.comboId || null,
         restaurantId: selectedPlace?.maSoNhaHang,
-        foodOrderRequests: bookingWithNewCombo
-          ? menuChoosed.map(({ maSoMonAn, soLuong }) => ({
-              maSoMonAn,
-              soLuong,
+        foodOrderRequests: menuChoosed[0].foods
+          ? menuChoosed[0].foods.map((food) => ({
+              maSoMonAn: food.maSoMonAn,
+              soLuong: food.soLuong ?? 1,
+              gia: food.gia,
+              ten: food.ten,
             }))
           : [],
       };
-
+      console.log(
+        "menuChoosed[0]",
+        menuChoosed[0].foods.map((food) => ({
+          maSoMonAn: food.maSoMonAn,
+          soLuong: food.soLuong ?? 1,
+          gia: food.gia,
+          ten: food.ten,
+        }))
+      );
+      console.log("orderPayload", orderPayload);
       const orderResponse = await dispatch(createOrder(orderPayload)).unwrap();
 
       if (!orderResponse || orderResponse.error) {
         throw new Error("Tạo đơn hàng thất bại!");
       }
-
-      const deposit = 10000;
+      console.log("menuChoosed", menuChoosed);
+      // const deposit = 10000;
       const response = await dispatch(
         createPaymentLink({ request: orderPayload, deposit, RETURN_URL })
       ).unwrap();
@@ -268,9 +279,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
         {/* Nút Thanh toán */}
         <Button
           className="ModalPayment-div2-button"
-          onClick={() =>
-            createPaymentLinkHandle(openPaymentDialog, setOpenDialogLoading)
-          }
+          onClick={() => createPaymentLinkHandle(openPaymentDialog, deposit)}
         >
           Thanh toán ngay
         </Button>

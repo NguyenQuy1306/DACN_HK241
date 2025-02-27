@@ -8,7 +8,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./TableInModalMenu.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { c } from "react-redux";
+import { saveDeposit } from "../../../../../../../redux/features/paymentSlice";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "hsl(174, 100%, 20%)",
@@ -31,6 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables({ combo }) {
+  const dispatch = useDispatch();
   console.log("combocombo", combo);
   let totalPrice = 0;
   const comboType = useSelector((state) => state.combo.comboType);
@@ -38,9 +41,9 @@ export default function CustomizedTables({ combo }) {
 
   let listFood = [];
   if (comboType === "newCombo") {
-    for (let i = 0; i < combo.length; i++) {
-      totalPrice += combo[i].item.gia * combo[i].quantity;
-      listFood = combo;
+    for (let i = 0; i < combo[0].length; i++) {
+      totalPrice += combo[0][i].gia * combo[0][i].soLuong;
+      listFood = combo[[0]];
     }
   } else if (comboType === "availableCombo") {
     for (let i = 0; i < combo[0].foods.length; i++) {
@@ -49,9 +52,15 @@ export default function CustomizedTables({ combo }) {
     }
   } else {
     for (let i = 0; i < combo.length; i++) {
-      totalPrice += combo[i].item.gia * combo[i].quantity;
+      totalPrice += combo[i].gia * combo[i].soLuong;
+      listFood = combo;
     }
   }
+  React.useEffect(() => {
+    if (totalPrice > 0) {
+      dispatch(saveDeposit(totalPrice));
+    }
+  }, [totalPrice]);
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 400, overflow: "auto" }}>
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
@@ -68,39 +77,24 @@ export default function CustomizedTables({ combo }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {comboType === "newCombo" &&
-            listFood.map((row) => (
-              <StyledTableRow key={row.ten}>
-                <StyledTableCell align="left" className="StyledTableCell1">
-                  {row.item.ten}
-                </StyledTableCell>
+          {listFood.map((row) => (
+            <StyledTableRow key={row.ten}>
+              <StyledTableCell align="left" className="StyledTableCell1">
+                {row.ten}
+              </StyledTableCell>
 
-                <StyledTableCell align="left" className="StyledTableCell2">
-                  {row.item.gia}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.item.gia * row.quantity} đ
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          {comboType === "availableCombo" &&
-            listFood.map((row) => (
-              <StyledTableRow key={row.ten}>
-                <StyledTableCell align="left" className="StyledTableCell1">
-                  {row.ten}
-                </StyledTableCell>
-
-                <StyledTableCell align="left" className="StyledTableCell2">
-                  {row.gia}
-                </StyledTableCell>
-                <StyledTableCell align="left">1</StyledTableCell>
-                <StyledTableCell align="left">{row.gia} đ</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          {comboType !== "availableCombo" &&
+              <StyledTableCell align="left" className="StyledTableCell2">
+                {row.gia}
+              </StyledTableCell>
+              <StyledTableCell align="left">
+                {row.soLuong ? row.soLuong : 1}
+              </StyledTableCell>
+              <StyledTableCell align="left">{row.gia} đ</StyledTableCell>
+            </StyledTableRow>
+          ))}
+          {/* {comboType !== "availableCombo" &&
             comboType !== "newCombo" &&
-            combo.map((row) => (
+            listFood.map((row) => (
               <StyledTableRow key={row.item.ten}>
                 <StyledTableCell align="left" className="StyledTableCell1">
                   {row.item.ten}
@@ -114,7 +108,7 @@ export default function CustomizedTables({ combo }) {
                   {row.quantity * row.item.gia} đ
                 </StyledTableCell>
               </StyledTableRow>
-            ))}
+            ))} */}
 
           <StyledTableRow key="Tổng cộng">
             <StyledTableCell align="left" className="StyledTableCell1">

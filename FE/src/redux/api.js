@@ -153,6 +153,7 @@ export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
     const queryParams2 = RETURN_URL
       ? `&returnUrl=${encodeURIComponent(RETURN_URL)}`
       : "";
+    console.log("requestrequest", request);
     const response = await API.get(
       `api/payments/create-payment-link${queryParams}${queryParams2}`,
       {

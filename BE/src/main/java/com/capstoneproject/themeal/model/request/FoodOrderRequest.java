@@ -24,5 +24,6 @@ public class FoodOrderRequest implements Serializable {
 
     private Long maSoMonAn;
     private Short soLuong;
-
+    private Long gia;
+    private String ten;
 }

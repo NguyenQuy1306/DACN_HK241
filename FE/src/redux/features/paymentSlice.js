@@ -60,12 +60,16 @@ export const paymentSlice = createSlice({
     getOrder: null,
     cancelOrder: [],
     paymentCallback: null,
+    deposit: 0,
     error: "",
     loading: false,
   },
   reducers: {
     setPaymentStatus: (state, action) => {
       state.paymentStatus = action.payload;
+    },
+    saveDeposit: (state, action) => {
+      state.saveDeposit = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -124,5 +128,5 @@ export const paymentSlice = createSlice({
   },
 });
 export const paymentStatus = (state) => state.payment.paymentStatus;
-export const { setPaymentStatus } = paymentSlice.actions;
+export const { setPaymentStatus, saveDeposit } = paymentSlice.actions;
 export default paymentSlice.reducer;

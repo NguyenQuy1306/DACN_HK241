@@ -84,12 +84,12 @@ const MenuChooseBookingwidget = ({
   };
   useEffect(() => {
     if (!openModalPayment && paymentStatus === "success") {
-      toast.success("Bạn đã đặt bàn thành công!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
-
+      // toast.success("Bạn đã đặt bàn thành công!", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      // });
+      console.log("calllllll");
       dispatch(
         setOpenBookingWithMenu({
           openBookingWithMenu: false,

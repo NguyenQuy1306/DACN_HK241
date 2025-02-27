@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
+import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.request.PaymentCallbackRequest;
+import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.OrderTableService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,7 +20,9 @@ import vn.payos.type.PaymentData;
 import vn.payos.type.PaymentLinkData;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,6 +33,8 @@ public class PaymentController {
     private OrderTableService orderTableService;
     private final PayOS payOS;
     private static final String WEBHOOK_URL = "https://ff74-14-169-38-181.ngrok-free.app/webhook/payos_transfer_handler";
+    @Autowired
+    private FoodService foodService;
 
     public PaymentController() {
         String clientId = "c52168d1-0b63-47b4-ab92-09a6138f05b5";
@@ -43,7 +49,7 @@ public class PaymentController {
             @RequestBody(required = false) CreateOrderRequest request, @RequestParam String returnUrl) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
-
+        System.out.println("reate-payment-link2323");
         try {
 
             int amount = deposit != null ? deposit : 10000;
@@ -52,6 +58,7 @@ public class PaymentController {
             String domain = "http://localhost:3000";
             long now = Instant.now().getEpochSecond(); // Lấy Unix Timestamp hiện tại (giây)
             long expirationTime = now + (5 * 60); // Hết hạn sau 15 phút (900 giây)
+
             PaymentData paymentData = PaymentData.builder()
                     .orderCode(orderCode)
                     .amount(amount)
@@ -59,13 +66,27 @@ public class PaymentController {
                     .returnUrl(returnUrl)
                     .cancelUrl(returnUrl)
                     .expiredAt(expirationTime)
-                    .item(ItemData.builder()
-                            .name("Đặt cọc")
-                            .quantity(1)
-                            .price(amount)
-                            .build())
-
                     .build();
+            List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
+            if (foodOrderRequests.size() > 0) {
+                List<Long> listIdFood = foodOrderRequests.stream()
+                        .map(FoodOrderRequest::getMaSoMonAn)
+                        .toList();
+
+                foodService.checkFoodExist(listIdFood);
+            }
+            if (foodOrderRequests.size() > 0) {
+                for (FoodOrderRequest foodOrderRequest : foodOrderRequests) {
+                    ItemData itemData = (ItemData.builder()
+                            .name(foodOrderRequest.getTen())
+                            .quantity(foodOrderRequest.getSoLuong() != null ? foodOrderRequest.getSoLuong().intValue()
+                                    : 0)
+                            .price(foodOrderRequest.getGia() != null ? foodOrderRequest.getGia().intValue() : 0)
+
+                            .build());
+                    paymentData.addItem(itemData);
+                }
+            }
 
             CheckoutResponseData data = payOS.createPaymentLink(paymentData);
             response.put("error", 0);
