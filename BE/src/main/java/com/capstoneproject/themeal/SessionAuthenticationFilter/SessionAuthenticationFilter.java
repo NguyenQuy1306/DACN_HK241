@@ -31,7 +31,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/elas/getDocument",
             "api/payments/*",
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
-            "/api/payments/.*", "/api/payments/getOrderById");
+            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit");
 
     @Autowired
     private SessionRegistry sessionRegistry;

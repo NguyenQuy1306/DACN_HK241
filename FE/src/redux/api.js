@@ -1,3 +1,4 @@
+import { Api } from "@mui/icons-material";
 import axios from "axios";
 
 const API = axios.create({
@@ -187,6 +188,15 @@ export const paymentCallback = async (params) => {
   try {
     console.log("paymentCallback", params);
     const response = await API.post(`/api/payments/payment-callback`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getDepositPolicy = async (params) => {
+  try {
+    const response = await API.get(`/api/payments/deposit`, { params });
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

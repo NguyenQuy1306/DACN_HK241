@@ -32,7 +32,9 @@ import com.capstoneproject.themeal.service.OrderTableService;
 import com.capstoneproject.themeal.service.TableAvailableService;
 import com.capstoneproject.themeal.service.impl.OrderTableServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/orders")
@@ -72,7 +74,7 @@ public class OrderTableController {
 
         ApiResponse<OrderTableResponse> apiResponse = new ApiResponse<>();
         try {
-            OrderTableResponse orderOrderTableResponse = orderTableService.createOrder(request, "PEDNING");
+            OrderTableResponse orderOrderTableResponse = orderTableService.createOrder(request, "PENDING");
             apiResponse.ok(orderOrderTableResponse);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
@@ -81,7 +83,9 @@ public class OrderTableController {
             apiResponse.error(ResponseCode.getError(1));
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            apiResponse.error(ResponseCode.getError(23));
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", e.getMessage() != null ? e.getMessage() : "Internal Server Error");
+            apiResponse.error(errorMap);
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);

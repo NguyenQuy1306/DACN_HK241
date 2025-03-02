@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, LinearProgress, Toolbar } from "@mui/material";
+import {
+  Box,
+  Typography,
+  LinearProgress,
+  Toolbar,
+  Button,
+} from "@mui/material";
 import PaymentFieldsTableDemo from "../../components/Payment/PaymentFieldsTableDemo";
 import OrderTableDemo from "../../components/Payment/OrderTableDemo";
 import { toast, ToastContainer } from "react-toastify";
@@ -98,6 +104,7 @@ export default function ResultPayment() {
           {/* <PaymentFieldsTableDemo data={order?.webhook_snapshot} /> */}
         </Box>
       )}
+      <Button>Trở về</Button>
     </Box>
   );
 }

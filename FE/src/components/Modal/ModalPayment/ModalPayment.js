@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { usePayOS } from "@payos/payos-checkout";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -6,7 +6,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Typography, Box, Divider } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setOpenModalPayment } from "../../../redux/features/tableSlice";
-import { setPaymentStatus } from "../../../redux/features/paymentSlice";
+import {
+  getDepositPolicy,
+  saveDeposit,
+  savePaymentAmount,
+  setPaymentStatus,
+} from "../../../redux/features/paymentSlice";
 import "./ModalPayment.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +22,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { createPaymentLink } from "../../../redux/features/paymentSlice";
 import useScript from "react-script-hook";
 import { useSearchParams } from "react-router-dom";
+import { Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
 
 import "react-toastify/dist/ReactToastify.css";
 const ModalPayment = ({ open, selectedPlace }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   // State hooks
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -30,14 +36,17 @@ const ModalPayment = ({ open, selectedPlace }) => {
   const [checkoutUrl, setCheckoutUrl] = useState(null);
   const [openDialogLoading, setOpenDialogLoading] = useState(false);
   // Redux state
+  const [paymentType, setPaymentType] = useState("deposit");
+
+  // Xác định số tiền thanh toán dựa trên lựa chọn
+  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
+  const totalAmount = useSelector((state) => state.payment.amount);
   const deposit = useSelector((state) => state.payment.deposit);
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const user = useSelector((state) => state.authentication.user);
-  const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
   const bookingWithNewCombo = useSelector(
     (state) => state.restaurant.bookingWithNewCombo
   );
-
   // Load script PayOS
   const [loading, error] = useScript({
     src: process.env.REACT_APP_PAYOS_SCRIPT,
@@ -48,7 +57,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
   const RETURN_URL = `${window.location.href}/ResultPayment/`;
   const CANCEL_URL = `${window.location.href}/ResultPayment/`;
-
+  const depositPolicy = useSelector((state) => state.payment.depositPolicy);
+  const paymentAmount = useSelector((state) => state.payment.paymentAmount);
   const payOSConfig = {
     RETURN_URL: RETURN_URL,
     ELEMENT_ID: "config_root",
@@ -70,7 +80,10 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
   // usePayOS hook
   const { open: openPayOS } = usePayOS(payOSConfig);
-
+  const location_id = localStorage.getItem("selectedPlaceId");
+  React.useEffect(() => {
+    dispatch(getDepositPolicy({ restaurantId: location_id }));
+  }, [dispatch, location_id]);
   useEffect(() => {
     if (message) {
       console.log("Người dùng đã hoàn thành thanh toán!");
@@ -90,12 +103,30 @@ const ModalPayment = ({ open, selectedPlace }) => {
       openPayOS();
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (paymentType === "deposit") {
+      dispatch(savePaymentAmount(deposit));
+    } else {
+      dispatch(savePaymentAmount(totalAmount));
+    }
+  }, [paymentType]);
+  const paymentAmountWithoutMenu = useMemo(() => {
+    if (menuChoosed.length === 0 && depositPolicy) {
+      dispatch(savePaymentAmount(depositPolicy.datCocToiThieu));
+      dispatch(saveDeposit(depositPolicy.datCocToiThieu));
+      return depositPolicy.datCocToiThieu;
+    }
+    return 0;
+  }, [depositPolicy]);
   console.log("dêrerere", deposit);
   const createPaymentLinkHandle = async (callbackFunction) => {
     try {
       setOpenDialogLoading(true);
       setIsCreatingLink(true);
       console.log("menuChoosed in createpaymentlink", menuChoosed);
+      console.log("paymentAmount", paymentAmount);
+
       //foodOrderRequests chỉ giành cho newCombo còn comboId giành cho availableCombo
       const orderPayload = {
         customerID: user?.maSoNguoiDung,
@@ -120,10 +151,10 @@ const ModalPayment = ({ open, selectedPlace }) => {
         throw new Error("Tạo đơn hàng thất bại!");
       }
       console.log("menuChoosed", menuChoosed);
-      console.log("depositdeposit", deposit);
+      console.log("paymentAmount", paymentAmount);
       // const deposit = 10000;
       const response = await dispatch(
-        createPaymentLink({ request: orderPayload, deposit, RETURN_URL })
+        createPaymentLink({ request: orderPayload, paymentAmount, RETURN_URL })
       ).unwrap();
       console.log("responseresponse", response.data);
       if (!response || response.error) {
@@ -140,7 +171,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           restaurantName: selectedPlace.ten,
         })
       );
-      callbackFunction(response.data);
+      // callbackFunction(response.data);
     } catch (error) {
       console.error("Lỗi khi tạo link thanh toán:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại.");
@@ -184,14 +215,12 @@ const ModalPayment = ({ open, selectedPlace }) => {
       <section className="ModalPayment-section">
         {/* Nút đóng modal */}
         {/* <div id="config_root"></div> */}
-
         <Button
           className="ModalPayment-button-close"
           onClick={() => dispatch(setOpenModalPayment(false))}
         >
           <CloseIcon className="ModalPayment-button-close-icon" />
         </Button>
-
         {/* Header Modal */}
         <Box
           display="flex"
@@ -208,14 +237,11 @@ const ModalPayment = ({ open, selectedPlace }) => {
             style={{ width: "50px", borderRadius: "8px" }}
           />
         </Box>
-
         {/* Địa chỉ nhà hàng */}
         <Typography variant="subtitle1" fontWeight="bold">
           Nhà hàng: {selectedPlace?.diaChi || "Không có thông tin"}
         </Typography>
-
         <Divider sx={{ my: 2 }} />
-
         {/* Thông tin đặt bàn */}
         <Box className="ModalPayment-div2-bookdetail">
           <Typography variant="h6" fontWeight="bold" color="primary">
@@ -240,9 +266,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
             </Typography>
           </Box>
         </Box>
-
         <Divider sx={{ my: 2 }} />
-
         {/* Thông tin khách hàng */}
         <Typography variant="h6" fontWeight="bold" color="primary">
           Thông tin khách hàng
@@ -255,9 +279,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           <Typography>Email:</Typography>
           <Typography fontWeight="bold">{user?.email || "N/A"}</Typography>
         </Box>
-
         <Divider sx={{ my: 2 }} />
-
         {/* Thông tin Menu đã chọn */}
         {menuChoosed.length > 0 && (
           <Box>
@@ -268,11 +290,56 @@ const ModalPayment = ({ open, selectedPlace }) => {
           </Box>
         )}
 
-        <p>
-          Tiền đặt cọc: <span style={{ color: "red" }}>100.000 VND</span>
-        </p>
+        <Typography variant="h6" fontWeight="bold" color="primary">
+          Thông tin thanh toán
+        </Typography>
+        {menuChoosed.length > 0 && (
+          <Box mb={2}>
+            <FormLabel component="legend">
+              Chọn phương thức thanh toán:
+            </FormLabel>
+            <RadioGroup
+              row
+              value={paymentType}
+              onChange={(e) => setPaymentType(e.target.value)}
+            >
+              <FormControlLabel
+                value="deposit"
+                color="primary"
+                control={<Radio />}
+                label={`Đặt cọc (${deposit} VND)`}
+              />
+              <FormControlLabel
+                value="full"
+                control={<Radio />}
+                color="primary"
+                label={`Thanh toán toàn bộ (${totalAmount} VND)`}
+              />
+            </RadioGroup>
+          </Box>
+        )}
+        {menuChoosed.length === 0 && (
+          <Box display="flex" justifyContent="space-between" mt={1}>
+            <Typography> Tiền đặt cọc:</Typography>
+            <Typography fontWeight="bold" color="primary">
+              {deposit ? `${deposit} VND` : "N/A"}
+            </Typography>
+          </Box>
+        )}
+        <Box mt={1}>
+          <Typography variant="body2" color="textSecondary">
+            Khoản đặt cọc/thanh toán này được tự động thêm nhằm tuân theo chính
+            sách của nhà hàng.
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          onClick={() => window.open("/deposit-policy")}
+          sx={{ mt: 2 }}
+        >
+          Chi tiết chính sách thanh toán
+        </Button>
 
-        {/* Nút Thanh toán */}
         <Button
           className="ModalPayment-div2-button"
           onClick={() => createPaymentLinkHandle(openPaymentDialog)}

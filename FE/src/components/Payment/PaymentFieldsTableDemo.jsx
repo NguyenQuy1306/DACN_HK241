@@ -35,9 +35,9 @@ const WEBHOOK_FIELD_DESC = {
 function TableHeader() {
   return (
     <Toolbar className="!flex-1 !justify-center">
-      {/* <Typography className="!font-semibold" component="h5" variant="h5">
+      <Typography className="!font-semibold" component="h5" variant="h5">
         Danh sách các trường dữ liệu trong webhook
-      </Typography> */}
+      </Typography>
     </Toolbar>
   );
 }

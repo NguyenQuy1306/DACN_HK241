@@ -10,7 +10,11 @@ import Paper from "@mui/material/Paper";
 import "./TableInModalMenu.css";
 import { useDispatch, useSelector } from "react-redux";
 import { c } from "react-redux";
-import { saveDeposit } from "../../../../../../../redux/features/paymentSlice";
+import {
+  getDepositPolicy,
+  saveAmount,
+  saveDeposit,
+} from "../../../../../../../redux/features/paymentSlice";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "hsl(174, 100%, 20%)",
@@ -35,33 +39,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CustomizedTables({ combo }) {
   const dispatch = useDispatch();
   console.log("combocombo", combo);
-  let totalPrice = 0;
+  // let totalPrice = 0;
   const comboType = useSelector((state) => state.combo.comboType);
-  console.log("comboType", comboType);
+  const totalPrice = React.useMemo(() => {
+    let total = 0;
+    let list = [];
 
-  let listFood = [];
-  if (comboType === "newCombo") {
-    for (let i = 0; i < combo[0].length; i++) {
-      totalPrice += combo[0][i].gia * combo[0][i].soLuong;
-      listFood = combo[[0]];
+    if (comboType === "newCombo") {
+      list = combo[0];
+      total = list.reduce((sum, item) => sum + item.gia * item.soLuong, 0);
+    } else if (comboType === "availableCombo") {
+      list = combo[0].foods;
+      total = list.reduce((sum, item) => sum + item.gia, 0);
+    } else {
+      list = combo;
+      total = list.reduce((sum, item) => sum + item.gia * item.soLuong, 0);
     }
-  } else if (comboType === "availableCombo") {
-    for (let i = 0; i < combo[0].foods.length; i++) {
-      totalPrice += combo[0].foods[i].gia;
-      listFood = combo[0].foods;
-    }
-  } else {
-    for (let i = 0; i < combo.length; i++) {
-      totalPrice += combo[i].gia * combo[i].soLuong;
-      listFood = combo;
-    }
-  }
+
+    return { total, list };
+  }, [combo, comboType]);
+
+  const depositPolicy = useSelector((state) => state.payment.depositPolicy);
+
   React.useEffect(() => {
-    if (totalPrice > 0) {
-      console.log("saveDeposit", totalPrice);
-      dispatch(saveDeposit(totalPrice));
+    if (totalPrice.total > 0 && depositPolicy) {
+      const depositAmount =
+        totalPrice.total > depositPolicy.nguongApDungDatCocTheoPhanTram
+          ? (totalPrice.total * depositPolicy.phanTramCoc) / 100
+          : depositPolicy.datCocToiThieu;
+
+      dispatch(saveDeposit(depositAmount));
+      dispatch(saveAmount(totalPrice.total));
     }
-  }, [totalPrice]);
+  }, [totalPrice.total, depositPolicy]);
+
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 400, overflow: "auto" }}>
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
@@ -78,7 +89,7 @@ export default function CustomizedTables({ combo }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {listFood.map((row) => (
+          {totalPrice?.list?.map((row) => (
             <StyledTableRow key={row.ten}>
               <StyledTableCell align="left" className="StyledTableCell1">
                 {row.ten}
@@ -120,7 +131,7 @@ export default function CustomizedTables({ combo }) {
               {null}
             </StyledTableCell>
             <StyledTableCell align="left"> {null}</StyledTableCell>
-            <StyledTableCell align="left">{totalPrice} đ</StyledTableCell>
+            <StyledTableCell align="left">{totalPrice.total} đ</StyledTableCell>
           </StyledTableRow>
         </TableBody>
       </Table>

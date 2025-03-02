@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.*;
 
 import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.exception.NotFoundException;
+import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
 import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.request.PaymentCallbackRequest;
+import com.capstoneproject.themeal.model.response.ApiResponse;
+import com.capstoneproject.themeal.model.response.DepositResponse;
+import com.capstoneproject.themeal.model.response.ResponseCode;
 import com.capstoneproject.themeal.repository.ComboAvailableHasFoodRepository;
 import com.capstoneproject.themeal.repository.ComboAvailableRepository;
+import com.capstoneproject.themeal.service.DepositService;
 import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.OrderTableService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +50,8 @@ public class PaymentController {
     private ComboAvailableRepository comboAvailableRepository;
     @Autowired
     private ComboAvailableHasFoodRepository comboAvailableHasFoodRepository;
+    @Autowired
+    private DepositService depositService;
 
     public PaymentController() {
         String clientId = "c52168d1-0b63-47b4-ab92-09a6138f05b5";
@@ -218,4 +225,24 @@ public class PaymentController {
                     .body("Error processing payment");
         }
     }
+
+    @GetMapping("/deposit")
+    public ResponseEntity<ApiResponse<DepositResponse>> getDepositByRestaurantId(@RequestParam Long restaurantId) {
+        ApiResponse<DepositResponse> apiResponse = new ApiResponse<>();
+        try {
+            DepositResponse depositResponse = depositService.getDeposit(restaurantId);
+            apiResponse.ok(depositResponse);
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
 }

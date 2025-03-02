@@ -9,7 +9,14 @@ import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 import ViewImagepage from "../pages/ViewImagepage";
 import SearchResult from "../pages/SearchResult";
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
+import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
+
 export const routes = [
+  {
+    path: "/deposit-policy",
+    component: DepositPolicy,
+    layout: MainLayout,
+  },
   {
     path: "/DetailRestaurant/:id/ResultPayment",
     component: ResultPayment,

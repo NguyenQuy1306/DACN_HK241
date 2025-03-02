@@ -78,6 +78,9 @@ public class Restaurant {
     @OneToMany(mappedBy = "NhaHang")
     private Set<TableAvailable> DanhSachBan;
 
+    @OneToOne(mappedBy = "NhaHang")
+    private Deposit DatCoc;
+
     @ManyToOne
     @JoinColumn(name = "MaSoChuNhaHang", referencedColumnName = "MaSoNguoiDung")
     private User ChuNhaHang;

@@ -17,6 +17,7 @@ import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailable;
 import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailableId;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFoodId;
+import com.capstoneproject.themeal.model.entity.OrderTableStatus;
 import com.capstoneproject.themeal.model.entity.PaymentMethod;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.TableAvailable;
@@ -92,12 +93,12 @@ public class OrderTableServiceImpl implements OrderTableService {
                 TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
                 TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                                 .orElseThrow(() -> new NotFoundException("Table not found"));
-                ;
+
                 OrderTable orderTable = OrderTable.builder()
                                 .SoKhach(tableAvailable.getSoNguoi())
                                 .Ngay(tableAvailable.getNgay())
                                 .Gio(tableAvailable.getGio())
-                                .TrangThai(statusOrder)
+                                .TrangThai(OrderTableStatus.valueOf(statusOrder))
                                 .KhachHang(user)
                                 .NhaHang(restaurant)
                                 .build();
@@ -218,9 +219,9 @@ public class OrderTableServiceImpl implements OrderTableService {
                 OrderTable order = orderTableRepository.findById(orderId)
                                 .orElseThrow(() -> new NotFoundException("Order not found"));
                 if (isSuccess) {
-                        order.setTrangThai("SUCCESS");
+                        order.setTrangThai(OrderTableStatus.COMPLETED);
                 } else {
-                        order.setTrangThai("FAILED");
+                        order.setTrangThai(OrderTableStatus.CANCELED);
                 }
                 orderTableRepository.save(order);
         }

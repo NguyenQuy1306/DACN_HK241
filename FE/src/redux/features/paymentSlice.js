@@ -51,7 +51,17 @@ export const paymentCallback = createAsyncThunk(
     }
   }
 );
-
+export const getDepositPolicy = createAsyncThunk(
+  "/payments/deposit",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getDepositPolicy(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const paymentSlice = createSlice({
   name: "payment",
   initialState: {
@@ -60,7 +70,10 @@ export const paymentSlice = createSlice({
     getOrder: null,
     cancelOrder: [],
     paymentCallback: null,
+    depositPolicy: null,
     deposit: 0,
+    paymentAmount: 0,
+    amount: 0,
     error: "",
     loading: false,
   },
@@ -70,6 +83,12 @@ export const paymentSlice = createSlice({
     },
     saveDeposit: (state, action) => {
       state.deposit = action.payload;
+    },
+    saveAmount: (state, action) => {
+      state.amount = action.payload;
+    },
+    savePaymentAmount: (state, action) => {
+      state.paymentAmount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -124,9 +143,23 @@ export const paymentSlice = createSlice({
       .addCase(paymentCallback.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      .addCase(getDepositPolicy.pending, (state) => {
+        state.loading = true;
+        state.depositPolicy = null;
+      })
+      .addCase(getDepositPolicy.fulfilled, (state, action) => {
+        state.loading = false;
+        state.depositPolicy = action.payload;
+      })
+      .addCase(getDepositPolicy.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 export const paymentStatus = (state) => state.payment.paymentStatus;
-export const { setPaymentStatus, saveDeposit } = paymentSlice.actions;
+export const { setPaymentStatus, saveDeposit, saveAmount, savePaymentAmount } =
+  paymentSlice.actions;
 export default paymentSlice.reducer;
