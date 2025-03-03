@@ -40,7 +40,7 @@ public class OrderTable {
 
     @Column(nullable = false)
     private LocalTime Gio;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderTableStatus TrangThai;
 
@@ -48,10 +48,7 @@ public class OrderTable {
     private Long TienDatCoc;
 
     @Column(nullable = false)
-    private Boolean StatusDeposit;
-
-    @Column(nullable = false)
-    private Boolean DepositRefunded;
+    private Boolean StatusDepositRefund;
 
     @Column(nullable = false)
     private Long TongTienThanhToan;

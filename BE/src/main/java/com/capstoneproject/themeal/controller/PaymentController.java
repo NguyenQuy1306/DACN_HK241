@@ -15,6 +15,8 @@ import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.request.PaymentCallbackRequest;
 import com.capstoneproject.themeal.model.response.ApiResponse;
 import com.capstoneproject.themeal.model.response.DepositResponse;
+import com.capstoneproject.themeal.model.response.OrderTableResponse;
+import com.capstoneproject.themeal.model.response.PaymentResponse;
 import com.capstoneproject.themeal.model.response.ResponseCode;
 import com.capstoneproject.themeal.repository.ComboAvailableHasFoodRepository;
 import com.capstoneproject.themeal.repository.ComboAvailableRepository;
@@ -33,6 +35,7 @@ import vn.payos.type.PaymentLinkData;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -209,14 +212,14 @@ public class PaymentController {
         try {
             Long orderCode = callbackRequest.getOrderCode();
             String status = callbackRequest.getStatus();
-
+            String paymentCode = callbackRequest.getPaymentCode();
             if ("PAID".equalsIgnoreCase(status)) {
                 // Update order status
 
-                orderTableService.updateOrderStatusAfterPayment(orderCode, true);
+                orderTableService.updateOrderStatusAfterPayment(orderCode, true, paymentCode);
                 return ResponseEntity.ok("Payment processed successfully");
             } else {
-                orderTableService.updateOrderStatusAfterPayment(orderCode, false);
+                orderTableService.updateOrderStatusAfterPayment(orderCode, false, paymentCode);
 
                 return ResponseEntity.badRequest().body("Payment failed");
             }
@@ -240,6 +243,28 @@ public class PaymentController {
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<ApiResponse<PaymentResponse>> createPayment(@RequestParam Long paymentAmount,
+            @RequestParam String maSoThanhToan) {
+        ApiResponse<PaymentResponse> apiResponse = new ApiResponse<>();
+        try {
+            PaymentResponse paymentResponse = orderTableService.createPayment(paymentAmount, maSoThanhToan);
+            apiResponse.ok(paymentResponse);
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", e.getMessage() != null ? e.getMessage() : "Internal Server Error");
+            apiResponse.error(errorMap);
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);

@@ -84,6 +84,7 @@ export default function ResultPayment() {
           paymentCallback({
             status: orderResponse.data.status,
             orderCode: pendingOrder.orderCode,
+            paymentCode: pendingOrder.orderCodePayOs,
           })
         );
         localStorage.removeItem("pendingOrder");

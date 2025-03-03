@@ -7,6 +7,7 @@ import { Typography, Box, Divider } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setOpenModalPayment } from "../../../redux/features/tableSlice";
 import {
+  createPayment,
   getDepositPolicy,
   saveDeposit,
   savePaymentAmount,
@@ -155,6 +156,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           deposit: deposit,
         })
       ).unwrap();
+      console.log("orderResponse", orderResponse);
 
       if (!orderResponse || orderResponse.error) {
         throw new Error("Tạo đơn hàng thất bại!");
@@ -170,10 +172,16 @@ const ModalPayment = ({ open, selectedPlace }) => {
         })
       ).unwrap();
       console.log("responseresponse", response.data);
+
       if (!response || response.error) {
         throw new Error("Tạo link thanh toán thất bại!");
       }
-
+      const paymentResponse = await dispatch(
+        createPayment({
+          paymentAmount: paymentAmount,
+          maSoThanhToan: response.data.paymentLinkId,
+        })
+      );
       localStorage.setItem(
         "pendingOrder",
         JSON.stringify({

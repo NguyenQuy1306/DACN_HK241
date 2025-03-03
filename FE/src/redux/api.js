@@ -125,6 +125,18 @@ export const createOrder = async ({ request, totalAmount, deposit }) => {
   }
 };
 
+export const createPayment = async (params) => {
+  try {
+    console.log("params createPayment", params);
+    const response = await API.post(
+      `api/payments?paymentAmount=${params.paymentAmount}&maSoThanhToan=${params.maSoThanhToan}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const getRateInRestaurant = async (params) => {
   try {
     const response = await API.get(

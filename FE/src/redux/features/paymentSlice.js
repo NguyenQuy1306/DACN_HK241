@@ -62,6 +62,19 @@ export const getDepositPolicy = createAsyncThunk(
     }
   }
 );
+
+export const createPayment = createAsyncThunk(
+  "/payments/payment",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.createPayment(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const paymentSlice = createSlice({
   name: "payment",
   initialState: {

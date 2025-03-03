@@ -5,6 +5,8 @@ import org.hibernate.annotations.DynamicInsert;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -25,6 +27,7 @@ public class Payment {
     private Long SoTienThanhToan;
     @Column(name = "IsDeposit", nullable = false)
     private Boolean IsDeposit;
+    @Enumerated(EnumType.STRING)
     @Column(name = "PaymentStatus", nullable = false)
     private PaymentStatus PaymentStatus;
 }

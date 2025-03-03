@@ -1,16 +1,14 @@
 package com.capstoneproject.themeal.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.entity.ComboAvailable;
-import com.capstoneproject.themeal.model.entity.ComboAvailableHasFood;
-import com.capstoneproject.themeal.model.entity.ComboAvailableHasFoodId;
 import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.entity.OrderTable;
 import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailable;
@@ -18,25 +16,24 @@ import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailableId;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFoodId;
 import com.capstoneproject.themeal.model.entity.OrderTableStatus;
+import com.capstoneproject.themeal.model.entity.Payment;
 import com.capstoneproject.themeal.model.entity.PaymentMethod;
+import com.capstoneproject.themeal.model.entity.PaymentStatus;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.TableAvailable;
 import com.capstoneproject.themeal.model.entity.TableAvailableId;
 import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.model.mapper.OrderTableMapper;
-import com.capstoneproject.themeal.model.request.ComboRequest;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
-import com.capstoneproject.themeal.model.response.ApiResponse;
-import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
-import com.capstoneproject.themeal.model.response.FoodResponse;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
-import com.capstoneproject.themeal.model.response.ResponseCode;
+import com.capstoneproject.themeal.model.response.PaymentResponse;
 import com.capstoneproject.themeal.repository.ComboAvailableRepository;
 import com.capstoneproject.themeal.repository.FoodRepository;
 import com.capstoneproject.themeal.repository.OrderTableHasComboAvailableRepository;
 import com.capstoneproject.themeal.repository.OrderTableHasFoodRepository;
 import com.capstoneproject.themeal.repository.OrderTableRepository;
+import com.capstoneproject.themeal.repository.PaymentRepository;
 import com.capstoneproject.themeal.repository.RestaurantRepository;
 import com.capstoneproject.themeal.repository.TableAvailableRepository;
 import com.capstoneproject.themeal.repository.UserRepository;
@@ -46,13 +43,6 @@ import com.capstoneproject.themeal.service.OrderTableService;
 import com.capstoneproject.themeal.service.TableAvailableService;
 
 import jakarta.transaction.Transactional;
-import vn.payos.type.CheckoutResponseData;
-import vn.payos.type.ItemData;
-import vn.payos.type.PaymentData;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderTableServiceImpl implements OrderTableService {
@@ -76,7 +66,8 @@ public class OrderTableServiceImpl implements OrderTableService {
         private ComboAvailableService comboAvailableService;
         @Autowired
         private FoodService foodService;
-
+        @Autowired
+        private PaymentRepository paymentRepository;
         @Autowired
         private TableAvailableService tableAvailableService;
 
@@ -93,14 +84,13 @@ public class OrderTableServiceImpl implements OrderTableService {
                 TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
                 TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                                 .orElseThrow(() -> new NotFoundException("Table not found"));
-
+                System.out.println("OrderTableStatus.valueOf(statusOrder)" + OrderTableStatus.valueOf(statusOrder));
                 OrderTable orderTable = OrderTable.builder()
                                 .SoKhach(tableAvailable.getSoNguoi())
                                 .Ngay(tableAvailable.getNgay())
                                 .Gio(tableAvailable.getGio())
                                 .TrangThai(OrderTableStatus.valueOf(statusOrder))
-                                .StatusDeposit(false)
-                                .DepositRefunded(false)
+                                .StatusDepositRefund(false)
                                 .TongTienThanhToan(totalAmount)
                                 .TienDatCoc(deposit)
                                 .KhachHang(user)
@@ -220,15 +210,34 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
 
         @Transactional
-        public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess) {
+        public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess, String paymentCode) {
                 OrderTable order = orderTableRepository.findById(orderId)
                                 .orElseThrow(() -> new NotFoundException("Order not found"));
+                Payment payment = paymentRepository.findById(paymentCode)
+                                .orElseThrow(() -> new NotFoundException("Payment not found"));
                 if (isSuccess) {
                         order.setTrangThai(OrderTableStatus.COMPLETED);
+                        payment.setPaymentStatus(PaymentStatus.PAID);
                 } else {
                         order.setTrangThai(OrderTableStatus.CANCELED);
+                        payment.setPaymentStatus(PaymentStatus.NONE);
                 }
                 orderTableRepository.save(order);
+        }
+
+        @Override
+        public PaymentResponse createPayment(Long paymentAmount,
+                        String maSoThanhToan) {
+                Payment payment = Payment.builder()
+                                .MaSoThanhToan(maSoThanhToan)
+                                .SoTienThanhToan(paymentAmount)
+                                .IsDeposit(false)
+                                .PaymentStatus(PaymentStatus.NONE)
+                                .build();
+                paymentRepository.save(payment);
+                return PaymentResponse.builder().IsDeposit(payment.getIsDeposit())
+                                .MaSoThanhToan(payment.getMaSoThanhToan()).PaymentStatus(payment.getPaymentStatus())
+                                .SoTienThanhToan(paymentAmount).build();
         }
 
 }

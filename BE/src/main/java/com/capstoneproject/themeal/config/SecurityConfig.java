@@ -52,7 +52,7 @@ public class SecurityConfig {
                         "/api/payments/payment-callback",
                         "/api/payments/.*",
                         "/api/payments/getOrderById",
-                        "/api/payments/deposit",
+                        "/api/payments/deposit", "/api/payments",
         };
 
         @Bean

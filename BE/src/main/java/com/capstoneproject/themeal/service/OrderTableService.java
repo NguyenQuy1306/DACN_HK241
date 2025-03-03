@@ -2,6 +2,8 @@ package com.capstoneproject.themeal.service;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.capstoneproject.themeal.model.entity.OrderTable;
 import com.capstoneproject.themeal.model.entity.PaymentMethod;
 import com.capstoneproject.themeal.model.entity.Restaurant;
@@ -11,25 +13,29 @@ import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.response.ComboAvailableHasFoodResponse;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
+import com.capstoneproject.themeal.model.response.PaymentResponse;
 
 public interface OrderTableService {
-    List<OrderTableResponse> getOrderTableByCustomerId(Long customerId);
+        List<OrderTableResponse> getOrderTableByCustomerId(Long customerId);
 
-    public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-            String statusOrder, Long totalAmount, Long deposit);
+        public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
+                        String statusOrder, Long totalAmount, Long deposit);
 
-    public void saveOrderTableHasComboAvailable(Long comboId, OrderTable orderTable);
+        public void saveOrderTableHasComboAvailable(Long comboId, OrderTable orderTable);
 
-    public void saveOrderTableHasFood(OrderTable orderTable, FoodOrderRequest foodOrderRequests);
+        public void saveOrderTableHasFood(OrderTable orderTable, FoodOrderRequest foodOrderRequests);
 
-    public void validateOrderRequest(CreateOrderRequest request);
+        public void validateOrderRequest(CreateOrderRequest request);
 
-    public OrderTableResponse mapping(OrderTable orderTable);
+        public OrderTableResponse mapping(OrderTable orderTable);
 
-    // public ComboAvailableHasFoodResponse createCombo(Long maSoNhaHang,
-    // ComboRequest comboRequest);
-    public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
-            Long deposit);
+        // public ComboAvailableHasFoodResponse createCombo(Long maSoNhaHang,
+        // ComboRequest comboRequest);
+        public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
+                        Long deposit);
 
-    public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess);
+        public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess, String paymentCode);
+
+        public PaymentResponse createPayment(Long paymentAmount,
+                        String maSoThanhToan);
 }

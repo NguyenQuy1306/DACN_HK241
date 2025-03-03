@@ -152,7 +152,7 @@ function Home(props) {
     if (!pendingOrderString) return; // Nếu không có đơn hàng nào, thoát
 
     const pendingOrder = JSON.parse(pendingOrderString); // Chuyển về object
-    console.log("pendingOrder.orderCode:", pendingOrder.orderCode);
+    console.log("pendingOrder.orderCode:", pendingOrder);
 
     const elapsedTime = Date.now() - pendingOrder.timeStamp;
 
@@ -163,6 +163,7 @@ function Home(props) {
         paymentCallback({
           status: "FAIL",
           orderCode: pendingOrder.orderCode,
+          paymentCode: pendingOrder.orderCodePayOs,
         })
       );
     } else {
