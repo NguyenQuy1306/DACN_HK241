@@ -54,7 +54,7 @@ public class OrderTable {
     private Boolean DepositRefunded;
 
     @Column(nullable = false)
-    private Boolean TongTienThanhToan;
+    private Long TongTienThanhToan;
 
     @ManyToOne
     @JoinColumn(name = "MaSoPhuongThucThanhToan")

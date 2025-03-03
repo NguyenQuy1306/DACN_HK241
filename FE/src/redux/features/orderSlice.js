@@ -3,9 +3,10 @@ import * as api from "../api";
 
 export const createOrder = createAsyncThunk(
   "/order",
-  async (params, { rejectWithValue }) => {
+  async ({ request, totalAmount, deposit }, { rejectWithValue }) => {
     try {
-      const response = await api.createOrder(params);
+      console.log("totalAmounttotalAmount", totalAmount);
+      const response = await api.createOrder({ request, totalAmount, deposit });
 
       return response.payload;
     } catch (error) {

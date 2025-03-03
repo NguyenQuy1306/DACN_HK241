@@ -12,8 +12,11 @@ import { toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { getOrder, paymentCallback } from "../../redux/features/paymentSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ButtonGreen from "../../components/Button/ButtonGreen/ButtonBooking/ButtonGreen";
+import { useNavigate } from "react-router-dom";
 export default function ResultPayment() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const setOrderWithExpiry = (key, value, expiryInMinutes) => {
     const now = Date.now();
     const item = {
@@ -104,7 +107,12 @@ export default function ResultPayment() {
           {/* <PaymentFieldsTableDemo data={order?.webhook_snapshot} /> */}
         </Box>
       )}
-      <Button>Trở về</Button>
+      <div
+        style={{ marginLeft: "600px", paddingBottom: "10px" }}
+        onClick={() => navigate(`../Home`)}
+      >
+        <ButtonGreen text={"Quay về"}></ButtonGreen>
+      </div>
     </Box>
   );
 }

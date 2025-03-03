@@ -23,8 +23,11 @@ import { createPaymentLink } from "../../../redux/features/paymentSlice";
 import useScript from "react-script-hook";
 import { useSearchParams } from "react-router-dom";
 import { Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
+// import formatCurrency from "../../../helper/helper";
 
 import "react-toastify/dist/ReactToastify.css";
+const { formatCurrency } = require("../../../helper/helper");
+
 const ModalPayment = ({ open, selectedPlace }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -145,7 +148,13 @@ const ModalPayment = ({ open, selectedPlace }) => {
       };
 
       console.log("orderPayload", orderPayload);
-      const orderResponse = await dispatch(createOrder(orderPayload)).unwrap();
+      const orderResponse = await dispatch(
+        createOrder({
+          request: orderPayload,
+          totalAmount: totalAmount,
+          deposit: deposit,
+        })
+      ).unwrap();
 
       if (!orderResponse || orderResponse.error) {
         throw new Error("Tạo đơn hàng thất bại!");
@@ -154,7 +163,11 @@ const ModalPayment = ({ open, selectedPlace }) => {
       console.log("paymentAmount", paymentAmount);
       // const deposit = 10000;
       const response = await dispatch(
-        createPaymentLink({ request: orderPayload, paymentAmount, RETURN_URL })
+        createPaymentLink({
+          request: orderPayload,
+          deposit: paymentAmount,
+          RETURN_URL,
+        })
       ).unwrap();
       console.log("responseresponse", response.data);
       if (!response || response.error) {
@@ -171,7 +184,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           restaurantName: selectedPlace.ten,
         })
       );
-      // callbackFunction(response.data);
+      callbackFunction(response.data);
     } catch (error) {
       console.error("Lỗi khi tạo link thanh toán:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại.");
@@ -307,13 +320,15 @@ const ModalPayment = ({ open, selectedPlace }) => {
                 value="deposit"
                 color="primary"
                 control={<Radio />}
-                label={`Đặt cọc (${deposit} VND)`}
+                label={`Đặt cọc (${formatCurrency(deposit)} VND)`}
               />
               <FormControlLabel
                 value="full"
                 control={<Radio />}
                 color="primary"
-                label={`Thanh toán toàn bộ (${totalAmount} VND)`}
+                label={`Thanh toán toàn bộ (${formatCurrency(
+                  totalAmount
+                )} VND)`}
               />
             </RadioGroup>
           </Box>
@@ -322,7 +337,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           <Box display="flex" justifyContent="space-between" mt={1}>
             <Typography> Tiền đặt cọc:</Typography>
             <Typography fontWeight="bold" color="primary">
-              {deposit ? `${deposit} VND` : "N/A"}
+              {deposit ? `${formatCurrency(deposit)} VND` : "N/A"}
             </Typography>
           </Box>
         )}

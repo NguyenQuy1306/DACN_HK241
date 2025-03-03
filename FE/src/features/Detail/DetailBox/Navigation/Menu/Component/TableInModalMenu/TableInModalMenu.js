@@ -15,6 +15,8 @@ import {
   saveAmount,
   saveDeposit,
 } from "../../../../../../../redux/features/paymentSlice";
+const { formatCurrency } = require("../../../../../../../helper/helper");
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "hsl(174, 100%, 20%)",
@@ -65,7 +67,9 @@ export default function CustomizedTables({ combo }) {
     if (totalPrice.total > 0 && depositPolicy) {
       const depositAmount =
         totalPrice.total > depositPolicy.nguongApDungDatCocTheoPhanTram
-          ? (totalPrice.total * depositPolicy.phanTramCoc) / 100
+          ? Math.round(
+              (totalPrice.total * depositPolicy.phanTramCoc) / 100 / 1000
+            ) * 1000
           : depositPolicy.datCocToiThieu;
 
       dispatch(saveDeposit(depositAmount));
@@ -96,12 +100,14 @@ export default function CustomizedTables({ combo }) {
               </StyledTableCell>
 
               <StyledTableCell align="left" className="StyledTableCell2">
-                {row.gia}
+                {formatCurrency(row.gia)}
               </StyledTableCell>
               <StyledTableCell align="left">
                 {row.soLuong ? row.soLuong : 1}
               </StyledTableCell>
-              <StyledTableCell align="left">{row.gia} đ</StyledTableCell>
+              <StyledTableCell align="left">
+                {formatCurrency(row.gia)} đ
+              </StyledTableCell>
             </StyledTableRow>
           ))}
           {/* {comboType !== "availableCombo" &&
@@ -131,7 +137,9 @@ export default function CustomizedTables({ combo }) {
               {null}
             </StyledTableCell>
             <StyledTableCell align="left"> {null}</StyledTableCell>
-            <StyledTableCell align="left">{totalPrice.total} đ</StyledTableCell>
+            <StyledTableCell align="left">
+              {formatCurrency(totalPrice.total)} đ
+            </StyledTableCell>
           </StyledTableRow>
         </TableBody>
       </Table>

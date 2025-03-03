@@ -70,11 +70,12 @@ public class OrderTableController {
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<OrderTableResponse>> createOrder(
-            @RequestBody CreateOrderRequest request) {
+            @RequestBody CreateOrderRequest request, @RequestParam Long totalAmount, @RequestParam Long deposit) {
 
         ApiResponse<OrderTableResponse> apiResponse = new ApiResponse<>();
         try {
-            OrderTableResponse orderOrderTableResponse = orderTableService.createOrder(request, "PENDING");
+            OrderTableResponse orderOrderTableResponse = orderTableService.createOrder(request, "PENDING",
+                    totalAmount, deposit);
             apiResponse.ok(orderOrderTableResponse);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));

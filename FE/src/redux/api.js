@@ -111,9 +111,14 @@ export const checkSession = async () => {
   }
 };
 
-export const createOrder = async (params) => {
+export const createOrder = async ({ request, totalAmount, deposit }) => {
   try {
-    const response = await API.post(`api/orders`, params);
+    const queryParams = `?totalAmount=${totalAmount}&deposit=${deposit}`;
+
+    const response = await API.post(
+      `api/orders${queryParams}`,
+      request // Gửi request body đúng cách
+    );
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -154,14 +159,12 @@ export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
     const queryParams2 = RETURN_URL
       ? `&returnUrl=${encodeURIComponent(RETURN_URL)}`
       : "";
-
     console.log("requestrequest", request, "deposit", deposit);
 
     const response = await API.post(
       `api/payments/create-payment-link${queryParams}${queryParams2}`,
       request // Gửi request body đúng cách
     );
-
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

@@ -16,7 +16,7 @@ public interface OrderTableService {
     List<OrderTableResponse> getOrderTableByCustomerId(Long customerId);
 
     public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-            String statusOrder);
+            String statusOrder, Long totalAmount, Long deposit);
 
     public void saveOrderTableHasComboAvailable(Long comboId, OrderTable orderTable);
 
@@ -28,7 +28,8 @@ public interface OrderTableService {
 
     // public ComboAvailableHasFoodResponse createCombo(Long maSoNhaHang,
     // ComboRequest comboRequest);
-    public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder);
+    public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
+            Long deposit);
 
     public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess);
 }

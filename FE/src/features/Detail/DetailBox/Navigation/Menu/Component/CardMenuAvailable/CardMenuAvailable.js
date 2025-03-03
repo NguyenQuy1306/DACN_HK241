@@ -123,7 +123,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
                             key={itemIndex}
                             className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu_p"
                           >
-                            {item.ten} - {item.gia} VND
+                            {item.ten} - {formatCurrency(item.gia)} VND
                           </p>
                         ))}
                         {/* {detail.ten} */}

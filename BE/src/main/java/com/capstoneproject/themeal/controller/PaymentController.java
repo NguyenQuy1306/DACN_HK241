@@ -83,7 +83,7 @@ public class PaymentController {
                     .cancelUrl(returnUrl)
                     .expiredAt(expirationTime)
                     .build();
-            if (request.getFoodOrderRequests() != null) {
+            if (request.getFoodOrderRequests() != null && request.getFoodOrderRequests().size() > 0) {
                 List<FoodOrderRequest> foodOrderRequests = request.getFoodOrderRequests();
                 if (foodOrderRequests.size() > 0) {
                     List<Long> listIdFood = foodOrderRequests.stream()

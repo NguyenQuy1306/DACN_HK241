@@ -89,7 +89,7 @@ public class OrderTableServiceImpl implements OrderTableService {
 
         @Override
         public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-                        String statusOrder) {
+                        String statusOrder, Long totalAmount, Long deposit) {
                 TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
                 TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                                 .orElseThrow(() -> new NotFoundException("Table not found"));
@@ -99,6 +99,10 @@ public class OrderTableServiceImpl implements OrderTableService {
                                 .Ngay(tableAvailable.getNgay())
                                 .Gio(tableAvailable.getGio())
                                 .TrangThai(OrderTableStatus.valueOf(statusOrder))
+                                .StatusDeposit(false)
+                                .DepositRefunded(false)
+                                .TongTienThanhToan(totalAmount)
+                                .TienDatCoc(deposit)
                                 .KhachHang(user)
                                 .NhaHang(restaurant)
                                 .build();
@@ -161,7 +165,8 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
 
         @Transactional
-        public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder) {
+        public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
+                        Long deposit) {
                 Long customerID = request.getCustomerID();
                 Short tableId = request.getTableId();
                 Long comboId = request.getComboId();
@@ -199,7 +204,7 @@ public class OrderTableServiceImpl implements OrderTableService {
                                 .orElseThrow(() -> new NotFoundException("Restaurant not found"));
                 // Create OderTalbe entity
                 OrderTable orderTable = this.saveOrderTable(customer, paymentMethod, restaurant,
-                                tableId, statusOrder);
+                                tableId, statusOrder, totalAmount, deposit);
                 // Create OderTableHasCombo entity if Menu is not null
                 if (comboId != null) {
                         this.saveOrderTableHasComboAvailable(comboId, orderTable);
