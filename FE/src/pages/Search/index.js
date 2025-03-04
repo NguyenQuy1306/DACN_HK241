@@ -76,8 +76,9 @@ const Search = () => {
       params.time = time;
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
+    console.log("calllll");
     dispatch(getRestaurantsInMaps(params));
-  }, [currentPage, bounds, time, date, people]);
+  }, [currentPage, time, date, people]);
 
   return (
     <>

@@ -48,6 +48,9 @@ const Reservation = () => {
     "21:00",
     "21:30",
     "22:00",
+    "22:30",
+    "23:00",
+    "23:30",
   ];
   const availablePersons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const bounds = useSelector((state) => state.restaurant.bounds);

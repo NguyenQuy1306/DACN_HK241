@@ -26,7 +26,9 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const data_restaurantsInMaps = useSelector(
     (state) => state.restaurant.restaurants
   );
-
+  const time = useSelector((state) => state.restaurant.time);
+  const date = useSelector((state) => state.restaurant.date);
+  const people = useSelector((state) => state.restaurant.people);
   useEffect(() => {
     // Update center when coords change
     setCoords(center);
@@ -38,18 +40,24 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const { ne, sw } = bounds;
       try {
         // Dispatch action to fetch restaurant data
-        dispatch(saveCurrentPage(0));
+        const params = {
+          bl_latitude: sw.lat,
+          bl_longitude: sw.lng,
+          tr_longitude: ne.lng,
+          tr_latitude: ne.lat,
+          page: 0,
+          size: 10,
+        };
 
-        dispatch(
-          getRestaurantsInMaps({
-            bl_latitude: sw.lat,
-            bl_longitude: sw.lng,
-            tr_longitude: ne.lng,
-            tr_latitude: ne.lat,
-            page: 0,
-            size: 10,
-          })
-        );
+        // Chỉ thêm các tham số `date`, `time`, `people` nếu chúng có giá trị
+        if (time && date && people) {
+          params.date = date;
+          params.people = people;
+          params.time = time;
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        dispatch(getRestaurantsInMaps(params));
+        dispatch(saveCurrentPage(0));
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
