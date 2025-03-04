@@ -46,7 +46,6 @@ public class RestaurantController {
     }
 
     @GetMapping("/recommended")
-
     public List<RestaurantInMapsResponse> getRecommendedList() {
         return restaurantService.getRecommendedList();
     }

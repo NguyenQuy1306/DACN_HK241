@@ -33,7 +33,7 @@ import com.capstoneproject.themeal.service.TableAvailableService;
 import com.capstoneproject.themeal.service.impl.OrderTableServiceImpl;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/orders")
 public class OrderTableController {
@@ -64,6 +64,11 @@ public class OrderTableController {
     @GetMapping("/customer/{customerId}/history")
     List<OrderTableResponse> getAllOrderByCustomerId(@PathVariable Long customerId) {
         return orderTableService.getOrderTableByCustomerId(customerId);
+    }
+
+    @GetMapping("/all")
+    List<OrderTableResponse> getAllOrders() {
+        return orderTableService.getAllOrders();
     }
 
     @PostMapping("")

@@ -14,6 +14,8 @@ import com.capstoneproject.themeal.model.response.OrderTableResponse;
 public interface OrderTableService {
     List<OrderTableResponse> getOrderTableByCustomerId(Long customerId);
 
+    List<OrderTableResponse> getAllOrders();
+
     public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId);
 
     public void saveOrderTableHasComboAvailable(Long comboId, OrderTable orderTable);

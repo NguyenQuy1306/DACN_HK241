@@ -1,4 +1,5 @@
-import { Col, Divider, Input, Row, Select } from "antd";
+import { Client } from "@stomp/stompjs";
+import { Col, Divider, Input, message, Row, Select } from "antd";
 import {
     ArcElement,
     BarElement,
@@ -11,17 +12,20 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import SockJS from "sockjs-client";
 import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
-import order from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
 import SidebarOwner from "../../components/SidebarOwner";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
+import orderImg from "../../assets/images/order.png";
+import { getAllOrders } from "../../redux/features/orderSlice";
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -111,14 +115,78 @@ const handleChange = (value) => {
 
 function Dashboard_Owner() {
     const [collapsed, setCollapsed] = useState(false);
+    const [input, setInput] = useState("");
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+    const [stompClient, setStompClient] = useState(null);
+    const dispatch = useDispatch();
+    const { order } = useSelector((state) => state.order);
+
+    useEffect(() => {
+        dispatch(getAllOrders());
+    }, []);
+
+    const [messages, setMessages] = useState(order);
+    // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
+
+    useEffect(() => {
+        setMessages(order);
+    }, [order]);
+
+    // useEffect(() => {
+    //     sendMessage(); // Dispatch action getAllOrders
+    // }, []);
+
+    const cancelledOrder = messages.filter((item) => item.trangThai === "Cancelled").length;
+
+    useEffect(() => {
+        // Khởi tạo kết nối WebSocket khi component mount
+        const socket = new SockJS("http://localhost:8080/ws");
+        const client = new Client({
+            webSocketFactory: () => socket,
+            connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
+            onConnect: () => {
+                setStompClient(client);
+                alert("Connecting to websocket....");
+                client.subscribe("/topic/messages", (message) => {
+                    console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
+                    setMessages(JSON.parse(message.body));
+                });
+            },
+            onStompError: (frame) => {
+                console.error("Broker reported error: " + frame.headers["message"]);
+                console.error("Additional details: " + frame.body);
+            },
+            debug: (str) => {
+                console.log(str); // Bật debug để xem log
+            },
+        });
+
+        client.activate(); // Kích hoạt kết nối
+
+        return () => {
+            if (client) {
+                client.deactivate(); // Ngắt kết nối khi component unmount
+            }
+        };
+    }, []);
+
+    const sendMessage = () => {
+        if (stompClient) {
+            stompClient.publish({
+                destination: "/app/sendMessage", // Đích đến trên server
+                body: "Hello", // Nội dung message
+            });
+        }
+    };
+
     return (
         <div className={styles.container}>
             <SidebarOwner collapsed={collapsed} />
             <div className={styles["dashboard-body"]}>
                 <div style={{ display: "flex", alignItems: "center" }}>
+                    <button onClick={sendMessage}>Send</button>
                     <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
                     <Select
                         defaultValue="Ngày"
@@ -151,7 +219,7 @@ function Dashboard_Owner() {
                         <Statistic
                             img={food}
                             title="Tổng đơn đặt"
-                            quantity={100}
+                            quantity={messages?.length}
                             up={true}
                             rate={3}
                             compare="So với hôm qua"
@@ -168,9 +236,9 @@ function Dashboard_Owner() {
                     </Col>
                     <Col span={6}>
                         <Statistic
-                            img={order}
+                            img={orderImg}
                             title="Tổng đơn bị hủy"
-                            quantity={8}
+                            quantity={cancelledOrder}
                             up={false}
                             rate={12}
                             compare="So với hôm qua"
@@ -180,7 +248,7 @@ function Dashboard_Owner() {
                         <Statistic
                             img={money}
                             title="Tổng doanh thu (VND)"
-                            quantity={32000000}
+                            quantity={4800000}
                             up={true}
                             rate={13}
                             compare="So với hôm qua"
