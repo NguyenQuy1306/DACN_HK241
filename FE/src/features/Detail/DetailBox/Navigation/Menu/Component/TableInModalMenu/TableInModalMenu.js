@@ -14,6 +14,7 @@ import {
   getDepositPolicy,
   saveAmount,
   saveDeposit,
+  savePaymentAmount,
 } from "../../../../../../../redux/features/paymentSlice";
 const { formatCurrency } = require("../../../../../../../helper/helper");
 
@@ -71,9 +72,10 @@ export default function CustomizedTables({ combo }) {
               (totalPrice.total * depositPolicy.phanTramCoc) / 100 / 1000
             ) * 1000
           : depositPolicy.datCocToiThieu;
-
+      console.log("depositAmountdepositAmount ,, ", depositAmount);
       dispatch(saveDeposit(depositAmount));
       dispatch(saveAmount(totalPrice.total));
+      dispatch(savePaymentAmount(depositAmount));
     }
   }, [totalPrice.total, depositPolicy]);
 

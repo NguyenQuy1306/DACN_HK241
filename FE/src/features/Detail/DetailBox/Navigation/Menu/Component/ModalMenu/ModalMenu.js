@@ -40,7 +40,6 @@ export default function BasicModal({ combo, selectedPlace }) {
     gia: item.gia,
     soLuong: quantity,
   }));
-  console.log("combo_convert2321", combo_convert);
   const handleOpen = () => {
     dispatch(setComboType(""));
     setOpen(true);

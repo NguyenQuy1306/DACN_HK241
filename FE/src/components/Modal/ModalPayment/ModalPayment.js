@@ -93,7 +93,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
       console.log("Người dùng đã hoàn thành thanh toán!");
     }
   }, [message]);
-
+  console.log("deposit:::", deposit);
   useEffect(() => {
     if (checkoutUrl) {
       console.log("useeffect", openPayOS());
@@ -110,6 +110,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
   useEffect(() => {
     if (paymentType === "deposit") {
+      console.log("deposit:::2333", deposit);
       dispatch(savePaymentAmount(deposit));
     } else {
       dispatch(savePaymentAmount(totalAmount));
@@ -121,6 +122,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
       dispatch(saveDeposit(depositPolicy.datCocToiThieu));
       return depositPolicy.datCocToiThieu;
     }
+
     return 0;
   }, [depositPolicy]);
   console.log("dêrerere", deposit);
@@ -148,7 +150,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
             : [],
       };
 
-      console.log("orderPayload", orderPayload);
       const orderResponse = await dispatch(
         createOrder({
           request: orderPayload,
@@ -156,7 +157,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
           deposit: deposit,
         })
       ).unwrap();
-      console.log("orderResponse", orderResponse);
 
       if (!orderResponse || orderResponse.error) {
         throw new Error("Tạo đơn hàng thất bại!");
@@ -192,7 +192,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
           restaurantName: selectedPlace.ten,
         })
       );
-      callbackFunction(response.data);
+      console.log("response.data", response.data);
+      // callbackFunction(response.data);
     } catch (error) {
       console.error("Lỗi khi tạo link thanh toán:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại.");

@@ -136,10 +136,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
     setSelectedMarker(null); // Hide the info window when the map is clicked
     setHighlightedMarkerIndex(null);
   };
-  const [mapLoaded, setMapLoaded] = useState(false);
 
   const onMapLoad = (map) => {
-    setMapLoaded(true);
     mapRef.current = map;
   };
   const onChildClick = (position, index) => {
