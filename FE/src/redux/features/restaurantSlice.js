@@ -17,8 +17,10 @@ export const getRestaurantsInMaps = createAsyncThunk(
   "/restaurants/list-in-boundary",
   async (params, { rejectWithValue }) => {
     try {
+      console.log("-params", params);
+
       const response = await api.getRestaurantsInMaps(params);
-      return response.payload;
+      return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -30,11 +32,17 @@ export const restaurantSlice = createSlice({
   initialState: {
     restaurants: [],
     restaurantsImages: [],
+    bounds: null,
     error: "",
     loading: false,
     openBookingWithMenu: false,
     menuChoosed: [],
     newMenu: [],
+    currentPage: 0,
+    time: null,
+    date: null,
+    people: null,
+    metadata: null,
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
   },
@@ -50,16 +58,30 @@ export const restaurantSlice = createSlice({
     setHoveredMarkerIndex: (state, action) => {
       state.hoveredMarkerIndex = action.payload;
     },
+    saveBounds: (state, action) => {
+      state.bounds = action.payload;
+    },
+    saveCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    saveFilterTable: (state, action) => {
+      const { time, date, people } = action.payload;
+      state.time = time;
+      state.date = date;
+      state.people = people;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getRestaurantsInMaps.pending, (state) => {
         state.loading = true;
         state.restaurants = [];
+        state.metadata = null;
       })
       .addCase(getRestaurantsInMaps.fulfilled, (state, action) => {
         state.loading = false;
-        state.restaurants = action.payload;
+        state.restaurants = action.payload.payload;
+        state.metadata = action.payload.metadata.pagination;
       })
       .addCase(getRestaurantsInMaps.rejected, (state, action) => {
         state.loading = false;
@@ -67,7 +89,12 @@ export const restaurantSlice = createSlice({
       });
   },
 });
-export const { setOpenBookingWithMenu, setHoveredMarkerIndex } =
-  restaurantSlice.actions;
+export const {
+  setOpenBookingWithMenu,
+  setHoveredMarkerIndex,
+  saveBounds,
+  saveCurrentPage,
+  saveFilterTable,
+} = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

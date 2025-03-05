@@ -8,7 +8,23 @@ import RegisterRestaurant1 from "../pages/RegisterRestaurant1";
 import RegisterRestaurant2 from "../pages/RegisterRestaurant2";
 import ViewImagepage from "../pages/ViewImagepage";
 import SearchResult from "../pages/SearchResult";
+import OwnerDashboard from "../pages/Dashboard_Owner";
+import OwnerLayout from "../layouts/OwnerLayout";
+
+import ResultPayment from "../pages/ResultPayment/ResultPayment";
+import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
+
 export const routes = [
+  {
+    path: "/deposit-policy",
+    component: DepositPolicy,
+    layout: MainLayout,
+  },
+  {
+    path: "/DetailRestaurant/:id/ResultPayment",
+    component: ResultPayment,
+    layout: MainLayout,
+  },
   {
     path: "/SearchResult/:keyword",
     component: SearchResult,
@@ -48,6 +64,12 @@ export const routes = [
     path: "/register-restaurant2",
     component: RegisterRestaurant2,
     layout: MainLayout,
+  },
+
+  {
+    path: "/owner/dashboard",
+    component: OwnerDashboard,
+    layout: OwnerLayout,
   },
 
   {

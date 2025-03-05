@@ -40,10 +40,7 @@ public class FavoriteListServiceImpl implements FavoriteListService {
             throw new IllegalArgumentException("User không ton tại!");
         }
 
-        System.out.println(user);
-
-
-        FavoriteList favoriteList =  new FavoriteList();
+        FavoriteList favoriteList = new FavoriteList();
         if (name != null) {
             favoriteList.setTen(name);
         } else {
@@ -52,7 +49,6 @@ public class FavoriteListServiceImpl implements FavoriteListService {
         favoriteList.setKhachHang(user.get());
 
         favoriteList.setThoiGianCapNhat(LocalDateTime.now());
-        System.out.println("DANH SACH MOI: "+ favoriteList);
         favoriteListRepository.save(favoriteList);
         return favoriteListMapper.toFavoriteListResponse(favoriteList);
     }

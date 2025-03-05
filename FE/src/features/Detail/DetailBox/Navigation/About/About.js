@@ -77,7 +77,7 @@ const About = ({ selectedPlace }) => {
   const now = daysOfWeek[new Date().getDay()];
   return (
     <div className="AboutDiv">
-      <h3 className="AboutDiv_h3">Chi tiết {selectedPlace.name}</h3>
+      <h3 className="AboutDiv_h3">Chi tiết {selectedPlace.ten}</h3>
       <div className="AboutDiv_H1">
         <div className="AboutDiv_H1_div">
           <div className="AboutDiv_H1_div_div1">

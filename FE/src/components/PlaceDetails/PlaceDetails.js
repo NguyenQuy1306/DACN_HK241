@@ -145,7 +145,7 @@ const PlaceDetails = ({
                   <div className="PlaceDetailDiv_H1_detail_name_div1_name">
                     <h2>
                       <a className="PlaceDetailDiv_H1_detail_name_div1_name_a">
-                        {place.name}
+                        {place.ten}
                       </a>
                     </h2>
                   </div>
@@ -167,7 +167,7 @@ const PlaceDetails = ({
                     </div>
                   </div>
                   <p className="PlaceDetailDiv_H1_detail_name_div1_p">
-                    {place.address}
+                    {place.diaChi}
                   </p>
                 </div>
               </div>

@@ -15,7 +15,10 @@ import { toast } from "react-toastify";
 import { setOpenBookingWithMenu } from "../../../../../../../../../redux/features/restaurantSlice";
 import { useNavigate } from "react-router-dom";
 import { setActiveTab } from "../../../../../../../../../redux/features/navigationSlice";
-import { getComboAvailable } from "../../../../../../../../../redux/features/comboSlice";
+import {
+  getComboAvailable,
+  setComboType,
+} from "../../../../../../../../../redux/features/comboSlice";
 import { setActiveTabMenu } from "../../../../../../../../../redux/features/navigationSlice";
 import { setShouldScroll } from "../../../../../../../../../redux/features/navigationSlice";
 import {
@@ -44,9 +47,7 @@ const MenuChooseBookingwidget = ({
   const choosedTable = useSelector((state) => state.table.choosedTable);
   const menuChoosed = useSelector((state) => state.restaurant.menuChoosed);
   const paymentStatus = useSelector((state) => state.payment.paymentStatus);
-  const bookingWithNewCombo = useSelector(
-    (state) => state.restaurant.bookingWithNewCombo
-  );
+
   const openModalPayment = useSelector((state) => state.table.openModalPayment);
   const handleBooking = async () => {
     if (choosedOptionByWithMenu && menuChoosed.length <= 0) {
@@ -83,27 +84,11 @@ const MenuChooseBookingwidget = ({
   };
   useEffect(() => {
     if (!openModalPayment && paymentStatus === "success") {
-      dispatch(
-        createOrder({
-          customerID: user.maSoNguoiDung,
-          tableId: choosedTable.maSo.thuTuBan,
-          comboId: menuChoosed[0] ? menuChoosed[0].comboId : null,
-          restaurantId: selectedPlace.maSoNhaHang,
-          foodOrderRequests: bookingWithNewCombo
-            ? menuChoosed[0].map(({ maSoMonAn, soLuong }) => ({
-                maSoMonAn,
-                soLuong,
-              }))
-            : [],
-        })
-      );
-
-      toast.success("Bạn đã đặt bàn thành công!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
-
+      // toast.success("Bạn đã đặt bàn thành công!", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      // });
       dispatch(
         setOpenBookingWithMenu({
           openBookingWithMenu: false,
@@ -111,6 +96,7 @@ const MenuChooseBookingwidget = ({
           bookingWithNewCombo: false,
         })
       );
+      dispatch(setComboType(""));
 
       setDate(null);
       setcloseDateDiv(false);

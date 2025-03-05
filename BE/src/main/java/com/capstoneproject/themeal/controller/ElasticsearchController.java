@@ -37,7 +37,6 @@ public class ElasticsearchController {
             @RequestParam String restaurantId) throws
 
     IOException {
-        System.out.println("nguyênnnnnn2");
         RestaurantElasticsearch restaurantElasticsearch = elasticSearchQuery.getDocumentById(restaurantId);
         ApiResponse<RestaurantElasticsearch> apiResponse = new ApiResponse<>();
         apiResponse.ok(restaurantElasticsearch);

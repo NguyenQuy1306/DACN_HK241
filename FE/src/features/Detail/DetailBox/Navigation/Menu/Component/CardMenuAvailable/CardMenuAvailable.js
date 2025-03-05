@@ -46,43 +46,15 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
   //   soLuong: quantity,
   // }));
   const handleOnClickBookingRestaurantWithAvailableMenu = async () => {
-    // dispatch();
-    // setOpenBookingWithMenu({
-    //   openBookingWithMenu: true,
-    //   menuChoosed: [menu],
-    //   bookingWithNewCombo: false,
-    // })
-    setIsCreatingLink(true);
-    // exit();
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/payments/create-payment-link",
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.status !== 200) {
-        console.log("Server doesn't response");
-      }
-
-      const result = await response.data;
-
-      setPayOSConfig((oldConfig) => ({
-        ...oldConfig,
-        CHECKOUT_URL: result.checkoutUrl,
-        RETURN_URL: result.returnUrl,
-      }));
-
-      window.location.href = result;
-
-      setIsOpen(true);
-      setIsCreatingLink(false);
-      setOpen(false);
-
-      dispatch(setComboType("availableCombo"));
-    } catch (e) {
-      console.error(e);
-    }
+    dispatch(
+      setOpenBookingWithMenu({
+        openBookingWithMenu: true,
+        menuChoosed: [menu],
+        bookingWithNewCombo: false,
+      })
+    );
+    dispatch(setComboType("availableCombo"));
+    setOpen(false);
   };
 
   const { comboId, comboName, comboPrice, comboCreationTime, foods } = menu;
@@ -122,7 +94,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
           </div>
         </div>
         <Button className="CardMenuAvailableDiv_button">
-          <span className="CardMenuAvailableDiv_button_span">Đặt combo</span>
+          <span className="CardMenuAvailableDiv_button_span">Đặt menu</span>
         </Button>
       </div>
 
@@ -151,7 +123,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
                             key={itemIndex}
                             className="CardMenuAvailableDiv_Modal_div_div_p_motaMenu_p"
                           >
-                            {item.ten} - {item.gia} VND
+                            {item.ten} - {formatCurrency(item.gia)} VND
                           </p>
                         ))}
                         {/* {detail.ten} */}
@@ -161,19 +133,19 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu">
                     <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
                       {" "}
-                      The dishes listed above are subject to change depending on
-                      availability.
+                      Các món được liệt kê ở trên được tạo theo nhu cầu có sẵn
+                      tại nhà hàng.
                     </p>
-                    <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
+                    {/* <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
                       {" "}
                       This preset menu is available from 2024-12-31 to
                       2024-12-31 for dinner on Tuesday, Wednesday and Thursday.{" "}
-                    </p>
-                    <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
+                    </p> */}
+                    {/* <p className="CardMenuAvailableDiv_Modal_div_div_p_noteMenu_p">
                       {" "}
                       Please note, it will not be possible to choose from the "à
                       la carte" menu once at the restaurant.
-                    </p>
+                    </p> */}
                   </div>
                   <div className="CardMenuAvailableDiv_Modal_div_div_p_button">
                     <div className="CardMenuAvailableDiv_Modal_div_div_p_button_div">

@@ -1,3 +1,4 @@
+import { Api } from "@mui/icons-material";
 import axios from "axios";
 
 const API = axios.create({
@@ -110,9 +111,35 @@ export const checkSession = async () => {
   }
 };
 
-export const createOrder = async (params) => {
+export const createOrder = async ({ request, totalAmount, deposit }) => {
   try {
-    const response = await API.post(`api/orders`, params);
+    const queryParams = `?totalAmount=${totalAmount}&deposit=${deposit}`;
+
+    const response = await API.post(
+      `api/orders${queryParams}`,
+      request // Gửi request body đúng cách
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const createPayment = async (params) => {
+  try {
+    console.log("params createPayment", params);
+    const response = await API.post(
+      `api/payments?paymentAmount=${params.paymentAmount}&maSoThanhToan=${params.maSoThanhToan}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getAllOrders = async () => {
+  try {
+    const response = await API.get(`api/orders/all`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -144,5 +171,58 @@ export const searchByKeyword = async (params) => {
     return response.data;
   } catch (error) {
     return error.response?.data || error;
+  }
+};
+
+export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
+  try {
+    const queryParams = deposit ? `?deposit=${deposit}` : "";
+    const queryParams2 = RETURN_URL
+      ? `&returnUrl=${encodeURIComponent(RETURN_URL)}`
+      : "";
+    console.log("requestrequest", request, "deposit", deposit);
+
+    const response = await API.post(
+      `api/payments/create-payment-link${queryParams}${queryParams2}`,
+      request // Gửi request body đúng cách
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getOrder = async (params) => {
+  try {
+    const response = await API.get(`/api/payments/getOrderById`, { params });
+    return response;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const cancelOrder = async (params) => {
+  try {
+    const response = await API.post(`/api/payments/${params.orderId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const paymentCallback = async (params) => {
+  try {
+    console.log("paymentCallback", params);
+    const response = await API.post(`/api/payments/payment-callback`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getDepositPolicy = async (params) => {
+  try {
+    const response = await API.get(`/api/payments/deposit`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
   }
 };

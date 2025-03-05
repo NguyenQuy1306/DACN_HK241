@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 @SecurityRequirement(name = "bearerAuth")
 
 public class AuthenticationController {
+    @Lazy
     private final AuthenticationService service;
     private final UserRepository userRepository;
     private final SessionRegistry sessionRegistry;

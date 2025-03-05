@@ -6,6 +6,8 @@ import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getRestaurantsInMaps,
+  saveBounds,
+  saveCurrentPage,
   setHoveredMarkerIndex,
 } from "../../redux/features/restaurantSlice";
 import { saveMyCoords } from "../../redux/features/searchSlice";
@@ -24,7 +26,9 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const data_restaurantsInMaps = useSelector(
     (state) => state.restaurant.restaurants
   );
-
+  const time = useSelector((state) => state.restaurant.time);
+  const date = useSelector((state) => state.restaurant.date);
+  const people = useSelector((state) => state.restaurant.people);
   useEffect(() => {
     // Update center when coords change
     setCoords(center);
@@ -36,15 +40,24 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const { ne, sw } = bounds;
       try {
         // Dispatch action to fetch restaurant data
-
-        dispatch(
-          getRestaurantsInMaps({
-            bl_latitude: sw.lat,
-            bl_longitude: sw.lng,
-            tr_longitude: ne.lng,
-            tr_latitude: ne.lat,
-          })
-        );
+        const params = {
+          bl_latitude: sw.lat,
+          bl_longitude: sw.lng,
+          tr_longitude: ne.lng,
+          tr_latitude: ne.lat,
+          page: 0,
+          size: 10,
+        };
+        console.log("datedate", date);
+        // Chỉ thêm các tham số `date`, `time`, `people` nếu chúng có giá trị
+        if (time && date && people) {
+          params.date = date;
+          params.people = people;
+          params.time = time;
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        dispatch(getRestaurantsInMaps(params));
+        dispatch(saveCurrentPage(0));
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -75,10 +88,10 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const transformedMarkers = data_restaurantsInMaps.map((place) => ({
         lat: parseFloat(place.viDo) || 0,
         lng: parseFloat(place.kinhDo) || 0,
-        name: place.ten,
+        ten: place.ten,
         photo: place.photo || null,
         rating: place.rating || null,
-        address: place.diaChi,
+        diaChi: place.diaChi,
         khoangGia: place.khoangGia,
         gioHoatDong: place.gioHoatDong,
         monDacSac: place.monDacSac,
@@ -113,6 +126,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
       const ne = map.getBounds().getNorthEast().toJSON();
       const sw = map.getBounds().getSouthWest().toJSON();
       setBounds({ ne, sw });
+      dispatch(saveBounds({ ne, sw }));
     }
   };
 
@@ -122,10 +136,8 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
     setSelectedMarker(null); // Hide the info window when the map is clicked
     setHighlightedMarkerIndex(null);
   };
-  const [mapLoaded, setMapLoaded] = useState(false);
 
   const onMapLoad = (map) => {
-    setMapLoaded(true);
     mapRef.current = map;
   };
   const onChildClick = (position, index) => {
@@ -211,7 +223,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                       ? selectedMarker.danhSachAnhNhaHang[0]
                       : "https://via.placeholder.com/100"
                   }
-                  alt={selectedMarker.name}
+                  alt={selectedMarker.ten}
                   style={{ width: "100%", height: "70%", borderRadius: "4px" }}
                 />
                 <div style={{ display: "flex" }}>
@@ -224,7 +236,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                       marginRight: "5px",
                     }}
                   >
-                    {selectedMarker.name}
+                    {selectedMarker.ten}
                   </div>
                   ★ {selectedMarker.rating}
                 </div>
@@ -237,7 +249,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
                     maxWidth: "100%",
                   }}
                 >
-                  {selectedMarker.address}
+                  {selectedMarker.diaChi}
                 </div>
 
                 {/* Tip of the talk bubble */}

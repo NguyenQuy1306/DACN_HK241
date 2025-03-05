@@ -3,16 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import ModalSearch from "../../Modal/ModalSearch/ModalSearch";
-import debounce from "lodash.debounce";
-import {
-  searchKeyword,
-  saveKeyword,
-} from "../../../redux/features/searchSlice";
 
-import {
-  handleModal,
-  openModalSearch2,
-} from "../../../redux/features/searchSlice";
 import "./InputSearch.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,7 +15,7 @@ function sleep(duration) {
   });
 }
 
-const InputSearch = ({ width, placeholder, iCon, getOpen }) => {
+const InputSearch = ({ width, placeholder, iCon }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const [options, setOptions] = React.useState([]);
@@ -45,26 +36,13 @@ const InputSearch = ({ width, placeholder, iCon, getOpen }) => {
       active = false;
     };
   }, [loading]);
-  const openOf2 = useSelector(openModalSearch2);
-  React.useEffect(() => {
-    if (openOf2 == false) {
-      setOpen(false);
-    }
-  }, [openOf2]);
 
   const handleInputClick = () => {
     setOpen(true);
-    dispatch(handleModal({ openModalSearch2: true }));
-    if (placeholder === "Bạn muốn đặt chỗ đến đâu") {
-      getOpen(true); // Pass the 'open' state value to the parent
-    }
   };
 
   return (
     <div className={`InputSearchDiv ${open ? "active" : ""}`}>
-      {/* {open && placeholder === "Bàn muốn đặt chỗ đến đâu" && (
-        <div className="overlay" onClick={handleCloseModal}></div>
-      )} */}
       {open && placeholder === "Bạn muốn đặt chỗ đến đâu" && (
         <div className="modalSearch_dropdown">
           <ModalSearch />

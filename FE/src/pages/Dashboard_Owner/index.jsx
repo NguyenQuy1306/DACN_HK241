@@ -1,33 +1,31 @@
-import React from "react";
-import styles from "./style.module.css";
-import { IoNotifications } from "react-icons/io5";
-import { FaMessage } from "react-icons/fa6";
-import { IoMdSettings } from "react-icons/io";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { Card, Col, Row, Select } from "antd";
-import { Input, Divider } from "antd";
-import TrendingItem from "./components/TrendingItem";
-import Statistic from "./components/Statistic";
-import ship from "../../assets/images/ship.png";
-import food from "../../assets/images/food.png";
-import order from "../../assets/images/order.png";
-import money from "../../assets/images/money.png";
-
-import { Bar, Line, Doughnut } from "react-chartjs-2";
+import { Client } from "@stomp/stompjs";
+import { Col, Divider, Input, message, Row, Select } from "antd";
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
     ArcElement,
-    Tooltip,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
     Legend,
+    LinearScale,
     LineElement,
     PointElement,
+    Title,
+    Tooltip,
 } from "chart.js";
-import CommentCard from "./components/CommentCard";
+import React, { useEffect, useMemo, useState } from "react";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import SockJS from "sockjs-client";
+import food from "../../assets/images/food.png";
+import money from "../../assets/images/money.png";
+import ship from "../../assets/images/ship.png";
 import SidebarOwner from "../../components/SidebarOwner";
+import CommentCard from "./components/CommentCard";
+import Statistic from "./components/Statistic";
+import TrendingItem from "./components/TrendingItem";
+import styles from "./style.module.css";
+import orderImg from "../../assets/images/order.png";
+import { getAllOrders } from "../../redux/features/orderSlice";
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -116,114 +114,148 @@ const handleChange = (value) => {
 };
 
 function Dashboard_Owner() {
+    const [collapsed, setCollapsed] = useState(false);
+    const [input, setInput] = useState("");
+    const toggleCollapsed = () => {
+        setCollapsed(!collapsed);
+    };
+    const [stompClient, setStompClient] = useState(null);
+    const dispatch = useDispatch();
+    const { order } = useSelector((state) => state.order);
+    console.log("order in dash",order)
+    const [messages, setMessages] = useState(order);
+
+
+    useEffect(() => {
+        console.log("Fetching orders...");
+        dispatch(getAllOrders());
+    }, [dispatch]); // Keep dependency to avoid unnecessary calls
+    
+    console.log("messages",messages)
+    // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
+    const cancelledOrder = messages? messages.filter((item) => item.trangThai === "CANCELED").length:0;
+
+    useEffect(() => {
+        setMessages(order);
+    }, [order]);
+
+    // useEffect(() => {
+    //     sendMessage(); // Dispatch action getAllOrders
+    // }, []);
+
+    useEffect(() => {
+        // Khởi tạo kết nối WebSocket khi component mount
+        const socket = new SockJS("http://localhost:8080/ws");
+        const client = new Client({
+            webSocketFactory: () => socket,
+            connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
+            onConnect: () => {
+                setStompClient(client);
+                alert("Connecting to websocket....");
+                client.subscribe("/topic/messages", (message) => {
+                    console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
+                    setMessages(JSON.parse(message.body));
+                });
+            },
+            onStompError: (frame) => {
+                console.error("Broker reported error: " + frame.headers["message"]);
+                console.error("Additional details: " + frame.body);
+            },
+            debug: (str) => {
+                console.log(str); // Bật debug để xem log
+            },
+        });
+
+        client.activate(); // Kích hoạt kết nối
+
+        return () => {
+            if (client) {
+                client.deactivate(); // Ngắt kết nối khi component unmount
+            }
+        };
+    }, []);
+
+    const sendMessage = () => {
+        if (stompClient) {
+            stompClient.publish({
+                destination: "/app/sendMessage", // Đích đến trên server
+                body: "Hello", // Nội dung message
+            });
+        }
+    };
+
     return (
         <div className={styles.container}>
-            <SidebarOwner />
-            <div>
-                <div className={styles["dash_header"]}>
-                    <div className={styles["search-wrap"]}>
-                        <Search
-                            placeholder="Search"
-                            allowClear
-                            enterButton
-                            size="large"
-                            onSearch={onSearch}
-                        />
-                    </div>
-
-                    <div className={styles.noti}>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--notification"]}`}>
-                            <IoNotifications
-                                size={22}
-                                color="#4C95DD"
-                            />
-                        </div>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--message"]}`}>
-                            <FaMessage
-                                size={20}
-                                color="#4C95DD"
-                            />
-                        </div>
-                        <div className={`${styles["icon_wrap"]} ${styles["icon-wrap--setting"]}`}>
-                            <IoMdSettings
-                                size={24}
-                                color="#E66430"
-                            />
-                        </div>
-                    </div>
+            <SidebarOwner collapsed={collapsed} />
+            <div className={styles["dashboard-body"]}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <button onClick={sendMessage}>Send</button>
+                    <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
+                    <Select
+                        defaultValue="Ngày"
+                        style={{
+                            width: 120,
+                            marginLeft: "10px",
+                        }}
+                        onChange={handleChange}
+                        options={[
+                            {
+                                value: "ngay",
+                                label: "Ngày",
+                            },
+                            {
+                                value: "thang",
+                                label: "Tháng",
+                            },
+                            {
+                                value: "nam",
+                                label: "Năm",
+                            },
+                        ]}
+                    />
                 </div>
-                <Select
-                    defaultValue="Ngày"
-                    style={{
-                        width: 120,
-                        marginLeft: "10px",
-                    }}
-                    onChange={handleChange}
-                    options={[
-                        {
-                            value: "ngay",
-                            label: "Ngày",
-                        },
-                        {
-                            value: "thang",
-                            label: "Tháng",
-                        },
-                        {
-                            value: "nam",
-                            label: "Năm",
-                        },
-                    ]}
-                />
                 <Row
                     gutter={16}
                     className={styles["statistic-wrap"]}
                 >
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={food}
-                                title="Tổng đơn đặt"
-                                quantity={100}
-                                up={true}
-                                rate={3}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={food}
+                            title="Tổng đơn đặt"
+                            quantity={messages?.length}
+                            up={true}
+                            rate={3}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={ship}
-                                title="Khung giờ đặt nhiều nhất"
-                                quantity={"17 - 20"}
-                                up={true}
-                                compare=""
-                            />
-                        </Card>
+                        <Statistic
+                            img={ship}
+                            title="Khung giờ đặt nhiều nhất"
+                            quantity={"17 - 20"}
+                            up={true}
+                            compare=""
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={order}
-                                title="Tổng đơn bị hủy"
-                                quantity={8}
-                                up={false}
-                                rate={12}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={orderImg}
+                            title="Tổng đơn bị hủy"
+                            quantity={cancelledOrder}
+                            up={false}
+                            rate={12}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                     <Col span={6}>
-                        <Card variant="borderless">
-                            <Statistic
-                                img={money}
-                                title="Tổng doanh thu (VND)"
-                                quantity={32000000}
-                                up={true}
-                                rate={13}
-                                compare="So với hôm qua"
-                            />
-                        </Card>
+                        <Statistic
+                            img={money}
+                            title="Tổng doanh thu (VND)"
+                            quantity={4800000}
+                            up={true}
+                            rate={13}
+                            compare="So với hôm qua"
+                        />
                     </Col>
                 </Row>
                 <Divider />
@@ -245,17 +277,17 @@ function Dashboard_Owner() {
                 </div>
                 <Divider />
 
-                <h2>Nhận xét của khách hàng</h2>
+                <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
 
                 <div className={styles["comment-wrap"]}>
-                    <CommentCard />
-                    <CommentCard />
                     <CommentCard />
                     <CommentCard />
                 </div>
                 <div className={styles["trending-wrap"]}>
                     <div className={styles.trending}>
-                        <h3 style={{ paddingLeft: "16px", marginTop: "12px", fontSize: "20px" }}>
+                        <h3
+                            style={{ paddingLeft: "16px", marginTop: "12px", fontSize: "20px", color: "rgb(28,69,28)" }}
+                        >
                             Top 10 món ăn bán chạy nhất
                         </h3>
                         <Divider />

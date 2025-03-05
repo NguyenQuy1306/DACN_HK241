@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.cglib.core.Local;
+import org.apache.kafka.common.protocol.types.Field.Bool;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
@@ -39,9 +40,18 @@ public class OrderTable {
 
     @Column(nullable = false)
     private LocalTime Gio;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderTableStatus TrangThai;
 
     @Column(nullable = false)
-    private String TrangThai;
+    private Long TienDatCoc;
+
+    @Column(nullable = false)
+    private Boolean StatusDepositRefund;
+
+    @Column(nullable = false)
+    private Long TongTienThanhToan;
 
     @ManyToOne
     @JoinColumn(name = "MaSoPhuongThucThanhToan")
@@ -90,11 +100,11 @@ public class OrderTable {
         Gio = gio;
     }
 
-    public String getTrangThai() {
+    public OrderTableStatus getTrangThai() {
         return TrangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(OrderTableStatus trangThai) {
         TrangThai = trangThai;
     }
 

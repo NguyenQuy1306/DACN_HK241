@@ -29,7 +29,6 @@ public class KafkaConsumerService {
 
             // Chỉ xử lý nếu "op" là "c" (Create) hoặc "u" (Update)
             // if (!"c".equals(operation) && !"u".equals(operation)) {
-            // System.out.println("Skipping message: operation type is not 'c' or 'u'");
             // return;
             // }
 
@@ -53,7 +52,6 @@ public class KafkaConsumerService {
 
             // Ghi vào Elasticsearch
             String result = elasticSearchQuery.createOrUpdateDocument(restaurant);
-            System.out.println(result);
 
         } catch (IOException e) {
             e.printStackTrace();

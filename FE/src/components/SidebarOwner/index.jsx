@@ -58,41 +58,21 @@ const items = [
         label: "General",
     },
 ];
-const SidebarOwner = () => {
-    const [collapsed, setCollapsed] = useState(false);
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
+const SidebarOwner = ({ collapsed }) => {
     return (
         <div
-            style={{
-                width: 256,
-            }}
+        // style={{
+        //     width: 256,
+        // }}
         >
-            <div className={styles["header-nav"]}>
-                <h2 className={styles["logo-name"]}>TheMeal</h2>
-                <img
-                    className={styles.logo}
-                    src={logo}
-                    alt="Logo"
-                />
-                {/* <Button
-                    type="primary"
-                    onClick={toggleCollapsed}
-                    style={{
-                        marginBottom: 16,
-                    }}
-                >
-                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                </Button> */}
-            </div>
             <Menu
                 defaultSelectedKeys={["1"]}
                 defaultOpenKeys={["sub1"]}
                 mode="inline"
-                theme="light"
+                theme="night"
                 inlineCollapsed={collapsed}
                 items={items}
+                style={{ backgroundColor: "#1c451c", color: "#fff", height: "100%", fontSize: 16 }}
             />
         </div>
     );

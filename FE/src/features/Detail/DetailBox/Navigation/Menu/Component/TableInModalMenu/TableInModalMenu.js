@@ -8,7 +8,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./TableInModalMenu.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { c } from "react-redux";
+import {
+  getDepositPolicy,
+  saveAmount,
+  saveDeposit,
+  savePaymentAmount,
+} from "../../../../../../../redux/features/paymentSlice";
+const { formatCurrency } = require("../../../../../../../helper/helper");
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "hsl(174, 100%, 20%)",
@@ -31,25 +40,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables({ combo }) {
-  let totalPrice = 0;
+  const dispatch = useDispatch();
   const comboType = useSelector((state) => state.combo.comboType);
+  const totalPrice = React.useMemo(() => {
+    let total = 0;
+    let list = [];
 
-  let listFood = [];
-  if (comboType === "newCombo") {
-    for (let i = 0; i < combo.length; i++) {
-      totalPrice += combo[i].item.gia * combo[i].quantity;
-      listFood = combo;
+    if (comboType === "newCombo") {
+      list = combo[0];
+      total = list.reduce((sum, item) => sum + item.gia * item.soLuong, 0);
+    } else if (comboType === "availableCombo") {
+      list = combo[0].foods;
+      total = list.reduce((sum, item) => sum + item.gia, 0);
+    } else {
+      list = combo;
+      total = list.reduce((sum, item) => sum + item.gia * item.soLuong, 0);
     }
-  } else if (comboType === "availableCombo") {
-    for (let i = 0; i < combo[0].foods.length; i++) {
-      totalPrice += combo[0].foods[i].gia;
-      listFood = combo[0].foods;
+
+    return { total, list };
+  }, [combo, comboType]);
+
+  const depositPolicy = useSelector((state) => state.payment.depositPolicy);
+
+  React.useEffect(() => {
+    if (totalPrice.total > 0 && depositPolicy) {
+      const depositAmount =
+        totalPrice.total > depositPolicy.nguongApDungDatCocTheoPhanTram
+          ? Math.round(
+              (totalPrice.total * depositPolicy.phanTramCoc) / 100 / 1000
+            ) * 1000
+          : depositPolicy.datCocToiThieu;
+      console.log("depositAmountdepositAmount ,, ", depositAmount);
+      dispatch(saveDeposit(depositAmount));
+      dispatch(saveAmount(totalPrice.total));
+      dispatch(savePaymentAmount(depositAmount));
     }
-  } else {
-    for (let i = 0; i < combo.length; i++) {
-      totalPrice += combo[i].item.gia * combo[i].quantity;
-    }
-  }
+  }, [totalPrice.total, depositPolicy]);
+
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 400, overflow: "auto" }}>
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
@@ -66,39 +93,26 @@ export default function CustomizedTables({ combo }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {comboType === "newCombo" &&
-            listFood.map((row) => (
-              <StyledTableRow key={row.ten}>
-                <StyledTableCell align="left" className="StyledTableCell1">
-                  {row.item.ten}
-                </StyledTableCell>
+          {totalPrice?.list?.map((row) => (
+            <StyledTableRow key={row.ten}>
+              <StyledTableCell align="left" className="StyledTableCell1">
+                {row.ten}
+              </StyledTableCell>
 
-                <StyledTableCell align="left" className="StyledTableCell2">
-                  {row.item.gia}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.item.gia * row.quantity} đ
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          {comboType === "availableCombo" &&
-            listFood.map((row) => (
-              <StyledTableRow key={row.ten}>
-                <StyledTableCell align="left" className="StyledTableCell1">
-                  {row.ten}
-                </StyledTableCell>
-
-                <StyledTableCell align="left" className="StyledTableCell2">
-                  {row.gia}
-                </StyledTableCell>
-                <StyledTableCell align="left">1</StyledTableCell>
-                <StyledTableCell align="left">{row.gia} đ</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          {comboType !== "availableCombo" &&
+              <StyledTableCell align="left" className="StyledTableCell2">
+                {formatCurrency(row.gia)}
+              </StyledTableCell>
+              <StyledTableCell align="left">
+                {row.soLuong ? row.soLuong : 1}
+              </StyledTableCell>
+              <StyledTableCell align="left">
+                {formatCurrency(row.gia)} đ
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+          {/* {comboType !== "availableCombo" &&
             comboType !== "newCombo" &&
-            combo.map((row) => (
+            listFood.map((row) => (
               <StyledTableRow key={row.item.ten}>
                 <StyledTableCell align="left" className="StyledTableCell1">
                   {row.item.ten}
@@ -112,7 +126,7 @@ export default function CustomizedTables({ combo }) {
                   {row.quantity * row.item.gia} đ
                 </StyledTableCell>
               </StyledTableRow>
-            ))}
+            ))} */}
 
           <StyledTableRow key="Tổng cộng">
             <StyledTableCell align="left" className="StyledTableCell1">
@@ -123,7 +137,9 @@ export default function CustomizedTables({ combo }) {
               {null}
             </StyledTableCell>
             <StyledTableCell align="left"> {null}</StyledTableCell>
-            <StyledTableCell align="left">{totalPrice} đ</StyledTableCell>
+            <StyledTableCell align="left">
+              {formatCurrency(totalPrice.total)} đ
+            </StyledTableCell>
           </StyledTableRow>
         </TableBody>
       </Table>

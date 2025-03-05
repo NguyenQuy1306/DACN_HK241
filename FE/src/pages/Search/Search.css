@@ -35,6 +35,14 @@
     -webkit-box-pack: justify;
     justify-content: space-between;
 }
+.pagination_search{
+
+
+    background: white;
+    margin-left: 150px;
+    padding-bottom: 10px;
+  }
+  
 .listRestaurantDiv_H1_left_sort_div
 {
     width: 100%;

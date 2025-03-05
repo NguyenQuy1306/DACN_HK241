@@ -10,7 +10,7 @@ const OtherInformation = ({ selectedPlace }) => {
       <div className="OtherInformation_H1">
         <OtherInformationComponent
           icon={<LocationOnOutlinedIcon></LocationOnOutlinedIcon>}
-          text={selectedPlace.address}
+          text={selectedPlace.diaChi}
         ></OtherInformationComponent>
         <OtherInformationComponent
           icon={<RestaurantOutlinedIcon></RestaurantOutlinedIcon>}

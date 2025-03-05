@@ -27,24 +27,29 @@ const Menu = ({ selectedPlace }) => {
 
   const [newCombo, setNewCombo] = useState([]);
   const handleAddItem = (item, quantity) => {
-    if (quantity > 0) {
-      const existingItem = newCombo.find(
+    setNewCombo((prev) => {
+      const existingItem = prev.find(
         (comboItem) => comboItem.item.ten === item.ten
       );
+
       if (existingItem) {
-        setNewCombo((prev) =>
-          prev.map((comboItem) =>
-            comboItem.item.ten === item.ten
-              ? { ...comboItem, quantity: quantity }
-              : comboItem
-          )
+        if (quantity === 0) {
+          // Xóa item khỏi newCombo nếu quantity = 0
+          return prev.filter((comboItem) => comboItem.item.ten !== item.ten);
+        }
+        // Cập nhật số lượng nếu item đã tồn tại
+        return prev.map((comboItem) =>
+          comboItem.item.ten === item.ten
+            ? { ...comboItem, quantity }
+            : comboItem
         );
-      } else {
-        // Add new item to newCombo
-        setNewCombo((prev) => [...prev, { item, quantity }]);
       }
-    }
+
+      // Thêm item mới nếu chưa tồn tại và quantity > 0
+      return quantity > 0 ? [...prev, { item, quantity }] : prev;
+    });
   };
+
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
   const itemsPerPage = 2;
   const handlePageChange = (event, value) => {

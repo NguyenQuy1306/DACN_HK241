@@ -49,11 +49,9 @@ public class ElasticSearchQuery {
         private final String indexName = "restaurants";
 
         public String createOrUpdateDocument(RestaurantElasticsearch restaurantElasticsearch) throws IOException {
-                System.out.println("nguyennnn232n");
                 IndexResponse response = elasticsearchClient.index(i -> i.index(indexName)
                                 .id(String.valueOf(restaurantElasticsearch.getMaSoNhaHang()))
                                 .document(restaurantElasticsearch));
-                System.out.println("kkkssdsdsds");
                 if (response.result().name().equals("Created")) {
                         return new StringBuilder("Document has been successfully created.").toString();
                 } else if (response.result().name().equals("Updated")) {
@@ -69,7 +67,6 @@ public class ElasticSearchQuery {
                                 RestaurantElasticsearch.class);
                 if (restaurantGetResponse.found()) {
                         restaurant = restaurantGetResponse.source();
-                        System.out.println("Restaurant name " + restaurant.getTen());
                 } else {
                         System.out.println("Restaurant not found");
                 }
@@ -84,7 +81,6 @@ public class ElasticSearchQuery {
                                         .toString();
 
                 }
-                System.out.println("Product not found");
                 return new StringBuilder("Product with id " + restaurantId + " dose not exist.").toString();
         }
 
@@ -95,7 +91,6 @@ public class ElasticSearchQuery {
                                 RestaurantElasticsearch.class);
                 List<Hit> hits = searchResponse.hits().hits();
                 for (Hit object : hits) {
-                        System.out.println(((RestaurantElasticsearch) object.source()));
                         restaurantElasticsearches.add(((RestaurantElasticsearch) object.source()));
                 }
                 return restaurantElasticsearches;
@@ -157,7 +152,6 @@ public class ElasticSearchQuery {
 
         public List<RestaurantInMapsResponse> searchWithKeyword(String param, Double lat, Double lon)
                         throws IOException {
-                System.out.println("param:: " + param + " lon:: " + lon + " lat:: " + lat);
                 List<RestaurantInMapsResponse> restaurantInMapsResponses = new ArrayList<>();
                 Query query = MultiMatchQuery.of(q -> q.query(param)
                                 .fields("ten", "monDacSac", "moTaKhongGian", "phuHop", "quan", "diemDacTrung")
@@ -191,7 +185,6 @@ public class ElasticSearchQuery {
                                         throw new IllegalArgumentException(
                                                         "Restaurant IDs not found: " + object.id());
                                 }
-                                System.out.println("object.id(): " + object.id());
                                 restaurantInMapsResponses.add(restaurantMapper.toDetailResponse(restaurant));
 
                         }

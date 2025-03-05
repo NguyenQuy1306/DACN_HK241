@@ -5,7 +5,7 @@ const Marker = ({ place }) => {
   return (
     <GoogleMarker
       position={{ lat: place.latitude, lng: place.longitude }}
-      title={place.name}
+      title={place.ten}
     />
   );
 };

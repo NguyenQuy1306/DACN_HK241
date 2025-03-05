@@ -22,7 +22,7 @@ const Marker = React.memo(({ place, matches }) => {
             variant="subtitle2"
             gutterBottom
           >
-            {place.name}
+            {place.ten}
           </Typography>
           <img
             className={classes.pointer}

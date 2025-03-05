@@ -26,9 +26,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.domain.Page;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/restaurants")
@@ -46,7 +52,6 @@ public class RestaurantController {
     }
 
     @GetMapping("/recommended")
-
     public List<RestaurantInMapsResponse> getRecommendedList() {
         return restaurantService.getRecommendedList();
     }
@@ -56,16 +61,36 @@ public class RestaurantController {
             @RequestParam Double bl_latitude,
             @RequestParam Double bl_longitude,
             @RequestParam Double tr_latitude,
-            @RequestParam Double tr_longitude) {
+            @RequestParam Double tr_longitude, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalDate date,
+            @RequestParam(required = false) Byte people) {
 
         ApiResponse<List<RestaurantInMapsResponse>> apiResponse = new ApiResponse<>();
-        Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
+        Pageable pageable = PageRequest.of(page, size);
 
         try {
-            List<RestaurantInMapsResponse> restaurantInMapsResponses = restaurantService.getRestaurantsInMaps(
+            Page<RestaurantInMapsResponse> restaurantInMapsResponses = restaurantService.getRestaurantsInMaps(
                     bl_latitude,
-                    bl_longitude, tr_latitude, tr_longitude, pageable);
-            apiResponse.ok(restaurantInMapsResponses);
+                    bl_longitude, tr_latitude, tr_longitude, time, date, people, pageable);
+
+            MetadataResponse metadata = new MetadataResponse(
+                    restaurantInMapsResponses.getTotalElements(),
+                    restaurantInMapsResponses.getTotalPages(),
+                    restaurantInMapsResponses.getNumber(),
+                    restaurantInMapsResponses.getSize(),
+                    (restaurantInMapsResponses.hasNext()
+                            ? "/api/restaurants/list-in-boundary?page=" + (restaurantInMapsResponses.getNumber() +
+                                    1)
+                            : null),
+                    (restaurantInMapsResponses.hasPrevious() ? "/api/restaurants/list-in-boundary?page=" +
+                            (restaurantInMapsResponses.getNumber() - 1) : null),
+                    "/api/restaurants/list-in-boundary?page=" + (restaurantInMapsResponses.getTotalPages() - 1),
+                    "/api/restaurants/list-in-boundary?page=0");
+            Map<String, Object> responseMetadata = new HashMap<>();
+            responseMetadata.put("pagination", metadata);
+            apiResponse.ok(restaurantInMapsResponses.getContent(), responseMetadata);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
             return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
