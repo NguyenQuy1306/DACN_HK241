@@ -25,14 +25,15 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
             "/v2/api-docs", "/v3/api-docs", "/swagger-resources", "/swagger-resources/.*",
             "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
-            "/api/food", "/api/combo", "/api/orders", "/api/table/restaurant",
+            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
             "/elas/searchWithKeyword",
             "/elas/getDocument",
             "api/payments/*",
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
-            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments");
-
+            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
+            "/ws/*",
+            "/ws/**");
     @Autowired
     private SessionRegistry sessionRegistry;
 
@@ -41,6 +42,13 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
+
+        System.out.println("Request URIIIIa: " + requestURI); // Log the request URI
+        if (requestURI.startsWith("/ws/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (isPublicUrl(requestURI)) {
 
             filterChain.doFilter(request, response);

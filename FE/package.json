@@ -13,6 +13,7 @@
     "@payos/payos-checkout": "^1.0.8",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.3.0",
+    "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -39,6 +40,7 @@
     "react-toastify": "^10.0.6",
     "redux-persist": "^6.0.0",
     "rss": "file:",
+    "sockjs-client": "^1.6.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -79,6 +79,14 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
 
         @Override
+        public List<OrderTableResponse> getAllOrders() {
+                System.out.println("------------------------- Getting All Order Tables ------------------------");
+                List<OrderTable> orderTables = orderTableRepository.findAll();
+                return orderTables.stream().map(OrderTableMapper.INSTANCE::toOrderTableResponse)
+                                .collect(Collectors.toList());
+        }
+
+        @Override
         public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
                         String statusOrder, Long totalAmount, Long deposit) {
                 TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);

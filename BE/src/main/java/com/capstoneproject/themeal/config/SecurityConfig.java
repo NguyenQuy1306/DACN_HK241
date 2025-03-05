@@ -35,10 +35,13 @@ public class SecurityConfig {
                         "/api/restaurant-categories",
                         "/api/food",
                         "/api/combo",
+                        "/api/orders/all",
                         "/api/table/restaurant",
-                        "/api/orders",
                         "/api/rate/**",
+                        "/ws/*",
+                        "/ws/**",
                         "/api/payments/*",
+                        "api/payments/create-payment-link",
                         "/api/favorite-list/**",
                         "/api/favorite-list/add-new-card/*",
                         "/api/order-table/*",
@@ -64,7 +67,7 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )
-                                .cors(cors -> cors.disable())
+                                .cors(cors -> {})
                                 .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)
                                 .formLogin(form -> form.disable()) // Disable form login
                                 .authenticationProvider(authenticationProvider) // Add custom authentication provider

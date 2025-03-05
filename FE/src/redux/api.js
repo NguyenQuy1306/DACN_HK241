@@ -137,6 +137,15 @@ export const createPayment = async (params) => {
   }
 };
 
+export const getAllOrders = async () => {
+  try {
+    const response = await API.get(`api/orders/all`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const getRateInRestaurant = async (params) => {
   try {
     const response = await API.get(

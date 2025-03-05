@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/orders")
 public class OrderTableController {
@@ -66,6 +67,11 @@ public class OrderTableController {
     @GetMapping("/customer/{customerId}/history")
     List<OrderTableResponse> getAllOrderByCustomerId(@PathVariable Long customerId) {
         return orderTableService.getOrderTableByCustomerId(customerId);
+    }
+
+    @GetMapping("/all")
+    List<OrderTableResponse> getAllOrders() {
+        return orderTableService.getAllOrders();
     }
 
     @PostMapping("")
