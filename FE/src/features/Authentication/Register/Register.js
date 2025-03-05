@@ -12,7 +12,7 @@ import {
 } from "../../../redux/features/authenticationSlice";
 import { toast } from "react-toastify";
 
-function Register({ setLogin, setRegister, setIsClickLogout }) {
+function Register({ setModalType, setIsClickLogout }) {
   const [sdt, setSdt] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,22 +84,20 @@ function Register({ setLogin, setRegister, setIsClickLogout }) {
   };
 
   const handleBackToLogin = () => {
-    setLogin(true);
-    setRegister(false);
+    setModalType("login");
   };
   const [showPassword, setShowPassword] = useState(false);
-  useEffect(() => {
-    if (registerStatus == "SUCCESS") {
-      toast.success("Đăng ký tài khoản thành công", {
-        position: "top-right",
-        autoClose: 3000, // Time in milliseconds
-        hideProgressBar: false,
-      });
-      dispatch(clearRegisterStatus());
-      setLogin(true);
-      setRegister(false);
-    }
-  });
+  // useEffect(() => {
+  //   if (registerStatus == "SUCCESS") {
+  //     toast.success("Đăng ký tài khoản thành công", {
+  //       position: "top-right",
+  //       autoClose: 3000, // Time in milliseconds
+  //       hideProgressBar: false,
+  //     });
+  //     dispatch(clearRegisterStatus());
+  //     setModalType("login");
+  //   }
+  // });
   return (
     <div className="register-container">
       <div className="registerDiv">

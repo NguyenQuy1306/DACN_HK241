@@ -57,17 +57,23 @@ const authenticationSlice = createSlice({
     openModal: false,
     error: null,
     errorCheckSession: null,
+    isAuthenticated: false,
     errorRegister: null,
     loading: false,
   },
   reducers: {
+    setUser: (state, action) => {
+      console.log("SET USER:", action.payload); // Check user khi Redux nhận dữ liệu
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
     clearError(state) {
       state.error = null;
     },
     clearRegisterStatus(state) {
       state.registerStatus = "";
     },
-    clearLoglin(state) {
+    clearLogin(state) {
       state.user = null;
     },
     setStatusModalAuthentication(state, action) {
@@ -77,7 +83,6 @@ const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.errorRegister = null;
@@ -90,8 +95,6 @@ const authenticationSlice = createSlice({
         state.loading = false;
         state.errorRegister = action.payload;
       })
-
-      // Login
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -104,8 +107,6 @@ const authenticationSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Check Session
       .addCase(checkSession.pending, (state) => {
         state.loading = true;
         state.errorCheckSession = null;
@@ -119,8 +120,6 @@ const authenticationSlice = createSlice({
         state.user = null;
         state.errorCheckSession = action.payload;
       })
-
-      // Logout
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       })
@@ -133,7 +132,8 @@ const authenticationSlice = createSlice({
 export const {
   clearError,
   clearRegisterStatus,
-  clearLoglin,
+  clearLogin,
+  setUser,
   setStatusModalAuthentication,
 } = authenticationSlice.actions;
 

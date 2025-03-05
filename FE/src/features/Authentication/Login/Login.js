@@ -19,8 +19,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({
-  setLogin,
-  setRegister,
+  setModalType,
   setIsClickLogout,
   isCLickLogout,
 }) {
@@ -36,35 +35,52 @@ export default function Login({
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    dispatch(clearLoglin());
+    // dispatch(clearLoglin());
     e.preventDefault();
     setMessage(""); // Reset the message
     setIsClickLogout(false); // Indicate manual login
     dispatch(login({ email, matKhau: password }));
+    toast.success("Đăng nhập thành công", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+    });
   };
-
-  useEffect(() => {
-    // Check session on initial load
-    dispatch(checkSession());
-  }, [dispatch]);
-
   useEffect(() => {
     if (user) {
-      if (!isCLickLogout) {
-        setLogin(true);
-        setRegister(true);
-      } else {
-        toast.success("Đăng nhập thành công", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-        });
-        setLogin(true);
-        setRegister(true);
-        setIsClickLogout(false);
-      }
+      setModalType("checked");
+      // toast.success("Đăng nhập thành công", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      // });
+      setIsClickLogout(false);
     }
-  }, [user, isCLickLogout, setLogin, setRegister, setIsClickLogout]);
+  }, [user]);
+  // useEffect(() => {
+  //   // Check session on initial load
+  //   dispatch(checkSession());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   const useInfor = localStorage.getItem("userInfor");
+  //   console.log("useInforuseInfor", useInfor);
+  //   if (useInfor) {
+  //     if (!isCLickLogout) {
+  //       setLogin(true);
+  //       setRegister(true);
+  //     } else {
+  //       toast.success("Đăng nhập thành công", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //       });
+  //       setLogin(true);
+  //       setRegister(true);
+  //       setIsClickLogout(false);
+  //     }
+  //   }
+  // }, [isCLickLogout, setLogin, setRegister, setIsClickLogout]);
 
   useEffect(() => {
     if (error) {
@@ -74,8 +90,7 @@ export default function Login({
   }, [error, dispatch]);
 
   const handleOnClickRegister = () => {
-    setLogin(false);
-    setRegister(true);
+    setModalType("register");
   };
   const handleOnClickLogo = () => {
     navigate(`../Home`);

@@ -21,12 +21,14 @@ import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
 public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
+            "/api/v1/auth/logout",
             "/api/restaurant", "/api/restaurants/.*", // Match any restaurant-related URL
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources",
             "/swagger-resources/.*",
             "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
-            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant",
+            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*",
+            "/api/orders",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
             "/elas/searchWithKeyword",
             "/elas/getDocument",

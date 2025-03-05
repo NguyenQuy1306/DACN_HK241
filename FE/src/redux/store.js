@@ -1,27 +1,54 @@
 import { configureStore } from "@reduxjs/toolkit";
-import restaurantRegisterReducer from "./features/RegisterRestaurantSlice";
-import storage from "redux-persist/lib/storage"; // Lưu vào localStorage
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
+// Import reducers
+import restaurantRegisterReducer from "./features/RegisterRestaurantSlice";
 import restaurantSlice from "./features/restaurantSlice";
 import foodSlice from "./features/foodSlice";
 import comboSlice from "./features/comboSlice";
 import tableSlice from "./features/tableSlice";
-import authenticationSlice from "./features/authenticationSlice";
+import authenticateSlice from "./features/authenticationSlice";
 import orderSlice from "./features/orderSlice";
 import rateSlice from "./features/rateSlice";
 import navigationSlice from "./features/navigationSlice";
 import searchSlice from "./features/searchSlice";
 import paymentSlice from "./features/paymentSlice";
 import persistSlice from "./features/persistSlice";
-import { persistStore, persistReducer } from "redux-persist";
 
-const persistConfig = {
-  key: "root",
-  storage, // Sử dụng localStorage để lưu Redux state
+// Authentication persist config
+const authPersistConfig = {
+  key: "authentication",
+  storage,
 };
 
-// Tạo persistedReducer cho searchSlice
-const persistedSearchReducer = persistReducer(persistConfig, persistSlice);
+// Create persisted authentication reducer
+const persistedAuthReducer = persistReducer(
+  authPersistConfig,
+  authenticateSlice
+);
+
+// Search persist config
+const searchPersistConfig = {
+  key: "search",
+  storage,
+};
+
+// Create persisted search reducer
+const persistedSearchReducer = persistReducer(
+  searchPersistConfig,
+  persistSlice
+);
+
 export const store = configureStore({
   reducer: {
     restaurant: restaurantSlice,
@@ -29,7 +56,7 @@ export const store = configureStore({
     combo: comboSlice,
     table: tableSlice,
     restaurantRegister: restaurantRegisterReducer,
-    authentication: authenticationSlice,
+    authentication: persistedAuthReducer,
     order: orderSlice,
     rate: rateSlice,
     navigation: navigationSlice,
@@ -37,6 +64,13 @@ export const store = configureStore({
     payment: paymentSlice,
     persist: persistedSearchReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
 export const persistor = persistStore(store);
 export const host = process.env.REACT_APP_BASE_URL || "http://localhost:8080";
