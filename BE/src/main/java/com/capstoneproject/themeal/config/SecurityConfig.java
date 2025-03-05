@@ -25,6 +25,7 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/swagger-resources",
                         "/swagger-resources/**",
+                        "/v3/api-docs/swagger-config",
                         "/configuration/ui",
                         "/configuration/security",
                         "/swagger-ui/**",
@@ -67,7 +68,8 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )
-                                .cors(cors -> {})
+                                .cors(cors -> {
+                                })
                                 .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)
                                 .formLogin(form -> form.disable()) // Disable form login
                                 .authenticationProvider(authenticationProvider) // Add custom authentication provider

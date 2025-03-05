@@ -38,4 +38,6 @@ public interface OrderTableService {
 
         public PaymentResponse createPayment(Long paymentAmount,
                         String maSoThanhToan);
+
+        public List<OrderTableResponse> getAllOrders();
 }

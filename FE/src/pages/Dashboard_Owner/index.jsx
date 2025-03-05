@@ -12,7 +12,7 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
@@ -122,13 +122,18 @@ function Dashboard_Owner() {
     const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
     const { order } = useSelector((state) => state.order);
+    console.log("order in dash",order)
+    const [messages, setMessages] = useState(order);
+
 
     useEffect(() => {
+        console.log("Fetching orders...");
         dispatch(getAllOrders());
-    }, []);
-
-    const [messages, setMessages] = useState(order);
+    }, [dispatch]); // Keep dependency to avoid unnecessary calls
+    
+    console.log("messages",messages)
     // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
+    const cancelledOrder = messages? messages.filter((item) => item.trangThai === "CANCELED").length:0;
 
     useEffect(() => {
         setMessages(order);
@@ -137,8 +142,6 @@ function Dashboard_Owner() {
     // useEffect(() => {
     //     sendMessage(); // Dispatch action getAllOrders
     // }, []);
-
-    const cancelledOrder = messages.filter((item) => item.trangThai === "Cancelled").length;
 
     useEffect(() => {
         // Khởi tạo kết nối WebSocket khi component mount
