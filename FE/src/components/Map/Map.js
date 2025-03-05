@@ -48,7 +48,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
           page: 0,
           size: 10,
         };
-
+        console.log("datedate", date);
         // Chỉ thêm các tham số `date`, `time`, `people` nếu chúng có giá trị
         if (time && date && people) {
           params.date = date;

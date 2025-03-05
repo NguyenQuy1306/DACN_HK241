@@ -41,8 +41,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({ combo }) {
   const dispatch = useDispatch();
-  console.log("combocombo", combo);
-  // let totalPrice = 0;
   const comboType = useSelector((state) => state.combo.comboType);
   const totalPrice = React.useMemo(() => {
     let total = 0;

@@ -55,6 +55,8 @@ const Reservation = () => {
   const availablePersons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const bounds = useSelector((state) => state.restaurant.bounds);
   const currentPage = useSelector((state) => state.restaurant.currentPage);
+  const date = useSelector((state) => state.restaurant.date);
+
   useEffect(() => {
     if (selectedDate && selectedPersons && selectedTime && bounds) {
       const { ne, sw } = bounds;
@@ -115,13 +117,15 @@ const Reservation = () => {
     setSelectedDate(null);
     setSelectedPersons(null);
     setSelectedTime(null);
-
     const { ne, sw } = bounds;
-    saveFilterTable({
-      time: null,
-      date: null,
-      people: null,
-    });
+    dispatch(
+      saveFilterTable({
+        time: null,
+        date: null,
+        people: null,
+      })
+    );
+    console.log("datedat23232e", date);
     dispatch(saveCurrentPage(0));
     dispatch(
       getRestaurantsInMaps({

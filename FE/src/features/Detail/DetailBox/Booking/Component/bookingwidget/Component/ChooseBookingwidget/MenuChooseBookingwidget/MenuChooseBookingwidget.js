@@ -89,7 +89,6 @@ const MenuChooseBookingwidget = ({
       //   autoClose: 3000,
       //   hideProgressBar: false,
       // });
-      console.log("calllllll");
       dispatch(
         setOpenBookingWithMenu({
           openBookingWithMenu: false,

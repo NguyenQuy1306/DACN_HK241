@@ -7,7 +7,6 @@ const ModalRePayment = ({
   pendingPayment,
   handleContinuePayment,
 }) => {
-  console.log("pendingPayment23", pendingPayment);
   return (
     <Modal open={open} onClose={handleClose}>
       <Box

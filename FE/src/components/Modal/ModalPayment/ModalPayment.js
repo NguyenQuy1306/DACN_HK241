@@ -57,8 +57,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
     checkForExisting: true,
   });
 
-  console.log("checkoutUrlcheckoutUrl", checkoutUrl);
-
   const RETURN_URL = `${window.location.href}/ResultPayment/`;
   const CANCEL_URL = `${window.location.href}/ResultPayment/`;
   const depositPolicy = useSelector((state) => state.payment.depositPolicy);
@@ -93,10 +91,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
       console.log("Người dùng đã hoàn thành thanh toán!");
     }
   }, [message]);
-  console.log("deposit:::", deposit);
   useEffect(() => {
     if (checkoutUrl) {
-      console.log("useeffect", openPayOS());
       openPayOS();
     }
   }, [checkoutUrl]);
@@ -110,7 +106,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
   useEffect(() => {
     if (paymentType === "deposit") {
-      console.log("deposit:::2333", deposit);
       dispatch(savePaymentAmount(deposit));
     } else {
       dispatch(savePaymentAmount(totalAmount));
@@ -125,13 +120,10 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
     return 0;
   }, [depositPolicy]);
-  console.log("dêrerere", deposit);
   const createPaymentLinkHandle = async (callbackFunction) => {
     try {
       setOpenDialogLoading(true);
       setIsCreatingLink(true);
-      console.log("menuChoosed in createpaymentlink", menuChoosed);
-      console.log("paymentAmount", paymentAmount);
 
       //foodOrderRequests chỉ giành cho newCombo còn comboId giành cho availableCombo
       const orderPayload = {
@@ -193,7 +185,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
         })
       );
       console.log("response.data", response.data);
-      // callbackFunction(response.data);
+      callbackFunction(response.data);
     } catch (error) {
       console.error("Lỗi khi tạo link thanh toán:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại.");
