@@ -13,8 +13,13 @@ import OwnerLayout from "../layouts/OwnerLayout";
 
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
-
+import MenuAdd from "../pages/MenuAdd/MenuAdd";
 export const routes = [
+  {
+    path: "/owner/menu/add",
+    component: MenuAdd,
+    layout: OwnerLayout,
+  },
   {
     path: "/deposit-policy",
     component: DepositPolicy,

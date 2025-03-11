@@ -13,10 +13,22 @@ export const getFood = createAsyncThunk(
   }
 );
 
+export const createFood = createAsyncThunk(
+  "/createfood",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.createFood(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const foodSlice = createSlice({
   name: "food",
   initialState: {
     food: [],
+    responseCreateFood: null,
     error: "",
     loading: false,
   },
@@ -32,6 +44,19 @@ export const foodSlice = createSlice({
         state.food = action.payload;
       })
       .addCase(getFood.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(createFood.pending, (state) => {
+        state.loading = true;
+        state.responseCreateFood = null;
+      })
+      .addCase(createFood.fulfilled, (state, action) => {
+        state.loading = false;
+        state.responseCreateFood = action.payload;
+      })
+      .addCase(createFood.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

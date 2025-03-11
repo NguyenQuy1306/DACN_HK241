@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/Restaurant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/TableAvailableMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/TableAvailableMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodFinalReponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodFinalReponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +64,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "configurable.group.editor"
   }
 }]]></component>
   <component name="RunManager">

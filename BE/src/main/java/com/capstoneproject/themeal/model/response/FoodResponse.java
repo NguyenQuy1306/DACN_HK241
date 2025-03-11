@@ -3,8 +3,6 @@ package com.capstoneproject.themeal.model.response;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.capstoneproject.themeal.model.entity.Category;
-
 import lombok.Getter;
 import lombok.Setter;
 

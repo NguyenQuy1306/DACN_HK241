@@ -186,7 +186,6 @@ function Dashboard_Owner() {
 
     return (
         <div className={styles.container}>
-            <SidebarOwner collapsed={collapsed} />
             <div className={styles["dashboard-body"]}>
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <button onClick={sendMessage}>Send</button>

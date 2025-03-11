@@ -24,7 +24,7 @@ import navigationSlice from "./features/navigationSlice";
 import searchSlice from "./features/searchSlice";
 import paymentSlice from "./features/paymentSlice";
 import persistSlice from "./features/persistSlice";
-
+import categorySlice from "./features/categorySlice";
 // Authentication persist config
 const authPersistConfig = {
   key: "authentication",
@@ -63,6 +63,7 @@ export const store = configureStore({
     search: searchSlice,
     payment: paymentSlice,
     persist: persistedSearchReducer,
+    category: categorySlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

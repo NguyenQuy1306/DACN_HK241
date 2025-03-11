@@ -1,7 +1,7 @@
 .bookButton {
     transform: translateX(-50%) !important;
-    background-color: hsl(174, 100%, 20%) !important ; /* Button background */
-    border: 1px solid hsl(174, 100%, 20%) !important; /* Button border */
+    background-color: hsl(0, 97%, 35%) !important ; /* Button background */
+    border: 1px solid hsl(0, 100%, 62%) !important; /* Button border */
     color: white !important;
     display: inline-block  !important;
     border-radius: 8px  !important;
@@ -10,6 +10,6 @@
 }
 
 .bookButton:hover {
-  background-color: hsl(174, 99%, 29%) !important;
+  background-color: hsla(0, 93%, 48%, 0.555) !important;
   color: black;
 }

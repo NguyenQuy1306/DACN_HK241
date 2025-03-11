@@ -16,6 +16,7 @@ import {
     PieChartOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
 const items = [
     {
         key: "1",
@@ -48,33 +49,60 @@ const items = [
         ],
     },
     {
-        key: "4",
+        key: "8",
         icon: <GoCommentDiscussion />,
         label: "Rating",
     },
     {
-        key: "5",
+        key: "9",
         icon: <MdOutlineTableRestaurant />,
         label: "General",
     },
 ];
 const SidebarOwner = ({ collapsed }) => {
+    const navigate = useNavigate();
+
+    const handleMenuClick = ({ key }) => {
+        switch (key) {
+            case "1":
+                navigate("/owner/dashboard");
+                break;
+            case "2":
+                navigate("/owner/orders");
+                break;
+            case "5":
+                navigate("/owner/menu/add");
+                break;
+            case "6":
+                navigate("/owner/menu/list");
+                break;
+            case "7":
+                navigate("/owner/menu/categories");
+                break;
+            case "4":
+                navigate("/owner/rating");
+                break;
+            case "5":
+                navigate("/owner/general");
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
-        <div
-        // style={{
-        //     width: 256,
-        // }}
-        >
-            <Menu
-                defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1"]}
-                mode="inline"
-                theme="night"
-                inlineCollapsed={collapsed}
-                items={items}
-                style={{ backgroundColor: "#1c451c", color: "#fff", height: "100%", fontSize: 16 }}
-            />
-        </div>
+        <Menu
+        defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["sub1"]}
+        mode="inline"
+        inlineCollapsed={collapsed}
+        items={items}
+        className={styles["menu-container"]}
+        onClick={handleMenuClick}
+    />
+    
     );
 };
+
 export default SidebarOwner;
+

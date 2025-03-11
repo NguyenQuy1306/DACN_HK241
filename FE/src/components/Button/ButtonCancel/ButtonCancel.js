@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import styles from "./style.module.css";
 
-export default function ButtonGreen({ text, onClick }) {
+export default function ButtonCancel({ text, onClick }) {
   const handleOnclick = () => {
     onClick(true);
   };

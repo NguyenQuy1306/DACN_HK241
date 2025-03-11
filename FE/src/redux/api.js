@@ -226,3 +226,21 @@ export const getDepositPolicy = async (params) => {
     throw error.response?.data || error;
   }
 };
+
+export const getAllCategory = async (params) => {
+  try {
+    const response = await API.get(`/api/category`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const createFood = async (params) => {
+  try {
+    const response = await API.post(`/api/food/${params.orderId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

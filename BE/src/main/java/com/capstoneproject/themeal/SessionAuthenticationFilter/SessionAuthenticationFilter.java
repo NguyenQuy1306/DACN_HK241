@@ -36,7 +36,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
             "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
             "/ws/*",
-            "/ws/**");
+            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*");
     @Autowired
     private SessionRegistry sessionRegistry;
 
@@ -48,12 +48,16 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
         System.out.println("Request URIIIIa: " + requestURI); // Log the request URI
         if (requestURI.startsWith("/ws/")) {
+            System.out.println("pass check websocket");
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("here3323");
+
+        System.out.println("here23" + isPublicUrl(requestURI));
 
         if (isPublicUrl(requestURI)) {
-
+            System.out.println("pass check session");
             filterChain.doFilter(request, response);
             return;
         }
@@ -70,7 +74,10 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isPublicUrl(String requestURI) {
         System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
-        boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern -> requestURI.matches(pattern))
+        // boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern ->
+        // requestURI.matches(pattern))
+        // || requestURI.contains("/swagger");
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith)
                 || requestURI.contains("/swagger");
         return isPublic;
     }

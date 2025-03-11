@@ -1,0 +1,27 @@
+.container
+{
+    display: flex;
+    flex-direction: row;
+    background-color: #F3F2F7;
+    border-radius: 10px;
+}
+.container-left{
+    padding: 5px 0 5px 20px;
+}
+.container-right
+{
+    padding-left: 100px;
+}
+.uploadImage
+{
+    padding-top: 10px;
+}
+.group-button
+{
+    display: flex;
+    flex-direction: row;
+}
+.button1
+{
+    padding-left: 100px;
+}
