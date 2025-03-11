@@ -122,18 +122,17 @@ function Dashboard_Owner() {
     const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
     const { order } = useSelector((state) => state.order);
-    console.log("order in dash",order)
+    console.log("order in dash", order);
     const [messages, setMessages] = useState(order);
-
 
     useEffect(() => {
         console.log("Fetching orders...");
         dispatch(getAllOrders());
     }, [dispatch]); // Keep dependency to avoid unnecessary calls
-    
-    console.log("messages",messages)
+
+    console.log("messages", messages);
     // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
-    const cancelledOrder = messages? messages.filter((item) => item.trangThai === "CANCELED").length:0;
+    const cancelledOrder = messages ? messages.filter((item) => item.trangThai === "CANCELED").length : 0;
 
     useEffect(() => {
         setMessages(order);
@@ -151,7 +150,6 @@ function Dashboard_Owner() {
             connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
             onConnect: () => {
                 setStompClient(client);
-                alert("Connecting to websocket....");
                 client.subscribe("/topic/messages", (message) => {
                     console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
                     setMessages(JSON.parse(message.body));
@@ -177,9 +175,10 @@ function Dashboard_Owner() {
 
     const sendMessage = () => {
         if (stompClient) {
+            // alert("Sent message to websocket");
             stompClient.publish({
                 destination: "/app/sendMessage", // Đích đến trên server
-                body: "Hello", // Nội dung message
+                body: "Hello Websocket", // Nội dung message
             });
         }
     };
@@ -189,7 +188,8 @@ function Dashboard_Owner() {
             <SidebarOwner collapsed={collapsed} />
             <div className={styles["dashboard-body"]}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <button onClick={sendMessage}>Send</button>
+                    {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
+                    {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>}
                     <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
                     <Select
                         defaultValue="Ngày"
@@ -222,7 +222,7 @@ function Dashboard_Owner() {
                         <Statistic
                             img={food}
                             title="Tổng đơn đặt"
-                            quantity={messages?.length}
+                            quantity={messages?.filter((item) => item.trangThai === "COMPLETED").length}
                             up={true}
                             rate={3}
                             compare="So với hôm qua"
