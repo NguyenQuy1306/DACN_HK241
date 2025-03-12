@@ -5,41 +5,45 @@ import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
-  return (
-    <Router>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Routes>
-        {routes.map((item, index) => {
-          let Page = item.component;
-          let Layout = Fragment;
-          if (item.layout) {
-            Layout = item.layout;
-          }
-          return (
-            <Route
-              key={index}
-              path={item.path}
-              element={
-                <Layout>
-                  <Page />
-                </Layout>
-              }
+    return (
+        <Router>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
             />
-          );
-        })}
-      </Routes>
-    </Router>
-  );
+            <Routes>
+                {routes.map((item, index) => {
+                    let Page = item.component;
+                    let Layout = Fragment;
+                    let title = "";
+                    if (item.layout) {
+                        Layout = item.layout;
+                    }
+                    if (item.title) {
+                        title = item.title;
+                    }
+                    return (
+                        <Route
+                            key={index}
+                            path={item.path}
+                            element={
+                                <Layout title={title}>
+                                    <Page />
+                                </Layout>
+                            }
+                        />
+                    );
+                })}
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

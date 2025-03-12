@@ -89,7 +89,7 @@ export default function ResultPayment() {
 
     const sendMessage = () => {
         if (stompClient) {
-            // alert("Sent message to websocket");
+            alert("Sent message to websocket");
             stompClient.publish({
                 destination: "/app/sendMessage", // Đích đến trên server
                 body: "Hello Websocket", // Nội dung message

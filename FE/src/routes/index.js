@@ -13,6 +13,7 @@ import OwnerLayout from "../layouts/OwnerLayout";
 import OwnerMenu from "../pages/MenuList_Owner";
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
+import MenuDetail from "../pages/MenuDetail";
 
 export const routes = [
     {
@@ -70,11 +71,19 @@ export const routes = [
         path: "/owner/dashboard",
         component: OwnerDashboard,
         layout: OwnerLayout,
+        title: "Bảng điều khiển",
     },
     {
         path: "/owner/menu",
         component: OwnerMenu,
         layout: OwnerLayout,
+        title: "Danh sách món ăn/thức uống",
+    },
+    {
+        path: "/owner/menu/:id",
+        component: MenuDetail,
+        layout: OwnerLayout,
+        title: "Danh sách món ăn/thức uống",
     },
 
     {

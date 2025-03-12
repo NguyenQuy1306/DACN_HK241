@@ -6,7 +6,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
 import avatar from "../../assets/images/avatar.png";
 
-function OwnerHeader() {
+function OwnerHeader({title}) {
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
@@ -15,7 +15,7 @@ function OwnerHeader() {
                     src={logo}
                     alt="Logo"
                 ></img>
-                <p className={styles.title}>Bảng điều khiển</p>
+                <p className={styles.title}>{title}</p>
             </div>
             <p className={styles.welcome}>Xin chào Nhựt, hãy tiếp tục theo dõi và quản lý nhà hàng của bạn!</p>
             <div className={styles.notifications}>

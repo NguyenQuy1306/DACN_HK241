@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import OwnerHeader from "../../components/OwnerHeader";
 import "./OwnerLayout.css";
-function OwnerLayout({ children }) {
+function OwnerLayout({ children, title }) {
     return (
         <Fragment>
-            <OwnerHeader />
+            <OwnerHeader title={title} />
             {children}
         </Fragment>
     );
