@@ -9,4 +9,5 @@ public interface CategoryService {
 
     public List<CategoryResponse> getAllCategoryByRestaurantId(Long restaurantId);
 
+    public void checkCategoryExist(Long categoryId);
 }

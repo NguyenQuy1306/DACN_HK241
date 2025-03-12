@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capstoneproject.themeal.model.entity.Category;
+import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.mapper.FoodMapper;
 import com.capstoneproject.themeal.model.response.CategoryResponse;
 import com.capstoneproject.themeal.repository.CategoryRepository;
@@ -28,6 +29,13 @@ public class CategoryServiceImpl implements CategoryService {
             e.printStackTrace();
             throw new RuntimeException("Error fetching categories", e); // Ném lỗi để Controller xử lý
         }
+    }
+
+    @Override
+    public void checkCategoryExist(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Food ID not found: " + categoryId));
+
     }
 
 }

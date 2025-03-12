@@ -37,9 +37,9 @@ public class Food {
     // @Column(nullable = false)
     private String TrangThai;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "MaSoAnh")
-    private RestaurantImage MaSoAnh;
+    private FoodImage MaSoAnh;
 
     @ManyToOne
     @JoinColumn(name = "MaSoDanhMuc")

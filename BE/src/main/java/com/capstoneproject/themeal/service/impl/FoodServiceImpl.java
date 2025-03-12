@@ -1,20 +1,29 @@
 package com.capstoneproject.themeal.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.capstoneproject.themeal.config.S3Buckets;
 import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.model.entity.*;
+import com.capstoneproject.themeal.model.entity.Category;
 import com.capstoneproject.themeal.model.mapper.FoodMapper;
 import com.capstoneproject.themeal.model.mapper.RestaurantMapper;
 import com.capstoneproject.themeal.model.request.*;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.repository.*;
+import com.capstoneproject.themeal.service.CategoryService;
 import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.RestaurantService;
+import com.capstoneproject.themeal.service.S3Service;
 
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -25,6 +34,18 @@ public class FoodServiceImpl implements FoodService {
     private FoodRepository foodRepository;
     @Autowired
     private FoodMapper foodMapper;
+    @Autowired
+    private S3Service s3Service;
+    @Autowired
+    private S3Buckets s3Buckets;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+    @Autowired
+    private FoodImageRepository foodImageRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId) {
@@ -51,4 +72,57 @@ public class FoodServiceImpl implements FoodService {
         }
         return true;
     }
+
+    public void checkFoodExist(Long foodId) {
+        Food food = foodRepository.findById(foodId)
+                .orElseThrow(() -> new IllegalArgumentException("Food ID not found: " + foodId));
+
+    }
+
+    @Override
+    public void upLoadImageRestaurant(Long restaurantId, Long categoryId, Long foodId, MultipartFile file) {
+        try {
+            // check food
+            checkFoodExist(foodId);
+            // check category
+            categoryService.checkCategoryExist(categoryId);
+            // Tên bucket chuẩn xác
+            String bucketName = "themealbucket1";
+
+            // Lấy loại file từ MultipartFile (vd: image/png, image/jpeg)
+            String contentType = file.getContentType();
+            String fileExtension = contentType != null && contentType.contains("png") ? ".png" : ".jpg";
+
+            // Tạo tên file với timestamp
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            String fileName = foodId + "_" + timestamp + fileExtension;
+
+            String s3Key = String.format("restaurants/%s/menu/%s/%s", restaurantId, categoryId, fileName);
+
+            // In ra log để debug
+            System.out.println("Uploading to bucket: " + bucketName);
+            System.out.println("S3 Key: " + s3Key);
+
+            s3Service.putObject(bucketName, s3Key, file.getBytes());
+
+            Food food = foodRepository.findById(foodId).orElse(null);
+            FoodImage foodImage = FoodImage.builder().KieuAnh(RestaurantImageType.FOODIMAGE)
+                    .NhaHang(restaurantRepository.findById(restaurantId).orElse(null)).URL(s3Key).food(food).build();
+            foodImageRepository.save(foodImage);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to upload food image: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Food createNewFood(FoodRequest foodRequest, Long restaurantId, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("category ID not found: " + categoryId));
+
+        Food food = Food.builder().Gia(foodRequest.getGia()).DanhMuc(category).MoTa(foodRequest.getMoTa())
+                .Ten(foodRequest.getTen()).TrangThai("Active").build();
+        foodRepository.save(food);
+        return food;
+    }
+
 }

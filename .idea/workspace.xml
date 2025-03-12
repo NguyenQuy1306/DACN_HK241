@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/entity/Restaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/TableAvailableMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/TableAvailableMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodFinalReponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodFinalReponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/response/FoodResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +21,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Dockerfile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -34,6 +30,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "NguyenQuy1306"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/NguyenQuy1306/DACN_HK241.git",
+    "accountId": "503fce79-741d-4ae1-86c1-bc695964b198"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -51,13 +59,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.CurcusApplication.executor": "Run",
-    "Application.capstoneprojectApplication.executor": "Run",
+    "Application.capstoneprojectApplication.executor": "Debug",
     "Maven.lms [clean].executor": "Run",
     "Maven.lms [install].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "mergeWebsocket",
+    "git-widget-placeholder": "aws__s3",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Admin/Documents/HK241/DACN/DACN_HK241",
@@ -118,10 +126,26 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="aws_s3" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
