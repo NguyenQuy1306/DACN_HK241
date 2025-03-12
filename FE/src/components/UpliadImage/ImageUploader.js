@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-const ImageUploader = ({ image, setImage }) => {
+const ImageUploader = ({ imagePreview, setFile, setImagePreview }) => {
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      setFile(selectedFile); // ✅ Set the actual File object for upload
+      setImagePreview(URL.createObjectURL(selectedFile)); // ✅ Preview URL for display
     }
   };
 
@@ -15,9 +17,9 @@ const ImageUploader = ({ image, setImage }) => {
       </h3>
 
       {/* Image Preview */}
-      {image && (
+      {imagePreview && (
         <img
-          src={image}
+          src={imagePreview}
           alt="Hình ảnh món ăn"
           style={{
             width: "200px",
@@ -57,7 +59,7 @@ const ImageUploader = ({ image, setImage }) => {
 
       {/* File Name Display */}
       <span style={{ marginLeft: "10px", color: "#666" }}>
-        {image ? "Đã chọn ảnh" : "Không có tệp nào được chọn"}
+        {imagePreview ? "Đã chọn ảnh" : "Không có tệp nào được chọn"}
       </span>
     </div>
   );

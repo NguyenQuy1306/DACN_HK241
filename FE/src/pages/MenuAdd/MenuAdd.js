@@ -7,13 +7,15 @@ import ButtonGreen from "../../components/Button/ButtonGreen/ButtonBooking/Butto
 import ButtonCancel from "../../components/Button/ButtonCancel/ButtonCancel";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../redux/features/categorySlice";
+import { createFood } from "../../redux/features/foodSlice";
 const MenuAdd = () => {
   const dispatch = useDispatch();
   const handleOnchangeInput = () => {
     console.log("input change");
   };
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const danhMuc = useSelector((state) => state.category.category);
   console.log("danhMuc", danhMuc);
   const handleCategoryChange = (value) => {
@@ -23,11 +25,23 @@ const MenuAdd = () => {
   useEffect(() => {
     dispatch(getAllCategory({ restaurantId: 1 }));
   }, [dispatch]);
-  const handleCreateNewFood=()=>
-  {
-    const param={}ss
-    dispatch()
-  }
+  const handleCreateNewFood = () => {
+    const foodRequest = {
+      ten: "quy day roi23",
+      moTa: "mo ta mon an",
+      gia: 1000,
+      trangThai: "active",
+    };
+
+    dispatch(
+      createFood({
+        restaurantId: 1,
+        categoryId: 1,
+        foodRequest: foodRequest,
+        file: file,
+      })
+    );
+  };
   return (
     <div className={styles.container}>
       <div className={styles["container-left"]}>
@@ -93,7 +107,10 @@ const MenuAdd = () => {
         </div>
         <div className={styles["group-button"]}>
           <div className={styles.button1}>
-            <ButtonGreen text={"Xác nhận"}></ButtonGreen>
+            <ButtonGreen
+              text={"Xác nhận"}
+              onClick={() => handleCreateNewFood()}
+            ></ButtonGreen>
           </div>
           <div className={styles.button2}>
             <ButtonCancel text={"Huỷ bỏ"}></ButtonCancel>
@@ -112,7 +129,11 @@ const MenuAdd = () => {
           ></Input> */}
         </div>
         <div className={styles.uploadImage}>
-          <ImageUploader setImage={setImage} image={image}></ImageUploader>
+          <ImageUploader
+            setFile={setFile}
+            imagePreview={imagePreview}
+            setImagePreview={setImagePreview}
+          ></ImageUploader>
         </div>
       </div>
     </div>

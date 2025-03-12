@@ -27,7 +27,7 @@ function Input({
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                 >
-                    {options.map((option, index) => (
+                    {options!=null && options.map((option, index) => (
                         <option key={index} value={option.ten}>
                             {option.ten}
                         </option>

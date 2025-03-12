@@ -15,7 +15,7 @@ API.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Có thể dispatch action để logout hoặc refresh token
-      window.location.href = "/login";
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -236,11 +236,36 @@ export const getAllCategory = async (params) => {
   }
 };
 
-export const createFood = async (params) => {
+export const createFood = async ({
+  restaurantId,
+  categoryId,
+  foodRequest,
+  file,
+}) => {
   try {
-    const response = await API.post(`/api/food/${params.orderId}`);
+    const formData = new FormData();
+    formData.append(
+      "foodRequest",
+      new Blob([JSON.stringify(foodRequest)], { type: "application/json" })
+    ); // Convert JSON to Blob
+    formData.append("file", file);
+
+    console.log("Sending form data:", formData);
+
+    const response = await API.post(
+      `/api/food/restaurants/${restaurantId}/categories/${categoryId}`,
+      formData, // Send formData instead of an object
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Response received:", response);
     return response.data;
   } catch (error) {
+    console.error("Error:", error);
     throw error.response?.data || error;
   }
 };

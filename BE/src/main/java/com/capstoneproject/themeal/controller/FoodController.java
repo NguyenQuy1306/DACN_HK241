@@ -71,8 +71,9 @@ public class FoodController {
             @PathVariable Long restaurantId,
             @PathVariable Long categoryId,
             @RequestPart("foodRequest") String foodRequestJson, // Nhận dưới dạng String JSON
-            @RequestPart("file") MultipartFile file) { // Dùng @RequestPart thay vì @RequestParam
-
+            @RequestPart(value = "file", required = false) MultipartFile file) { // Dùng @RequestPart thay vì
+                                                                                 // @RequestParam
+        System.out.println("file check" + file);
         ApiResponse<String> apiResponse = new ApiResponse<>();
 
         try {

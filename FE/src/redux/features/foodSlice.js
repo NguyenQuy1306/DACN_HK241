@@ -15,9 +15,17 @@ export const getFood = createAsyncThunk(
 
 export const createFood = createAsyncThunk(
   "/createfood",
-  async (params, { rejectWithValue }) => {
+  async (
+    { restaurantId, categoryId, foodRequest, file },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await api.createFood(params);
+      const response = await api.createFood({
+        restaurantId,
+        categoryId,
+        foodRequest,
+        file,
+      });
       return response.payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
