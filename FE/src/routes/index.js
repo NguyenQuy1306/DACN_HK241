@@ -14,77 +14,83 @@ import OwnerLayout from "../layouts/OwnerLayout";
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
 import MenuAdd from "../pages/MenuAdd/MenuAdd";
+import NotFoundPage from "../pages/NotFound/NotFoundPage";
 export const routes = [
+  {
+    path: "/notfound",
+    component: NotFoundPage,
+    // layout: OwnerLayout,
+    role: ["guest", "customer", "owner"],
+  },
   {
     path: "/owner/menu/add",
     component: MenuAdd,
     layout: OwnerLayout,
+    role: "owner",
   },
   {
     path: "/deposit-policy",
     component: DepositPolicy,
     layout: MainLayout,
+    role: "customer",
   },
   {
     path: "/DetailRestaurant/:id/ResultPayment",
     component: ResultPayment,
     layout: MainLayout,
+    role: "customer",
   },
   {
     path: "/SearchResult/:keyword",
     component: SearchResult,
     layout: MainLayout,
+    role: ["guest", "customer", "owner"],
   },
   {
     path: "/Search",
     component: Search,
     layout: MainLayout,
-  },
-  {
-    path: "/Search",
-    component: Search,
-    layout: MainLayout,
+    role: "customer",
   },
   {
     path: "/DetailRestaurant/:id",
     component: DetailRestaurant,
     layout: MainLayout,
+    role: ["guest", "customer", "owner"],
   },
   {
     path: "/Home",
     component: Home,
     layout: MainLayout,
+    role: ["guest", "customer", "owner"],
   },
   {
     path: "/favorite-list/:id",
     component: FavoriteList,
     layout: MainLayout,
+    role: "customer",
   },
   {
     path: "/register-restaurant",
     component: RegisterRestaurant1,
     layout: MainLayout,
+    role: ["guest", "customer", "owner"],
   },
   {
     path: "/register-restaurant2",
     component: RegisterRestaurant2,
     layout: MainLayout,
+    role: ["guest", "customer", "owner"],
   },
-
   {
     path: "/owner/dashboard",
     component: OwnerDashboard,
     layout: OwnerLayout,
+    role: "owner",
   },
-
   {
     path: "/DetailRestaurant/:id/menuImages",
     component: ViewImagepage,
+    role: ["guest", "customer", "owner"],
   },
-
-  // {
-  //   path: "*",
-  //   component: NotFound,
-  //   layout: null,
-  // },
 ];

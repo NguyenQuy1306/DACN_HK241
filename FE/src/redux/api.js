@@ -250,8 +250,6 @@ export const createFood = async ({
     ); // Convert JSON to Blob
     formData.append("file", file);
 
-    console.log("Sending form data:", formData);
-
     const response = await API.post(
       `/api/food/restaurants/${restaurantId}/categories/${categoryId}`,
       formData, // Send formData instead of an object
@@ -262,7 +260,6 @@ export const createFood = async ({
       }
     );
 
-    console.log("Response received:", response);
     return response.data;
   } catch (error) {
     console.error("Error:", error);

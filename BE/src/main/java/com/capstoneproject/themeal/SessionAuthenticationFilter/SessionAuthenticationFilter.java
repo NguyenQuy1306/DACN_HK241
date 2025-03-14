@@ -16,6 +16,12 @@ import java.util.List;
 // Đảm bảo rằng các class này tồn tại trong dự án của bạn
 import com.capstoneproject.themeal.model.response.LoginResponse;
 import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
+import org.springframework.security.web.FilterChainProxy;
+import org.springframework.security.web.FilterChainProxy.VirtualFilterChainDecorator;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.Servlet;
+import org.apache.catalina.core.ApplicationFilterChain;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 
 @Component
 public class SessionAuthenticationFilter extends OncePerRequestFilter {

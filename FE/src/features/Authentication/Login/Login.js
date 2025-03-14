@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   login,
   checkSession,
@@ -9,6 +10,7 @@ import {
   clearError,
   clearLoglin,
   setStatusModalAuthentication,
+  setLoginRoute,
 } from "../../../redux/features/authenticationSlice";
 import { Button } from "@mui/material";
 import logo from "../../../assets/images/logo.png";
@@ -16,7 +18,7 @@ import "./Login.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Login({
   setModalType,
@@ -33,7 +35,7 @@ export default function Login({
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const navigate = useNavigate();
-
+  const userRole = useSelector((state) => state.authentication.userRole);
   const handleSubmit = async (e) => {
     // dispatch(clearLoglin());
     e.preventDefault();
@@ -47,8 +49,16 @@ export default function Login({
     });
   };
   useEffect(() => {
-    if (user) {
+    console.log("afterlogin ", userRole);
+
+    if (user && userRole != "guest") {
       setModalType("checked");
+      console.log("after login", userRole);
+      // if (userRole === "owner") {
+      //   console.log("after login2323");
+      //   navigate("../owner/menu/add");
+      //   dispatch(setLoginRoute(false));
+      // }
       // toast.success("Đăng nhập thành công", {
       //   position: "top-right",
       //   autoClose: 3000,

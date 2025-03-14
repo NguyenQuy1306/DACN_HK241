@@ -53,19 +53,28 @@ const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
     user: null,
+    userRole: "guest",
     registerStatus: "",
     openModal: false,
     error: null,
+    loginRoute: false,
     errorCheckSession: null,
     isAuthenticated: false,
     errorRegister: null,
     loading: false,
   },
   reducers: {
+    setLoginRoute: (state, action) => {
+      state.loginRoute = action.payload;
+    },
     setUser: (state, action) => {
-      console.log("SET USER:", action.payload); // Check user khi Redux nhận dữ liệu
       state.user = action.payload;
+      console.log("action.payload", action.payload);
       state.isAuthenticated = true;
+      // state.userRole=action.payload.
+    },
+    setUserRole: (state, action) => {
+      state.userRole = action.payload;
     },
     clearError(state) {
       state.error = null;
@@ -101,7 +110,18 @@ const authenticationSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
+        state.loginRoute = true;
         state.user = action.payload;
+        switch (action.payload.userRole) {
+          case "C":
+            state.userRole = "customer";
+            break;
+          case "O":
+            state.userRole = "owner";
+            break;
+          default:
+            state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -122,6 +142,8 @@ const authenticationSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.userRole = "guest";
+        state.loginRoute = false;
       })
       .addCase(logout.rejected, (state, action) => {
         state.error = action.payload;
@@ -133,7 +155,9 @@ export const {
   clearError,
   clearRegisterStatus,
   clearLogin,
+  setLoginRoute,
   setUser,
+  setUserRole,
   setStatusModalAuthentication,
 } = authenticationSlice.actions;
 

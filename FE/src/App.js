@@ -4,6 +4,8 @@ import { Fragment } from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import NotFoundPage from "./pages/NotFound/NotFoundPage";
 function App() {
   return (
     <Router>
@@ -30,13 +32,16 @@ function App() {
               key={index}
               path={item.path}
               element={
-                <Layout>
-                  <Page />
-                </Layout>
+                <ProtectedRoute allowedRoles={item.role}>
+                  <Layout>
+                    <Page />
+                  </Layout>
+                </ProtectedRoute>
               }
             />
           );
         })}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

@@ -42,16 +42,6 @@ public class S3Config {
                 .forcePathStyle(true) // Force
                 .build();
 
-        // // Define request using default endpoint
-        // GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-        // .bucket("themealbucket1")
-        // .key("text.txt")
-        // .build();
-
-        // // Download the object
-        // System.out.println("success afterget ");
-        // s3Client.getObject(getObjectRequest, Paths.get("text.txt"));
-        // System.out.println("success afterget 232");
         return s3Client;
     }
 

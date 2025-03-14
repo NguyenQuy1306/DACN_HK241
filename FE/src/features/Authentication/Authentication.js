@@ -68,12 +68,12 @@ const Authentication = ({ open }) => {
 
     setIsClickLogout(false);
   };
-  useEffect(() => {
-    const storedAuth = JSON.parse(localStorage.getItem("persist:auth"));
-    if (storedAuth && storedAuth.user) {
-      dispatch(setUser(JSON.parse(storedAuth.user)));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const storedAuth = JSON.parse(localStorage.getItem("persist:auth"));
+  //   if (storedAuth && storedAuth.user) {
+  //     dispatch(setUser(JSON.parse(storedAuth.user)));
+  //   }
+  // }, [dispatch]);
 
   useEffect(() => {
     if (!open) {

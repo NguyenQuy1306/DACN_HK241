@@ -77,6 +77,14 @@ function Register({ setModalType, setIsClickLogout }) {
       //   setMessage("Đăng ký thành công");
 
       // }
+      navigate("../Home");
+      setModalType("login");
+      setIsClickLogout(false);
+      toast.success("Đăng ký tài khoản thành công", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     } catch (err) {
       setError("Đăng ký không thành công. Vui lòng thử lại.");
       console.error("Lỗi khi đăng ký:", err);
