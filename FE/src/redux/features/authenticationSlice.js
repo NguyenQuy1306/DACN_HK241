@@ -110,7 +110,7 @@ const authenticationSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.loginRoute = true;
+
         state.user = action.payload;
         switch (action.payload.userRole) {
           case "C":
@@ -118,6 +118,7 @@ const authenticationSlice = createSlice({
             break;
           case "O":
             state.userRole = "owner";
+            state.loginRoute = true;
             break;
           default:
             state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role

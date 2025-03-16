@@ -3,10 +3,12 @@ package com.capstoneproject.themeal.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.RestaurantImage;
 import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
+import com.capstoneproject.themeal.service.S3Service;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class RestaurantMapper {
+    @Autowired
+    private S3Service s3Service;
 
     // @Mapping(source = "MasoNhaHang", target = "MaSoNhaHang")
     // @Mapping(source = "url", target = "url")
@@ -31,15 +35,23 @@ public abstract class RestaurantMapper {
     @Mapping(source = "danhSachAnhNhaHang", target = "imageUrls", qualifiedByName = "mapImageUrls")
     public abstract RestaurantInMapsResponse toDetailResponse(Restaurant restaurant);
 
-    // Phương thức để ánh xạ danh sách ảnh thành map dựa trên loại ảnh
+    private String extractKeyFromUrl(String fullUrl) {
+        if (fullUrl.startsWith("http://") || fullUrl.startsWith("https://")) {
+            return fullUrl;
+        }
+        return fullUrl;
+    }
+
     @Named("mapImageUrls")
     protected Map<String, Set<String>> mapImageUrls(Set<RestaurantImage> danhSachAnhNhaHang) {
         return danhSachAnhNhaHang.stream()
                 .collect(Collectors.groupingBy(
-                        image -> image.getKieuAnh().toString(), // Chuyển đổi sang String để phù hợp với Map<String,
-                                                                // Set<String>>
-                        Collectors.mapping(RestaurantImage::getURL, // Dùng URL làm value
-                                Collectors.toSet()) // Gom thành Set URL
-                ));
+                        image -> image.getKieuAnh().toString(),
+                        Collectors.mapping(image -> {
+                            String keyOrUrl = extractKeyFromUrl(image.getURL());
+                            return image.getURL().startsWith("http") ? keyOrUrl
+                                    : s3Service.generatePresignedUrl("themealbucket1", keyOrUrl);
+                        }, Collectors.toSet())));
     }
+
 }

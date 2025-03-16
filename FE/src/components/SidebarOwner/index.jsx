@@ -56,7 +56,7 @@ const items = [
     {
         key: "9",
         icon: <MdOutlineTableRestaurant />,
-        label: "General",
+        label: "Thông tin nhà hàng",
     },
 ];
 const SidebarOwner = ({ collapsed }) => {
@@ -82,8 +82,8 @@ const SidebarOwner = ({ collapsed }) => {
             case "4":
                 navigate("/owner/rating");
                 break;
-            case "5":
-                navigate("/owner/general");
+            case "9":
+                navigate("/owner/restaurant");
                 break;
             default:
                 break;

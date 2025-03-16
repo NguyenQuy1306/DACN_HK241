@@ -1,35 +1,46 @@
 import React, { useEffect, useState } from "react";
-import Input from "../../components/Input";
-import { border, borderRadius, height, padding, textAlign } from "@mui/system";
-import styles from "./style.module.css";
-import ImageUploader from "../../components/UpliadImage/ImageUploader";
-import ButtonGreen from "../../components/Button/ButtonGreen/ButtonBooking/ButtonGreen";
-import ButtonCancel from "../../components/Button/ButtonCancel/ButtonCancel";
 import { useDispatch, useSelector } from "react-redux";
+import styles from "./style.module.css";
 import { getAllCategory } from "../../redux/features/categorySlice";
 import { createFood } from "../../redux/features/foodSlice";
 const MenuAdd = () => {
   const dispatch = useDispatch();
-  const handleOnchangeInput = () => {
-    console.log("input change");
-  };
   const [selectedCategory, setSelectedCategory] = useState("");
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+  });
+
   const danhMuc = useSelector((state) => state.category.category);
-  console.log("danhMuc", danhMuc);
-  const handleCategoryChange = (value) => {
-    console.log("Selected category:", value);
-    setSelectedCategory(value);
-  };
+  console.log("danh muc ", danhMuc);
   useEffect(() => {
     dispatch(getAllCategory({ restaurantId: 1 }));
   }, [dispatch]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleCreateNewFood = () => {
     const foodRequest = {
-      ten: "quy day roi23",
-      moTa: "mo ta mon an",
-      gia: 1000,
+      ten: formData.name,
+      moTa: formData.description,
+      gia: Number(formData.price),
       trangThai: "active",
     };
 
@@ -42,101 +53,101 @@ const MenuAdd = () => {
       })
     );
   };
+
   return (
     <div className={styles.container}>
-      <div className={styles["container-left"]}>
-        <div style={{ padding: " 5px 0 5px 0px" }}>
-          <Input
-            label="Tên món ăn"
-            type="text"
-            placeholder="Nhập tên món ăn"
-            labelColor="black"
-            otherStyle={{
-              width: "350px",
-              border: "1.5px solid black",
-              borderRadius: "10px",
-            }}
-            onChange={handleOnchangeInput}
-          ></Input>
-        </div>
-        <div style={{ padding: " 5px 0 5px 0px" }}>
-          <Input
-            label="Danh mục"
-            type="select"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            otherStyle={{
-              width: "350px",
-              border: "1.5px solid black",
-              borderRadius: "10px",
-            }}
-            options={danhMuc}
-          />
-        </div>
-        <div style={{ padding: " 5px 0 5px 0px" }}>
-          <Input
-            label="Giá (VNĐ)"
-            type="number"
-            placeholder="10000, 20000...."
-            labelColor="black"
-            otherStyle={{
-              width: "350px",
-              border: "1.5px solid black",
-              borderRadius: "10px",
-            }}
-            step="1000"
-            min="0"
-            onChange={handleOnchangeInput}
-          ></Input>
-        </div>
-        <div style={{ padding: " 5px 0 5px 0px" }}>
-          <Input
-            label="Mô tả"
-            type="textarea"
-            labelColor="black"
-            otherStyle={{
-              width: "350px",
-              height: "200px",
-              border: "1.5px solid black",
-              borderRadius: "10px",
-              textAlign: "left", // Ensure left alignment
-              padding: "10px",
-            }}
-            onChange={handleOnchangeInput}
-          />
-        </div>
-        <div className={styles["group-button"]}>
-          <div className={styles.button1}>
-            <ButtonGreen
-              text={"Xác nhận"}
-              onClick={() => handleCreateNewFood()}
-            ></ButtonGreen>
+      <div className={styles.content}>
+        <div className={styles.formSection}>
+          <h2 className={styles.title}>Thêm Món Ăn Mới</h2>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Tên món ăn</label>
+            <input
+              type="text"
+              name="name"
+              className={styles.input}
+              placeholder="Nhập tên món ăn"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
           </div>
-          <div className={styles.button2}>
-            <ButtonCancel text={"Huỷ bỏ"}></ButtonCancel>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Danh mục</label>
+            <select
+              className={styles.select}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">Chọn danh mục</option>
+              {danhMuc?.map((category) => (
+                <option key={category.maSoDanhMuc} value={category.ten}>
+                  {category.ten}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Giá (VNĐ)</label>
+            <input
+              type="number"
+              name="price"
+              className={styles.input}
+              placeholder="Nhập giá"
+              value={formData.price}
+              onChange={handleInputChange}
+              min="0"
+              step="1000"
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Mô tả</label>
+            <textarea
+              name="description"
+              className={styles.textarea}
+              placeholder="Mô tả món ăn"
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className={styles.imageSection}>
+          <div className={styles.imageUploader}>
+            <label className={styles.uploadLabel}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className={styles.fileInput}
+              />
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className={styles.imagePreview}
+                />
+              ) : (
+                <div className={styles.uploadPlaceholder}>
+                  <span>Click để tải ảnh lên</span>
+                  <span className={styles.uploadIcon}>📸</span>
+                </div>
+              )}
+            </label>
           </div>
         </div>
       </div>
-      <div className={styles["container-right"]}>
-        <div>
-          {/* <Input
-            label="Tên món ăn"
-            type="text"
-            placeholder="Nhập tên món ăn"
-            labelColor="black"
-            otherStyle={{ width: "350px", border: "1.5px solid black" }}
-            onChange={handleOnchangeInput}
-          ></Input> */}
-        </div>
-        <div className={styles.uploadImage}>
-          <ImageUploader
-            setFile={setFile}
-            imagePreview={imagePreview}
-            setImagePreview={setImagePreview}
-          ></ImageUploader>
-        </div>
+
+      <div className={styles.actions}>
+        <button className={styles.submitButton} onClick={handleCreateNewFood}>
+          Xác nhận
+        </button>
+        <button className={styles.cancelButton}>Huỷ bỏ</button>
       </div>
     </div>
   );
 };
+
 export default MenuAdd;

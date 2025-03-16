@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
+import { create } from "@mui/material/styles/createTransitions";
 
 export const getRestaurants = createAsyncThunk(
   "/restaurants",
   async ({ rejectWithValue }) => {
     try {
-      const response = await api.getRestaurants();
+      const response = await api.updateRestaurantInfor();
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -27,6 +28,28 @@ export const getRestaurantsInMaps = createAsyncThunk(
   }
 );
 
+export const getRestaurantByOwnerId = createAsyncThunk(
+  "/restaurants/owner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getRestaurantByOnwerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const updateRestaurantInfor = createAsyncThunk(
+  "/restaurants/update",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateRestaurantInfor(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
@@ -39,6 +62,8 @@ export const restaurantSlice = createSlice({
     menuChoosed: [],
     newMenu: [],
     currentPage: 0,
+    restaurantOwner: null,
+    updateRestaurantResponse: null,
     time: null,
     date: null,
     people: null,
@@ -84,6 +109,31 @@ export const restaurantSlice = createSlice({
         state.metadata = action.payload.metadata.pagination;
       })
       .addCase(getRestaurantsInMaps.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getRestaurantByOwnerId.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwner = [];
+      })
+      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantOwner = action.payload.payload;
+      })
+      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(updateRestaurantInfor.pending, (state) => {
+        state.loading = true;
+        state.updateRestaurantResponse = [];
+      })
+      .addCase(updateRestaurantInfor.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updateRestaurantInfor = action.payload.payload;
+      })
+      .addCase(updateRestaurantInfor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

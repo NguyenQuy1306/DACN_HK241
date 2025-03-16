@@ -50,4 +50,10 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
                         @Param("people") Byte people,
                         Pageable pageable);
 
+        @Query("SELECT DISTINCT r FROM Restaurant r " +
+                        "JOIN r.ChuNhaHang chuNhaHang " +
+
+                        "WHERE chuNhaHang.MaSoNguoiDung = :ownerId ")
+        Restaurant findRestaurantByOwner(@Param("ownerId") double ownerId);
+
 }

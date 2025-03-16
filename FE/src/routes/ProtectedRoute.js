@@ -15,9 +15,10 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const userRole = useSelector((state) => state.authentication.userRole);
   console.log("allowedRoles", allowedRoles);
   console.log("userRole", userRole);
-  //   useEffect(() => {
-  //     dispatch(setUserRole("guest"));
-  //   }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setUserRole("guest"));
+  //   dispatch(setLoginRoute(false));
+  // }, [dispatch]);
   console.log("location pathname", location.pathname);
   console.log(
     "allowedRoles.includes(userRole)",

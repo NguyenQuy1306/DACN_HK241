@@ -93,18 +93,12 @@ public class FoodServiceImpl implements FoodService {
             String contentType = file.getContentType();
             String fileExtension = contentType != null && contentType.contains("png") ? ".png" : ".jpg";
 
-            // Tạo tên file với timestamp
             String timestamp = String.valueOf(System.currentTimeMillis());
             String fileName = foodId + "_" + timestamp + fileExtension;
 
             String s3Key = String.format("restaurants/%s/menu/%s/%s", restaurantId, categoryId, fileName);
 
-            // In ra log để debug
-            System.out.println("Uploading to bucket: " + bucketName);
-            System.out.println("S3 Key: " + s3Key);
-
             s3Service.putObject(bucketName, s3Key, file.getBytes());
-
             Food food = foodRepository.findById(foodId).orElse(null);
             FoodImage foodImage = FoodImage.builder().KieuAnh(RestaurantImageType.FOODIMAGE)
                     .NhaHang(restaurantRepository.findById(restaurantId).orElse(null)).URL(s3Key).food(food).build();

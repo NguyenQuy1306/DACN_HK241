@@ -72,7 +72,7 @@ public class Restaurant {
     @OneToMany(mappedBy = "NhaHang")
     private Set<RestaurantHasPaymentMethod> DanhSachNhaHangCoPhuongThucThanhToan;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "NhaHang")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "NhaHang", cascade = CascadeType.REMOVE)
     private Set<RestaurantImage> DanhSachAnhNhaHang;
 
     @OneToMany(mappedBy = "NhaHang")

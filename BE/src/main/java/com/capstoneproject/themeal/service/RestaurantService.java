@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.request.*;
 import com.capstoneproject.themeal.model.response.*;
 
@@ -18,4 +20,10 @@ public interface RestaurantService {
 
     List<RestaurantInMapsResponse> getRecommendedList();
 
+    public RestaurantInMapsResponse getRestaurant(Long ownerId);
+
+    public void findImagesToDelete(List<String> updatedImage, Restaurant restaurant);
+
+    public void addNewRestaurantImages(List<MultipartFile> newImages, Long restaurantId, String bucketName,
+            Restaurant restaurant);
 }

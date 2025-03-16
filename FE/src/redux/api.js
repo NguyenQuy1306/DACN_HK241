@@ -236,6 +236,27 @@ export const getAllCategory = async (params) => {
   }
 };
 
+export const getRestaurantByOnwerId = async (params) => {
+  try {
+    const response = await API.get(`/api/restaurants`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateRestaurantInfor = async (params) => {
+  try {
+    console.log("params", params);
+    const response = await API.put(`/api/restaurants`, params, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const createFood = async ({
   restaurantId,
   categoryId,

@@ -15,7 +15,14 @@ import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
 import MenuAdd from "../pages/MenuAdd/MenuAdd";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
+import RestaurantInfoForm from "../pages/InforRestaurant/InforRestaurant";
 export const routes = [
+  {
+    path: "/owner/restaurant",
+    component: RestaurantInfoForm,
+    layout: OwnerLayout,
+    role: ["owner"],
+  },
   {
     path: "/notfound",
     component: NotFoundPage,
