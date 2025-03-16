@@ -57,7 +57,7 @@ export const routes = [
     path: "/Search",
     component: Search,
     layout: MainLayout,
-    role: "customer",
+    role: ["customer", "guest", "owner"],
   },
   {
     path: "/DetailRestaurant/:id",

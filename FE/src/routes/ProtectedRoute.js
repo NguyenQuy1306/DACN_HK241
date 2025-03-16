@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
       return <Navigate to="/notfound" replace />;
     }
   } else {
-    if (loginRoute && location.pathname === "/Home") {
+    if (loginRoute && allowedRoles.includes("guest")) {
       //   dispatch(setLoginRoute(false));
       console.log("navaigate to owner");
       return <Navigate to="/owner/menu/add" replace />;

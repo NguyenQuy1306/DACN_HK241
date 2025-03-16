@@ -12,6 +12,7 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import StarRating from "./StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setHoveredMarkerIndex } from "../../redux/features/restaurantSlice";
+import { motion } from "framer-motion";
 const PlaceDetails = ({
   place,
   selected,
@@ -69,11 +70,13 @@ const PlaceDetails = ({
   };
   return (
     <div>
-      <div
+      <motion.div
         onClick={() => handleClickDetailRestaurant(place.maSoNhaHang)}
         className="PlaceDetailDiv"
         onMouseOver={() => handleMouseOver(index)}
         onMouseOut={handleMouseOut}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3 }}
       >
         <div className="PlaceDetailDiv_H1">
           <div className="PlaceDetailDiv_H1_div">
@@ -281,7 +284,7 @@ const PlaceDetails = ({
             </Button>
           </CardActions>
         </div> */}
-      </div>
+      </motion.div>
     </div>
   );
 };
