@@ -10,9 +10,10 @@ import ViewImagepage from "../pages/ViewImagepage";
 import SearchResult from "../pages/SearchResult";
 import OwnerDashboard from "../pages/Dashboard_Owner";
 import OwnerLayout from "../layouts/OwnerLayout";
-
+import OwnerMenu from "../pages/MenuList_Owner";
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
+
 import MenuAdd from "../pages/MenuAdd/MenuAdd";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import RestaurantInfoForm from "../pages/InforRestaurant/InforRestaurant";

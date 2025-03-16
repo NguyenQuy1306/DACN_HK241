@@ -1,0 +1,42 @@
+.action-list {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+    margin-top: 120px;
+}
+
+.title {
+    text-align: center;
+    margin-top: 64px;
+}
+
+.name {
+    font-size: 20px;
+    margin: 8px 0;
+
+}
+
+.category {
+    font-size: 14px;
+}
+
+
+
+.action-list {
+    margin-top: 40px;
+}
+
+.img-container {
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+}

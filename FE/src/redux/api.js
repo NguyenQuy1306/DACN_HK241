@@ -15,7 +15,7 @@ API.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Có thể dispatch action để logout hoặc refresh token
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -186,6 +186,7 @@ export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
       `api/payments/create-payment-link${queryParams}${queryParams2}`,
       request // Gửi request body đúng cách
     );
+    console.log("data from payment controller: ", response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

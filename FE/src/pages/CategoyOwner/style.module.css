@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    gap: 16px;
+}
+
+.statistics {
+    background-color: #fff;
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.category-list {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pagination {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 0;
+}

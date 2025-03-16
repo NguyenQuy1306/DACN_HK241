@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    gap: 16px;
+    background-color: #F3F2F7;
+    
+}
+
+.menu-list {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px;
+}
+.pagination {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 0;
+}
+
+.statistics {
+    background-color: #fff;
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+

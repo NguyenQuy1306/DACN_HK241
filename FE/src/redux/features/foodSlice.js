@@ -5,6 +5,7 @@ export const getFood = createAsyncThunk(
   "/food",
   async (params, { rejectWithValue }) => {
     try {
+      alert("Getting food...");
       const response = await api.getFood(params);
       return response.payload;
     } catch (error) {
