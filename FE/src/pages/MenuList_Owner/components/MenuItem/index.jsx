@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./style.module.css";
-import ActionButton from "../ActionButton";
+import ActionButton from "../../../../components/ActionButton";
 import { GoEye } from "react-icons/go";
 import { MdEdit } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";

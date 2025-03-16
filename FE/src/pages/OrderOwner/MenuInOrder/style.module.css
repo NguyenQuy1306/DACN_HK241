@@ -1,0 +1,6 @@
+.discount, .totalPrice {
+    display: flex;
+    gap: 32px;
+    justify-content: flex-end;
+    margin: 0;
+}

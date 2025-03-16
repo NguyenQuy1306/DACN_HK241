@@ -14,12 +14,22 @@ import OwnerMenu from "../pages/MenuList_Owner";
 import ResultPayment from "../pages/ResultPayment/ResultPayment";
 import DepositPolicy from "../pages/DepositPolicy/DepositPolicy";
 import MenuDetail from "../pages/MenuDetail";
+import CategoryOwner from "../pages/CategoyOwner";
+import OrderOwner from "./../pages/OrderOwner";
+import MenuInOrder from "../pages/OrderOwner/MenuInOrder";
+import RatingOwner from "../pages/RatingOwner";
 
 export const routes = [
     {
         path: "/deposit-policy",
         component: DepositPolicy,
         layout: MainLayout,
+    },
+    {
+        path: "/owner/rating",
+        component: RatingOwner,
+        layout: OwnerLayout,
+        title: "Danh sách đánh giá",
     },
     {
         path: "/DetailRestaurant/:id/ResultPayment",
@@ -66,7 +76,6 @@ export const routes = [
         component: RegisterRestaurant2,
         layout: MainLayout,
     },
-
     {
         path: "/owner/dashboard",
         component: OwnerDashboard,
@@ -74,10 +83,22 @@ export const routes = [
         title: "Bảng điều khiển",
     },
     {
+        path: "/owner/order",
+        component: OrderOwner,
+        layout: OwnerLayout,
+        title: "Danh sách đặt bàn",
+    },
+    {
         path: "/owner/menu",
         component: OwnerMenu,
         layout: OwnerLayout,
         title: "Danh sách món ăn/thức uống",
+    },
+    {
+        path: "/owner/category",
+        component: CategoryOwner,
+        layout: OwnerLayout,
+        title: "Danh mục món ăn",
     },
     {
         path: "/owner/menu/:id",

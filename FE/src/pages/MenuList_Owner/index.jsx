@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import SidebarOwner from "../../components/SidebarOwner";
 import MenuItem from "./components/MenuItem";
@@ -11,8 +11,28 @@ import foodLogo from "../../assets/images/food.svg";
 import drinkLogo from "../../assets/images/drink.svg";
 import foodIncLogo from "../../assets/images/foodinc.svg";
 import drinkIncLogo from "../../assets/images/drinkinc.svg";
+import { useSelector } from "react-redux";
+import { getFood } from "../../redux/features/foodSlice";
 const { Search } = Input;
+
 function MenuList_Owner() {
+    const [foods, setFoods] = useState([]);
+
+    const foodList = useSelector((state) => state.food);
+
+    useEffect(() => {
+        setFoods(...foods, ...foodList.food);
+    }, [foodList.food]);
+
+    useEffect(() => {
+        alert("chuaanr bi");
+        getFood({ restaurantId: 72 });
+    }, []);
+
+    useEffect(() => {
+        console.log("DANH SACH MON AN: ", foods);
+    }, [foods]);
+
     const [collapsed, setCollapsed] = useState(false);
     const onSearch = () => {
         console.log("Searching...");
