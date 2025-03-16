@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { TextField } from "@mui/material";
+import { TextField, Modal, Box, Button, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import styles from "./RestaurantInfoForm.module.css";
 import {
   getRestaurantByOwnerId,
@@ -14,36 +15,13 @@ const RestaurantInfoForm = () => {
   const restaurantOwner = useSelector(
     (state) => state.restaurant.restaurantOwner
   );
-  const fieldsAllow = [
-    "ten",
-    "diaChi",
-    "loaiHinh",
-    "khoangGia",
-    "gioHoatDong",
-    "phuHop",
-    "monDacSac",
-    "moTaKhongGian",
-    "diemDacTrung",
-    "viDo",
-    "kinhDo",
-  ];
-  const fieldLabels = {
-    ten: "Tên nhà hàng",
-    diaChi: "Địa chỉ",
-    loaiHinh: "Loại hình",
-    khoangGia: "Khoảng giá",
-    gioHoatDong: "Giờ hoạt động",
-    phuHop: "Phù hợp với",
-    monDacSac: "Món đặc sắc",
-    moTaKhongGian: "Mô tả không gian",
-    diemDacTrung: "Điểm đặc trưng",
-    viDo: "Vĩ độ",
-    kinhDo: "Kinh độ",
-  };
+
   const [updatedFields, setUpdatedFields] = useState({});
   const [existingImages, setExistingImages] = useState([]);
   const [error, setError] = useState("");
-  console.log("existingImages", existingImages);
+  const [openModal, setOpenModal] = useState(false);
+  const [saving, setSaving] = useState(false);
+
   useEffect(() => {
     if (user) {
       dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
@@ -65,73 +43,37 @@ const RestaurantInfoForm = () => {
     setUpdatedFields((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTimeChange = (e) => {
-    const { name, value } = e.target;
-    if (
-      name === "gioMoCua" &&
-      updatedFields.gioDongCua &&
-      value >= updatedFields.gioDongCua
-    ) {
-      setError("Giờ mở cửa phải nhỏ hơn giờ đóng cửa");
-      return;
-    }
-    if (
-      name === "gioDongCua" &&
-      updatedFields.gioMoCua &&
-      value <= updatedFields.gioMoCua
-    ) {
-      setError("Giờ đóng cửa phải lớn hơn giờ mở cửa");
-      return;
-    }
-    setError("");
-    setUpdatedFields((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = files.map((file) => ({
-      file, // Lưu file gốc
-      preview: URL.createObjectURL(file), // Lưu URL tạm thời
-    }));
-
-    setExistingImages((prev) => [...prev, ...newImages]);
-  };
-
-  const removeExistingImage = (idx) => {
-    setExistingImages((prev) => prev.filter((img, index) => index !== idx));
-  };
-
   const handleSave = () => {
-    const formData = new FormData();
-    existingImages.forEach((image) => {
-      if (image.file) {
-        formData.append("newImages", image.file);
-      } else {
-        let processedUrl = image;
-
-        try {
-          const urlObj = new URL(image);
-          if (
-            urlObj.hostname === "themealbucket1.s3.ap-southeast-1.amazonaws.com"
-          ) {
-            processedUrl = urlObj.pathname.substring(1); // Bỏ dấu '/' đầu tiên
+    setSaving(true);
+    setTimeout(() => {
+      const formData = new FormData();
+      existingImages.forEach((image) => {
+        if (image.file) {
+          formData.append("newImages", image.file);
+        } else {
+          let processedUrl = image;
+          try {
+            const urlObj = new URL(image);
+            if (
+              urlObj.hostname ===
+              "themealbucket1.s3.ap-southeast-1.amazonaws.com"
+            ) {
+              processedUrl = urlObj.pathname.substring(1);
+            }
+          } catch (error) {
+            console.warn("Invalid URL:", image);
           }
-        } catch (error) {
-          console.warn("Invalid URL:", image);
+          formData.append("imageUrls", processedUrl);
         }
+      });
 
-        formData.append("imageUrls", processedUrl);
-      }
-    });
+      formData.append("fields", JSON.stringify(updatedFields));
+      formData.append("maSoNhaHang", restaurantOwner.maSoNhaHang);
+      dispatch(updateRestaurantInfor(formData));
 
-    formData.append("fields", JSON.stringify(updatedFields));
-
-    console.log("FormData contents:");
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-    formData.append("maSoNhaHang", restaurantOwner.maSoNhaHang);
-    dispatch(updateRestaurantInfor(formData));
+      setSaving(false);
+      setOpenModal(false);
+    }, 2000);
   };
 
   return (
@@ -140,40 +82,22 @@ const RestaurantInfoForm = () => {
         <div className={styles.inputGrid}>
           {restaurantOwner &&
             Object.entries(restaurantOwner).map(([key, value]) =>
-              fieldsAllow.includes(key) ? (
+              [
+                "ten",
+                "diaChi",
+                "loaiHinh",
+                "khoangGia",
+                "gioHoatDong",
+              ].includes(key) ? (
                 <div key={key} className={styles.inputGroup}>
-                  <label className={styles.label}>
-                    {fieldLabels[key] || key}
-                  </label>
-                  {key === "gioHoatDong" ? (
-                    <>
-                      <TextField
-                        type="time"
-                        name="gioMoCua"
-                        value={updatedFields.gioMoCua || value.gioMoCua || ""}
-                        onChange={handleTimeChange}
-                        className={styles.input}
-                      />
-                      <TextField
-                        type="time"
-                        name="gioDongCua"
-                        value={
-                          updatedFields.gioDongCua || value.gioDongCua || ""
-                        }
-                        onChange={handleTimeChange}
-                        className={styles.input}
-                      />
-                      {error && <p className={styles.errorText}>{error}</p>}
-                    </>
-                  ) : (
-                    <input
-                      type="text"
-                      name={key}
-                      value={updatedFields[key] || value}
-                      onChange={handleChange}
-                      className={styles.input}
-                    />
-                  )}
+                  <label className={styles.label}>{key}</label>
+                  <input
+                    type="text"
+                    name={key}
+                    value={updatedFields[key] || value}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
                 </div>
               ) : null
             )}
@@ -184,33 +108,28 @@ const RestaurantInfoForm = () => {
         <h3>Hình ảnh nhà hàng</h3>
         <div className={styles.imageGrid}>
           {existingImages.map((image, index) => (
-            <div key={index} className={styles.imageWrapper}>
-              {image.file ? (
-                <>
-                  <img
-                    src={image.preview}
-                    alt="Ảnh cũ"
-                    className={styles.image}
-                  />
-                  <button
-                    onClick={() => removeExistingImage(index)}
-                    className={styles.removeButton}
-                  >
-                    <X size={16} />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <img src={image} alt="Ảnh cũ" className={styles.image} />
-                  <button
-                    onClick={() => removeExistingImage(index)}
-                    className={styles.removeButton}
-                  >
-                    <X size={16} />
-                  </button>
-                </>
-              )}
-            </div>
+            <motion.div
+              key={index}
+              className={styles.imageWrapper}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <img
+                src={image.file ? image.preview : image}
+                alt="Ảnh"
+                className={styles.image}
+              />
+              <button
+                onClick={() =>
+                  setExistingImages(
+                    existingImages.filter((_, i) => i !== index)
+                  )
+                }
+                className={styles.removeButton}
+              >
+                <X size={16} />
+              </button>
+            </motion.div>
           ))}
         </div>
 
@@ -220,17 +139,78 @@ const RestaurantInfoForm = () => {
             type="file"
             multiple
             accept="image/*"
-            onChange={handleImageUpload}
+            onChange={(e) => {
+              const files = Array.from(e.target.files);
+              const newImages = files.map((file) => ({
+                file,
+                preview: URL.createObjectURL(file),
+              }));
+              setExistingImages([...existingImages, ...newImages]);
+            }}
           />
         </label>
 
         <div className={styles.buttonGroup}>
-          <button onClick={handleSave} className={styles.saveButton}>
+          <motion.button
+            onClick={() => setOpenModal(true)}
+            className={styles.saveButton}
+            whileTap={{ scale: 0.95 }}
+          >
             Lưu
-          </button>
-          <button className={styles.cancelButton}>Hủy</button>
+          </motion.button>
+          <motion.button
+            onClick={() => window.location.reload()}
+            className={styles.cancelButton}
+            whileTap={{ scale: 0.95 }}
+          >
+            Hủy
+          </motion.button>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: "10px",
+            minWidth: 300,
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Xác nhận lưu thay đổi?
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Bạn có chắc chắn muốn lưu những thay đổi này không?
+          </Typography>
+          <Box
+            sx={{ mt: 3, display: "flex", justifyContent: "center", gap: 2 }}
+          >
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setOpenModal(false)}
+            >
+              Hủy
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSave}
+              disabled={saving}
+            >
+              {saving ? "Đang lưu..." : "Xác nhận"}
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 };
