@@ -22,7 +22,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
   const [highlightedMarkerIndex, setHighlightedMarkerIndex] = useState(null);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const isFirstLoad = useRef(true); // Track the initial load
-
+  const thanhPho = useSelector((state) => state.restaurant.thanhPho);
   const data_restaurantsInMaps = useSelector(
     (state) => state.restaurant.restaurants
   );
@@ -45,6 +45,7 @@ const Map = ({ setPlaces, setCoords, setChildClicked }) => {
           bl_longitude: sw.lng,
           tr_longitude: ne.lng,
           tr_latitude: ne.lat,
+          thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
           page: 0,
           size: 10,
         };
