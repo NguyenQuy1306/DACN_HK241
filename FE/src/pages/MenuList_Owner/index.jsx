@@ -11,12 +11,13 @@ import foodLogo from "../../assets/images/food.svg";
 import drinkLogo from "../../assets/images/drink.svg";
 import foodIncLogo from "../../assets/images/foodinc.svg";
 import drinkIncLogo from "../../assets/images/drinkinc.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getFood } from "../../redux/features/foodSlice";
 const { Search } = Input;
 
 function MenuList_Owner() {
     const [foods, setFoods] = useState([]);
+    const dispatch = useDispatch();
 
     const foodList = useSelector((state) => state.food);
 
@@ -25,8 +26,7 @@ function MenuList_Owner() {
     }, [foodList.food]);
 
     useEffect(() => {
-        alert("chuaanr bi");
-        getFood({ restaurantId: 72 });
+        dispatch(getFood({ restaurantId: 72 }));
     }, []);
 
     useEffect(() => {
@@ -39,8 +39,6 @@ function MenuList_Owner() {
     };
     return (
         <div className={styles.container}>
-            <SidebarOwner collapsed={collapsed} />
-
             <div className={styles.body}>
                 <Search
                     placeholder="Input name of menu to search"
