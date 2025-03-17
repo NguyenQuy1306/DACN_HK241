@@ -38,7 +38,7 @@ function OwnerHeader() {
                     alt="Owner's avatar"
                     src={avatar}
                 ></img> */}
-        {/* {user ? (
+        {user ? (
           <div
             onClick={showDrawer}
             style={{
@@ -58,7 +58,7 @@ function OwnerHeader() {
               dispatch(setStatusModalAuthentication({ openModal: true }))
             }
           ></ButtonLogin>
-        )} */}
+        )}
         <Authentication open={open}></Authentication>
       </div>
     </div>

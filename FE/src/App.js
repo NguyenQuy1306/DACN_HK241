@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { routes } from "./routes";
 import { Fragment } from "react";
 import "./App.css";
@@ -41,6 +46,7 @@ function App() {
             />
           );
         })}
+        <Route path="/" element={<Navigate to="/Home" />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
