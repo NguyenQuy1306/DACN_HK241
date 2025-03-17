@@ -32,36 +32,7 @@ const About = ({ selectedPlace }) => {
       },
     },
     additionalFacilities: ["wifi", "air condition", "parking"],
-    openingHours: {
-      monday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      tuesday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      wednesday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      thursday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      friday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      saturday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-      sunday: {
-        lunch: "12:00 - 14:00",
-        dinner: "19:00 - 21:45",
-      },
-    },
+
     highlights:
       "Đầu bếp nhiều kinh nghiệm, từng phục vụ nội địa Nhật. Đa dạng món, hương vị nguyên bản Yakiniku, không gian đẹp",
   };
@@ -115,17 +86,17 @@ const About = ({ selectedPlace }) => {
                   - {floor.name}: {floor.capacity} Khách{" "}
                 </span>
               ))} */}
-              <span>
-                {/* - Phòng riêng: {selectedPlace.space.privateRooms.total} Phòng{" "}
-                {selectedPlace.space.privateRooms.description} */}
-              </span>
+              {/* <span>
+                - Phòng riêng: {selectedPlace.space.privateRooms.total} Phòng{" "}
+                {selectedPlace.space.privateRooms.description}
+              </span> */}
             </div>
-            <div className="AboutDiv_H1_div_div1_title">
+            {/* <div className="AboutDiv_H1_div_div1_title">
               <div className="AboutDiv_H1_div_div1_title_icon">
                 <VerifiedOutlinedIcon className="AboutDiv_H1_div_div1_title_icon_css"></VerifiedOutlinedIcon>
               </div>
               Các tiện ích khác:
-            </div>
+            </div> */}
             <div className="AboutDiv_H1_div_div1_description">
               {/* {restaurantData.additionalFacilities.map((service, index) => (
                 <span key={index}>{service}, </span>
@@ -139,6 +110,7 @@ const About = ({ selectedPlace }) => {
             </div>
             <div className="AboutDiv_H1_div_div1_description">
               {" "}
+              <span>- {selectedPlace.gioHoatDong} </span>
               {/* {Object.entries(selectedPlace.openingHours).map(
                 ([day, times], index) => (
                   <div

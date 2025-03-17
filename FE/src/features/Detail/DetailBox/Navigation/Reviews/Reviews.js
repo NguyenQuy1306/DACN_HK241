@@ -56,7 +56,9 @@ const Reviews = ({ selectedPlace, reviewData }) => {
   return (
     <div className="ReviewsDiv">
       <h2>
-        <span>Reviews</span>
+        <span style={{ color: "    hsl(174, 100%, 20%)", fontWeight: "bold" }}>
+          Reviews
+        </span>
         <div className="ReviewsDiv_H1">
           {/* <div className="ReviewsDiv_H1_rating_summary">
             <div className="ReviewsDiv_H1_rating_summary_H1">

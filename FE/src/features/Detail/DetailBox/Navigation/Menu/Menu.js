@@ -128,43 +128,47 @@ const Menu = ({ selectedPlace }) => {
 
       {activeTabMenu === "Tất cả món ăn" && (
         <div className="MenuNavBar_allfood">
-          {selectedPlace.danhSachAnhMenu.map((menuImage, index) => {
-            if (index < 8) {
-              return (
-                <div
-                  key={index}
-                  className="col-md-4 ImageAllFoodDiv"
-                  onClick={() => handleOnClickImageMenu()}
-                >
-                  <img
-                    src={menuImage}
-                    alt={`Menu ${index + 1}`}
-                    className="ImageAllFoodDiv_img"
-                  />
-                </div>
-              );
-            } else if (index === 8) {
-              return (
-                <div
-                  key={index}
-                  className="col-md-4 ImageAllFoodDiv"
-                  onClick={() => handleOnClickImageMenu()}
-                >
-                  <div className="ImageAllFoodDiv_number8">
-                    <div className="ImageAllFoodDiv_number8_H1">
-                      <div className="ImageAllFoodDiv_number8_H1_div">+8</div>
-                    </div>
+          {selectedPlace.imageUrls.MENUIMAGE ? (
+            selectedPlace.imageUrls.MENUIMAGE.map((menuImage, index) => {
+              if (index < 8) {
+                return (
+                  <div
+                    key={index}
+                    className="col-md-4 ImageAllFoodDiv"
+                    onClick={() => handleOnClickImageMenu()}
+                  >
                     <img
                       src={menuImage}
                       alt={`Menu ${index + 1}`}
                       className="ImageAllFoodDiv_img"
                     />
                   </div>
-                </div>
-              );
-            }
-            return null;
-          })}
+                );
+              } else if (index === 8) {
+                return (
+                  <div
+                    key={index}
+                    className="col-md-4 ImageAllFoodDiv"
+                    onClick={() => handleOnClickImageMenu()}
+                  >
+                    <div className="ImageAllFoodDiv_number8">
+                      <div className="ImageAllFoodDiv_number8_H1">
+                        <div className="ImageAllFoodDiv_number8_H1_div">+8</div>
+                      </div>
+                      <img
+                        src={menuImage}
+                        alt={`Menu ${index + 1}`}
+                        className="ImageAllFoodDiv_img"
+                      />
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })
+          ) : (
+            <>Không có ảnh menu</>
+          )}
         </div>
       )}
 

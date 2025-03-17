@@ -3,7 +3,7 @@ import "./OtherInformationComponent.css";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 
-const OtherInformationComponent = ({ icon, text }) => {
+const OtherInformationComponent = ({ icon, text, title }) => {
   const [check, setCheck] = useState(false);
   const [hovered, setHovered] = useState(false); // To track hover state
 
@@ -15,7 +15,8 @@ const OtherInformationComponent = ({ icon, text }) => {
     <div className="OtherInformationComponent_H1">
       <div className="OtherInformationComponent_H2">{icon}</div>
       <span className="OtherInformationComponent_H1_span">
-        <span>{text}</span>
+        <span style={{ fontWeight: "bold" }}>{title}: </span>
+        <span>{text} </span>
         {/* <span>$105</span> */}
       </span>
 
@@ -32,7 +33,7 @@ const OtherInformationComponent = ({ icon, text }) => {
                 <div className="OtherInformationComponent_H1_span_HelpOutlineOutlinedIcon_span_div"></div>
 
                 <p className="OtherInformationComponent_H1_span_HelpOutlineOutlinedIcon_span_p1">
-                  <span>Average price</span>
+                  <span>Khoảng giá</span>
                 </p>
                 <p className="OtherInformationComponent_H1_span_HelpOutlineOutlinedIcon_span_p2">
                   <span>
