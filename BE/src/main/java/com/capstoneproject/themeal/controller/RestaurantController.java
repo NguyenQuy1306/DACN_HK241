@@ -76,7 +76,7 @@ public class RestaurantController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalDate date,
-            @RequestParam(required = false) Byte people) {
+            @RequestParam(required = false) Byte people, @RequestParam(required = false) String thanhPho) {
 
         ApiResponse<List<RestaurantInMapsResponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(page, size);
@@ -84,8 +84,7 @@ public class RestaurantController {
         try {
             Page<RestaurantInMapsResponse> restaurantInMapsResponses = restaurantService.getRestaurantsInMaps(
                     bl_latitude,
-                    bl_longitude, tr_latitude, tr_longitude, time, date, people, pageable);
-
+                    bl_longitude, tr_latitude, tr_longitude, time, date, people, thanhPho, pageable);
             MetadataResponse metadata = new MetadataResponse(
                     restaurantInMapsResponses.getTotalElements(),
                     restaurantInMapsResponses.getTotalPages(),
@@ -100,6 +99,7 @@ public class RestaurantController {
                     "/api/restaurants/list-in-boundary?page=" + (restaurantInMapsResponses.getTotalPages() - 1),
                     "/api/restaurants/list-in-boundary?page=0");
             Map<String, Object> responseMetadata = new HashMap<>();
+
             responseMetadata.put("pagination", metadata);
             apiResponse.ok(restaurantInMapsResponses.getContent(), responseMetadata);
         } catch (NotFoundException e) {

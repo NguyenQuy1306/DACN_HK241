@@ -64,6 +64,7 @@ export const restaurantSlice = createSlice({
     currentPage: 0,
     restaurantOwner: null,
     updateRestaurantResponse: null,
+    thanhPho: "TP Hồ Chí Minh",
     time: null,
     date: null,
     people: null,
@@ -79,6 +80,9 @@ export const restaurantSlice = createSlice({
       state.menuChoosed = menuChoosed || [];
       state.newMenu = newMenu || [];
       state.bookingWithNewCombo = bookingWithNewCombo;
+    },
+    saveThanhPho: (state, action) => {
+      state.thanhPho = action.payload;
     },
     setHoveredMarkerIndex: (state, action) => {
       state.hoveredMarkerIndex = action.payload;
@@ -143,6 +147,7 @@ export const {
   setOpenBookingWithMenu,
   setHoveredMarkerIndex,
   saveBounds,
+  saveThanhPho,
   saveCurrentPage,
   saveFilterTable,
 } = restaurantSlice.actions;

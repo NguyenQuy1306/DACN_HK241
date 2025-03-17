@@ -86,17 +86,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Page<RestaurantInMapsResponse> getRestaurantsInMaps(Double blLat, Double blLng, Double trLat, Double trLng,
-            LocalTime time, LocalDate date, Byte people, Pageable pageable) {
-
+            LocalTime time, LocalDate date, Byte people, String thanhPho, Pageable pageable) {
         try {
             if (time != null && date != null && people != null) {
 
                 return restaurantRepository.findRestaurantsInBoundaryWithTable(blLat, blLng, trLat, trLng,
-                        RestaurantImageType.RESTAURANTIMAGE, date, time, people, pageable)
+                        RestaurantImageType.RESTAURANTIMAGE, date, time, people, thanhPho, pageable)
                         .map(restaurantMapper::toDetailResponse);
             }
             Page<Restaurant> restaurants = restaurantRepository.findRestaurantsInBoundary(blLat, blLng, trLat, trLng,
-                    RestaurantImageType.RESTAURANTIMAGE, pageable);
+                    RestaurantImageType.RESTAURANTIMAGE, thanhPho, pageable);
 
             return restaurants.map(restaurantMapper::toDetailResponse);
 

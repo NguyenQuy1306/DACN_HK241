@@ -52,6 +52,8 @@ public class Restaurant {
     private Double KinhDo;
     private Double ViDo;
 
+    @Column(nullable = false)
+    private String ThanhPho;
     // dư thuộc tính~
     private String LoaiAmThuc;
     private String KieuNhaHang;

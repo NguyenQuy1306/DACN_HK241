@@ -56,6 +56,7 @@ const Reservation = () => {
   const bounds = useSelector((state) => state.restaurant.bounds);
   const currentPage = useSelector((state) => state.restaurant.currentPage);
   const date = useSelector((state) => state.restaurant.date);
+  const thanhPho = useSelector((state) => state.restaurant.thanhPho);
 
   useEffect(() => {
     if (selectedDate && selectedPersons && selectedTime && bounds) {
@@ -79,6 +80,7 @@ const Reservation = () => {
           date: selectedDate,
           people: selectedPersons,
           time: selectedTime,
+          thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
           size: 10,
         })
       );
@@ -133,6 +135,7 @@ const Reservation = () => {
         bl_longitude: sw.lng,
         tr_longitude: ne.lng,
         tr_latitude: ne.lat,
+        thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
         page: 0,
         size: 10,
       })

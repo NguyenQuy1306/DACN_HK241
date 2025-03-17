@@ -25,8 +25,10 @@ const Direction = ({ selectedPlace }) => {
     {
       id: 1,
       name: "Restaurant Example",
-      latitude: selectedPlace.viDo,
-      longitude: selectedPlace.kinhDo,
+      latitude: selectedPlace.viDo ? selectedPlace.viDo : selectedPlace.lat,
+      longitude: selectedPlace.kinhDo
+        ? selectedPlace.kinhDo
+        : selectedPlace.lng,
       photo: {
         images: {
           large: {
@@ -67,7 +69,10 @@ const Direction = ({ selectedPlace }) => {
         </div>
       </div>
       <GoogleMap
-        center={{ lat: selectedPlace.viDo, lng: selectedPlace.kinhDo }}
+        center={{
+          lat: selectedPlace.viDo ? selectedPlace.viDo : selectedPlace.lat,
+          lng: selectedPlace.kinhDo ? selectedPlace.kinhDo : selectedPlace.lng,
+        }}
         zoom={15}
         mapContainerStyle={{ width: "100%", height: "400px" }}
         onClick={onMapClick}
