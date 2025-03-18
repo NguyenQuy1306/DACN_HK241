@@ -9,7 +9,7 @@
     flex: 1;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
     gap: 16px;
     margin: 24px;
 }
@@ -27,3 +27,6 @@
     gap: 16px;
 }
 
+.body {
+    flex: 1;
+}

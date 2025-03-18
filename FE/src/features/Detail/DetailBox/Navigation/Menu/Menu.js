@@ -189,7 +189,7 @@ const Menu = ({ selectedPlace }) => {
                     {category.categoryResponse.ten}
                   </h3>
                   <ul>
-                    {category.foodResponses.map((item, idx) => (
+                    {category?.foodResponses.map((item, idx) => (
                       <li
                         className="MenuNavBar_createMenu_div_index_H3_li"
                         key={idx}

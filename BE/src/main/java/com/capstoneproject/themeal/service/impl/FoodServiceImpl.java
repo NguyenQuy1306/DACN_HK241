@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,8 @@ public class FoodServiceImpl implements FoodService {
         }
     }
 
+
+
     @Override
     public boolean checkFoodExist(List<Long> listIdFood) {
         List<Long> existingIds = foodRepository.findExistingFoodIds(listIdFood);
@@ -71,6 +74,58 @@ public class FoodServiceImpl implements FoodService {
             throw new IllegalArgumentException("Food IDs not found: " + missingIds);
         }
         return true;
+    }
+
+    @Override
+    public List<FoodFinalReponse> deleteFood(Long restaurantId, Long foodId, Pageable pageable) {
+        try {
+            boolean isFoodExist = this.checkFoodExist(List.of(foodId));
+            if (isFoodExist) {
+                foodRepository.deleteById(foodId);
+                List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
+                return foodMapper.toFoodFinalResponse(food);
+            } else {
+                throw new IllegalArgumentException("Food ID not found: " + foodId);
+            }
+
+
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
+    public List<FoodFinalReponse> duplicateFood(Long restaurantId, Long foodId, Pageable pageable) {
+        try {
+            boolean isFoodExist = this.checkFoodExist(List.of(foodId));
+            if (isFoodExist) {
+                Optional<Food> currentFood = foodRepository.findById(foodId);
+
+
+                Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc()).MoTa(currentFood.get().getMoTa())
+                        .Ten(currentFood.get().getTen()).TrangThai("Active").build();
+                foodRepository.save(newFood);
+
+                List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
+                return foodMapper.toFoodFinalResponse(food);
+            } else {
+                throw new IllegalArgumentException("Food ID not found: " + foodId);
+            }
+
+
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
+    public List<FoodFinalReponse> searchFood(String key, Long restaurantId, Pageable pageable) {
+        try {
+                List<Food> food = foodRepository.searchByKeyWord(key, restaurantId, pageable);
+                return foodMapper.toFoodFinalResponse(food);
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
     }
 
     public void checkFoodExist(Long foodId) {
@@ -118,5 +173,7 @@ public class FoodServiceImpl implements FoodService {
         foodRepository.save(food);
         return food;
     }
+
+
 
 }

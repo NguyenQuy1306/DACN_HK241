@@ -16,11 +16,9 @@ function CategoryOwner() {
         console.log("onSearch");
     };
 
-    
-
     return (
         <div className={styles.container}>
-            <SidebarOwner collapsed={collapsed} />
+            {/* <SidebarOwner collapsed={collapsed} /> */}
             <div className={styles.body}>
                 <Search
                     placeholder="Input name of category to search"

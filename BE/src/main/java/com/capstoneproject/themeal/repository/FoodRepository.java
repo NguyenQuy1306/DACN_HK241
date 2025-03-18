@@ -21,4 +21,7 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     @Query("SELECT f.MaSoMonAn FROM Food f WHERE f.MaSoMonAn IN :ids")
     List<Long> findExistingFoodIds(List<Long> ids);
 
+    @Query("SELECT f FROM Food f WHERE LOWER(f.Ten) LIKE LOWER(CONCAT('%',:key,'%')) AND f.DanhMuc.NhaHang.MaSoNhaHang = :restaurantId")
+    List<Food> searchByKeyWord(@Param("key") String key, @Param("restaurantId") Long restaurantId, Pageable pageable);
+
 }

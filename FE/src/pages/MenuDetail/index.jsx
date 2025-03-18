@@ -69,7 +69,6 @@ function MenuDetail() {
     };
     return (
         <div className={styles.container}>
-            <SidebarOwner collapsed={collapsed} />
             <div className={styles.body}>
                 <Breadcrumb
                     style={{ margin: "8px" }}
