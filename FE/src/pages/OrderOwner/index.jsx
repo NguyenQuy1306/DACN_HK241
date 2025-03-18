@@ -89,7 +89,7 @@ function OrderOwner() {
 
     return (
         <div className={styles.container}>
-            <SidebarOwner collapsed={collapsed} />
+            {/* <SidebarOwner collapsed={collapsed} /> */}
             <div className={styles.body}>
                 <Search
                     placeholder="Nhập thông tin tìm kiếm"

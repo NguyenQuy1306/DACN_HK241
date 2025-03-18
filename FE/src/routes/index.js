@@ -19,6 +19,9 @@ import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import RestaurantInfoForm from "../pages/InforRestaurant/InforRestaurant";
 import Dashboard_Owner from "../pages/Dashboard_Owner";
 import MenuList_Owner from "../pages/MenuList_Owner";
+import MenuDetail from "./../pages/MenuDetail/index";
+import CategoryOwner from "./../pages/CategoyOwner/index";
+import OrderOwner from "./../pages/OrderOwner/index";
 export const routes = [
     {
         path: "/owner/restaurant",
@@ -34,10 +37,38 @@ export const routes = [
         role: ["owner"],
     },
     {
-        path: "/owner/menu",
+        path: "/owner/orders",
+        component: OrderOwner,
+        layout: OwnerLayout,
+        title: "Danh sách đặt bàn",
+        role: ["owner"],
+    },
+    {
+        path: "/owner/menu/list",
         component: MenuList_Owner,
         layout: OwnerLayout,
         title: "Danh sách món ăn/thức uống",
+        role: ["owner"],
+    },
+    {
+        path: "/owner/menu/add",
+        component: MenuAdd,
+        layout: OwnerLayout,
+        title: "Danh sách món ăn/thức uống",
+        role: ["owner"],
+    },
+    {
+        path: "/owner/menu/categories",
+        component: CategoryOwner,
+        layout: OwnerLayout,
+        title: "Danh mục",
+        role: ["owner"],
+    },
+    {
+        path: "/owner/menu/:id",
+        component: MenuDetail,
+        layout: OwnerLayout,
+        title: "Chi tiết món ăn/thức uống",
         role: ["owner"],
     },
     {

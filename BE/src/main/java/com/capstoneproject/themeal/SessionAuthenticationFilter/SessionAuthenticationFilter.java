@@ -45,7 +45,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
             "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
             "/ws/*",
-            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",
+            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage","/api/food/delete/*", "/api/food/duplicate","/api/food/search",
             "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
             "/api/food/restaurants/*/categories/*");
     @Autowired

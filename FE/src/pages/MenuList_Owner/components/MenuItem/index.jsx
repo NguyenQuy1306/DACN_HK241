@@ -6,9 +6,12 @@ import { MdEdit } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { IoDuplicate } from "react-icons/io5";
 
-function MenuItem({ menuName, category, img }) {
+function MenuItem({ menuName, category, img, viewClick, deleteClick, duplicateClick }) {
     return (
-        <div className={styles.container}>
+        <div
+            
+            className={styles.container}
+        >
             <div className={styles["img-container"]}>
                 <img
                     src={img}
@@ -23,42 +26,45 @@ function MenuItem({ menuName, category, img }) {
                 <ActionButton
                     icon={
                         <GoEye
-                            color="01B075"
+                            color="#01B075"
                             size={16}
                         />
                     }
-                    color="E9F5EA"
+                    color="#E9F5EA"
                     type="View"
+                    viewClick={viewClick}
                 />
                 <ActionButton
                     icon={
                         <MdEdit
-                            color="C76741"
+                            color="#C76741"
                             size={16}
                         />
                     }
-                    color="F8C9B7"
+                    color="#F8C9B7"
                     type="Edit"
                 />
                 <ActionButton
                     icon={
                         <AiFillDelete
-                            color="4C95DD"
+                            color="#4C95DD"
                             size={16}
                         />
                     }
-                    color="CDE3F9"
+                    color="#CDE3F9"
                     type="Delete"
+                    deleteClick={deleteClick}
                 />
                 <ActionButton
                     icon={
                         <IoDuplicate
-                            color="634FD2"
+                            color="#634FD2"
                             size={16}
                         />
                     }
-                    color="E3DEFE"
+                    color="#E3DEFE"
                     type="Duplicate"
+                    duplicateClick={duplicateClick}
                 />
             </div>
         </div>

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -70,6 +71,9 @@ public class SecurityConfig {
                         "/api/payments/deposit", "/api/category/**",
                         "/api/category/*",
                         "/api/food/uploadImage",
+                        "/api/food/delete/*",
+                        "/api/food/duplicate",
+                        "/api/food/search",
                         "/api/food/uploadImage/*",
                         "/api/food/uploadImage/.*",
                         "/api/food/uploadImage/**",
@@ -89,6 +93,7 @@ public class SecurityConfig {
 
                                                 .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
                                                 // white-listed URLs
+                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho phép DELETE
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )

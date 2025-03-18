@@ -18,5 +18,11 @@ public interface FoodService {
 
     public boolean checkFoodExist(List<Long> listIdFood);
 
+    public List<FoodFinalReponse> deleteFood(Long restaurantId, Long foodId, Pageable pageable);
+
+    public List<FoodFinalReponse> duplicateFood(Long restaurantId, Long foodId, Pageable pageable);
+
+    public List<FoodFinalReponse> searchFood(String key, Long restaurantId, Pageable pageable);
+
     public void upLoadImageRestaurant(Long restaurantId, Long categoryId, Long foodId, MultipartFile file);
 }

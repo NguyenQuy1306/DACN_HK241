@@ -47,6 +47,6 @@ public class Food {
 
     @OneToMany(mappedBy = "MonAn")
     private Set<OrderTableHasFood> danhSachDonDatBanCoMonAn;
-    @OneToMany(mappedBy = "MonAn")
+    @OneToMany(mappedBy = "MonAn",cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<ComboAvailableHasFood> danhSachComboCoSanCoMonan;
 }
