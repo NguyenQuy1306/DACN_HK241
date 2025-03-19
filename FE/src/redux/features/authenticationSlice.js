@@ -48,13 +48,24 @@ export const logout = createAsyncThunk(
     }
   }
 );
-
+export const getRestaurantByOwnerId = createAsyncThunk(
+  "/restaurants/owner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getRestaurantByOnwerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
     user: null,
     userRole: "guest",
     registerStatus: "",
+    restaurantOwner: null,
     openModal: false,
     error: null,
     loginRoute: false,
@@ -145,8 +156,22 @@ const authenticationSlice = createSlice({
         state.user = null;
         state.userRole = "guest";
         state.loginRoute = false;
+        state.restaurantOwner = null;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+
+      .addCase(getRestaurantByOwnerId.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwner = [];
+      })
+      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantOwner = action.payload.payload;
+      })
+      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       });
   },

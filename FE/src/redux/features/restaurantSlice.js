@@ -28,17 +28,6 @@ export const getRestaurantsInMaps = createAsyncThunk(
   }
 );
 
-export const getRestaurantByOwnerId = createAsyncThunk(
-  "/restaurants/owner",
-  async (params, { rejectWithValue }) => {
-    try {
-      const response = await api.getRestaurantByOnwerId(params);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 export const updateRestaurantInfor = createAsyncThunk(
   "/restaurants/update",
   async (params, { rejectWithValue }) => {
@@ -62,7 +51,6 @@ export const restaurantSlice = createSlice({
     menuChoosed: [],
     newMenu: [],
     currentPage: 0,
-    restaurantOwner: null,
     updateRestaurantResponse: null,
     thanhPho: "TP Hồ Chí Minh",
     time: null,
@@ -113,18 +101,6 @@ export const restaurantSlice = createSlice({
         state.metadata = action.payload.metadata.pagination;
       })
       .addCase(getRestaurantsInMaps.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(getRestaurantByOwnerId.pending, (state) => {
-        state.loading = true;
-        state.restaurantOwner = [];
-      })
-      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
-        state.loading = false;
-        state.restaurantOwner = action.payload.payload;
-      })
-      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
