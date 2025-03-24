@@ -1,4 +1,3 @@
-import { Api } from "@mui/icons-material";
 import axios from "axios";
 
 const API = axios.create({
@@ -45,6 +44,15 @@ export const getFood = async (params) => {
     }
 };
 
+export const getFoodById = async (restaurantId, foodId) => {
+    try {
+        const response = await API.get(`api/food/${foodId}`, { params: { restaurantId } });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
 export const deleteFood = async (params) => {
     try {
         const response = await API.delete(`api/food`, { params });
@@ -66,6 +74,15 @@ export const duplicateFood = async (params) => {
 export const searchFood = async (params) => {
     try {
         const response = await API.get(`api/food/search`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
+export const getFoodByCategory = async (params) => {
+    try {
+        const response = await API.get(`api/food/category`, { params });
         return response.data;
     } catch (error) {
         throw error.response?.data || error;
@@ -251,9 +268,43 @@ export const getDepositPolicy = async (params) => {
     }
 };
 
+//Category APIs
 export const getAllCategory = async (params) => {
     try {
         const response = await API.get(`/api/category`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+export const searchCategory = async (params) => {
+    try {
+        const response = await API.get(`/api/category/search`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
+export const createCategory = async ({ restaurantId }) => {
+    try {
+        const response = await API.post(`/api/category/add?restaurantId=${restaurantId}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+export const deleteCategory = async (params) => {
+    try {
+        const response = await API.delete(`/api/category`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+export const updateCategory = async (categoryId, params) => {
+    try {
+        const response = await API.post(`/api/category/update?categoryId=${categoryId}`, params);
         return response.data;
     } catch (error) {
         throw error.response?.data || error;
@@ -263,6 +314,15 @@ export const getAllCategory = async (params) => {
 export const getRestaurantByOnwerId = async (params) => {
     try {
         const response = await API.get(`/api/restaurants`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
+export const updateFood = async (params) => {
+    try {
+        const response = await API.post(`/api/food/update`, params);
         return response.data;
     } catch (error) {
         throw error.response?.data || error;

@@ -47,7 +47,7 @@ export const routes = [
         path: "/owner/menu/list",
         component: MenuList_Owner,
         layout: OwnerLayout,
-        title: "Danh sách món ăn/thức uống",
+        title: "Menu",
         role: ["owner"],
     },
     {

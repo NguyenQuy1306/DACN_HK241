@@ -10,6 +10,27 @@ export const getFood = createAsyncThunk("/food", async (params, { rejectWithValu
     }
 });
 
+export const getFoodById = createAsyncThunk("/food/id", async ({ restaurantId, foodId }, { rejectWithValue }) => {
+    try {
+        const response = await api.getFoodById(restaurantId, foodId);
+        return response.payload;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
+export const getFoodByCategory = createAsyncThunk(
+    "/food/category",
+    async ({ restaurantId, categoryId }, { rejectWithValue }) => {
+        try {
+            const response = await api.getFoodByCategory({ restaurantId, categoryId });
+            return response.payload;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 export const createFood = createAsyncThunk(
     "/createfood",
     async ({ restaurantId, categoryId, foodRequest, file }, { rejectWithValue }) => {
@@ -56,6 +77,15 @@ export const duplicateFood = createAsyncThunk(
     },
 );
 
+export const updateFood = createAsyncThunk("/updateFood", async (params, { rejectWithValue }) => {
+    try {
+        const response = await api.updateFood(params);
+        return response.payload;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 export const foodSlice = createSlice({
     name: "food",
     initialState: {
@@ -73,7 +103,9 @@ export const foodSlice = createSlice({
             })
             .addCase(getFood.fulfilled, (state, action) => {
                 state.loading = false;
-                state.food = action.payload[0]?.foodResponses;
+                let foodResult = [];
+                foodResult = action.payload.reduce((acc, cur) => [...acc, ...cur.foodResponses], []);
+                state.food = foodResult;
             })
             .addCase(getFood.rejected, (state, action) => {
                 state.loading = false;
@@ -128,6 +160,32 @@ export const foodSlice = createSlice({
                 state.food = action.payload[0]?.foodResponses;
             })
             .addCase(searchFood.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(getFoodByCategory.pending, (state) => {
+                state.loading = true;
+                state.responseCreateFood = null;
+            })
+            .addCase(getFoodByCategory.fulfilled, (state, action) => {
+                state.loading = false;
+                state.food = action.payload[0]?.foodResponses;
+            })
+            .addCase(getFoodByCategory.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(getFoodById.pending, (state) => {
+                state.loading = true;
+                state.responseCreateFood = null;
+            })
+            .addCase(getFoodById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.food = action.payload;
+            })
+            .addCase(getFoodById.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });

@@ -1,7 +1,7 @@
 package com.capstoneproject.themeal.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.capstoneproject.themeal.model.request.CategoryRequest;
+import org.springframework.web.bind.annotation.*;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
@@ -20,8 +20,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("api/category")
@@ -48,6 +46,40 @@ public class CategoryController {
             apiResponse.error(ResponseCode.getError(23));
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/search")
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> searchCategory(@RequestParam String keyword, @RequestParam Long restaurantId) {
+        ApiResponse<List<CategoryResponse>> apiResponse = new ApiResponse<>();
+
+        apiResponse.ok(categoryService.searchCategory(restaurantId, keyword));
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> addCategory(@RequestParam Long restaurantId) {
+        ApiResponse<List<CategoryResponse>> apiResponse = new ApiResponse<>();
+        List<CategoryResponse> categoryResponses = categoryService.addNewCategory(restaurantId);
+        apiResponse.ok(categoryResponses);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> deleteCategory(@RequestParam Long restaurantId, @RequestParam Long categoryId) {
+        ApiResponse<List<CategoryResponse>> apiResponse = new ApiResponse<>();
+        List<CategoryResponse> categoryResponses = categoryService.deleteCategory(restaurantId, categoryId);
+        apiResponse.ok(categoryResponses);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> updateCategory(@RequestParam Long categoryId,@RequestBody CategoryRequest categoryRequest) {
+        ApiResponse<List<CategoryResponse>> apiResponse = new ApiResponse<>();
+        List<CategoryResponse> categoryResponses = categoryService.updateCategory(categoryId, categoryRequest);
+        apiResponse.ok(categoryResponses);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 

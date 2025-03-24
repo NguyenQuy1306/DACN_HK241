@@ -1,9 +1,10 @@
 .container {
-    width: 360px;
+    width: 358px;
     /* background-color: blueviolet; */
     border-radius: 8px;border: 1px solid #ccc;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    height: fit-content;
 }
 
 .category-img{
@@ -31,10 +32,20 @@
     gap: 12px;
 }
 
+.action-list {
+    /* margin-left: -16px; */
+}
+
+.ml15 {
+    margin-left: 15px;
+}
+
 .price {
     margin: 0;
     font-size: 16px;
     color: rgb(202, 62, 62);
+    text-decoration: none;
+    margin-bottom: 16px;
 }
 
 .quantity-wrapper {

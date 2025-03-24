@@ -59,6 +59,29 @@ public class FoodServiceImpl implements FoodService {
         }
     }
 
+    @Override
+    public List<FoodFinalReponse> getFoodByCategoryId(Pageable pageable, Long restaurantId, Long categoryId) {
+        try {
+            List<Food> food = foodRepository.searchByCategoryId(categoryId,restaurantId, pageable);
+            return foodMapper.toFoodFinalResponse(food);
+
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
+    public FoodResponse getFoodById(Pageable pageable, Long restaurantId, Long foodId) {
+        try {
+            List<FoodFinalReponse> foodOfRestaurant = getAllFood(pageable, restaurantId);
+            return foodOfRestaurant.stream().flatMap(f->f.getFoodResponses().stream()).filter(f1->f1.getMaSoMonAn().equals(foodId)).findFirst().orElse(null);
+
+
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
+
 
 
     @Override
@@ -74,6 +97,11 @@ public class FoodServiceImpl implements FoodService {
             throw new IllegalArgumentException("Food IDs not found: " + missingIds);
         }
         return true;
+    }
+
+    @Override
+    public Optional<Food> isFoodExist(Long foodId) {
+        return foodRepository.findById(foodId);
     }
 
     @Override

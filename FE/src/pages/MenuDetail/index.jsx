@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import styles from "./style.module.css";
-import SidebarOwner from "../../components/SidebarOwner";
-import { Breadcrumb, Button, Col, Form, Input, InputNumber, Radio, Row, Select } from "antd";
-import StatisticCard from "../MenuList_Owner/components/StatisticCard";
-import foodLogo from "../../assets/images/food.svg";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
-import { Image, Upload } from "antd";
+import { Breadcrumb, Button, Col, Form, Image, Input, InputNumber, Radio, Row, Select, Upload } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import React, { useEffect, useState } from "react";
+import { RxUpdate } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
 import drinkLogo from "../../assets/images/drink.svg";
-import foodIncLogo from "../../assets/images/foodinc.svg";
 import drinkIncLogo from "../../assets/images/drinkinc.svg";
+import foodLogo from "../../assets/images/food.svg";
+import foodIncLogo from "../../assets/images/foodinc.svg";
+import { getFoodById, updateFood } from "../../redux/features/foodSlice";
+import StatisticCard from "../MenuList_Owner/components/StatisticCard";
+import styles from "./style.module.css";
+import { getAllCategory } from "../../redux/features/categorySlice";
+import { useParams } from "react-router-dom";
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -20,6 +22,12 @@ const getBase64 = (file) =>
     });
 
 function MenuDetail() {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const category = useSelector((state) => state.category);
+    const [categoryList, setCategoryList] = useState([]);
+    const foodInformation = useSelector((state) => state.food);
+    const [foodRender, setFoodRender] = useState({});
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState([
@@ -30,6 +38,7 @@ function MenuDetail() {
             url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         },
     ]);
+
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
@@ -65,8 +74,48 @@ function MenuDetail() {
         setClientReady(true);
     }, []);
     const onFinish = (values) => {
-        console.log("Finish:", values);
+        console.log("Value of form:", { ...values, id: Number(id) });
+        dispatch(updateFood({ ...values, id: Number(id) }));
     };
+
+    useEffect(() => {
+        dispatch(getAllCategory({ restaurantId: 72 }));
+    }, []);
+
+    useEffect(() => {
+        setCategoryList(category.category);
+    }, [category.category]);
+
+    useEffect(() => {
+        dispatch(getFoodById({ restaurantId: 72, foodId: id }));
+    }, []);
+
+    useEffect(() => {
+        setFoodRender(foodInformation.food);
+    }, [foodInformation.food]);
+
+    useEffect(() => {
+        console.log("CATE", categoryList);
+    }, [categoryList]);
+
+    useEffect(() => {
+        if (foodRender) {
+            form.setFieldsValue({
+                name: foodRender.ten,
+                price: foodRender.gia,
+                description: foodRender.moTa,
+                category: foodRender.danhMuc?.ten,
+                type: foodRender.trangThai === "available" ? 1 : 2,
+                discount: 0,
+            });
+        }
+    }, [foodRender]);
+
+    const cateOption = categoryList?.map((cate) => ({
+        label: cate.ten,
+        value: cate.maSoDanhMuc,
+    }));
+
     return (
         <div className={styles.container}>
             <div className={styles.body}>
@@ -74,10 +123,10 @@ function MenuDetail() {
                     style={{ margin: "8px" }}
                     items={[
                         {
-                            title: "Danh sách món ăn",
+                            title: "Chi tiết món ăn",
                         },
                         {
-                            title: "Salad hoa quả",
+                            title: foodRender.ten,
                         },
                     ]}
                 />
@@ -100,7 +149,10 @@ function MenuDetail() {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Name of dish" />
+                                <Input
+                                    onChange={(e) => e.preventDefault()}
+                                    placeholder="Name of dish"
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -148,20 +200,7 @@ function MenuDetail() {
                                     placeholder="Select a category"
                                     optionFilterProp="label"
                                     style={{ border: "1px solid #ccc", borderRadius: "4px" }}
-                                    options={[
-                                        {
-                                            value: "lau",
-                                            label: "Lẩu",
-                                        },
-                                        {
-                                            value: "nuong",
-                                            label: "Nướng",
-                                        },
-                                        {
-                                            value: "kho",
-                                            label: "Kho",
-                                        },
-                                    ]}
+                                    options={cateOption}
                                 />
                             </Form.Item>
                         </Col>
@@ -207,7 +246,7 @@ function MenuDetail() {
                                 label="Upload hình ảnh"
                                 rules={[
                                     {
-                                        required: true,
+                                        // required: true,
                                         message: "Please input price of dish!",
                                     },
                                 ]}
@@ -255,6 +294,16 @@ function MenuDetail() {
                             />
                         </Form.Item>
                     </Col>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            style={{ backgroundColor: "rgb(0,102,92)" }}
+                        >
+                            <RxUpdate />
+                            Cập nhật
+                        </Button>
+                    </Form.Item>
                 </Form>
             </div>
             <div className={styles.statistics}>

@@ -12,4 +12,7 @@ import com.capstoneproject.themeal.model.entity.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT DISTINCT c FROM Category c JOIN c.NhaHang nh WHERE nh.MaSoNhaHang = :restaurantId")
     List<Category> getCategories(@Param("restaurantId") Long restaurantId);
+
+    @Query("SELECT c FROM Category c WHERE LOWER(c.Ten) LIKE LOWER(CONCAT('%',:keyword,'%')) AND c.NhaHang.MaSoNhaHang = :restaurantId ")
+    List<Category> searchCategory(@Param("restaurantId") Long restaurantId, @Param("keyword") String keyword);
 }
