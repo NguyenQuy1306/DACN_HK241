@@ -168,6 +168,17 @@ export const createOrder = async ({ request, totalAmount, deposit }) => {
         throw error.response?.data || error;
     }
 };
+export const getOrdersByRestaurantId = async ({ restaurantId }) => {
+    try {
+        
+        const response = await API.get(
+            `api/orders/all/${restaurantId}` // Gửi request body đúng cách, // Gửi request body đúng cách
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
 
 export const createPayment = async (params) => {
     try {

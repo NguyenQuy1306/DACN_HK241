@@ -1,0 +1,4 @@
+.detail-order-table .ant-table-thead > tr > th {
+    background-color: #1890ff !important; /* Màu xanh */
+    color: #ffffff !important;
+}

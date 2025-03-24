@@ -1,14 +1,92 @@
-import React, { useState } from "react";
-import styles from "./style.module.css";
-import SidebarOwner from "../../components/SidebarOwner";
-import { Breadcrumb, Table } from "antd";
-import { Input } from "antd";
+import { Breadcrumb, Button, Input, Space, Table, Tag } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import MenuInOrder from "./MenuInOrder";
+import styles from "./style.module.css";
+import "./OrderOwner.css";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 const { Search } = Input;
 function OrderOwner() {
-    const [collapsed, setCollapsed] = useState(false);
+    const [searchText, setSearchText] = useState("");
+    const searchInput = useRef(null);
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+    };
     const onSearch = () => {
         console.log("onSearch");
+    };
+
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+            <div
+                style={{
+                    padding: 8,
+                }}
+                onKeyDown={(e) => e.stopPropagation()}
+            >
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{
+                        marginBottom: 8,
+                        display: "block",
+                    }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{
+                            width: 90,
+                        }}
+                    >
+                        Search
+                    </Button>
+
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            close();
+                        }}
+                    >
+                        close
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined
+                style={{
+                    color: filtered ? "#1677ff" : undefined,
+                }}
+            />
+        ),
+        onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        filterDropdownProps: {
+            onOpenChange(open) {
+                if (open) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
+        },
+    });
+
+    const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
+        return new Intl.NumberFormat(locale, {
+            style: "currency",
+            currency: currency,
+        })
+            .format(value)
+            .replace("₫", "đ");
     };
 
     const columns = [
@@ -28,64 +106,124 @@ function OrderOwner() {
             key: "name",
         },
         {
+            title: "Ngày",
+            dataIndex: "date",
+            key: "date",
+        },
+        {
+            title: "Giờ",
+            dataIndex: "timezone",
+            key: "timezone",
+        },
+        {
+            title: "Số khách",
+            dataIndex: "quantity",
+            key: "quantity",
+        },
+        {
             title: "Trạng thái",
             dataIndex: "status",
             key: "status",
+            render: (_, { status }) => {
+                let color = status.length > 5 ? "green" : "brown";
+                if (status === "Đang chờ phục vụ") {
+                    color = "blue";
+                } else if (status === "Đã hủy") {
+                    color = "red";
+                }
+                return (
+                    <Tag
+                        color={color}
+                        key={status}
+                    >
+                        {status.toUpperCase()}
+                    </Tag>
+                );
+            },
         },
+
         {
             title: "Tổng tiền",
             dataIndex: "price",
             key: "price",
+            render: (_, { price }) => {
+                return <p style={{ color: "#d61a1b" }}>{formatCurrency(price)}</p>;
+            },
         },
         {
-            title: "Ngày tạo",
+            title: "Thanh toán trước",
+            dataIndex: "prePay",
+            key: "prePay",
+            render: (_, { prePay }) => {
+                return <p style={{ color: "#d61a1a" }}>{formatCurrency(prePay)}</p>;
+            },
+        },
+        {
+            title: "Còn lại",
+            dataIndex: "remain",
+            key: "remain",
+            render: (_, { price }) => {
+                return <p style={{ color: "#d61a1a" }}>{formatCurrency(price)}</p>;
+            },
+        },
+        {
+            title: "Thời gian tạo",
             dataIndex: "time",
             key: "time",
         },
     ];
 
+    const dispatch = useDispatch();
+    const orderSlice = useSelector((state) => state.order);
+
+    useEffect(() => {
+        dispatch(getAllOrderByRestaurantId({ restaurantId: 72 }));
+    }, []);
+
+    useEffect(() => {
+        console.log("ORDER LIST: ", orderSlice?.order);
+    }, [orderSlice?.order]);
+
     const data = [
         {
             stt: 1,
-            id: 2491,
+            id: "VKZ2491",
             key: 1,
             name: "Nguyễn Quốc Nhựt",
-            status: "Đã xác nhận",
+            status: "Đã hoàn thành",
             price: 199000,
             description: <MenuInOrder />,
             time: "12-03-2025 14:21:21",
         },
-        {
-            stt: 2,
-            id: 2493,
-            key: 2,
-            name: "Nguyễn Ngọc Qúy",
-            status: "Đã xác nhận",
-            price: 399000,
-            description: "My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.",
-            time: "12-03-2025 14:21:21",
-        },
-        {
-            stt: 3,
-            id: 2493,
-            key: 3,
-            name: "Nguyễn Kim Huệ",
-            status: "Đã chờ",
-            price: 549000,
-            description: "This not expandable",
-            time: "12-03-2025 14:21:21",
-        },
-        {
-            stt: 4,
-            id: 2494,
-            key: 4,
-            name: "Lâm Thành An",
-            status: "Đã hủy",
-            price: 359000,
-            description: "My name is Joe Black, I am 32 years old, living in Sydney No. 1 Lake Park.",
-            time: "12-03-2025 14:21:21",
-        },
     ];
+
+    const [dataRender, setDataRender] = useState([]);
+
+    useEffect(() => {
+        if (orderSlice.order) return;
+
+        setDataRender(
+            orderSlice.order.map((order, index) => ({
+                stt: index + 1,
+                id: order.maSoDatBan,
+                key: index,
+                name: order.tenKhachHang,
+                status: order.trangThai,
+                price: 500000,
+                description: <MenuInOrder />,
+                time: "12-03-2025 14:21:21",
+                timezone: order.gio,
+                date: order.ngay,
+                quantity: order.soKhach,
+                remain: 500000,
+                prePay: Number(order.tienCoc) || 0, // Đảm bảo `tienCoc` không bị NaN
+            })),
+        );
+    }, [orderSlice.order]);
+
+    useEffect(() => {
+        console.log("DATA RENDER: ", dataRender);
+    }, [dataRender]);
 
     return (
         <div className={styles.container}>
@@ -112,6 +250,9 @@ function OrderOwner() {
 
                 <Table
                     columns={columns}
+                    rowClassName={(record, index) => {
+                        return index % 2 === 0 ? styles["row-even"] : styles["row-odd"];
+                    }}
                     expandable={{
                         expandedRowRender: (record) => (
                             <p
@@ -124,7 +265,7 @@ function OrderOwner() {
                         ),
                         rowExpandable: (record) => record.name !== "Not Expandable",
                     }}
-                    dataSource={data}
+                    dataSource={dataRender}
                 />
             </div>
         </div>

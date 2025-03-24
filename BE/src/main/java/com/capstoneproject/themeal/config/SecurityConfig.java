@@ -47,6 +47,7 @@ public class SecurityConfig {
                         "/api/food",
                         "/api/combo",
                         "/api/orders/all",
+                        "api/orders/all/*",
                         "/api/orders/*",
                         "/api/orders",
                         "/api/table/restaurant",

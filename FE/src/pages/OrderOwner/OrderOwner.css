@@ -1,0 +1,20 @@
+.ant-table {
+    border: 2px solid #ddd; /* Viền ngoài của bảng */
+}
+  
+.ant-table-thead > tr > th {
+    border-bottom: 2px solid #000 !important; /* Viền dưới của tiêu đề */
+}
+  
+.ant-table-tbody > tr > td {
+    border: 1px solid #ddd !important; /* Viền giữa các ô */
+}
+  
+/* styles.css */
+.ant-table-thead > tr > th {
+    background-color: rgb(0,102,92) !important; /* Màu nền header */
+    color: white !important; /* Màu chữ */
+    font-weight: bold; /* In đậm chữ */
+    text-align: center; /* Căn giữa chữ */
+}
+  

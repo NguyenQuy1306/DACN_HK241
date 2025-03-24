@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./style.module.css";
 import { Image, Table } from "antd";
 import bundau from "../../../assets/images/bundau.jpg";
+import "./MenuInOrder.css";
 function MenuInOrder() {
     const columns = [
         {
@@ -23,6 +24,9 @@ function MenuInOrder() {
             title: "Đơn giá",
             dataIndex: "price",
             key: "price",
+            render: (price) => {
+                return <p style={{ color: "#d61a1a" }}>{formatCurrency(price)}</p>;
+            },
         },
         {
             title: "Số lượng",
@@ -38,6 +42,9 @@ function MenuInOrder() {
             title: "Tổng tiền",
             dataIndex: "totalPrice",
             key: "totalPrice",
+            render: (price) => {
+                return <p style={{ color: "#d61a1a" }}>{formatCurrency(price)}</p>;
+            },
         },
     ];
 
@@ -77,10 +84,20 @@ function MenuInOrder() {
             ),
         },
     ];
+    const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
+        return new Intl.NumberFormat(locale, {
+            style: "currency",
+            currency: currency,
+        })
+            .format(value)
+            .replace("₫", "đ");
+    };
     return (
         <div className={styles.container}>
+            <h3 style={{ textAlign: "center" }}>Chi tiết đơn đặt bàn</h3>
             <Table
                 columns={columns}
+                className="detail-order-table"
                 // expandable={{
                 //     expandedRowRender: (record) => (
                 //         <p
@@ -96,12 +113,12 @@ function MenuInOrder() {
                 dataSource={data}
             />
             <div className={styles.discount}>
-                <p>Mã giảm giá: </p>
-                <span>10% đơn hàng</span>
+                <p style={{ marginRight: "60px", color: "rgb(0,102,92)" }}>Giảm giá: </p>
+                <span>10% </span>
             </div>
             <div className={styles.totalPrice}>
-                <p style={{ marginRight: "32px" }}>Tổng: </p>
-                <span>440.000đ</span>
+                <p style={{ marginRight: "32px", color: "rgb(0,102,92)" }}>Tổng thanh toán: </p>
+                <span style={{ color: "#d61a1a" }}>440.000đ</span>
             </div>
         </div>
     );
