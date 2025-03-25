@@ -31,7 +31,7 @@ export const getAllOrderByRestaurantId = createAsyncThunk(
         try {
             const response = await api.getOrdersByRestaurantId({ restaurantId });
             console.log("DATA ORDER LIST FROM SERVER: ", response);
-            return response;
+            return response.payload;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }

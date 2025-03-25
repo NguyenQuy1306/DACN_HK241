@@ -3,7 +3,9 @@ import styles from "./style.module.css";
 import { Image, Table } from "antd";
 import bundau from "../../../assets/images/bundau.jpg";
 import "./MenuInOrder.css";
-function MenuInOrder() {
+function MenuInOrder({ menu }) {
+    const totalDiscount = 10;
+    console.log("SUBMENU: ", menu);
     const columns = [
         {
             title: "STT",
@@ -34,56 +36,59 @@ function MenuInOrder() {
             key: "quantity",
         },
         {
-            title: "Khuyến mãi",
+            title: "Khuyến mãi (%)",
             dataIndex: "discount",
             key: "discount",
         },
         {
             title: "Tổng tiền",
-            dataIndex: "totalPrice",
+            // dataIndex: "totalPrice",
             key: "totalPrice",
-            render: (price) => {
-                return <p style={{ color: "#d61a1a" }}>{formatCurrency(price)}</p>;
+            render: (row, price) => {
+                return (
+                    <p style={{ color: "#d61a1a" }}>
+                        {formatCurrency((row.price - (row.discount / 100) * row.price) * row.quantity)}
+                    </p>
+                );
             },
         },
     ];
 
-    const data = [
-        {
-            stt: 1,
-            key: 1,
-            name: "Bún đậu mắm tôm",
-            price: 89000,
-            quantity: 1,
-            discount: 0,
-            totalPrice: 89000,
-            img: (
-                <Image
-                    width={50}
-                    height={50}
-                    src="error"
-                    fallback={bundau}
-                />
-            ),
-        },
-        {
-            stt: 1,
-            key: 1,
-            name: "Bún đậu mắm tôm",
-            price: 89000,
-            quantity: 1,
-            discount: 0,
-            totalPrice: 89000,
-            img: (
-                <Image
-                    width={50}
-                    height={50}
-                    src="error"
-                    fallback={bundau}
-                />
-            ),
-        },
-    ];
+    const data =
+        // {
+        //     stt: 1,
+        //     key: 1,
+        //     name: "Bún đậu mắm tôm",
+        //     price: 89000,
+        //     quantity: 2,
+        //     discount: 3,
+        //     img: (
+        //         <Image
+        //             width={50}
+        //             height={50}
+        //             src="error"
+        //             fallback={bundau}
+        //         />
+        //     ),
+        // },
+        menu.map((item, index) => {
+            return {
+                stt: index + 1,
+                key: index + 1,
+                name: item.tenMon,
+                price: item.gia,
+                quantity: item.soLuong,
+                discount: 0,
+                img: (
+                    <Image
+                        width={50}
+                        height={50}
+                        src="error"
+                        fallback={bundau}
+                    />
+                ),
+            };
+        });
     const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
         return new Intl.NumberFormat(locale, {
             style: "currency",
@@ -92,6 +97,10 @@ function MenuInOrder() {
             .format(value)
             .replace("₫", "đ");
     };
+    const totalCost = data.reduce((acc, cur) => {
+        return acc + (cur.price - (cur.discount / 100) * cur.price) * cur.quantity;
+    }, 0);
+
     return (
         <div className={styles.container}>
             <h3 style={{ textAlign: "center" }}>Chi tiết đơn đặt bàn</h3>
@@ -113,12 +122,14 @@ function MenuInOrder() {
                 dataSource={data}
             />
             <div className={styles.discount}>
-                <p style={{ marginRight: "60px", color: "rgb(0,102,92)" }}>Giảm giá: </p>
-                <span>10% </span>
+                <p style={{ marginRight: "40px", color: "rgb(0,102,92)" }}>Giảm giá(%): </p>
+                <span>{totalDiscount} </span>
             </div>
             <div className={styles.totalPrice}>
                 <p style={{ marginRight: "32px", color: "rgb(0,102,92)" }}>Tổng thanh toán: </p>
-                <span style={{ color: "#d61a1a" }}>440.000đ</span>
+                <span style={{ color: "#d61a1a" }}>
+                    {formatCurrency(totalCost - totalCost * (totalDiscount / 100))}
+                </span>
             </div>
         </div>
     );

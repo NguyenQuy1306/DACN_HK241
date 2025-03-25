@@ -64,8 +64,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         @Autowired
         private TableAvailableService tableAvailableService;
 
-        @Autowired
-        private CustomerRepository customerRepository;
+
 
         @Autowired
         private OrderTableMapper orderTableMapper;
@@ -88,7 +87,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         @Override
         public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
                 List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
-                return orderTables.stream().map(orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, customerRepository)).collect(Collectors.toList());
+                return orderTables.stream().map(orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository)).collect(Collectors.toList());
         }
 
         @Override

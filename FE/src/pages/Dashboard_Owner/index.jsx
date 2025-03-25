@@ -12,20 +12,20 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
+import orderImg from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
-import SidebarOwner from "../../components/SidebarOwner";
+import { getAllOrders } from "../../redux/features/orderSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
-import orderImg from "../../assets/images/order.png";
-import { getAllOrders } from "../../redux/features/orderSlice";
+import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -113,21 +113,32 @@ const handleChange = (value) => {
     console.log(`selected ${value}`);
 };
 
+const getDayOfWeek = (dateString) => {
+    const date = new Date(dateString);
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return days[date.getDay()];
+};
+
+const processData = (orders) => {
+    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+    orders.forEach((order) => {
+        const day = getDayOfWeek(order.ngay);
+        dayData[day] += 1; // Increment the count for the day
+    });
+
+    return Object.values(dayData);
+};
+
 function Dashboard_Owner() {
-    const [collapsed, setCollapsed] = useState(false);
-    const [input, setInput] = useState("");
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
     const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
     const { order } = useSelector((state) => state.order);
-    console.log("order in dash", order);
+
     const [messages, setMessages] = useState(order);
 
     useEffect(() => {
-        console.log("Fetching orders...");
-        dispatch(getAllOrders());
+        dispatch(getAllOrderByRestaurantId({ restaurantId: 72 }));
     }, [dispatch]); // Keep dependency to avoid unnecessary calls
 
     console.log("messages", messages);
@@ -138,9 +149,22 @@ function Dashboard_Owner() {
         setMessages(order);
     }, [order]);
 
-    // useEffect(() => {
-    //     sendMessage(); // Dispatch action getAllOrders
-    // }, []);
+    useEffect(() => {
+        console.log("DON HANG NHA VE DASHBOARD: ", message); // Dispatch action getAllOrders
+    }, [message]);
+
+    const [chartData, setChartData] = useState({
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [
+            {
+                label: "Đơn đặt bàn",
+                data: [0, 0, 0, 0, 0, 0, 0],
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+            },
+        ],
+    });
 
     useEffect(() => {
         // Khởi tạo kết nối WebSocket khi component mount
@@ -173,22 +197,117 @@ function Dashboard_Owner() {
         };
     }, []);
 
-    const sendMessage = () => {
-        if (stompClient) {
-            // alert("Sent message to websocket");
-            stompClient.publish({
-                destination: "/app/sendMessage", // Đích đến trên server
-                body: "Hello Websocket", // Nội dung message
-            });
-        }
+    const processRevenueData = (orders) => {
+        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+        orders.forEach((order) => {
+            const day = getDayOfWeek(order.ngay);
+            const revenue = order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0);
+            dayData[day] += revenue; // Add the revenue for the day
+        });
+
+        return Object.values(dayData);
     };
+
+    const [revenueData, setRevenueData] = useState({
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [
+            {
+                label: "Doanh thu (VND)",
+                data: [0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
+            },
+        ],
+    });
+
+    const processOrderData = (orders) => {
+        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+        orders.forEach((order) => {
+            const day = getDayOfWeek(order.ngay);
+            dayData[day] += 1; // Increment the count for the day
+        });
+
+        return Object.values(dayData);
+    };
+
+    const processCategoryData = (orders) => {
+        const categoryData = {};
+
+        orders.forEach((order) => {
+            order.danhSachMonAn.forEach((item) => {
+                if (categoryData[item.tenMon]) {
+                    categoryData[item.tenMon] += 1;
+                } else {
+                    categoryData[item.tenMon] = 1;
+                }
+            });
+        });
+
+        const labels = Object.keys(categoryData);
+        const data = Object.values(categoryData);
+
+        return { labels, data };
+    };
+
+    const [categoryData, setCategoryData] = useState({
+        labels: [],
+        datasets: [
+            {
+                label: "Số lượng",
+                data: [],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
+                hoverOffset: 4,
+            },
+        ],
+    });
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            const processedOrderData = processOrderData(messages);
+            const processedRevenueData = processRevenueData(messages);
+            const processedCategoryData = processCategoryData(messages);
+            setChartData((prevData) => ({
+                ...prevData,
+                datasets: [
+                    {
+                        ...prevData.datasets[0],
+                        data: processedOrderData,
+                    },
+                ],
+            }));
+
+            setRevenueData((prevData) => ({
+                ...prevData,
+                datasets: [
+                    {
+                        ...prevData.datasets[0],
+                        data: processedRevenueData,
+                    },
+                ],
+            }));
+
+            setCategoryData((prevData) => ({
+                ...prevData,
+                labels: processedCategoryData.labels,
+                datasets: [
+                    {
+                        ...prevData.datasets[0],
+                        data: processedCategoryData.data,
+                    },
+                ],
+            }));
+        }
+    }, [messages]);
 
     return (
         <div className={styles.container}>
             <div className={styles["dashboard-body"]}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
-                    {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>}
+                    {/* {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
+                    {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
                     <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
                     <Select
                         defaultValue="Ngày"
@@ -220,20 +339,11 @@ function Dashboard_Owner() {
                     <Col span={6}>
                         <Statistic
                             img={food}
-                            title="Tổng đơn đặt"
-                            quantity={messages?.filter((item) => item.trangThai === "COMPLETED").length}
+                            title=<p style={{ marginBottom: "8px" }}>Tổng đơn đặt</p>
+                            quantity={messages.length}
                             up={true}
                             rate={3}
                             compare="So với hôm qua"
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            img={ship}
-                            title="Khung giờ đặt nhiều nhất"
-                            quantity={"17 - 20"}
-                            up={true}
-                            compare=""
                         />
                     </Col>
                     <Col span={6}>
@@ -248,9 +358,21 @@ function Dashboard_Owner() {
                     </Col>
                     <Col span={6}>
                         <Statistic
+                            img={ship}
+                            title="Khung giờ đặt nhiều nhất"
+                            quantity={"17 - 20"}
+                            up={true}
+                            compare=""
+                        />
+                    </Col>
+
+                    <Col span={6}>
+                        <Statistic
                             img={money}
                             title="Tổng doanh thu (VND)"
-                            quantity={4800000}
+                            quantity={messages
+                                .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
+                                .reduce((acc, cur) => acc + cur.gia, 0)}
                             up={true}
                             rate={13}
                             compare="So với hôm qua"
@@ -262,14 +384,14 @@ function Dashboard_Owner() {
                     <div className={styles["order-statistic"]}>
                         <h2 className={styles["line-title"]}>Biểu đồ chi tiết đơn đặt bàn</h2>
                         <Line
-                            data={data2}
+                            data={chartData}
                             label={labels}
                         />
                     </div>
                     <div className={styles["order-statistic"]}>
                         <h2 className={styles["bar-title"]}>Biểu đồ chi tiết doanh thu</h2>
                         <Bar
-                            data={data}
+                            data={revenueData}
                             options={options}
                         />
                     </div>
@@ -303,7 +425,7 @@ function Dashboard_Owner() {
                     <div className={styles.doughnut}>
                         <h2 className={styles["doughnut-title"]}>Tỷ lệ danh mục món ăn được đặt</h2>
                         <Doughnut
-                            data={data3}
+                            data={categoryData}
                             options={options3}
                         />
                     </div>

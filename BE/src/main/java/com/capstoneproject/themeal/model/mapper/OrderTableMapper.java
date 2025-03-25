@@ -1,23 +1,23 @@
 package com.capstoneproject.themeal.model.mapper;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
-import com.capstoneproject.themeal.model.entity.Customer;
+import com.capstoneproject.themeal.model.entity.*;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
+import com.capstoneproject.themeal.model.response.OrderTableHasFoodResponse;
 import com.capstoneproject.themeal.repository.CustomerRepository;
+import com.capstoneproject.themeal.repository.FoodRepository;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import com.capstoneproject.themeal.model.entity.OrderTable;
-import com.capstoneproject.themeal.model.entity.RestaurantImage;
-import com.capstoneproject.themeal.model.entity.RestaurantImageType;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface OrderTableMapper {
@@ -53,18 +53,20 @@ public interface OrderTableMapper {
     @Mapping(source = "trangThai", target = "trangThai")
     @Mapping(source = "khachHang.hoTen", target = "tenKhachHang")
     @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
-    @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn")
-    FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context CustomerRepository customerRepository);
+    @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
+    FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context FoodRepository foodRepository);
 
-//    @Named("IdToName")
-//    default String covertIdToName(Customer customer, @Context CustomerRepository customerRepository) {
-//        Optional<Customer> currentCustomer = customerRepository.findById(customer.getMaSoNguoiDung());
-//        if (currentCustomer.isEmpty()) {
-//            throw new NotFoundException("Customer not found");
-//        } else {
-//            return currentCustomer.get().getHoTen();
-//        }
-//    }
+    @Named("addFoodInfo")
+    default Set<OrderTableHasFoodResponse> addFoodName(Set<OrderTableHasFood> orderTableHasFoods, @Context FoodRepository foodRepository) {
+        return orderTableHasFoods.stream().map(food -> {
+            OrderTableHasFoodResponse orderTableHasFoodResponse = new OrderTableHasFoodResponse();
+            orderTableHasFoodResponse.setSoLuong(food.getSoLuong());
+            orderTableHasFoodResponse.setMaSo(food.getMaSo());
+            orderTableHasFoodResponse.setGia(foodRepository.findById(food.getMaSo().getMaSoMonAn()).get().getGia());
+            orderTableHasFoodResponse.setTenMon(foodRepository.findById(food.getMaSo().getMaSoMonAn()).get().getTen());
+            return orderTableHasFoodResponse;
+        }).collect(Collectors.toSet());
+    }
 
 
 }

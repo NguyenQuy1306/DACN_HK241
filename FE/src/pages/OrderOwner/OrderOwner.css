@@ -15,6 +15,6 @@
     background-color: rgb(0,102,92) !important; /* Màu nền header */
     color: white !important; /* Màu chữ */
     font-weight: bold; /* In đậm chữ */
-    text-align: center; /* Căn giữa chữ */
+    text-align: center !important; /* Căn giữa chữ */
 }
   

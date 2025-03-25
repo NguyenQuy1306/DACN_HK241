@@ -7,6 +7,7 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
+import { format } from "date-fns";
 const { Search } = Input;
 function OrderOwner() {
     const [searchText, setSearchText] = useState("");
@@ -89,6 +90,11 @@ function OrderOwner() {
             .replace("₫", "đ");
     };
 
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        return date.toLocaleDateString("vi-VN"); // Kết quả: "25/03/2025"
+    };
+
     const columns = [
         {
             title: "STT",
@@ -109,6 +115,9 @@ function OrderOwner() {
             title: "Ngày",
             dataIndex: "date",
             key: "date",
+            render: (_, { date }) => {
+                return <p>{formatDate(date)}</p>;
+            },
         },
         {
             title: "Giờ",
@@ -126,7 +135,7 @@ function OrderOwner() {
             key: "status",
             render: (_, { status }) => {
                 let color = status.length > 5 ? "green" : "brown";
-                if (status === "Đang chờ phục vụ") {
+                if (status === "COMPLETED") {
                     color = "blue";
                 } else if (status === "Đã hủy") {
                     color = "red";
@@ -160,10 +169,10 @@ function OrderOwner() {
         },
         {
             title: "Còn lại",
-            dataIndex: "remain",
+            // dataIndex: "remain",
             key: "remain",
-            render: (_, { price }) => {
-                return <p style={{ color: "#d61a1a" }}>{formatCurrency(price)}</p>;
+            render: (row) => {
+                return <p style={{ color: "#d61a1a" }}>{formatCurrency(row.price - row.prePay)}</p>;
             },
         },
         {
@@ -182,7 +191,7 @@ function OrderOwner() {
 
     useEffect(() => {
         console.log("ORDER LIST: ", orderSlice?.order);
-    }, [orderSlice?.order]);
+    }, [orderSlice.order]);
 
     const data = [
         {
@@ -200,24 +209,30 @@ function OrderOwner() {
     const [dataRender, setDataRender] = useState([]);
 
     useEffect(() => {
-        if (orderSlice.order) return;
+        if (orderSlice.order.length <= 0) return;
 
         setDataRender(
-            orderSlice.order.map((order, index) => ({
-                stt: index + 1,
-                id: order.maSoDatBan,
-                key: index,
-                name: order.tenKhachHang,
-                status: order.trangThai,
-                price: 500000,
-                description: <MenuInOrder />,
-                time: "12-03-2025 14:21:21",
-                timezone: order.gio,
-                date: order.ngay,
-                quantity: order.soKhach,
-                remain: 500000,
-                prePay: Number(order.tienCoc) || 0, // Đảm bảo `tienCoc` không bị NaN
-            })),
+            orderSlice?.order?.map((order, index) => {
+                return {
+                    stt: index + 1,
+                    id: order.maSoDatBan,
+                    key: index,
+                    name: order.tenKhachHang,
+                    status: order.trangThai,
+                    price: order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0),
+                    description: (
+                        <MenuInOrder
+                            menu={order.danhSachMonAn.length > 0 ? order.danhSachMonAn : order.danhSachCombo}
+                        />
+                    ),
+                    time: "12-03-2025 14:21:21",
+                    timezone: order.gio,
+                    date: order.ngay,
+                    quantity: order.soKhach,
+                    remain: 500000,
+                    prePay: Number(order.tienCoc) || 0, // Đảm bảo `tienCoc` không bị NaN
+                };
+            }),
         );
     }, [orderSlice.order]);
 

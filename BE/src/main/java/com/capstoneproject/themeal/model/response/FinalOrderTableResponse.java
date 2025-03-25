@@ -24,6 +24,6 @@ public class FinalOrderTableResponse implements Serializable {
     private String TrangThai;
     private String TenKhachHang;
     private Long TienCoc;
-    private Set<OrderTableHasFood> DanhSachMonAn;
+    private Set<OrderTableHasFoodResponse> DanhSachMonAn;
     private Set<OrderTableHasComboAvailable> DanhSachCombo;
 }
