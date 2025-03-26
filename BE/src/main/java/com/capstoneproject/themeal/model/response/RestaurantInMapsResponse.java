@@ -26,6 +26,7 @@ public class RestaurantInMapsResponse implements Serializable {
     private String diemDacTrung;
     private Double viDo;
     private Double kinhDo;
+    private String thanhPho;
     private Map<String, Set<String>> imageUrls; // Chứa các ảnh theo loại
 
     @Override
@@ -140,6 +141,14 @@ public class RestaurantInMapsResponse implements Serializable {
 
     public void setKinhDo(Double kinhDo) {
         this.kinhDo = kinhDo;
+    }
+
+    public String getThanhPho() {
+        return thanhPho;
+    }
+
+    public void setThanhPho(String thanhPho) {
+        this.thanhPho = thanhPho;
     }
 
     public Map<String, Set<String>> getImageUrls() {

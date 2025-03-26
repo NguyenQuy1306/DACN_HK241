@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    gap: 16px;
+    background-color: #F3F2F7;
+    min-height: calc(100vh - 61.55px);
+}
+
+.body {
+    background-color: #fff;
+    flex: 1
+}
+
+.statistics {
+    background-color: #fff;
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

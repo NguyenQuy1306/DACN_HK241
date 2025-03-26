@@ -5,11 +5,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
 import com.capstoneproject.themeal.model.request.AuthenticationRequest;
 import com.capstoneproject.themeal.model.request.RegisterRequest;
 import com.capstoneproject.themeal.model.response.LoginResponse;
 import com.capstoneproject.themeal.model.response.UserResponse;
 
+@Service
 public interface AuthenticationService {
 
     UserResponse register(RegisterRequest request);

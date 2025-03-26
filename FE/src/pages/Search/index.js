@@ -17,6 +17,7 @@ import "./Search.css";
 import {
   getRestaurantsInMaps,
   saveCurrentPage,
+  saveThanhPho,
 } from "../../redux/features/restaurantSlice";
 const Search = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,8 @@ const Search = () => {
   const time = useSelector((state) => state.restaurant.time);
   const date = useSelector((state) => state.restaurant.date);
   const people = useSelector((state) => state.restaurant.people);
+  const thanhPho = useSelector((state) => state.restaurant.thanhPho);
+
   useEffect(() => {
     if (!bounds) return;
 
@@ -66,6 +69,8 @@ const Search = () => {
       tr_longitude: ne.lng,
       tr_latitude: ne.lat,
       page: currentPage,
+      thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
+
       size: 10,
     };
 
@@ -79,7 +84,9 @@ const Search = () => {
     console.log("calllll");
     dispatch(getRestaurantsInMaps(params));
   }, [currentPage, time, date, people]);
-
+  useEffect(() => {
+    dispatch(saveThanhPho("TP Hồ Chí Minh"));
+  }, [dispatch]);
   return (
     <>
       <SearchBar></SearchBar>
@@ -113,7 +120,7 @@ const Search = () => {
             <Reservation />
             <Filter />
           </div>
-          <div>bbbádaaa</div>
+          {/* <div>bbbádaaa</div> */}
         </div>
       </div>
       <ResultSearch

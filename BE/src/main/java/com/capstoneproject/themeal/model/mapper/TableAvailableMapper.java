@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import com.capstoneproject.themeal.model.entity.Category;
 import com.capstoneproject.themeal.model.entity.DateTimeKey;
 import com.capstoneproject.themeal.model.entity.Food;
 import com.capstoneproject.themeal.model.entity.TableAvailable;

@@ -3,6 +3,8 @@ package com.capstoneproject.themeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
+import com.capstoneproject.themeal.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +30,6 @@ import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
 import com.capstoneproject.themeal.model.response.PaymentResponse;
-import com.capstoneproject.themeal.repository.ComboAvailableRepository;
-import com.capstoneproject.themeal.repository.FoodRepository;
-import com.capstoneproject.themeal.repository.OrderTableHasComboAvailableRepository;
-import com.capstoneproject.themeal.repository.OrderTableHasFoodRepository;
-import com.capstoneproject.themeal.repository.OrderTableRepository;
-import com.capstoneproject.themeal.repository.PaymentRepository;
-import com.capstoneproject.themeal.repository.RestaurantRepository;
-import com.capstoneproject.themeal.repository.TableAvailableRepository;
-import com.capstoneproject.themeal.repository.UserRepository;
 import com.capstoneproject.themeal.service.ComboAvailableService;
 import com.capstoneproject.themeal.service.FoodService;
 import com.capstoneproject.themeal.service.OrderTableService;
@@ -71,6 +64,11 @@ public class OrderTableServiceImpl implements OrderTableService {
         @Autowired
         private TableAvailableService tableAvailableService;
 
+
+
+        @Autowired
+        private OrderTableMapper orderTableMapper;
+
         @Override
         public List<OrderTableResponse> getOrderTableByCustomerId(Long customerId) {
                 List<OrderTable> orderTables = orderTableRepository.findByMaSoKhachHang(customerId);
@@ -84,6 +82,12 @@ public class OrderTableServiceImpl implements OrderTableService {
                 List<OrderTable> orderTables = orderTableRepository.findAll();
                 return orderTables.stream().map(OrderTableMapper.INSTANCE::toOrderTableResponse)
                                 .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
+                List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
+                return orderTables.stream().map(orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository)).collect(Collectors.toList());
         }
 
         @Override

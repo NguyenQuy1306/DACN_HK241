@@ -11,14 +11,17 @@ const OtherInformation = ({ selectedPlace }) => {
         <OtherInformationComponent
           icon={<LocationOnOutlinedIcon></LocationOnOutlinedIcon>}
           text={selectedPlace.diaChi}
+          title={"Địa chỉ"}
         ></OtherInformationComponent>
         <OtherInformationComponent
           icon={<RestaurantOutlinedIcon></RestaurantOutlinedIcon>}
           text={"Ho Chi Minh"}
+          title={"Khu vực"}
         ></OtherInformationComponent>
         <OtherInformationComponent
           icon={<LocalAtmOutlinedIcon></LocalAtmOutlinedIcon>}
-          text={"Average price €105"}
+          text={`${selectedPlace.khoangGia} VNĐ`}
+          title={"Khoảng giá"}
         ></OtherInformationComponent>
       </div>
     </div>

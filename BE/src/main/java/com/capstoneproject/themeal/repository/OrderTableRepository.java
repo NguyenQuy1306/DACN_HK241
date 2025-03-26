@@ -13,5 +13,7 @@ import java.util.List;
 public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
     @Query("SELECT DISTINCT o FROM OrderTable o WHERE o.KhachHang.MaSoNguoiDung = :customerId")
     List<OrderTable> findByMaSoKhachHang(@Param("customerId") Long customerId);
+    @Query("SELECT DISTINCT o FROM OrderTable o WHERE o.NhaHang.MaSoNhaHang = :restaurantId")
+    List<OrderTable> findByRestaurantId(@Param("restaurantId") Long restaurantId);
 
 }

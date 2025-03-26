@@ -1,0 +1,15 @@
+.bookButton {
+    transform: translateX(-50%) !important;
+    background-color: hsl(0, 97%, 35%) !important ; /* Button background */
+    border: 1px solid hsl(0, 100%, 62%) !important; /* Button border */
+    color: white !important;
+    display: inline-block  !important;
+    border-radius: 8px  !important;
+    cursor: pointer  !important;
+    font-weight: bold  !important;
+}
+
+.bookButton:hover {
+  background-color: hsla(0, 93%, 48%, 0.555) !important;
+  color: black;
+}

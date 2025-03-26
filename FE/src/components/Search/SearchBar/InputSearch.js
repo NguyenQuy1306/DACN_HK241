@@ -6,6 +6,10 @@ import ModalSearch from "../../Modal/ModalSearch/ModalSearch";
 
 import "./InputSearch.css";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getRestaurantsInMaps,
+  saveThanhPho,
+} from "../../../redux/features/restaurantSlice";
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -20,6 +24,12 @@ const InputSearch = ({ width, placeholder, iCon }) => {
   const dispatch = useDispatch();
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+
+  const bounds = useSelector((state) => state.restaurant.bounds);
+  const time = useSelector((state) => state.restaurant.time);
+  const date = useSelector((state) => state.restaurant.date);
+  const people = useSelector((state) => state.restaurant.people);
+  const currentPage = useSelector((state) => state.restaurant.currentPage);
 
   React.useEffect(() => {
     let active = true;
@@ -51,9 +61,35 @@ const InputSearch = ({ width, placeholder, iCon }) => {
       <Autocomplete
         sx={{ width: width }}
         open={placeholder === "Khu vực" ? open : false}
+        onChange={(event, newValue) => {
+          if (!bounds) return;
+
+          const { ne, sw } = bounds;
+
+          const params = {
+            bl_latitude: sw.lat,
+            bl_longitude: sw.lng,
+            tr_longitude: ne.lng,
+            tr_latitude: ne.lat,
+            page: currentPage,
+            thanhPho: newValue.title,
+
+            size: 10,
+          };
+          dispatch(saveThanhPho(newValue.title));
+          if (time && date && people) {
+            params.date = date;
+            params.people = people;
+            params.time = time;
+          }
+          dispatch(getRestaurantsInMaps(params));
+        }}
         onClose={placeholder === "Khu vực" ? () => setOpen(false) : undefined}
         options={placeholder === "Khu vực" ? options : []}
+        defaultValue={provinces.find((p) => p.title === "TP Hồ Chí Minh")}
         getOptionLabel={(option) => option.title}
+        clearText="none"
+        disableClearable
         renderInput={(params) => (
           <TextField
             {...params}

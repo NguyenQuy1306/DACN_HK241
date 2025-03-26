@@ -16,17 +16,28 @@ import java.util.List;
 // Đảm bảo rằng các class này tồn tại trong dự án của bạn
 import com.capstoneproject.themeal.model.response.LoginResponse;
 import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
+import org.springframework.security.web.FilterChainProxy;
+import org.springframework.security.web.FilterChainProxy.VirtualFilterChainDecorator;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.Servlet;
+import org.apache.catalina.core.ApplicationFilterChain;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 
 @Component
 public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
-            "/api/restaurant", "/api/restaurants/.*", // Match any restaurant-related URL
+            "/api/v1/auth/logout",
+            "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*",
+            "/api/restaurants",
+            "/api/restaurants/**",
+            "/api/restaurants", // Match any restaurant-related URL
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources",
             "/swagger-resources/.*",
             "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
-            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant",
+            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*", "api/orders/all/*",
+            "/api/orders",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
             "/elas/searchWithKeyword",
             "/elas/getDocument",
@@ -34,7 +45,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
             "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
             "/ws/*",
-            "/ws/**");
+            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",
+            "/api/food/delete/*", "/api/food/update", "/api/food/duplicate", "/api/food/search", "/api/food/category",
+            "/api/food/.*", "/api/food/*",
+            "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
+            "/api/food/restaurants/*/categories/*");
     @Autowired
     private SessionRegistry sessionRegistry;
 
@@ -46,12 +61,16 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
         System.out.println("Request URIIIIa: " + requestURI); // Log the request URI
         if (requestURI.startsWith("/ws/")) {
+            System.out.println("pass check websocket");
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("here3323");
+
+        System.out.println("here23" + isPublicUrl(requestURI));
 
         if (isPublicUrl(requestURI)) {
-
+            System.out.println("pass check session");
             filterChain.doFilter(request, response);
             return;
         }
@@ -68,7 +87,10 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isPublicUrl(String requestURI) {
         System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
-        boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern -> requestURI.matches(pattern))
+        // boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern ->
+        // requestURI.matches(pattern))
+        // || requestURI.contains("/swagger");
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith)
                 || requestURI.contains("/swagger");
         return isPublic;
     }

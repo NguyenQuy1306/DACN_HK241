@@ -56,6 +56,7 @@ const Reservation = () => {
   const bounds = useSelector((state) => state.restaurant.bounds);
   const currentPage = useSelector((state) => state.restaurant.currentPage);
   const date = useSelector((state) => state.restaurant.date);
+  const thanhPho = useSelector((state) => state.restaurant.thanhPho);
 
   useEffect(() => {
     if (selectedDate && selectedPersons && selectedTime && bounds) {
@@ -79,6 +80,7 @@ const Reservation = () => {
           date: selectedDate,
           people: selectedPersons,
           time: selectedTime,
+          thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
           size: 10,
         })
       );
@@ -133,6 +135,7 @@ const Reservation = () => {
         bl_longitude: sw.lng,
         tr_longitude: ne.lng,
         tr_latitude: ne.lat,
+        thanhPho: thanhPho ? thanhPho : "TP Hồ Chí Minh",
         page: 0,
         size: 10,
       })
@@ -187,7 +190,7 @@ const Reservation = () => {
         }}
       >
         <DatePicker
-          placeholder="Date"
+          placeholder="Ngày"
           disabledDate={(current) => {
             let customDate = moment().format("YYYY-MM-DD");
             return current && current < moment(customDate, "YYYY-MM-DD");
@@ -199,7 +202,7 @@ const Reservation = () => {
           style={{
             border: "none",
             borderRadius: "9999px",
-            width: 120,
+            width: 117,
           }}
         />
         <div
@@ -211,8 +214,8 @@ const Reservation = () => {
           }}
         ></div>
         <Select
-          placeholder="Time"
-          style={{ width: 95, border: "none" }}
+          placeholder="Giờ"
+          style={{ width: 78, border: "none" }}
           value={selectedTime ? selectedTime : null}
           onChange={handleTimeChange}
           open={isTimeSelectOpen}
@@ -235,8 +238,8 @@ const Reservation = () => {
           }}
         ></div>
         <Select
-          placeholder="Persons"
-          style={{ width: 95, border: "none", borderRadius: "9999px" }}
+          placeholder="Số người"
+          style={{ width: 115, border: "none", borderRadius: "9999px" }}
           value={selectedPersons}
           onChange={handlePersonChange}
           open={isPersonSelectOpen}

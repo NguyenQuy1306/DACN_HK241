@@ -33,7 +33,7 @@ const TitleDetail = ({ selectedPlace }) => {
         </div>
         <RestaurantName selectedPlace={selectedPlace}></RestaurantName>
         <OtherInformation selectedPlace={selectedPlace}></OtherInformation>
-        <PositionInTop></PositionInTop>
+        <PositionInTop text={selectedPlace.loaiHinh}></PositionInTop>
       </div>
     </div>
   );

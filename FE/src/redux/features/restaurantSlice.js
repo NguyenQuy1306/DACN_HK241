@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
+import { create } from "@mui/material/styles/createTransitions";
 
 export const getRestaurants = createAsyncThunk(
   "/restaurants",
   async ({ rejectWithValue }) => {
     try {
-      const response = await api.getRestaurants();
+      const response = await api.updateRestaurantInfor();
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -27,6 +28,17 @@ export const getRestaurantsInMaps = createAsyncThunk(
   }
 );
 
+export const updateRestaurantInfor = createAsyncThunk(
+  "/restaurants/update",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateRestaurantInfor(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
@@ -39,6 +51,8 @@ export const restaurantSlice = createSlice({
     menuChoosed: [],
     newMenu: [],
     currentPage: 0,
+    updateRestaurantResponse: null,
+    thanhPho: "TP Hồ Chí Minh",
     time: null,
     date: null,
     people: null,
@@ -54,6 +68,9 @@ export const restaurantSlice = createSlice({
       state.menuChoosed = menuChoosed || [];
       state.newMenu = newMenu || [];
       state.bookingWithNewCombo = bookingWithNewCombo;
+    },
+    saveThanhPho: (state, action) => {
+      state.thanhPho = action.payload;
     },
     setHoveredMarkerIndex: (state, action) => {
       state.hoveredMarkerIndex = action.payload;
@@ -86,6 +103,19 @@ export const restaurantSlice = createSlice({
       .addCase(getRestaurantsInMaps.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      .addCase(updateRestaurantInfor.pending, (state) => {
+        state.loading = true;
+        state.updateRestaurantResponse = [];
+      })
+      .addCase(updateRestaurantInfor.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updateRestaurantInfor = action.payload.payload;
+      })
+      .addCase(updateRestaurantInfor.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
@@ -93,6 +123,7 @@ export const {
   setOpenBookingWithMenu,
   setHoveredMarkerIndex,
   saveBounds,
+  saveThanhPho,
   saveCurrentPage,
   saveFilterTable,
 } = restaurantSlice.actions;

@@ -25,8 +25,10 @@ const Direction = ({ selectedPlace }) => {
     {
       id: 1,
       name: "Restaurant Example",
-      latitude: selectedPlace.lat,
-      longitude: selectedPlace.lng,
+      latitude: selectedPlace.viDo ? selectedPlace.viDo : selectedPlace.lat,
+      longitude: selectedPlace.kinhDo
+        ? selectedPlace.kinhDo
+        : selectedPlace.lng,
       photo: {
         images: {
           large: {
@@ -39,7 +41,9 @@ const Direction = ({ selectedPlace }) => {
   const onMapClick = (event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
-
+    console.log("selectedPlace", selectedPlace);
+    console.log("lat", selectedPlace.viDo);
+    console.log("lng", selectedPlace.kinhDo);
     const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
 
     window.open(googleMapsUrl, "_blank");
@@ -65,7 +69,10 @@ const Direction = ({ selectedPlace }) => {
         </div>
       </div>
       <GoogleMap
-        center={{ lat: selectedPlace.lat, lng: selectedPlace.lng }}
+        center={{
+          lat: selectedPlace.viDo ? selectedPlace.viDo : selectedPlace.lat,
+          lng: selectedPlace.kinhDo ? selectedPlace.kinhDo : selectedPlace.lng,
+        }}
         zoom={15}
         mapContainerStyle={{ width: "100%", height: "400px" }}
         onClick={onMapClick}

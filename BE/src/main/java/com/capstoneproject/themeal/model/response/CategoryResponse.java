@@ -9,5 +9,8 @@ import lombok.Setter;
 public class CategoryResponse implements Serializable {
     private Long MaSoDanhMuc;
     private String Ten;
-    // Getters and Setters
+    // Getters and Setter
+    private int SoLuongMon;
+    private Long minPrice;
+    private Long maxPrice;
 }

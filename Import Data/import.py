@@ -4,12 +4,12 @@ import os
 from datetime import datetime
 
 conn = pg8000.dbapi.Connection(
-    user="postgres", password="Nhut3030", host="localhost", port=5432, database="themeal",
+    user="postgres", password="Nhut3030", host="localhost", port=5432, database="THEMEAL",
     ssl_context=None
 )
 cur = conn.cursor()
 
-folder_path = "C:\\Users\\Admin\\Documents\\HK241\\DACN\\Data_set"
+folder_path = "D:\\HK242\\DATN\\DACN_HK241\\Import Data"
 
 # Loop through all CSV files in the folder
 for filename in os.listdir(folder_path):

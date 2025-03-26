@@ -1,11 +1,14 @@
 package com.capstoneproject.themeal.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,7 +128,7 @@ public class AuthenticationController {
             newSession.setAttribute("USER_SESSION", loginResponse);
             newSession.setMaxInactiveInterval(300); // 5 phút
 
-            // Đăng ký session
+            // Đăng ký session với registry
             sessionRegistry.registerSession(newSession.getId(), loginResponse.getMaSoNguoiDung());
             apiResponse.ok(loginResponse);
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -139,13 +142,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request) {
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         ApiResponse<Map<String, String>> apiResponse = new ApiResponse<>();
         HttpSession session = request.getSession(false);
         if (session != null) {
             sessionRegistry.invalidateSession(session.getId());
             session.invalidate();
         }
+        // Xoá cookie JSESSIONID trên trình duyệt
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0); // Đặt thời gian hết hạn để trình duyệt xoá cookie
+        response.addCookie(cookie);
         apiResponse.ok(ResponseCode.getError(28));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }

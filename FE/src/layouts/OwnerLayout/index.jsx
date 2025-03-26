@@ -1,12 +1,23 @@
-import { Fragment } from "react";
 import OwnerHeader from "../../components/OwnerHeader";
-import "./OwnerLayout.css";
-function OwnerLayout({ children }) {
+import styles from "./OwnerLayout.module.css";
+
+import Footer from "../../components/Footer";
+import SidebarOwner from "../../components/SidebarOwner";
+
+function OwnerLayout({ children, title }) {
     return (
-        <Fragment>
-            <OwnerHeader />
-            {children}
-        </Fragment>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <OwnerHeader title={title} />
+            </div>
+
+            <div className={styles.mainContent}>
+                <SidebarOwner />
+
+                <div className={styles.content}>{children}</div>
+            </div>
+            <Footer />
+        </div>
     );
 }
 

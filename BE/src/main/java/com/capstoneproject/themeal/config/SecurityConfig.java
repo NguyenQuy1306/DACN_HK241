@@ -5,8 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -32,11 +37,19 @@ public class SecurityConfig {
                         "/webjars/**",
                         "/swagger-ui.html",
                         "/api/v1/auth/**", // API for guest access
+                        "/api/v1/auth/logout",
                         "/api/restaurants/*",
+                        "/api/restaurants",
+                        "/api/restaurants/**",
+                        "/api/restaurants/.*",
+                        "/api/restaurants/",
                         "/api/restaurant-categories",
                         "/api/food",
                         "/api/combo",
                         "/api/orders/all",
+                        "api/orders/all/*",
+                        "/api/orders/*",
+                        "/api/orders",
                         "/api/table/restaurant",
                         "/api/rate/**",
                         "/ws/*",
@@ -56,15 +69,38 @@ public class SecurityConfig {
                         "/api/payments/payment-callback",
                         "/api/payments/.*",
                         "/api/payments/getOrderById",
-                        "/api/payments/deposit", "/api/payments",
+                        "/api/payments/deposit", "/api/category/**",
+                        "/api/category/*",
+                        "/api/food/uploadImage",
+                        "/api/food/delete/*",
+                        "/api/food/duplicate",
+                        "/api/food/search",
+                        "/api/food/update",
+                        "/api/food/*",
+                        "/api/food/.*",
+                        "/api/food/category",
+                        "/api/food/uploadImage/*",
+                        "/api/food/uploadImage/.*",
+                        "/api/food/uploadImage/**",
+                        "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
+                        "/api/food/restaurants/*/categories/*"
         };
+
+        @Autowired
+        void registerProvider(AuthenticationManagerBuilder auth) {
+                auth.authenticationProvider(authenticationProvider);
+        }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .authorizeRequests(authz -> authz
+                                .authorizeHttpRequests(authz -> authz
+
                                                 .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
                                                 // white-listed URLs
+                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho
+                                                                                                                       // phép
+                                                                                                                       // DELETE
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )
@@ -78,4 +114,5 @@ public class SecurityConfig {
 
                 return http.build();
         }
+
 }

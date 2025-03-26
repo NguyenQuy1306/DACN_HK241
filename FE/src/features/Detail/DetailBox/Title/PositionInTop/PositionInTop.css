@@ -26,5 +26,6 @@
   width: 200px;
 }
 .PositionInTop_div1_icon_span {
-  width: 200px;
-}
+  padding-left: 15px;
+  width: fit-content;
+  color: hsl(140, 96%, 17%);}

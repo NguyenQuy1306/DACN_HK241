@@ -19,16 +19,17 @@ import org.springframework.data.domain.Page;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
         @Query("SELECT DISTINCT r FROM Restaurant r " +
                         "JOIN r.DanhSachAnhNhaHang ra " +
-                        "JOIN r.DanhSachBan ban " +
                         "WHERE ra.KieuAnh = :restaurantImageType " +
                         "AND r.ViDo BETWEEN :blLat AND :trLat " +
-                        "AND r.KinhDo BETWEEN :blLng AND :trLng ")
+                        "AND r.KinhDo BETWEEN :blLng AND :trLng " +
+                        "AND r.ThanhPho=:thanhPho")
         Page<Restaurant> findRestaurantsInBoundary(
                         @Param("blLat") double blLat,
                         @Param("blLng") double blLng,
                         @Param("trLat") double trLat,
                         @Param("trLng") double trLng,
                         @Param("restaurantImageType") RestaurantImageType restaurantImageType,
+                        @Param("thanhPho") String thanhPho,
                         Pageable pageable);
 
         @Query("SELECT DISTINCT r FROM Restaurant r " +
@@ -37,7 +38,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
                         "WHERE ra.KieuAnh = :restaurantImageType " +
                         "AND r.ViDo BETWEEN :blLat AND :trLat " +
                         "AND r.KinhDo BETWEEN :blLng AND :trLng " +
-
+                        "AND r.ThanhPho=:thanhPho" +
                         " AND ban.Ngay = :date AND ban.Gio = :time AND ban.SoNguoi = :people")
         Page<Restaurant> findRestaurantsInBoundaryWithTable(
                         @Param("blLat") double blLat,
@@ -48,6 +49,13 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
                         @Param("date") LocalDate date,
                         @Param("time") LocalTime time,
                         @Param("people") Byte people,
+                        @Param("thanhPho") String thanhPho,
                         Pageable pageable);
+
+        @Query("SELECT DISTINCT r FROM Restaurant r " +
+                        "JOIN r.ChuNhaHang chuNhaHang " +
+
+                        "WHERE chuNhaHang.MaSoNguoiDung = :ownerId ")
+        Restaurant findRestaurantByOwner(@Param("ownerId") double ownerId);
 
 }

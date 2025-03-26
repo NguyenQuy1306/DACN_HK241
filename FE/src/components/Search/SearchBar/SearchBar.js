@@ -5,6 +5,9 @@ import HeaderInfo from "../../../features/UserInfo/components/HeaderInfo";
 import Authentication from "../../../features/Authentication/Authentication";
 import { useSelector, useDispatch } from "react-redux";
 import { setStatusModalAuthentication } from "../../../redux/features/authenticationSlice";
+import ButtonLogin from "../../Button/ButtonLogin/ButtonLogin";
+import avatar from "../../../assets/images/avatar.png";
+
 const SearchBar = ({ border }) => {
   const dispatch = useDispatch();
   const showDrawer = () => {
@@ -12,7 +15,7 @@ const SearchBar = ({ border }) => {
     // document.body.style.overflow = "hidden";
   };
   const open = useSelector((state) => state.authentication.openModal);
-
+  const user = useSelector((state) => state.authentication.user);
   return (
     <>
       <div
@@ -33,20 +36,29 @@ const SearchBar = ({ border }) => {
           <Logo></Logo>
         </div>
         <SearchBox border={border} />
-        <div
-          onClick={showDrawer}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            right: 0,
-            paddingRight: "5px",
-          }}
-        >
-          <HeaderInfo
-            userName="Nhựt"
-            avatar={require("../../../assets/images/avatar.png")}
-          />
-        </div>
+        {user ? (
+          <div
+            onClick={showDrawer}
+            style={{
+              cursor: "pointer",
+              // position: "absolute",
+              right: 0,
+              paddingRight: "5px",
+              // marginLeft: "15px",
+            }}
+          >
+            <HeaderInfo userName={user ? user.hoTen : ""} avatar={avatar} />
+          </div>
+        ) : (
+          <div style={{ paddingLeft: "60px" }}>
+            <ButtonLogin
+              text={"Đăng nhập"}
+              onClick={() =>
+                dispatch(setStatusModalAuthentication({ openModal: true }))
+              }
+            ></ButtonLogin>
+          </div>
+        )}
         <Authentication open={open}></Authentication>
       </div>
     </>

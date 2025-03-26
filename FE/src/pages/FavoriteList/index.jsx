@@ -15,6 +15,7 @@ import styles from "./style.module.css";
 import axios from "axios";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 function FavoriteList() {
     const location = useLocation();
     const originList = location.state?.card;
@@ -37,7 +38,8 @@ function FavoriteList() {
         setOpen(false);
         document.body.style.overflow = "auto";
     };
-
+      const user=useSelector((state)=>state.authentication.user)
+    
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
@@ -146,7 +148,7 @@ function FavoriteList() {
                     onClick={showDrawer}
                 >
                     <HeaderInfo
-                        userName="Nhựt"
+                        userName={user? user.hoTen:""}
                         avatar={require("../../assets/images/avatar.png")}
                     />
                 </div>

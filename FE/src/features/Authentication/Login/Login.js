@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   login,
   checkSession,
@@ -9,6 +10,7 @@ import {
   clearError,
   clearLoglin,
   setStatusModalAuthentication,
+  setLoginRoute,
 } from "../../../redux/features/authenticationSlice";
 import { Button } from "@mui/material";
 import logo from "../../../assets/images/logo.png";
@@ -16,11 +18,10 @@ import "./Login.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Login({
-  setLogin,
-  setRegister,
+  setModalType,
   setIsClickLogout,
   isCLickLogout,
 }) {
@@ -34,37 +35,62 @@ export default function Login({
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const navigate = useNavigate();
-
+  const userRole = useSelector((state) => state.authentication.userRole);
   const handleSubmit = async (e) => {
-    dispatch(clearLoglin());
+    // dispatch(clearLoglin());
     e.preventDefault();
     setMessage(""); // Reset the message
     setIsClickLogout(false); // Indicate manual login
     dispatch(login({ email, matKhau: password }));
+    toast.success("Đăng nhập thành công", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+    });
   };
-
   useEffect(() => {
-    // Check session on initial load
-    dispatch(checkSession());
-  }, [dispatch]);
+    console.log("afterlogin ", userRole);
 
-  useEffect(() => {
-    if (user) {
-      if (!isCLickLogout) {
-        setLogin(true);
-        setRegister(true);
-      } else {
-        toast.success("Đăng nhập thành công", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-        });
-        setLogin(true);
-        setRegister(true);
-        setIsClickLogout(false);
-      }
+    if (user && userRole != "guest") {
+      setModalType("checked");
+      console.log("after login", userRole);
+      // if (userRole === "owner") {
+      //   console.log("after login2323");
+      //   navigate("../owner/menu/add");
+      //   dispatch(setLoginRoute(false));
+      // }
+      // toast.success("Đăng nhập thành công", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      // });
+      setIsClickLogout(false);
     }
-  }, [user, isCLickLogout, setLogin, setRegister, setIsClickLogout]);
+  }, [user]);
+  // useEffect(() => {
+  //   // Check session on initial load
+  //   dispatch(checkSession());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   const useInfor = localStorage.getItem("userInfor");
+  //   console.log("useInforuseInfor", useInfor);
+  //   if (useInfor) {
+  //     if (!isCLickLogout) {
+  //       setLogin(true);
+  //       setRegister(true);
+  //     } else {
+  //       toast.success("Đăng nhập thành công", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //       });
+  //       setLogin(true);
+  //       setRegister(true);
+  //       setIsClickLogout(false);
+  //     }
+  //   }
+  // }, [isCLickLogout, setLogin, setRegister, setIsClickLogout]);
 
   useEffect(() => {
     if (error) {
@@ -74,8 +100,7 @@ export default function Login({
   }, [error, dispatch]);
 
   const handleOnClickRegister = () => {
-    setLogin(false);
-    setRegister(true);
+    setModalType("register");
   };
   const handleOnClickLogo = () => {
     navigate(`../Home`);

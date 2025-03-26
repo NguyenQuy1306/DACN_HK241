@@ -21,8 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.ProviderManager;
 
 import java.io.IOException;
 
@@ -50,7 +53,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setEmail(request.getEmail());
             user.setSDT(request.getSDT());
 
-            
             return userMapper.toUserResponse(repository.save(user));
 
         } catch (ApplicationException e) {
@@ -66,10 +68,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // if (!user.isActivated())
         // throw new InactivatedUserException("Account has not been activated");
         try {
-            authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getEmail(),
                             request.getMatKhau()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (BadCredentialsException e) {
             throw new IncorrectPasswordException("Incorrect password");
         }

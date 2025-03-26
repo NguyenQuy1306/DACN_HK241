@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    gap: 16px;
+    min-height: 100vh;
+}
+
+.body {
+    flex: 1;
+    padding: 16px;
+}
+
+.row-even {
+    background-color: #fff;
+}
+.row-odd {
+    background-color: #f9f9f9;
+}

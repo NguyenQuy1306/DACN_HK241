@@ -6,6 +6,8 @@
 .AboutDiv_h3
 {
     margin-top: 12px;
+    color: hsl(174, 100%, 20%) ;
+    font-weight: bold;
 }
 .AboutDiv_H1_div
 {

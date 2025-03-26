@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./style.module.css";
 import DiscountCard from "../DiscountCard";
 import { Rate } from "antd";
+import { motion } from "framer-motion";
 import ButtonBooking from "../../../components/Button/ButtonBooking/ButtonBooking";
 function RecommendCard({ place,tags,point ,discountPercent}) {
     const handleOnclickToDetail=(id)=>{
@@ -11,7 +12,8 @@ function RecommendCard({ place,tags,point ,discountPercent}) {
     }
 
     return (
-        <div className={styles.container} onClick={()=>handleOnclickToDetail(place.maSoNhaHang)}>
+        <motion.div className={styles.container} onClick={()=>handleOnclickToDetail(place.maSoNhaHang) }   whileHover={{ scale: 1.05 }}
+        transition={{ duration: 0.3 }}>
             <img
                 src={place.imageUrls["RESTAURANTIMAGE"]? place.imageUrls["RESTAURANTIMAGE"][0]  : "https://placehold.co/400x300"}
                 alt="Restaurant view"
@@ -53,7 +55,7 @@ function RecommendCard({ place,tags,point ,discountPercent}) {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

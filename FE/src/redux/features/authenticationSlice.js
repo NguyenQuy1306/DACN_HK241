@@ -48,26 +48,52 @@ export const logout = createAsyncThunk(
     }
   }
 );
-
+export const getRestaurantByOwnerId = createAsyncThunk(
+  "/restaurants/owner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getRestaurantByOnwerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
     user: null,
+    userRole: "guest",
     registerStatus: "",
+    restaurantOwner: null,
     openModal: false,
     error: null,
+    loginRoute: false,
     errorCheckSession: null,
+    isAuthenticated: false,
     errorRegister: null,
     loading: false,
   },
   reducers: {
+    setLoginRoute: (state, action) => {
+      state.loginRoute = action.payload;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
+      console.log("action.payload", action.payload);
+      state.isAuthenticated = true;
+      // state.userRole=action.payload.
+    },
+    setUserRole: (state, action) => {
+      state.userRole = action.payload;
+    },
     clearError(state) {
       state.error = null;
     },
     clearRegisterStatus(state) {
       state.registerStatus = "";
     },
-    clearLoglin(state) {
+    clearLogin(state) {
       state.user = null;
     },
     setStatusModalAuthentication(state, action) {
@@ -77,7 +103,6 @@ const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.errorRegister = null;
@@ -90,22 +115,30 @@ const authenticationSlice = createSlice({
         state.loading = false;
         state.errorRegister = action.payload;
       })
-
-      // Login
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
+
         state.user = action.payload;
+        switch (action.payload.userRole) {
+          case "C":
+            state.userRole = "customer";
+            break;
+          case "O":
+            state.userRole = "owner";
+            state.loginRoute = true;
+            break;
+          default:
+            state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Check Session
       .addCase(checkSession.pending, (state) => {
         state.loading = true;
         state.errorCheckSession = null;
@@ -119,12 +152,26 @@ const authenticationSlice = createSlice({
         state.user = null;
         state.errorCheckSession = action.payload;
       })
-
-      // Logout
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.userRole = "guest";
+        state.loginRoute = false;
+        state.restaurantOwner = null;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+
+      .addCase(getRestaurantByOwnerId.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwner = [];
+      })
+      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantOwner = action.payload.payload;
+      })
+      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       });
   },
@@ -133,7 +180,10 @@ const authenticationSlice = createSlice({
 export const {
   clearError,
   clearRegisterStatus,
-  clearLoglin,
+  clearLogin,
+  setLoginRoute,
+  setUser,
+  setUserRole,
   setStatusModalAuthentication,
 } = authenticationSlice.actions;
 

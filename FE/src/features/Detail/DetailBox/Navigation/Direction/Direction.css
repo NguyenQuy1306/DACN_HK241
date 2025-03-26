@@ -3,6 +3,12 @@
 {
     margin-top: 10px;
 }
+.DirectionDiv_h3
+{
+    color: hsl(174, 100%, 20%) ;
+  font-weight: bold;
+
+}
 .DirectionDiv_h1
 {
     display: flex;

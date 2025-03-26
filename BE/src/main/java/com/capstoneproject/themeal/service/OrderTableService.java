@@ -2,6 +2,7 @@ package com.capstoneproject.themeal.service;
 
 import java.util.List;
 
+import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capstoneproject.themeal.model.entity.OrderTable;
@@ -40,4 +41,6 @@ public interface OrderTableService {
                         String maSoThanhToan);
 
         public List<OrderTableResponse> getAllOrders();
+
+        List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId);
 }

@@ -32,11 +32,11 @@ public class RestaurantImage {
     @Column(nullable = false)
     private RestaurantImageType KieuAnh;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "MaSoNhaHang", referencedColumnName = "MaSoNhaHang")
     private Restaurant NhaHang;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "MaSoDanhGia", referencedColumnName = "MaSoDanhGia")
     private Rate DanhGia;
 

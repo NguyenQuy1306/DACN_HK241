@@ -1,21 +1,11 @@
-import React, { useState } from "react";
-import styles from "./style.module.css";
-import logo from "../../assets/images/logo-mini.png";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { MdOutlineLibraryBooks } from "react-icons/md";
+import { Menu } from "antd";
+import React from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { GoCommentDiscussion } from "react-icons/go";
-import { MdOutlineTableRestaurant } from "react-icons/md";
-import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    PieChartOutlined,
-} from "@ant-design/icons";
-import { Button, Menu } from "antd";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineLibraryBooks, MdOutlineTableRestaurant } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import styles from "./style.module.css";
 const items = [
     {
         key: "1",
@@ -48,33 +38,61 @@ const items = [
         ],
     },
     {
-        key: "4",
+        key: "8",
         icon: <GoCommentDiscussion />,
         label: "Rating",
     },
     {
-        key: "5",
+        key: "9",
         icon: <MdOutlineTableRestaurant />,
-        label: "General",
+        label: "Thông tin nhà hàng",
     },
 ];
 const SidebarOwner = ({ collapsed }) => {
+    const navigate = useNavigate();
+
+    const handleMenuClick = ({ key }) => {
+        switch (key) {
+            case "1":
+                navigate("/owner/dashboard");
+                break;
+            case "2":
+                navigate("/owner/orders");
+                break;
+            case "5":
+                navigate("/owner/menu/add");
+                break;
+            case "6":
+                navigate("/owner/menu/list");
+                break;
+            case "7":
+                navigate("/owner/menu/categories");
+                break;
+            case "4":
+                navigate("/owner/rating");
+                break;
+            case "9":
+                navigate("/owner/restaurant");
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
-        <div
-        // style={{
-        //     width: 256,
-        // }}
-        >
+        <div>
             <Menu
+                style={{ minHeight: "calc(100vh - 66px)", height: "100%" }}
                 defaultSelectedKeys={["1"]}
                 defaultOpenKeys={["sub1"]}
                 mode="inline"
-                theme="night"
                 inlineCollapsed={collapsed}
                 items={items}
-                style={{ backgroundColor: "#1c451c", color: "#fff", height: "100%", fontSize: 16 }}
+                className={styles["menu-container"]}
+                onClick={handleMenuClick}
             />
         </div>
     );
 };
+
 export default SidebarOwner;

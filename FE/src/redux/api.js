@@ -1,4 +1,3 @@
-import { Api } from "@mui/icons-material";
 import axios from "axios";
 
 const API = axios.create({
@@ -15,7 +14,7 @@ API.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Có thể dispatch action để logout hoặc refresh token
-      window.location.href = "/login";
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -39,6 +38,53 @@ export const getRestaurantsInMaps = async (params) => {
 export const getFood = async (params) => {
   try {
     const response = await API.get(`api/food`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getFoodById = async (restaurantId, foodId) => {
+  try {
+    const response = await API.get(`api/food/${foodId}`, {
+      params: { restaurantId },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteFood = async (params) => {
+  try {
+    const response = await API.delete(`api/food`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const duplicateFood = async (params) => {
+  try {
+    const response = await API.post(`api/food/duplicate`, null, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const searchFood = async (params) => {
+  try {
+    const response = await API.get(`api/food/search`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getFoodByCategory = async (params) => {
+  try {
+    const response = await API.get(`api/food/category`, { params });
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -124,6 +170,16 @@ export const createOrder = async ({ request, totalAmount, deposit }) => {
     throw error.response?.data || error;
   }
 };
+export const getOrdersByRestaurantId = async ({ restaurantId }) => {
+  try {
+    const response = await API.get(
+      `api/orders/all/${restaurantId}` // Gửi request body đúng cách, // Gửi request body đúng cách
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
 
 export const createPayment = async (params) => {
   try {
@@ -186,6 +242,7 @@ export const createPaymentLink = async ({ deposit, request, RETURN_URL }) => {
       `api/payments/create-payment-link${queryParams}${queryParams2}`,
       request // Gửi request body đúng cách
     );
+    console.log("data from payment controller: ", response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -223,6 +280,115 @@ export const getDepositPolicy = async (params) => {
     const response = await API.get(`/api/payments/deposit`, { params });
     return response.data;
   } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+//Category APIs
+export const getAllCategory = async (params) => {
+  try {
+    const response = await API.get(`/api/category`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const searchCategory = async (params) => {
+  try {
+    const response = await API.get(`/api/category/search`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const createCategory = async ({ restaurantId }) => {
+  try {
+    const response = await API.post(
+      `/api/category/add?restaurantId=${restaurantId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const deleteCategory = async (params) => {
+  try {
+    const response = await API.delete(`/api/category`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const updateCategory = async (categoryId, params) => {
+  try {
+    const response = await API.post(
+      `/api/category/update?categoryId=${categoryId}`,
+      params
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getRestaurantByOnwerId = async (params) => {
+  try {
+    const response = await API.get(`/api/restaurants`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateFood = async (params) => {
+  try {
+    const response = await API.post(`/api/food/update`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateRestaurantInfor = async (params) => {
+  try {
+    console.log("params", params);
+    const response = await API.put(`/api/restaurants`, params, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const createFood = async ({
+  restaurantId,
+  categoryId,
+  foodRequest,
+  file,
+}) => {
+  try {
+    const formData = new FormData();
+    formData.append(
+      "foodRequest",
+      new Blob([JSON.stringify(foodRequest)], { type: "application/json" })
+    ); // Convert JSON to Blob
+    formData.append("file", file);
+
+    const response = await API.post(
+      `/api/food/restaurants/${restaurantId}/categories/${categoryId}`,
+      formData, // Send formData instead of an object
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error:", error);
     throw error.response?.data || error;
   }
 };

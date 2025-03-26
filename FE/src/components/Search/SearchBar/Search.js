@@ -61,7 +61,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         display: "flex",
         flexDirection: "row",
         borderRadius: "8px",
-        width: "940px",
+        width: "900px",
         alignItems: "center",
         background: "rgb(255, 255, 255)",
         border: border === "none" ? "none" : border,
@@ -94,7 +94,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
         <InputSearchType
           value={search2}
           onChange={handleSearch2Change}
-          width={600}
+          width={560}
           placeholder={"Bạn muốn đặt chỗ đến đâu"}
           iCon={<SearchIcon></SearchIcon>}
           setValue={setInputValue}
@@ -105,7 +105,7 @@ const SearchBox = ({ border = "1px solid rgb(213, 216, 220)" }) => {
           className="search-btn"
           onClick={() => handleClickSearch()}
         >
-          Search
+          Tìm kiếm
         </button>
       </div>
     </form>

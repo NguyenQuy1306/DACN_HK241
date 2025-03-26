@@ -37,9 +37,9 @@ public class Food {
     // @Column(nullable = false)
     private String TrangThai;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "MaSoAnh")
-    private RestaurantImage MaSoAnh;
+    private FoodImage MaSoAnh;
 
     @ManyToOne
     @JoinColumn(name = "MaSoDanhMuc")
@@ -47,6 +47,6 @@ public class Food {
 
     @OneToMany(mappedBy = "MonAn")
     private Set<OrderTableHasFood> danhSachDonDatBanCoMonAn;
-    @OneToMany(mappedBy = "MonAn")
+    @OneToMany(mappedBy = "MonAn",cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<ComboAvailableHasFood> danhSachComboCoSanCoMonan;
 }
