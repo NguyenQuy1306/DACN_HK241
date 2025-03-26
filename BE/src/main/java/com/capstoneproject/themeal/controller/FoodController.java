@@ -65,7 +65,8 @@ public class FoodController {
     }
 
     @GetMapping("/{foodId}")
-    public ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@RequestParam Long restaurantId, @PathVariable Long foodId) {
+    public ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@RequestParam Long restaurantId,
+            @PathVariable Long foodId) {
 
         ApiResponse<FoodResponse> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
@@ -86,7 +87,8 @@ public class FoodController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> getFoodByCategory(@RequestParam Long restaurantId, @RequestParam Long categoryId) {
+    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> getFoodByCategory(@RequestParam Long restaurantId,
+            @RequestParam Long categoryId) {
 
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
@@ -107,12 +109,13 @@ public class FoodController {
     }
 
     @PostMapping(value = "/duplicate")
-    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> duplicateFood(@RequestParam Long restaurantId, @RequestParam Long foodId) {
+    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> duplicateFood(@RequestParam Long restaurantId,
+            @RequestParam Long foodId) {
 
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
         try {
-            List<FoodFinalReponse> foodResponses = foodService.duplicateFood(restaurantId,foodId,pageable);
+            List<FoodFinalReponse> foodResponses = foodService.duplicateFood(restaurantId, foodId, pageable);
             apiResponse.ok(foodResponses);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
@@ -128,12 +131,13 @@ public class FoodController {
     }
 
     @GetMapping(value = "/search")
-    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> searchFood(@RequestParam Long restaurantId, @RequestParam String key) {
+    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> searchFood(@RequestParam Long restaurantId,
+            @RequestParam String key) {
 
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
         try {
-            List<FoodFinalReponse> foodResponses = foodService.searchFood(key,restaurantId,pageable);
+            List<FoodFinalReponse> foodResponses = foodService.searchFood(key, restaurantId, pageable);
             apiResponse.ok(foodResponses);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));
@@ -149,7 +153,8 @@ public class FoodController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> deleteFood(@RequestParam Long foodId, @RequestParam Long restaurantId) {
+    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> deleteFood(@RequestParam Long foodId,
+            @RequestParam Long restaurantId) {
 
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Pageable pageable = PageRequest.of(0, 30); // Trang 0, kích thước 30
@@ -211,7 +216,8 @@ public class FoodController {
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> updateFood(@RequestBody FoodUpdateRequest foodUpdateRequest) {
+    public ResponseEntity<ApiResponse<List<FoodFinalReponse>>> updateFood(
+            @RequestBody FoodUpdateRequest foodUpdateRequest) {
         ApiResponse<List<FoodFinalReponse>> apiResponse = new ApiResponse<>();
         Optional<Food> currentFood = foodService.isFoodExist(foodUpdateRequest.getId());
         if (currentFood.isEmpty()) {

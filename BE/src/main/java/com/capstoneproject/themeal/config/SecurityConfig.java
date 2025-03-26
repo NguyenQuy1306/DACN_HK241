@@ -98,7 +98,9 @@ public class SecurityConfig {
 
                                                 .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
                                                 // white-listed URLs
-                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho phép DELETE
+                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho
+                                                                                                                       // phép
+                                                                                                                       // DELETE
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )

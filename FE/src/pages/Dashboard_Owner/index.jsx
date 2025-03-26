@@ -1,5 +1,5 @@
 import { Client } from "@stomp/stompjs";
-import { Col, Divider, Input, message, Row, Select } from "antd";
+import { Col, Divider, Row, Select } from "antd";
 import {
     ArcElement,
     BarElement,
@@ -20,34 +20,34 @@ import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
 import orderImg from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
+import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Tùy chọn cho biểu đồ
-const revenueOption = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: "top",
+const chartOptions = {
+    revenue: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+            },
         },
     },
-};
 
-// Tùy chỉnh biểu đồ
-const categoryOption = {
-    responsive: true,
-    cutout: "60%", // Điều chỉnh độ dày của vòng donut
-    plugins: {
-        legend: {
-            display: true,
-            position: "bottom",
+    category: {
+        responsive: true,
+        cutout: "60%",
+        plugins: {
+            legend: {
+                display: true,
+                position: "bottom",
+            },
         },
     },
 };
@@ -73,37 +73,103 @@ function Dashboard_Owner() {
     const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
     const { order } = useSelector((state) => state.order);
-
+    const user = useSelector((state) => state.authentication.user);
     const [messages, setMessages] = useState(order);
+    const restaurantOwner = useSelector((state) => state.authentication.restaurantOwner);
+
+    const [orderData, setOrderData] = useState({
+        labels,
+        datasets: [
+            {
+                label: "Đơn đặt bàn",
+                data: [0, 0, 0, 0, 0, 0, 0],
+                fill: true,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 10,
+            },
+        ],
+    });
+
+    const [revenueData, setRevenueData] = useState({
+        labels,
+        datasets: [
+            {
+                label: "Doanh thu (VND)",
+                data: [0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
+            },
+        ],
+    });
+
+    const [categoryData, setCategoryData] = useState({
+        labels: [],
+        datasets: [
+            {
+                label: "Số lượng",
+                data: [],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
+                hoverOffset: 4,
+            },
+        ],
+    });
+
+    const processOrderData = (orders) => {
+        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+        orders.forEach((order) => {
+            const day = getDayOfWeek(order.ngay);
+            dayData[day] += 1; // Increment the count for the day
+        });
+
+        return Object.values(dayData);
+    };
+
+    const processRevenueData = (orders) => {
+        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+        orders.forEach((order) => {
+            const day = getDayOfWeek(order.ngay);
+            const revenue = order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0);
+            dayData[day] += revenue; // Add the revenue for the day
+        });
+
+        return Object.values(dayData);
+    };
+
+    const processCategoryData = (orders) => {
+        const categoryData = {};
+
+        orders.forEach((order) => {
+            order.danhSachMonAn.forEach((item) => {
+                if (categoryData[item.tenMon]) {
+                    categoryData[item.tenMon] += 1;
+                } else {
+                    categoryData[item.tenMon] = 1;
+                }
+            });
+        });
+
+        const labels = Object.keys(categoryData);
+        const data = Object.values(categoryData);
+
+        return { labels, data };
+    };
 
     useEffect(() => {
-        dispatch(getAllOrderByRestaurantId({ restaurantId: 72 }));
-    }, [dispatch]); // Keep dependency to avoid unnecessary calls
-
-    console.log("messages", messages);
-    // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
-    const cancelledOrder = messages ? messages.filter((item) => item.trangThai === "CANCELED").length : 0;
-
-    useEffect(() => {
-        setMessages(order);
-    }, [order]);
+        dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
+    }, [restaurantOwner?.maSoNhaHang, dispatch]); // Keep dependency to avoid unnecessary calls
 
     useEffect(() => {
         console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
     }, [messages]);
 
-    const [chartData, setChartData] = useState({
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [
-            {
-                label: "Đơn đặt bàn",
-                data: [0, 0, 0, 0, 0, 0, 0],
-                fill: false,
-                borderColor: "rgb(75, 192, 192)",
-                tension: 0.1,
-            },
-        ],
-    });
+    useEffect(() => {
+        if (user) {
+            dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+        }
+    }, [dispatch, user]);
 
     useEffect(() => {
         // Khởi tạo kết nối WebSocket khi component mount
@@ -136,79 +202,12 @@ function Dashboard_Owner() {
         };
     }, []);
 
-    const processRevenueData = (orders) => {
-        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-        orders.forEach((order) => {
-            const day = getDayOfWeek(order.ngay);
-            const revenue = order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0);
-            dayData[day] += revenue; // Add the revenue for the day
-        });
-
-        return Object.values(dayData);
-    };
-
-    const [revenueData, setRevenueData] = useState({
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [
-            {
-                label: "Doanh thu (VND)",
-                data: [0, 0, 0, 0, 0, 0, 0],
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-            },
-        ],
-    });
-
-    const processOrderData = (orders) => {
-        const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-        orders.forEach((order) => {
-            const day = getDayOfWeek(order.ngay);
-            dayData[day] += 1; // Increment the count for the day
-        });
-
-        return Object.values(dayData);
-    };
-
-    const processCategoryData = (orders) => {
-        const categoryData = {};
-
-        orders.forEach((order) => {
-            order.danhSachMonAn.forEach((item) => {
-                if (categoryData[item.tenMon]) {
-                    categoryData[item.tenMon] += 1;
-                } else {
-                    categoryData[item.tenMon] = 1;
-                }
-            });
-        });
-
-        const labels = Object.keys(categoryData);
-        const data = Object.values(categoryData);
-
-        return { labels, data };
-    };
-
-    const [categoryData, setCategoryData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: "Số lượng",
-                data: [],
-                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-                hoverOffset: 4,
-            },
-        ],
-    });
-
     useEffect(() => {
         if (messages.length > 0) {
             const processedOrderData = processOrderData(messages);
             const processedRevenueData = processRevenueData(messages);
             const processedCategoryData = processCategoryData(messages);
-            setChartData((prevData) => ({
+            setOrderData((prevData) => ({
                 ...prevData,
                 datasets: [
                     {
@@ -241,140 +240,147 @@ function Dashboard_Owner() {
         }
     }, [messages]);
 
-    useEffect(() => {
-        console.log("categoryData", categoryData);
-    }, [categoryData]);
-
     return (
-        <div className={styles.container}>
-            <div className={styles["dashboard-body"]}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                    {/* {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
-                    {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
-                    <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>Bạn đang xem thống kê theo</p>
-                    <Select
-                        defaultValue="Ngày"
-                        style={{
-                            width: 120,
-                            marginLeft: "10px",
-                        }}
-                        onChange={handleChange}
-                        options={[
-                            {
-                                value: "ngay",
-                                label: "Ngày",
-                            },
-                            {
-                                value: "thang",
-                                label: "Tháng",
-                            },
-                            {
-                                value: "nam",
-                                label: "Năm",
-                            },
-                        ]}
-                    />
-                </div>
-                <Row
-                    gutter={16}
-                    className={styles["statistic-wrap"]}
-                >
-                    <Col span={6}>
-                        <Statistic
-                            img={food}
-                            title=<p style={{ marginBottom: "8px" }}>Tổng đơn đặt</p>
-                            quantity={messages.length}
-                            up={true}
-                            rate={3}
-                            compare="So với hôm qua"
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            img={orderImg}
-                            title="Tổng đơn bị hủy"
-                            quantity={cancelledOrder}
-                            up={false}
-                            rate={12}
-                            compare="So với hôm qua"
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            img={ship}
-                            title="Khung giờ đặt nhiều nhất"
-                            quantity={"17 - 20"}
-                            up={true}
-                            compare=""
-                        />
-                    </Col>
-
-                    <Col span={6}>
-                        <Statistic
-                            img={money}
-                            title="Tổng doanh thu (VND)"
-                            quantity={messages
-                                .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
-                                .reduce((acc, cur) => acc + cur.gia, 0)}
-                            up={true}
-                            rate={13}
-                            compare="So với hôm qua"
-                        />
-                    </Col>
-                </Row>
-                <Divider />
-                <div className={styles["chart-wrap"]}>
-                    <div className={styles["order-statistic"]}>
-                        <h2 className={styles["line-title"]}>Biểu đồ chi tiết đơn đặt bàn</h2>
-                        <Line
-                            data={chartData}
-                            label={labels}
+        <>
+            <div className={styles.container}>
+                <div className={styles["dashboard-body"]}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        {/* {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
+                        {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
+                        <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>
+                            Bạn đang xem thống kê theo
+                        </p>
+                        <Select
+                            defaultValue="Ngày"
+                            style={{
+                                width: 120,
+                                marginLeft: "10px",
+                            }}
+                            onChange={handleChange}
+                            options={[
+                                {
+                                    value: "ngay",
+                                    label: "Ngày",
+                                },
+                                {
+                                    value: "thang",
+                                    label: "Tháng",
+                                },
+                                {
+                                    value: "nam",
+                                    label: "Năm",
+                                },
+                            ]}
                         />
                     </div>
-                    <div className={styles["order-statistic"]}>
-                        <h2 className={styles["bar-title"]}>Biểu đồ chi tiết doanh thu</h2>
-                        <Bar
-                            data={revenueData}
-                            options={revenueOption}
-                        />
-                    </div>
-                </div>
-                <Divider />
+                    <Row
+                        gutter={16}
+                        className={styles["statistic-wrap"]}
+                    >
+                        <Col span={6}>
+                            <Statistic
+                                img={food}
+                                title=<p style={{ marginBottom: "8px" }}>Tổng đơn đặt</p>
+                                quantity={messages.length}
+                                up={true}
+                                rate={3}
+                                compare="So với hôm qua"
+                            />
+                        </Col>
+                        <Col span={6}>
+                            <Statistic
+                                img={orderImg}
+                                title="Tổng đơn bị hủy"
+                                quantity={
+                                    messages ? messages.filter((item) => item.trangThai === "CANCELED").length : 0
+                                }
+                                up={false}
+                                rate={12}
+                                compare="So với hôm qua"
+                            />
+                        </Col>
+                        <Col span={6}>
+                            <Statistic
+                                img={ship}
+                                title="Khung giờ đặt nhiều nhất"
+                                quantity={"17 - 20"}
+                                up={true}
+                                compare=""
+                            />
+                        </Col>
 
-                <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
-
-                <div className={styles["comment-wrap"]}>
-                    <CommentCard />
-                    <CommentCard />
-                </div>
-                <div className={styles["trending-wrap"]}>
-                    <div className={styles.trending}>
-                        <h3
-                            style={{ paddingLeft: "16px", marginTop: "12px", fontSize: "20px", color: "rgb(28,69,28)" }}
-                        >
-                            Top 10 món ăn bán chạy nhất
-                        </h3>
-                        <Divider />
-                        <TrendingItem />
-                        <Divider />
-                        <TrendingItem />
-                        <Divider />
-                        <TrendingItem />
-                        <Divider />
-                        <TrendingItem />
-                        <Divider />
-                        <TrendingItem />
+                        <Col span={6}>
+                            <Statistic
+                                img={money}
+                                title="Tổng doanh thu (VND)"
+                                quantity={messages
+                                    .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
+                                    .reduce((acc, cur) => acc + cur.gia, 0)}
+                                up={true}
+                                rate={13}
+                                compare="So với hôm qua"
+                            />
+                        </Col>
+                    </Row>
+                    <Divider />
+                    <div className={styles["chart-wrap"]}>
+                        <div className={styles["order-statistic"]}>
+                            <h2 className={styles["line-title"]}>Biểu đồ chi tiết đơn đặt bàn</h2>
+                            <Line
+                                data={orderData}
+                                label={labels}
+                            />
+                        </div>
+                        <div className={styles["order-statistic"]}>
+                            <h2 className={styles["bar-title"]}>Biểu đồ chi tiết doanh thu</h2>
+                            <Bar
+                                data={revenueData}
+                                options={chartOptions.revenue}
+                            />
+                        </div>
                     </div>
-                    <div className={styles.doughnut}>
-                        <h2 className={styles["doughnut-title"]}>Tỷ lệ danh mục món ăn được đặt</h2>
-                        <Doughnut
-                            data={categoryData}
-                            options={categoryOption}
-                        />
+                    <Divider />
+
+                    <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
+
+                    <div className={styles["comment-wrap"]}>
+                        <CommentCard />
+                        <CommentCard />
+                    </div>
+                    <div className={styles["trending-wrap"]}>
+                        <div className={styles.trending}>
+                            <h3
+                                style={{
+                                    paddingLeft: "16px",
+                                    marginTop: "12px",
+                                    fontSize: "20px",
+                                    color: "rgb(28,69,28)",
+                                }}
+                            >
+                                Top 10 món ăn bán chạy nhất
+                            </h3>
+                            <Divider />
+                            <TrendingItem />
+                            <Divider />
+                            <TrendingItem />
+                            <Divider />
+                            <TrendingItem />
+                            <Divider />
+                            <TrendingItem />
+                            <Divider />
+                            <TrendingItem />
+                        </div>
+                        <div className={styles.doughnut}>
+                            <h2 className={styles["doughnut-title"]}>Tỷ lệ danh mục món ăn được đặt</h2>
+                            <Doughnut
+                                data={categoryData}
+                                options={chartOptions.category}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

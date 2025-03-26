@@ -13,7 +13,7 @@ const RestaurantInfoForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authentication.user);
   const restaurantOwner = useSelector(
-    (state) => state.restaurant.restaurantOwner
+    (state) => state.authentication.restaurantOwner
   );
 
   const [updatedFields, setUpdatedFields] = useState({});
@@ -22,11 +22,11 @@ const RestaurantInfoForm = () => {
   const [openModal, setOpenModal] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
-    }
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+  //   }
+  // }, [dispatch, user]);
 
   useEffect(() => {
     if (restaurantOwner) {
