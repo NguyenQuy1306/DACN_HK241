@@ -24,7 +24,7 @@ import { getAllOrders } from "../../redux/features/orderSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
-
+import styles from "./style.module.css";
 import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
 
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
@@ -147,11 +147,15 @@ function Dashboard_Owner() {
   const [stompClient, setStompClient] = useState(null);
   const dispatch = useDispatch();
   const { order } = useSelector((state) => state.order);
-
+  const user = useSelector((state) => state.authentication.user);
   const [messages, setMessages] = useState(order);
-
+  const restaurantOwner = useSelector(
+    (state) => state.authentication.restaurantOwner
+  );
   useEffect(() => {
-    dispatch(getAllOrderByRestaurantId({ restaurantId: 72 }));
+    dispatch(
+      getAllOrderByRestaurantId({ restaurantId: restaurantOwner.maSoNhaHang })
+    );
   }, [dispatch]); // Keep dependency to avoid unnecessary calls
 
   useEffect(() => {

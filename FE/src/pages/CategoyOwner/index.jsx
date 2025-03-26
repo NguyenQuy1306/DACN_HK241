@@ -38,14 +38,22 @@ function CategoryOwner() {
   const [form] = useForm();
   const [searchKey, setSearchKey] = useState(null);
   const [categories, setCategories] = useState([]);
+  const restaurantOwner = useSelector(
+    (state) => state.authentication.restaurantOwner
+  );
 
   const onSearch = () => {
-    dispatch(searchCategory({ keyword: searchKey, restaurantId: 72 }));
+    dispatch(
+      searchCategory({
+        keyword: searchKey,
+        restaurantId: restaurantOwner.maSoNhaHang,
+      })
+    );
   };
   const categoryList = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(getAllCategory({ restaurantId: 72 }));
+    dispatch(getAllCategory({ restaurantId: restaurantOwner.maSoNhaHang }));
   }, []);
 
   useEffect(() => {
@@ -57,7 +65,12 @@ function CategoryOwner() {
   };
 
   const deleteClick = (categoryId) => {
-    dispatch(deleteCategory({ restaurantId: 72, categoryId: categoryId }));
+    dispatch(
+      deleteCategory({
+        restaurantId: restaurantOwner.maSoNhaHang,
+        categoryId: categoryId,
+      })
+    );
   };
 
   const [titleBreadCrumb, setTitleBreadCrumb] = useState("Tất cả");
@@ -111,7 +124,7 @@ function CategoryOwner() {
         categoryId,
         params: {
           ...formData,
-          restaurantId: 72,
+          restaurantId: restaurantOwner.maSoNhaHang,
         },
       })
     );
@@ -151,7 +164,11 @@ function CategoryOwner() {
 
           <Button
             type="primary"
-            onClick={() => dispatch(createCategory({ restaurantId: 72 }))}
+            onClick={() =>
+              dispatch(
+                createCategory({ restaurantId: restaurantOwner.maSoNhaHang })
+              )
+            }
           >
             <IoIosAddCircleOutline />
             Thêm danh mục
