@@ -36,7 +36,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources",
             "/swagger-resources/.*",
             "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
-            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*",
+            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*", "api/orders/all/*",
             "/api/orders",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
             "/elas/searchWithKeyword",
@@ -45,7 +45,9 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
             "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
             "/ws/*",
-            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage","/api/food/delete/*", "/api/food/duplicate","/api/food/search",
+            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",
+            "/api/food/delete/*", "/api/food/update", "/api/food/duplicate", "/api/food/search", "/api/food/category",
+            "/api/food/.*", "/api/food/*",
             "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
             "/api/food/restaurants/*/categories/*");
     @Autowired

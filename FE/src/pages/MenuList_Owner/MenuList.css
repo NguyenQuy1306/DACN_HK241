@@ -1,0 +1,24 @@
+.ant-btn  {
+    background-color: rgb(0, 102, 92);
+}
+
+.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: rgb(0, 102, 92);
+    opacity: 0.8;
+}
+
+.ant-pagination-item {
+    border-color: rgb(0, 102, 92) !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+    color: rgb(0, 102, 92) !important;
+}
+
+.ant-input-outlined:focus {
+    border-color: rgb(0, 102, 92);
+}
+
+.ant-input-outlined:hover {
+    border-color: rgb(7,141,128);
+}

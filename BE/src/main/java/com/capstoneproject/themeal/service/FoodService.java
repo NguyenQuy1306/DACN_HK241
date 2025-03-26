@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +15,13 @@ public interface FoodService {
 
     List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId);
 
+    List<FoodFinalReponse> getFoodByCategoryId(Pageable pageable, Long restaurantId, Long categoryId);
+
+    FoodResponse getFoodById(Pageable pageable, Long restaurantId, Long foodId);
+
     public Food createNewFood(FoodRequest foodRequest, Long restaurantId, Long categoryId);
+
+    Optional<Food> isFoodExist(Long foodId);
 
     public boolean checkFoodExist(List<Long> listIdFood);
 

@@ -1,10 +1,3 @@
-.discount, .totalPrice {
-    display: flex;
-    gap: 32px;
-    justify-content: flex-end;
-    margin: 0;
-}
-
 .detail-order-table .ant-table-thead > tr > th {
     background-color: #1890ff !important; /* Màu xanh */
     color: #ffffff !important;

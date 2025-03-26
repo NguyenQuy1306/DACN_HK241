@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.controller;
 
+import com.capstoneproject.themeal.model.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +20,6 @@ import com.capstoneproject.themeal.model.request.ComboRequest;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
 import com.capstoneproject.themeal.model.request.TableRequest;
-import com.capstoneproject.themeal.model.response.ApiResponse;
-import com.capstoneproject.themeal.model.response.OrderTableResponse;
-import com.capstoneproject.themeal.model.response.ResponseCode;
-import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 import com.capstoneproject.themeal.repository.PaymentMethodRepository;
 import com.capstoneproject.themeal.repository.RestaurantRepository;
 import com.capstoneproject.themeal.repository.UserRepository;
@@ -67,6 +64,14 @@ public class OrderTableController {
     @GetMapping("/customer/{customerId}/history")
     List<OrderTableResponse> getAllOrderByCustomerId(@PathVariable Long customerId) {
         return orderTableService.getOrderTableByCustomerId(customerId);
+    }
+
+    @GetMapping("/all/{restaurantId}")
+    ResponseEntity<ApiResponse<List<FinalOrderTableResponse>>> getAllOrderByRestaurantId(@PathVariable Long restaurantId) {
+        ApiResponse<List<FinalOrderTableResponse>> apiResponse = new ApiResponse<>();
+        List<FinalOrderTableResponse> orderTableResponses = orderTableService.getAllOrdersByRestaurantId(restaurantId);
+        apiResponse.ok(orderTableResponses);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @GetMapping("/all")

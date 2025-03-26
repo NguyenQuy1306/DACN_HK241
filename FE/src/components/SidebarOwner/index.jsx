@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import styles from "./style.module.css";
-import logo from "../../assets/images/logo-mini.png";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { MdOutlineLibraryBooks } from "react-icons/md";
+import { Menu } from "antd";
+import React from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { GoCommentDiscussion } from "react-icons/go";
-import { MdOutlineTableRestaurant } from "react-icons/md";
-import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    PieChartOutlined,
-} from "@ant-design/icons";
-import { Button, Menu } from "antd";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineLibraryBooks, MdOutlineTableRestaurant } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import styles from "./style.module.css";
 const items = [
     {
         key: "1",
@@ -91,18 +80,19 @@ const SidebarOwner = ({ collapsed }) => {
     };
 
     return (
-        <Menu
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        inlineCollapsed={collapsed}
-        items={items}
-        className={styles["menu-container"]}
-        onClick={handleMenuClick}
-    />
-    
+        <div>
+            <Menu
+                style={{ minHeight: "calc(100vh - 66px)", height: "100%" }}
+                defaultSelectedKeys={["1"]}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                inlineCollapsed={collapsed}
+                items={items}
+                className={styles["menu-container"]}
+                onClick={handleMenuClick}
+            />
+        </div>
     );
 };
 
 export default SidebarOwner;
-

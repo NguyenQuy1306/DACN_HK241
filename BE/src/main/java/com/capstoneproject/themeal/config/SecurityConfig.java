@@ -47,6 +47,7 @@ public class SecurityConfig {
                         "/api/food",
                         "/api/combo",
                         "/api/orders/all",
+                        "api/orders/all/*",
                         "/api/orders/*",
                         "/api/orders",
                         "/api/table/restaurant",
@@ -74,6 +75,10 @@ public class SecurityConfig {
                         "/api/food/delete/*",
                         "/api/food/duplicate",
                         "/api/food/search",
+                        "/api/food/update",
+                        "/api/food/*",
+                        "/api/food/.*",
+                        "/api/food/category",
                         "/api/food/uploadImage/*",
                         "/api/food/uploadImage/.*",
                         "/api/food/uploadImage/**",
@@ -93,7 +98,9 @@ public class SecurityConfig {
 
                                                 .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
                                                 // white-listed URLs
-                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho phép DELETE
+                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho
+                                                                                                                       // phép
+                                                                                                                       // DELETE
                                                 .anyRequest().authenticated() // Require authentication for all other
                                 // requests
                                 )

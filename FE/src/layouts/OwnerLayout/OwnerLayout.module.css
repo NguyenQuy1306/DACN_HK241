@@ -1,6 +1,5 @@
 .container {
-    display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* .sidebar {
@@ -10,8 +9,15 @@
 .mainContent {
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    min-height: calc(100vh -66px);
+   
 }
+.header {
+    height: 100%;
+    background-color: aqua;
+}
+
+
 
 /* .header {
     height: 60px;
@@ -24,6 +30,8 @@
 
 .content {
     flex-grow: 1;
-    padding: 20px;
+    /* padding: 20px; */
+    /* background-color: #f3f2f7; */
+
     overflow-y: auto;
 }

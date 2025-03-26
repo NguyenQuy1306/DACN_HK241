@@ -59,7 +59,28 @@ public class FoodServiceImpl implements FoodService {
         }
     }
 
+    @Override
+    public List<FoodFinalReponse> getFoodByCategoryId(Pageable pageable, Long restaurantId, Long categoryId) {
+        try {
+            List<Food> food = foodRepository.searchByCategoryId(categoryId, restaurantId, pageable);
+            return foodMapper.toFoodFinalResponse(food);
 
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
+    public FoodResponse getFoodById(Pageable pageable, Long restaurantId, Long foodId) {
+        try {
+            List<FoodFinalReponse> foodOfRestaurant = getAllFood(pageable, restaurantId);
+            return foodOfRestaurant.stream().flatMap(f -> f.getFoodResponses().stream())
+                    .filter(f1 -> f1.getMaSoMonAn().equals(foodId)).findFirst().orElse(null);
+
+        } catch (Exception ex) {
+            throw new ApplicationException();
+        }
+    }
 
     @Override
     public boolean checkFoodExist(List<Long> listIdFood) {
@@ -77,6 +98,12 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+
+    public Optional<Food> isFoodExist(Long foodId) {
+        return foodRepository.findById(foodId);
+    }
+
+    @Override
     public List<FoodFinalReponse> deleteFood(Long restaurantId, Long foodId, Pageable pageable) {
         try {
             boolean isFoodExist = this.checkFoodExist(List.of(foodId));
@@ -87,7 +114,6 @@ public class FoodServiceImpl implements FoodService {
             } else {
                 throw new IllegalArgumentException("Food ID not found: " + foodId);
             }
-
 
         } catch (Exception ex) {
             throw new ApplicationException();
@@ -101,8 +127,8 @@ public class FoodServiceImpl implements FoodService {
             if (isFoodExist) {
                 Optional<Food> currentFood = foodRepository.findById(foodId);
 
-
-                Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc()).MoTa(currentFood.get().getMoTa())
+                Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc())
+                        .MoTa(currentFood.get().getMoTa())
                         .Ten(currentFood.get().getTen()).TrangThai("Active").build();
                 foodRepository.save(newFood);
 
@@ -112,7 +138,6 @@ public class FoodServiceImpl implements FoodService {
                 throw new IllegalArgumentException("Food ID not found: " + foodId);
             }
 
-
         } catch (Exception ex) {
             throw new ApplicationException();
         }
@@ -121,8 +146,8 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public List<FoodFinalReponse> searchFood(String key, Long restaurantId, Pageable pageable) {
         try {
-                List<Food> food = foodRepository.searchByKeyWord(key, restaurantId, pageable);
-                return foodMapper.toFoodFinalResponse(food);
+            List<Food> food = foodRepository.searchByKeyWord(key, restaurantId, pageable);
+            return foodMapper.toFoodFinalResponse(food);
         } catch (Exception ex) {
             throw new ApplicationException();
         }
@@ -173,7 +198,5 @@ public class FoodServiceImpl implements FoodService {
         foodRepository.save(food);
         return food;
     }
-
-
 
 }

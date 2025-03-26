@@ -13,8 +13,8 @@ function Statistic({ img, quantity, title, up, rate, compare }) {
             ></img>
             <div>
                 <div>
-                    <b className={styles.quantity}>{quantity}</b>
                     <p className={styles.title}>{title}</p>
+                    <b className={styles.quantity}>{quantity}</b>
                 </div>
                 <div className={styles["grow-up-info"]}>
                     {up && rate && (
@@ -27,7 +27,6 @@ function Statistic({ img, quantity, title, up, rate, compare }) {
                         <FaArrowCircleDown
                             color="red"
                             size={20}
-                            
                         />
                     )}
 
