@@ -158,6 +158,10 @@ function Dashboard_Owner() {
     };
 
     useEffect(() => {
+        console.log("CURRENT USER OF THIS APP: ", user);
+    }, [user]);
+
+    useEffect(() => {
         dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
     }, [restaurantOwner?.maSoNhaHang, dispatch]); // Keep dependency to avoid unnecessary calls
 
