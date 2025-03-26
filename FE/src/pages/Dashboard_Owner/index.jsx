@@ -20,45 +20,18 @@ import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
 import orderImg from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
-import { getAllOrders } from "../../redux/features/orderSlice";
+import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
-const data = {
-    labels: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ],
-    datasets: [
-        {
-            label: "Triệu đồng",
-            data: [65, 59, 80, 81, 56, 55, 100, 120, 90, 110, 86, 88],
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
-        },
-    ],
-};
-
 // Tùy chọn cho biểu đồ
-const options = {
+const revenueOption = {
     responsive: true,
     plugins: {
         legend: {
@@ -67,20 +40,8 @@ const options = {
     },
 };
 
-const data3 = {
-    labels: ["Lầu thái", "Salad hoa quả", "Tôm hấp bia", "Lẩu cua đồng"],
-    datasets: [
-        {
-            label: "Số lượng",
-            data: [30, 20, 25, 25], // Phần trăm hoặc số lượng
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-            hoverOffset: 4, // Hiệu ứng khi hover
-        },
-    ],
-};
-
 // Tùy chỉnh biểu đồ
-const options3 = {
+const categoryOption = {
     responsive: true,
     cutout: "60%", // Điều chỉnh độ dày của vòng donut
     plugins: {
@@ -97,18 +58,7 @@ const getMonthLabels = (count) => {
 };
 
 const labels = getMonthLabels(7);
-const data2 = {
-    labels: labels,
-    datasets: [
-        {
-            label: "Đơn đặt bàn",
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: false,
-            borderColor: "rgb(75, 192, 192)",
-            tension: 0.1,
-        },
-    ],
-};
+
 const handleChange = (value) => {
     console.log(`selected ${value}`);
 };
@@ -117,17 +67,6 @@ const getDayOfWeek = (dateString) => {
     const date = new Date(dateString);
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return days[date.getDay()];
-};
-
-const processData = (orders) => {
-    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-    orders.forEach((order) => {
-        const day = getDayOfWeek(order.ngay);
-        dayData[day] += 1; // Increment the count for the day
-    });
-
-    return Object.values(dayData);
 };
 
 function Dashboard_Owner() {
@@ -150,8 +89,8 @@ function Dashboard_Owner() {
     }, [order]);
 
     useEffect(() => {
-        console.log("DON HANG NHA VE DASHBOARD: ", message); // Dispatch action getAllOrders
-    }, [message]);
+        console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
+    }, [messages]);
 
     const [chartData, setChartData] = useState({
         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -302,6 +241,10 @@ function Dashboard_Owner() {
         }
     }, [messages]);
 
+    useEffect(() => {
+        console.log("categoryData", categoryData);
+    }, [categoryData]);
+
     return (
         <div className={styles.container}>
             <div className={styles["dashboard-body"]}>
@@ -392,7 +335,7 @@ function Dashboard_Owner() {
                         <h2 className={styles["bar-title"]}>Biểu đồ chi tiết doanh thu</h2>
                         <Bar
                             data={revenueData}
-                            options={options}
+                            options={revenueOption}
                         />
                     </div>
                 </div>
@@ -426,7 +369,7 @@ function Dashboard_Owner() {
                         <h2 className={styles["doughnut-title"]}>Tỷ lệ danh mục món ăn được đặt</h2>
                         <Doughnut
                             data={categoryData}
-                            options={options3}
+                            options={categoryOption}
                         />
                     </div>
                 </div>
