@@ -8,6 +8,7 @@ const MenuAdd = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [file, setFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const foodDetail=useSelector((state)=>state.food.foodDetail);
     const [formData, setFormData] = useState({
         name: "",
         price: "",
