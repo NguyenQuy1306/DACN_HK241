@@ -332,7 +332,7 @@ export const updateCategory = async (categoryId, params) => {
   }
 };
 
-export const getRestaurantByOnwerId = async (params) => {
+export const getRestaurantByOwnerId = async (params) => {
   try {
     const response = await API.get(`/api/restaurants`, { params });
     return response.data;

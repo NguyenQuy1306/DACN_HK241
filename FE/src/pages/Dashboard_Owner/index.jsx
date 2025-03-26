@@ -69,6 +69,15 @@ const getDayOfWeek = (dateString) => {
     return days[date.getDay()];
 };
 
+const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
+    return new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: currency,
+    })
+        .format(value)
+        .replace("₫", "");
+};
+
 function Dashboard_Owner() {
     const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
@@ -83,9 +92,9 @@ function Dashboard_Owner() {
             {
                 label: "Đơn đặt bàn",
                 data: [0, 0, 0, 0, 0, 0, 0],
-                fill: true,
+                fill: false,
                 borderColor: "rgb(75, 192, 192)",
-                tension: 10,
+                tension: 0.1,
             },
         ],
     });
@@ -158,8 +167,8 @@ function Dashboard_Owner() {
     };
 
     useEffect(() => {
-        console.log("CURRENT USER OF THIS APP: ", user);
-    }, [user]);
+        console.log("ORDER DATA: ", orderData);
+    }, [orderData]);
 
     useEffect(() => {
         dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
@@ -317,9 +326,11 @@ function Dashboard_Owner() {
                             <Statistic
                                 img={money}
                                 title="Tổng doanh thu (VND)"
-                                quantity={messages
-                                    .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
-                                    .reduce((acc, cur) => acc + cur.gia, 0)}
+                                quantity={formatCurrency(
+                                    messages
+                                        .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
+                                        .reduce((acc, cur) => acc + cur.gia, 0),
+                                )}
                                 up={true}
                                 rate={13}
                                 compare="So với hôm qua"
@@ -353,26 +364,18 @@ function Dashboard_Owner() {
                     </div>
                     <div className={styles["trending-wrap"]}>
                         <div className={styles.trending}>
-                            <h3
+                            <h2
                                 style={{
                                     paddingLeft: "16px",
                                     marginTop: "12px",
-                                    fontSize: "20px",
                                     color: "rgb(28,69,28)",
                                 }}
                             >
-                                Top 10 món ăn bán chạy nhất
-                            </h3>
+                                Top các món ăn bán chạy nhất
+                            </h2>
                             <Divider />
                             <TrendingItem />
                             <Divider />
-                            <TrendingItem />
-                            <Divider />
-                            <TrendingItem />
-                            <Divider />
-                            <TrendingItem />
-                            <Divider />
-                            <TrendingItem />
                         </div>
                         <div className={styles.doughnut}>
                             <h2 className={styles["doughnut-title"]}>Tỷ lệ danh mục món ăn được đặt</h2>

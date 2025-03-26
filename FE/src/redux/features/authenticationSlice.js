@@ -38,7 +38,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValu
 });
 export const getRestaurantByOwnerId = createAsyncThunk("/restaurants/owner", async (params, { rejectWithValue }) => {
     try {
-        const response = await api.getRestaurantByOnwerId(params);
+        const response = await api.getRestaurantByOwnerId(params);
         return response;
     } catch (error) {
         return rejectWithValue(error.response.data);
