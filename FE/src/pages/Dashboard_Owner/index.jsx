@@ -215,6 +215,64 @@ function Dashboard_Owner() {
         };
     }, []);
 
+    // const [topMenu, setTopMenu] = useState([]);
+    // const [topMenuRender, setTopMenuRender] = useState({});
+    // const [trendingItem, setTrendingItem] = useState([]);
+
+    // useEffect(() => {
+    //     const setMenu = messages.reduce((acc, cur) => {
+    //         return new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon)]);
+    //     }, new Set());
+    //     setTopMenu([...setMenu]);
+    // }, [messages]);
+
+    // useEffect(() => {
+    //     const menuWithName = topMenu.reduce((acc, cur) => {
+    //         acc[cur] = 0;
+    //         return acc;
+    //     }, {});
+    //     setTopMenuRender(menuWithName);
+    // }, [topMenu]);
+
+    // useEffect(() => {
+    //     const updateTopMenuRender = { ...topMenuRender };
+    //     messages.forEach((message) => {
+    //         message.danhSachMonAn.forEach((item) => {
+    //             updateTopMenuRender[item.tenMon] += item.soLuong;
+    //         });
+    //     });
+    //     setTopMenuRender(updateTopMenuRender);
+    // }, [topMenu]);
+
+    const menuNames = messages.reduce(
+        (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
+        new Set(),
+    );
+    const topTrending = [...menuNames].map((i) => {
+        return {
+            name: i,
+            quantity: 0,
+            price: 0,
+        };
+    }, []);
+
+    const topMenuTrending = messages.forEach((item) => {
+        item.danhSachMonAn.forEach((i) => {
+            const curItem = topTrending.find((item1) => item1.name === i.tenMon);
+            curItem.quantity += i.soLuong;
+            curItem.price = i.gia;
+        });
+    });
+
+    useEffect(() => {
+        console.log("TOP MENU: ", topTrending);
+    }, [topTrending]);
+
+    // useEffect(() => {
+    //     const trendingItems = Object.entries(topMenuRender).sort((a, b) => b[1] - a[1]);
+    //     setTrendingItem(trendingItems);
+    // }, [topMenuRender]);
+
     useEffect(() => {
         if (messages.length > 0) {
             const processedOrderData = processOrderData(messages);
@@ -373,8 +431,20 @@ function Dashboard_Owner() {
                             >
                                 Top các món ăn bán chạy nhất
                             </h2>
-                            <Divider />
-                            <TrendingItem />
+                            {topTrending
+                                .sort((a, b) => b["quantity"] - a["quantity"])
+                                .map((item, index) => {
+                                    return (
+                                        <TrendingItem
+                                            rank={index + 1}
+                                            key={index}
+                                            name={item.name}
+                                            price={item.price}
+                                            quantity={item.quantity}
+                                        />
+                                    );
+                                })}
+
                             <Divider />
                         </div>
                         <div className={styles.doughnut}>
