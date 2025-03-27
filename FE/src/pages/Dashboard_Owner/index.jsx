@@ -167,12 +167,8 @@ function Dashboard_Owner() {
     };
 
     useEffect(() => {
-        console.log("ORDER DATA: ", orderData);
-    }, [orderData]);
-
-    useEffect(() => {
         dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
-    }, [restaurantOwner?.maSoNhaHang, dispatch]); // Keep dependency to avoid unnecessary calls
+    }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
 
     useEffect(() => {
         console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
@@ -215,35 +211,6 @@ function Dashboard_Owner() {
         };
     }, []);
 
-    // const [topMenu, setTopMenu] = useState([]);
-    // const [topMenuRender, setTopMenuRender] = useState({});
-    // const [trendingItem, setTrendingItem] = useState([]);
-
-    // useEffect(() => {
-    //     const setMenu = messages.reduce((acc, cur) => {
-    //         return new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon)]);
-    //     }, new Set());
-    //     setTopMenu([...setMenu]);
-    // }, [messages]);
-
-    // useEffect(() => {
-    //     const menuWithName = topMenu.reduce((acc, cur) => {
-    //         acc[cur] = 0;
-    //         return acc;
-    //     }, {});
-    //     setTopMenuRender(menuWithName);
-    // }, [topMenu]);
-
-    // useEffect(() => {
-    //     const updateTopMenuRender = { ...topMenuRender };
-    //     messages.forEach((message) => {
-    //         message.danhSachMonAn.forEach((item) => {
-    //             updateTopMenuRender[item.tenMon] += item.soLuong;
-    //         });
-    //     });
-    //     setTopMenuRender(updateTopMenuRender);
-    // }, [topMenu]);
-
     const menuNames = messages.reduce(
         (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
         new Set(),
@@ -265,13 +232,8 @@ function Dashboard_Owner() {
     });
 
     useEffect(() => {
-        console.log("TOP MENU: ", topTrending);
-    }, [topTrending]);
-
-    // useEffect(() => {
-    //     const trendingItems = Object.entries(topMenuRender).sort((a, b) => b[1] - a[1]);
-    //     setTrendingItem(trendingItems);
-    // }, [topMenuRender]);
+        setMessages(order);
+    }, [order]);
 
     useEffect(() => {
         if (messages.length > 0) {
@@ -414,9 +376,14 @@ function Dashboard_Owner() {
                     </div>
                     <Divider />
 
-                    <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
+                    <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét gần đây của khách hàng</h2>
 
                     <div className={styles["comment-wrap"]}>
+                        <CommentCard />
+                        <CommentCard />
+                        <CommentCard />
+                        <CommentCard />
+                        <CommentCard />
                         <CommentCard />
                         <CommentCard />
                     </div>

@@ -1,6 +1,7 @@
 
 .container {
-    display: flex;
+    /* display: flex;
+    width: 100%; */
 }
 
 .noti {
@@ -87,8 +88,10 @@
 
 .comment-wrap {
     display: flex;
-    gap: 8px;
-
+    overflow-x: auto;
+    gap: 12px;
+    width: 100%;
+    white-space: nowrap;
     
 }
 
