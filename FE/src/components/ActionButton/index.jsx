@@ -40,8 +40,10 @@ function ActionButton({
         <div className={styles.container}>
             {type === "Delete" ? (
                 <Popconfirm
-                    title="Delete the task?"
-                    description="Are you sure to delete this task?"
+                    title={isMenuItem ? "Delete Menu" : "Delete Category"}
+                    description={
+                        isMenuItem ? "Are you sure to delete this menu?" : "Are you sure to delete this category?"
+                    }
                     onConfirm={confirm}
                     onCancel={cancel}
                     okText="Yes"

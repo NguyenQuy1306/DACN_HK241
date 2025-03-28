@@ -215,6 +215,24 @@ function Dashboard_Owner() {
         (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
         new Set(),
     );
+
+    const timeFrame = messages.reduce((acc, cur) => new Set([...acc, cur.gio]), new Set());
+
+    const timeFrameDetail = [...timeFrame].reduce((acc, cur) => {
+        acc[cur] = 0;
+        return acc;
+    }, {});
+
+    messages.forEach((item) => {
+        timeFrameDetail[item.gio] += 1;
+    });
+
+    const timeFrameDetailArray = Object.entries(timeFrameDetail)
+        .sort((a, b) => b[1] - a[1])
+        .map((i) => i[0]);
+
+    console.log("THỜI GIAN ĐẶT: ", timeFrameDetailArray);
+
     const topTrending = [...menuNames].map((i) => {
         return {
             name: i,
@@ -336,7 +354,7 @@ function Dashboard_Owner() {
                             <Statistic
                                 img={ship}
                                 title="Khung giờ đặt nhiều nhất"
-                                quantity={"17 - 20"}
+                                quantity={timeFrameDetailArray[0]?.slice(0, 5)}
                                 up={true}
                                 compare=""
                             />
