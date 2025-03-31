@@ -38,7 +38,7 @@ const items = [
         ],
     },
     {
-        key: "8",
+        key: "4",
         icon: <GoCommentDiscussion />,
         label: "Rating",
     },
