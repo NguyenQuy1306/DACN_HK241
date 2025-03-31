@@ -362,6 +362,14 @@ export const updateRestaurantInfor = async (params) => {
   }
 };
 
+export const loginWithGoogle = async (params) => {
+  try {
+    const response = await API.post(`/oauth2/authorization/google`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
 export const createFood = async ({
   restaurantId,
   categoryId,

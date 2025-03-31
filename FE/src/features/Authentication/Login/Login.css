@@ -101,3 +101,7 @@ h2 {
   cursor: pointer; /* Đổi con trỏ thành pointer khi hover */
   margin-top: 10px; /* Đặt khoảng cách giữa nút và input */
 }
+.google-login
+{
+  margin-right: 20px;
+}

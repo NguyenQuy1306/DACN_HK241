@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+
 import java.util.Set;
 import java.util.List;
 import java.sql.Date;
@@ -52,6 +53,10 @@ public class User {
 
     @Column(nullable = false)
     private String GioiTinh = "Nam";
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
     @OneToMany(mappedBy = "NguoiDung")
     private Set<UserLikeRate> danhSachNguoiDungThichDanhGia;

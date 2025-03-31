@@ -1,6 +1,8 @@
 package com.capstoneproject.themeal.SessionAuthenticationFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import jakarta.servlet.FilterChain;
@@ -10,7 +12,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 // Đảm bảo rằng các class này tồn tại trong dự án của bạn
@@ -25,37 +29,16 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAut
 
 @Component
 public class SessionAuthenticationFilter extends OncePerRequestFilter {
+    private static final String DEFAULT_AUTHORIZATION_REQUEST_ATTR_NAME = HttpSessionOAuth2AuthorizationRequestRepository.class.getName() + ".AUTHORIZATION_REQUEST";
 
-    private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
-            "/api/v1/auth/logout",
-            "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*",
-            "/api/restaurants",
-            "/api/restaurants/**",
-            "/api/restaurants", // Match any restaurant-related URL
-            "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
-            "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources",
-            "/swagger-resources/.*",
-            "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*",
-            "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*", "api/orders/all/*",
-            "/api/orders",
-            "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
-            "/elas/searchWithKeyword",
-            "/elas/getDocument",
-            "api/payments/*",
-            "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
-            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
-            "/ws/*",
-            "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",
-            "/api/food/delete/*", "/api/food/update", "/api/food/duplicate", "/api/food/search", "/api/food/category",
-            "/api/food/.*", "/api/food/*",
-            "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
-            "/api/food/restaurants/*/categories/*");
+    private final String sessionAttributeName = DEFAULT_AUTHORIZATION_REQUEST_ATTR_NAME;
+    private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register", "/api/v1/auth/logout", "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*", "/api/restaurants", "/api/restaurants/**", "/api/restaurants", // Match any restaurant-related URL
+            "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories", "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources", "/swagger-resources/.*", "/configuration/ui", "/configuration/security", "/swagger-ui/.*", "/webjars/.*", "/api/food", "/api/combo", "/api/orders/all", "/api/table/restaurant", "/api/orders/*", "api/orders/all/*", "/api/orders", "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword", "/elas/searchWithKeyword", "/elas/getDocument", "api/payments/*", "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback", "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments", "/ws/*", "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage", "/api/food/delete/*", "/api/food/update", "/api/food/duplicate", "/api/food/search", "/api/food/category", "/api/food/.*", "/api/food/*", "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image", "/api/food/restaurants/*/categories/*", "/oauth2/authorization/infor", "/callbackOauthen2", "/callbackOauthen2/*", "/login", "/login/*", "/favicon.ico", "/user", "/welcome", "login/oauth2/code/google", "/secure", "/callbackOauth2Google");
     @Autowired
     private SessionRegistry sessionRegistry;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
 
@@ -76,6 +59,29 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         }
 
         HttpSession session = request.getSession(false);
+        if (session != null) {
+            OAuth2AuthorizationRequest authorizationRequest = getAuthorizationRequest(request);
+
+//            String stateParameter = request.getParameter("state");
+//            System.out.println("stateParameter: " + stateParameter);
+//            if (authorizationRequest != null) {
+//                System.out.println("true or fallses: " + stateParameter.equals(authorizationRequest.getState()));
+//            }
+            Object authRequest = session.getAttribute("org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository.AUTHORIZATION_REQUEST");
+            System.out.println("Authorization Request: " + authRequest);
+            if (authRequest instanceof OAuth2AuthorizationRequest) {
+                OAuth2AuthorizationRequest requestDetails = (OAuth2AuthorizationRequest) authRequest;
+                System.out.println("Client ID: " + requestDetails.getClientId());
+                System.out.println("Authorization URI: " + requestDetails.getAuthorizationUri());
+                System.out.println("Scopes: " + requestDetails.getScopes());
+                System.out.println("Redirect URI: " + requestDetails.getRedirectUri());
+                System.out.println("State: " + requestDetails.getState());
+            }
+        } else {
+            System.out.println("Session does not exist.");
+        }
+
+
         if (!isValidSession(session)) {
             sendUnauthorizedResponse(response);
             return;
@@ -85,19 +91,23 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    private OAuth2AuthorizationRequest getAuthorizationRequest(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return (session != null) ? (OAuth2AuthorizationRequest) session.getAttribute(this.sessionAttributeName) : null;
+    }
+
     private boolean isPublicUrl(String requestURI) {
         System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
         // boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern ->
         // requestURI.matches(pattern))
         // || requestURI.contains("/swagger");
-        boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith)
-                || requestURI.contains("/swagger");
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith) || requestURI.contains("/swagger");
         return isPublic;
     }
 
     private boolean isValidSession(HttpSession session) {
-        if (session == null)
-            return false;
+        if (session == null) return false;
+        System.out.println("USER_SESSION id: " + session.getAttribute("USER_SESSION"));
         LoginResponse userSession = (LoginResponse) session.getAttribute("USER_SESSION");
 
         return userSession != null && sessionRegistry.isSessionValid(session.getId());

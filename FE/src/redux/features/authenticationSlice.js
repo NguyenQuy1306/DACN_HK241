@@ -59,12 +59,25 @@ export const getRestaurantByOwnerId = createAsyncThunk(
     }
   }
 );
+
+export const loginWithGoogle = createAsyncThunk(
+  "/oauth2/google",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.loginWithGoogle(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Login failed");
+    }
+  }
+);
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
     user: null,
     userRole: "guest",
     registerStatus: "",
+    oath2Callback: null,
     restaurantOwner: null,
     openModal: false,
     error: null,
@@ -171,6 +184,18 @@ const authenticationSlice = createSlice({
         state.restaurantOwner = action.payload.payload;
       })
       .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwner = [];
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.oath2Callback = action.payload.payload;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

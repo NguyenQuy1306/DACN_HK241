@@ -19,6 +19,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc"; // Import icon Google từ react-icons
 
 export default function Login({
   setModalType,
@@ -67,35 +68,12 @@ export default function Login({
       setIsClickLogout(false);
     }
   }, [user]);
-  // useEffect(() => {
-  //   // Check session on initial load
-  //   dispatch(checkSession());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   const useInfor = localStorage.getItem("userInfor");
-  //   console.log("useInforuseInfor", useInfor);
-  //   if (useInfor) {
-  //     if (!isCLickLogout) {
-  //       setLogin(true);
-  //       setRegister(true);
-  //     } else {
-  //       toast.success("Đăng nhập thành công", {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //       });
-  //       setLogin(true);
-  //       setRegister(true);
-  //       setIsClickLogout(false);
-  //     }
-  //   }
-  // }, [isCLickLogout, setLogin, setRegister, setIsClickLogout]);
 
   useEffect(() => {
     if (error) {
       setMessage(error); // Display error message
-      dispatch(clearError()); // Reset error after displaying
+    } else {
+      setMessage("");
     }
   }, [error, dispatch]);
 
@@ -105,6 +83,18 @@ export default function Login({
   const handleOnClickLogo = () => {
     navigate(`../Home`);
   };
+  const handleOnchangeUsername = (e) => {
+    dispatch(clearError());
+    setEmail(e.target.value);
+  };
+  const handleOnchangePassword = (e) => {
+    dispatch(clearError());
+    setPassword(e.target.value);
+  };
+  const handleGoogleLogin = async () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
+
   return (
     <div className="loginDiv">
       <div className="loginDivH1">
@@ -120,7 +110,7 @@ export default function Login({
               className="input-group-input"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleOnchangeUsername(e)}
               required
             />
           </div>
@@ -136,7 +126,7 @@ export default function Login({
             <input
               type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handleOnchangePassword(e)}
               required
               style={{ paddingRight: "30px" }}
             />
@@ -157,6 +147,16 @@ export default function Login({
           </Button>
         </form>
         {message && <p className="login-notify">{message}</p>}
+        <div className="google-login" style={{ marginTop: "10px" }}>
+          <Button
+            variant="outlined"
+            startIcon={<FcGoogle />}
+            onClick={handleGoogleLogin}
+            fullWidth
+          >
+            Đăng nhập với Google
+          </Button>
+        </div>
         <div className="footer-links">
           <p>
             Bạn chưa có tài khoản?{" "}

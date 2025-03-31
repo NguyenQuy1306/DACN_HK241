@@ -2,117 +2,91 @@ package com.capstoneproject.themeal.config;
 
 import lombok.RequiredArgsConstructor;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionAuthenticationFilter;
+import com.capstoneproject.themeal.handler.OAuth2AuthenticationSuccessHandler;
+import com.capstoneproject.themeal.service.impl.CustomOidcUserService;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.*;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-        @Autowired
-        private SessionAuthenticationFilter sessionAuthenticationFilter;
-        private final AuthenticationProvider authenticationProvider;
+    @Autowired
+    private SessionAuthenticationFilter sessionAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:https://accounts.google.com}")
+    private String issuer;
+    private static final String[] WHITE_LIST_URL = {"/v2/api-docs", "/v3/api-docs", "/swagger-resources", "/swagger-ui/**", "/api/v1/auth/**", "/api/restaurants/**", "/api/orders/**", "/api/payments/**", "/user-info"};
 
-        private static final String[] WHITE_LIST_URL = {
-                        "/v2/api-docs",
-                        "/v3/api-docs",
-                        "/v3/api-docs/**",
-                        "/swagger-resources",
-                        "/swagger-resources/**",
-                        "/v3/api-docs/swagger-config",
-                        "/configuration/ui",
-                        "/configuration/security",
-                        "/swagger-ui/**",
-                        "/webjars/**",
-                        "/swagger-ui.html",
-                        "/api/v1/auth/**", // API for guest access
-                        "/api/v1/auth/logout",
-                        "/api/restaurants/*",
-                        "/api/restaurants",
-                        "/api/restaurants/**",
-                        "/api/restaurants/.*",
-                        "/api/restaurants/",
-                        "/api/restaurant-categories",
-                        "/api/food",
-                        "/api/combo",
-                        "/api/orders/all",
-                        "api/orders/all/*",
-                        "/api/orders/*",
-                        "/api/orders",
-                        "/api/table/restaurant",
-                        "/api/rate/**",
-                        "/ws/*",
-                        "/ws/**",
-                        "/api/payments/*",
-                        "api/payments/create-payment-link",
-                        "/api/favorite-list/**",
-                        "/api/favorite-list/add-new-card/*",
-                        "/api/order-table/*",
-                        "/api/restaurant-categories",
-                        "/elas/createOrUpdateDocument",
-                        "/elas/searchDocument",
-                        "/elas/getDocument",
-                        "/elas/searchByKeyword",
-                        "/elas/searchWithKeyword",
-                        "/api/payments/create-payment-link",
-                        "/api/payments/payment-callback",
-                        "/api/payments/.*",
-                        "/api/payments/getOrderById",
-                        "/api/payments/deposit", "/api/category/**",
-                        "/api/category/*",
-                        "/api/food/uploadImage",
-                        "/api/food/delete/*",
-                        "/api/food/duplicate",
-                        "/api/food/search",
-                        "/api/food/update",
-                        "/api/food/*",
-                        "/api/food/.*",
-                        "/api/food/category",
-                        "/api/food/uploadImage/*",
-                        "/api/food/uploadImage/.*",
-                        "/api/food/uploadImage/**",
-                        "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
-                        "/api/food/restaurants/*/categories/*"
+    @Autowired
+    void registerProvider(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider);
+    }
+
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler successHandler;
+    @Autowired
+    private CustomOidcUserService customOidcUserService;
+
+
+    @Bean
+    public JwtDecoderFactory<ClientRegistration> jwtDecoderFactory() {
+        return clientRegistration -> {
+            NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(clientRegistration.getProviderDetails().getJwkSetUri()).build();
+            JwtTimestampValidator timestampValidator = new JwtTimestampValidator(Duration.ofMinutes(5));
+            jwtDecoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault(), timestampValidator));
+            return jwtDecoder;
         };
+    }
 
-        @Autowired
-        void registerProvider(AuthenticationManagerBuilder auth) {
-                auth.authenticationProvider(authenticationProvider);
-        }
+    @Bean
+    public Clock customClock() {
+        return Clock.offset(Clock.systemUTC(), Duration.ofMinutes(3));
+    }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .authorizeHttpRequests(authz -> authz
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authz -> authz
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .failureHandler((request, response, exception) -> {
+                            response.sendRedirect("/login?error=" + URLEncoder.encode(exception.getMessage(), StandardCharsets.UTF_8));
+                        })
+                        .successHandler(successHandler)
+                )
 
-                                                .requestMatchers(WHITE_LIST_URL).permitAll() // Allow all access to
-                                                // white-listed URLs
-                                                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").permitAll() // Cho
-                                                                                                                       // phép
-                                                                                                                       // DELETE
-                                                .anyRequest().authenticated() // Require authentication for all other
-                                // requests
-                                )
-                                .cors(cors -> {
-                                })
-                                .csrf(csrf -> csrf.disable()) // Disable CSRF (for development)
-                                .formLogin(form -> form.disable()) // Disable form login
-                                .authenticationProvider(authenticationProvider) // Add custom authentication provider
-                                .addFilterBefore(sessionAuthenticationFilter,
-                                                UsernamePasswordAuthenticationFilter.class);
+//                .oauth2ResourceServer(oauth2 -> oauth2
+//                        .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
+//                )
+                .csrf(csrf -> csrf.disable())
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(sessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
-        }
+        return http.build();
+    }
+
 
 }
