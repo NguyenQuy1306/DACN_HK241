@@ -44,6 +44,7 @@ export const getRestaurantByOwnerId = createAsyncThunk("/restaurants/owner", asy
         return rejectWithValue(error.response.data);
     }
 });
+
 const authenticationSlice = createSlice({
     name: "authentication",
     initialState: {

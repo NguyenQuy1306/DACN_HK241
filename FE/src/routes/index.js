@@ -22,6 +22,9 @@ import MenuList_Owner from "../pages/MenuList_Owner";
 import MenuDetail from "./../pages/MenuDetail/index";
 import CategoryOwner from "./../pages/CategoyOwner/index";
 import OrderOwner from "./../pages/OrderOwner/index";
+import RatingOwner from "./../pages/RatingOwner/index";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard_Admin from "../pages/Dashboard_Admin";
 export const routes = [
     {
         path: "/owner/restaurant",
@@ -49,6 +52,13 @@ export const routes = [
         component: MenuList_Owner,
         layout: OwnerLayout,
         title: "Menu",
+        role: ["owner"],
+    },
+    {
+        path: "/owner/rating",
+        component: RatingOwner,
+        layout: OwnerLayout,
+        title: "Đánh giá",
         role: ["owner"],
     },
     {
@@ -148,5 +158,13 @@ export const routes = [
         path: "/DetailRestaurant/:id/menuImages",
         component: ViewImagepage,
         role: ["guest", "customer", "owner"],
+    },
+
+    {
+        path: "/admin/dashboard",
+        component: Dashboard_Admin,
+        layout: AdminLayout,
+        role: "owner",
+        title: "Bảng điều khiển",
     },
 ];

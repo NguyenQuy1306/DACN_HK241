@@ -6,5 +6,16 @@
 
 .body {
     flex: 1;
-    padding-right: 16px;
+    padding: 8px;
+}
+
+
+.actions {
+    display: flex;
+    gap: 8px;
+
+}
+
+.detail {
+    color: #fff;
 }

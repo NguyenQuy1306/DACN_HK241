@@ -1,0 +1,51 @@
+import { Menu } from "antd";
+import React from "react";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineTableRestaurant } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import styles from "./style.module.css";
+const items = [
+    {
+        key: "1",
+        icon: <LuLayoutDashboard />,
+        label: "Dashboard",
+    },
+    {
+        key: "2",
+        icon: <MdOutlineTableRestaurant />,
+        label: "Partners",
+    },
+];
+const SidebarAdmin = ({ collapsed }) => {
+    const navigate = useNavigate();
+
+    const handleMenuClick = ({ key }) => {
+        switch (key) {
+            case "1":
+                navigate("/admin/dashboard");
+                break;
+            case "2":
+                navigate("/admin/partner");
+                break;
+            default:
+                break;
+        }
+    };
+
+    return (
+        <div>
+            <Menu
+                style={{ minHeight: "calc(100vh - 66px)", height: "100%" }}
+                defaultSelectedKeys={["1"]}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                inlineCollapsed={collapsed}
+                items={items}
+                className={styles["menu-container"]}
+                onClick={handleMenuClick}
+            />
+        </div>
+    );
+};
+
+export default SidebarAdmin;
