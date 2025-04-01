@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./style.module.css";
 import { getAllCategory } from "../../redux/features/categorySlice";
-import { createFood } from "../../redux/features/foodSlice";
+import { createFood, setCreateStatus } from "../../redux/features/foodSlice";
+import { notification } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
 const MenuAdd = () => {
     const dispatch = useDispatch();
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [file, setFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [formData, setFormData] = useState({
@@ -13,11 +15,26 @@ const MenuAdd = () => {
         price: "",
         description: "",
     });
-    
 
     const danhMuc = useSelector((state) => state.category.category);
     const { restaurantOwner } = useSelector((state) => state.authentication);
-    console.log("danh muc ", danhMuc);
+
+    const { createStatus } = useSelector((state) => state.food);
+
+    useEffect(() => {
+        console.log("CREATE STATUS: ", createStatus);
+        if (createStatus === "SUCCESS") {
+            openNotification();
+            setFormData({
+                name: "",
+                price: "",
+                description: "",
+            });
+            setSelectedCategory(null);
+            dispatch(setCreateStatus(""));
+        }
+    }, [createStatus]);
+
     useEffect(() => {
         dispatch(getAllCategory({ restaurantId: restaurantOwner.maSoNhaHang }));
     }, [restaurantOwner.maSoNhaHang]);
@@ -48,16 +65,26 @@ const MenuAdd = () => {
 
         dispatch(
             createFood({
-                restaurantId: 1,
-                categoryId: 1,
+                restaurantId: restaurantOwner.maSoNhaHang,
+                categoryId: selectedCategory,
                 foodRequest: foodRequest,
                 file: file,
             }),
         );
     };
 
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = () => {
+        api.open({
+            message: "Thành công",
+            description: "Món ăn đã được thêm thành công. Vui lòng đến trang danh sách món ăn để xem chi tiết.",
+            icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+        });
+    };
+
     return (
         <div className={styles.container}>
+            {contextHolder}
             <div className={styles.content}>
                 <div className={styles.formSection}>
                     <h2 className={styles.title}>Thêm Món Ăn Mới</h2>
@@ -79,13 +106,14 @@ const MenuAdd = () => {
                         <select
                             className={styles.select}
                             value={selectedCategory}
+                            name="category"
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
                             <option value="">Chọn danh mục</option>
                             {danhMuc?.map((category) => (
                                 <option
                                     key={category.maSoDanhMuc}
-                                    value={category.ten}
+                                    value={category.maSoDanhMuc}
                                 >
                                     {category.ten}
                                 </option>
@@ -152,7 +180,12 @@ const MenuAdd = () => {
                 >
                     Xác nhận
                 </button>
-                <button className={styles.cancelButton}>Huỷ bỏ</button>
+                <button
+                    onClick={() => openNotification()}
+                    className={styles.cancelButton}
+                >
+                    Huỷ bỏ
+                </button>
             </div>
         </div>
     );
