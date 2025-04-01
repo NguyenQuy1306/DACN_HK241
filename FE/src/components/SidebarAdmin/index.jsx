@@ -1,5 +1,5 @@
 import { Menu } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineTableRestaurant } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -18,8 +18,15 @@ const items = [
 ];
 const SidebarAdmin = ({ collapsed }) => {
     const navigate = useNavigate();
+    const [navKey, setNavKey] = useState(1);
+    useEffect(() => {
+        if (navKey === 1) {
+            navigate("/admin/dashboard");
+        }
+    }, [navKey]);
 
     const handleMenuClick = ({ key }) => {
+        setNavKey(key);
         switch (key) {
             case "1":
                 navigate("/admin/dashboard");
