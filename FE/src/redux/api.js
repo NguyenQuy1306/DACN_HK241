@@ -290,6 +290,14 @@ export const getRateOfRestaurant = async ({ restaurantId }) => {
         throw error.response?.data || error;
     }
 };
+export const getAllRestaurant = async () => {
+    try {
+        const response = await API.get(`/api/restaurants/all`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
 
 //Category APIs
 export const getAllCategory = async (params) => {

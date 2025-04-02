@@ -1,5 +1,6 @@
 import { Client } from "@stomp/stompjs";
-import { Col, Divider, Row, Select } from "antd";
+import { Col, Divider, message, Row, Select } from "antd";
+
 import {
     ArcElement,
     BarElement,
@@ -16,19 +17,15 @@ import React, { useEffect, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
-import food from "../../assets/images/food.png";
+import cancelImg from "../../assets/images/cancel.svg";
 import money from "../../assets/images/money.png";
-import orderImg from "../../assets/images/order.png";
-import ship from "../../assets/images/ship.png";
-import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
+import partnerImg from "../../assets/images/partner.svg";
+import waitingImg from "../../assets/images/waiting.svg";
+import { getAllRestaurants } from "../../redux/features/adminSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
-import partnerImg from "../../assets/images/partner.svg";
-import waitingImg from "../../assets/images/waiting.svg";
-import cancelImg from "../../assets/images/cancel.svg";
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -81,18 +78,17 @@ const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
 };
 
 function Dashboard_Admin() {
-    const [stompClient, setStompClient] = useState(null);
     const dispatch = useDispatch();
-    const { order } = useSelector((state) => state.order);
-    const user = useSelector((state) => state.authentication.user);
-    const [messages, setMessages] = useState(order);
-    const restaurantOwner = useSelector((state) => state.authentication.restaurantOwner);
+    const { restaurants } = useSelector((state) => state.admin);
+    const [stompClient, setStompClient] = useState(null);
 
-    const [orderData, setOrderData] = useState({
+    const [messages, setMessages] = useState(restaurants);
+
+    const [joinData, setJoinData] = useState({
         labels,
         datasets: [
             {
-                label: "Đơn đặt bàn",
+                label: "Đối tác liên kết",
                 data: [0, 0, 0, 0, 0, 0, 0],
                 fill: false,
                 borderColor: "rgb(75, 192, 192)",
@@ -114,11 +110,11 @@ function Dashboard_Admin() {
         ],
     });
 
-    const [categoryData, setCategoryData] = useState({
+    const [regionData, setRegionData] = useState({
         labels: [],
         datasets: [
             {
-                label: "Số lượng",
+                label: "Phần trăm",
                 data: [],
                 backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
                 hoverOffset: 4,
@@ -126,11 +122,11 @@ function Dashboard_Admin() {
         ],
     });
 
-    const processOrderData = (orders) => {
+    const processJoinData = (orders) => {
         const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
 
         orders.forEach((order) => {
-            const day = getDayOfWeek(order.ngay);
+            const day = getDayOfWeek(order.ngayThamGia);
             dayData[day] += 1; // Increment the count for the day
         });
 
@@ -149,38 +145,28 @@ function Dashboard_Admin() {
         return Object.values(dayData);
     };
 
-    const processCategoryData = (orders) => {
-        const categoryData = {};
+    const processRegionData = (res) => {
+        const regionData = {};
 
-        orders.forEach((order) => {
-            order.danhSachMonAn.forEach((item) => {
-                if (categoryData[item.tenMon]) {
-                    categoryData[item.tenMon] += 1;
-                } else {
-                    categoryData[item.tenMon] = 1;
-                }
-            });
+        res.forEach((item) => {
+            if (regionData[item.thanhPho]) {
+                regionData[item.thanhPho] += 1;
+            } else {
+                regionData[item.thanhPho] = 1;
+            }
         });
 
-        const labels = Object.keys(categoryData);
-        const data = Object.values(categoryData);
+        const labels = Object.keys(regionData);
+        const data = Object.values(regionData);
+        const total = data.reduce((acc, cur) => acc + cur, 0);
+        const percentData = data.map((item) => ((item / total) * 100).toFixed(2));
 
-        return { labels, data };
+        return { labels, percentData };
     };
 
     useEffect(() => {
-        dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
-    }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
-
-    useEffect(() => {
-        console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
-    }, [messages]);
-
-    useEffect(() => {
-        if (user) {
-            dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
-        }
-    }, [dispatch, user]);
+        dispatch(getAllRestaurants());
+    }, [dispatch]);
 
     useEffect(() => {
         // Khởi tạo kết nối WebSocket khi component mount
@@ -190,7 +176,7 @@ function Dashboard_Admin() {
             connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
             onConnect: () => {
                 setStompClient(client);
-                client.subscribe("/topic/messages", (message) => {
+                client.subscribe("/topic/restaurants", (message) => {
                     console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
                     setMessages(JSON.parse(message.body));
                 });
@@ -213,84 +199,86 @@ function Dashboard_Admin() {
         };
     }, []);
 
-    const menuNames = messages.reduce(
-        (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
-        new Set(),
-    );
+    // const menuNames = messages.reduce(
+    //     (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
+    //     new Set(),
+    // );
 
-    const timeFrame = messages.reduce((acc, cur) => new Set([...acc, cur.gio]), new Set());
+    // const timeFrame = messages.reduce((acc, cur) => new Set([...acc, cur.gio]), new Set());
 
-    const timeFrameDetail = [...timeFrame].reduce((acc, cur) => {
-        acc[cur] = 0;
-        return acc;
-    }, {});
+    // const timeFrameDetail = [...timeFrame].reduce((acc, cur) => {
+    //     acc[cur] = 0;
+    //     return acc;
+    // }, {});
 
-    messages.forEach((item) => {
-        timeFrameDetail[item.gio] += 1;
-    });
+    // messages.forEach((item) => {
+    //     timeFrameDetail[item.gio] += 1;
+    // });
 
-    const timeFrameDetailArray = Object.entries(timeFrameDetail)
-        .sort((a, b) => b[1] - a[1])
-        .map((i) => i[0]);
+    // const timeFrameDetailArray = Object.entries(timeFrameDetail)
+    //     .sort((a, b) => b[1] - a[1])
+    //     .map((i) => i[0]);
 
-    console.log("THỜI GIAN ĐẶT: ", timeFrameDetailArray);
+    // const topTrending = [...menuNames].map((i) => {
+    //     return {
+    //         name: i,
+    //         quantity: 0,
+    //         price: 0,
+    //     };
+    // }, []);
 
-    const topTrending = [...menuNames].map((i) => {
-        return {
-            name: i,
-            quantity: 0,
-            price: 0,
-        };
-    }, []);
-
-    const topMenuTrending = messages.forEach((item) => {
-        item.danhSachMonAn.forEach((i) => {
-            const curItem = topTrending.find((item1) => item1.name === i.tenMon);
-            curItem.quantity += i.soLuong;
-            curItem.price = i.gia;
-        });
-    });
-
-    useEffect(() => {
-        setMessages(order);
-    }, [order]);
+    // const topMenuTrending = messages.forEach((item) => {
+    //     item.danhSachMonAn.forEach((i) => {
+    //         const curItem = topTrending.find((item1) => item1.name === i.tenMon);
+    //         curItem.quantity += i.soLuong;
+    //         curItem.price = i.gia;
+    //     });
+    // });
 
     useEffect(() => {
         if (messages.length > 0) {
-            const processedOrderData = processOrderData(messages);
-            const processedRevenueData = processRevenueData(messages);
-            const processedCategoryData = processCategoryData(messages);
-            setOrderData((prevData) => ({
+            const processedRegionData = processRegionData(messages);
+            const processedJoinData = processJoinData(messages);
+            // const processedCategoryData = processCategoryData(messages);
+            // setOrderData((prevData) => ({
+            //     ...prevData,
+            //     datasets: [
+            //         {
+            //             ...prevData.datasets[0],
+            //             data: processedOrderData,
+            //         },
+            //     ],
+            // }));
+
+            setJoinData((prevData) => ({
                 ...prevData,
                 datasets: [
                     {
                         ...prevData.datasets[0],
-                        data: processedOrderData,
+                        data: processedJoinData,
                     },
                 ],
             }));
 
-            setRevenueData((prevData) => ({
+            setRegionData((prevData) => ({
                 ...prevData,
+                labels: processedRegionData.labels,
                 datasets: [
                     {
                         ...prevData.datasets[0],
-                        data: processedRevenueData,
-                    },
-                ],
-            }));
-
-            setCategoryData((prevData) => ({
-                ...prevData,
-                labels: processedCategoryData.labels,
-                datasets: [
-                    {
-                        ...prevData.datasets[0],
-                        data: processedCategoryData.data,
+                        data: processedRegionData.percentData,
                     },
                 ],
             }));
         }
+    }, [messages]);
+
+    useEffect(() => {
+        setMessages(restaurants);
+    }, [restaurants]);
+
+    useEffect(() => {
+        console.log("RESTAURANT LIST: ", messages);
     }, [messages]);
 
     return (
@@ -344,9 +332,7 @@ function Dashboard_Admin() {
                             <Statistic
                                 img={waitingImg}
                                 title="Đối tác chờ duyệt"
-                                quantity={
-                                    messages ? messages.filter((item) => item.trangThai === "CANCELED").length : 0
-                                }
+                                quantity={messages.filter((i) => i.trangThai === "pending").length}
                                 up={false}
                                 rate={12}
                                 compare="So với hôm qua"
@@ -356,7 +342,7 @@ function Dashboard_Admin() {
                             <Statistic
                                 img={cancelImg}
                                 title="Đối tác đã hủy"
-                                quantity={timeFrameDetailArray[0]?.slice(0, 5)}
+                                quantity={messages.filter((i) => i.trangThai === "deactive").length}
                                 up={true}
                                 compare=""
                             />
@@ -366,11 +352,7 @@ function Dashboard_Admin() {
                             <Statistic
                                 img={money}
                                 title="Tổng doanh thu (VND)"
-                                quantity={formatCurrency(
-                                    messages
-                                        .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
-                                        .reduce((acc, cur) => acc + cur.gia, 0),
-                                )}
+                                quantity={formatCurrency(0)}
                                 up={true}
                                 rate={13}
                                 compare="So với hôm qua"
@@ -382,7 +364,7 @@ function Dashboard_Admin() {
                         <div className={styles["order-statistic"]}>
                             <h2 className={styles["line-title"]}>Biểu đồ đối tác mới</h2>
                             <Line
-                                data={orderData}
+                                data={joinData}
                                 label={labels}
                             />
                         </div>
@@ -418,7 +400,7 @@ function Dashboard_Admin() {
                             >
                                 Top các nhà hàng có doanh số cao nhất
                             </h2>
-                            {topTrending
+                            {/* {topTrending
                                 .sort((a, b) => b["quantity"] - a["quantity"])
                                 .map((item, index) => {
                                     return (
@@ -430,14 +412,14 @@ function Dashboard_Admin() {
                                             quantity={item.quantity}
                                         />
                                     );
-                                })}
+                                })} */}
 
                             <Divider />
                         </div>
                         <div className={styles.doughnut}>
                             <h2 className={styles["doughnut-title"]}>Tỷ lệ nhà hàng theo khu vực</h2>
                             <Doughnut
-                                data={categoryData}
+                                data={regionData}
                                 options={chartOptions.category}
                             />
                         </div>
