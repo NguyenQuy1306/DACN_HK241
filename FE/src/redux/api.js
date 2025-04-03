@@ -299,6 +299,44 @@ export const getAllRestaurant = async () => {
     }
 };
 
+//FoodImage APIs
+
+export const getFoodImage = async (params) => {
+    try {
+        const response = await API.post(`/api/foodImage`, params);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
+export const deleteFoodImage = async (params) => {
+    try {
+        const response = await API.delete(`/api/foodImage`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+export const uploadFoodImage = async ({ restaurantId, categoryId, foodId, file }) => {
+    try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const response = await API.post(
+            `/api/food/restaurants/${restaurantId}/categories/${categoryId}/foods/${foodId}/image`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            },
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
 //Category APIs
 export const getAllCategory = async (params) => {
     try {

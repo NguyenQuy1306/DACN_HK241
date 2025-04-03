@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.mapstruct.Condition;
+import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -44,9 +46,9 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
-    private FoodImageRepository foodImageRepository;
-    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private FoodImageRepository foodImageRepository;
 
     @Override
     public List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId) {

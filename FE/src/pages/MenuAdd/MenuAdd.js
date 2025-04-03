@@ -32,6 +32,7 @@ const MenuAdd = () => {
             });
             setSelectedCategory(null);
             dispatch(setCreateStatus(""));
+            setImagePreview(null);
         }
     }, [createStatus]);
 
@@ -180,12 +181,7 @@ const MenuAdd = () => {
                 >
                     Xác nhận
                 </button>
-                <button
-                    onClick={() => openNotification()}
-                    className={styles.cancelButton}
-                >
-                    Huỷ bỏ
-                </button>
+                <button className={styles.cancelButton}>Huỷ bỏ</button>
             </div>
         </div>
     );

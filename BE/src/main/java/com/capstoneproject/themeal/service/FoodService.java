@@ -3,6 +3,8 @@ package com.capstoneproject.themeal.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.capstoneproject.themeal.repository.FoodImageRepository;
+import org.mapstruct.Context;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 

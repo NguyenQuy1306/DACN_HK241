@@ -1,5 +1,8 @@
 package com.capstoneproject.themeal.model.mapper;
 
+import com.capstoneproject.themeal.model.entity.FoodImage;
+import com.capstoneproject.themeal.repository.FoodImageRepository;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -17,13 +20,18 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class FoodMapper {
 
+
+
     // Map Food to FoodResponse without danhMuc field
     @Mapping(source = "maSoMonAn", target = "maSoMonAn")
     @Mapping(source = "ten", target = "ten")
     @Mapping(source = "gia", target = "gia")
     @Mapping(source = "moTa", target = "moTa")
+
     @Mapping(source = "trangThai", target = "trangThai")
     public abstract FoodResponse toFoodResponse(Food food);
+
+
 
     @Named("mapCategory")
     public CategoryResponse toCategoryResponse(Category category) {
@@ -40,7 +48,7 @@ public abstract class FoodMapper {
         // Group FoodResponse items by CategoryResponse
         Map<Category, List<FoodResponse>> groupedByCategory = foods.stream()
                 .collect(Collectors.groupingBy(Food::getDanhMuc,
-                        Collectors.mapping(this::toFoodResponse, Collectors.toList())));
+                        Collectors.mapping(food -> toFoodResponse(food), Collectors.toList())));
 
         // Convert Map entries to FoodFinalReponse
         return groupedByCategory.entrySet().stream()

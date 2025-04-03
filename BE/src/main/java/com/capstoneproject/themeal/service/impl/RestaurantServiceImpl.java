@@ -121,6 +121,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public List<RestaurantInMapsResponse> getAll() {
+        try {
+            List<Restaurant> restaurants = restaurantRepository.findAll();
+            return restaurants.stream().map(restaurantMapper::toDetailResponse).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new ApplicationException();
+        }
+    }
+
+    @Override
     public void findImagesToDelete(List<String> updatedImage, Restaurant restaurant) {
         Set<RestaurantImage> lImages = restaurant.getDanhSachAnhNhaHang().stream()
                 .filter(q -> q.getKieuAnh() == RestaurantImageType.RESTAURANTIMAGE).collect(Collectors.toSet());

@@ -1,7 +1,9 @@
 package com.capstoneproject.themeal.controller;
 
 import com.capstoneproject.themeal.model.response.OrderTableResponse;
+import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 import com.capstoneproject.themeal.service.impl.OrderTableServiceImpl;
+import com.capstoneproject.themeal.service.impl.RestaurantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,6 +17,8 @@ import java.util.List;
 public class WebSocketController {
     @Autowired
     private OrderTableServiceImpl orderTableService;
+    @Autowired
+    private RestaurantServiceImpl restaurantService;
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
@@ -26,5 +30,12 @@ public class WebSocketController {
         List<OrderTableResponse> orderTableResponses = orderTableService.getAllOrders();
         System.out.println("DANH SACH DAT BAN CHUAN BI TRA VE CLIENT: " + orderTableResponses);
         return orderTableResponses;
+    }
+
+    @MessageMapping("/updateRestaurant")
+    @SendTo("/topic/restaurants")
+    public List<RestaurantInMapsResponse> updateRestaurant(String message) {
+        System.out.println(message);
+        return restaurantService.getAll();
     }
 }

@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.model.response;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import lombok.*;
@@ -27,6 +28,8 @@ public class RestaurantInMapsResponse implements Serializable {
     private Double viDo;
     private Double kinhDo;
     private String thanhPho;
+    private String trangThai;
+    private LocalDate ngayThamGia;
     private Map<String, Set<String>> imageUrls; // Chứa các ảnh theo loại
 
     @Override

@@ -30,6 +30,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/v1/auth/logout",
             "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*",
             "/api/restaurants",
+            "/api/foodImage",
             "/api/restaurants/**",
             "/api/restaurants", // Match any restaurant-related URL
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories",
@@ -42,8 +43,9 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/elas/searchWithKeyword",
             "/elas/getDocument",
             "api/payments/*",
-            "/api/rate/.*/restaurant", "/api/payments/create-payment-link", "/api/payments/payment-callback",
-            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments",
+            "/api/rate/restaurant/*",
+          "/api/payments/create-payment-link", "/api/payments/payment-callback",
+            "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments","/api/food/restaurants/*/categories/*/foods/*/image",
             "/ws/*",
             "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",
             "/api/food/delete/*", "/api/food/update", "/api/food/duplicate", "/api/food/search", "/api/food/category",
@@ -65,7 +67,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("here3323");
+
 
         System.out.println("here23" + isPublicUrl(requestURI));
 
@@ -86,11 +88,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isPublicUrl(String requestURI) {
-        System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(requestURI::startsWith));
+        System.out.println("true or false:::" + PUBLIC_URLS.stream().anyMatch(pattern->requestURI.matches(pattern.replace("*",".*"))));
         // boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern ->
         // requestURI.matches(pattern))
         // || requestURI.contains("/swagger");
-        boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith)
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(pattern -> requestURI.matches(pattern.replace("*",".*")))
                 || requestURI.contains("/swagger");
         return isPublic;
     }

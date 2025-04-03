@@ -11,6 +11,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -54,6 +55,8 @@ public class Restaurant {
 
     @Column(nullable = false)
     private String ThanhPho;
+    @Column(name = "ngaythamgia", nullable = true)
+    private LocalDate ngayThamGia;
     // dư thuộc tính~
     private String LoaiAmThuc;
     private String KieuNhaHang;

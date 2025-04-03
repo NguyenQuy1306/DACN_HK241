@@ -2,6 +2,8 @@ package com.capstoneproject.themeal.controller;
 // nguyene
 
 import com.capstoneproject.themeal.model.mapper.FoodMapper;
+import com.capstoneproject.themeal.repository.FoodImageRepository;
+import org.mapstruct.Context;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,9 +212,8 @@ public class FoodController {
 
     @PostMapping(value = "/restaurants/{restaurantId}/categories/{categoryId}/foods/{foodId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void uploadImageRestaurant(@PathVariable Long foodId, @PathVariable Long restaurantId,
-            @PathVariable Long categoryId, @RequestParam("file") MultipartFile file) {
+            @PathVariable Long categoryId, @RequestBody MultipartFile file) {
         foodService.upLoadImageRestaurant(restaurantId, categoryId, foodId, file);
-
     }
 
     @PostMapping(value = "/update")

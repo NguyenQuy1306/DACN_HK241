@@ -13,6 +13,7 @@ function MenuItem({ menuName, category, img, viewClick, deleteClick, duplicateCl
                 <img
                     src={img}
                     alt="Food"
+                    className={styles['food-img']}
                 ></img>
             </div>
             <div className={styles.title}>

@@ -13,6 +13,7 @@ import StatisticCard from "../MenuList_Owner/components/StatisticCard";
 import styles from "./style.module.css";
 import { getAllCategory } from "../../redux/features/categorySlice";
 import { useParams } from "react-router-dom";
+import { deleteFoodImage, getFoodImage, uploadFoodImage } from "../../redux/api";
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -31,14 +32,21 @@ function MenuDetail() {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const restaurantOwner = useSelector((state) => state.authentication.restaurantOwner);
-    const [fileList, setFileList] = useState([
-        {
-            uid: "-1",
-            name: "image.png",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-    ]);
+    const [fileList, setFileList] = useState([]);
+
+    const [foodImage, setFoodImage] = useState([]);
+
+    useEffect(() => {
+        const handleGetFoodImage = async () => {
+            const result = await getFoodImage([{ foodId: id, restaurantId: restaurantOwner.maSoNhaHang }]);
+            setFoodImage(result.payload);
+        };
+        handleGetFoodImage();
+    }, [restaurantOwner.maSoNhaHang, id]);
+
+    useEffect(() => {
+        console.log("FOOD IMAGE: ", foodImage);
+    }, [foodImage]);
 
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
@@ -47,7 +55,17 @@ function MenuDetail() {
         setPreviewImage(file.url || file.preview);
         setPreviewOpen(true);
     };
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+    const handleChange = ({ fileList: newFileList, file: currentFile }) => {
+        setFileList(newFileList);
+        // if (currentFile.status === "done" && currentFile.originFileObj) {
+        //     uploadFoodImage({
+        //         restaurantId: restaurantOwner.maSoNhaHang,
+        //         categoryId: foodRender.danhMuc.maSoDanhMuc,
+        //         foodId: id,
+        //         file: currentFile.originFileObj, // Đảm bảo gửi file gốc
+        //     });
+        // }
+    };
     const uploadButton = (
         <button
             style={{
@@ -96,8 +114,20 @@ function MenuDetail() {
     }, [foodInformation.food]);
 
     useEffect(() => {
-        console.log("CATE", categoryList);
-    }, [categoryList]);
+        const currentImage = foodImage?.map((img) => {
+            const randomIndex = Math.floor(Math.random() * img.imageUrl.length);
+            return {
+                uid: "-1",
+                name: "image.png",
+                status: "done",
+                url:
+                    img.imageUrl.length > 0
+                        ? `https:/themealbucket1.s3.amazonaws.com/${img.imageUrl[randomIndex]}`
+                        : ``,
+            };
+        });
+        setFileList(currentImage);
+    }, [foodImage]);
 
     useEffect(() => {
         if (foodRender) {
@@ -116,6 +146,17 @@ function MenuDetail() {
         label: cate.ten,
         value: cate.maSoDanhMuc,
     }));
+
+    const handleDeleteImage = async ({ restaurantId, foodId, url }) => {
+        const params = {
+            restaurantId,
+            foodId,
+            url,
+        };
+        const result = await deleteFoodImage(params);
+        setFileList((prevList) => prevList.filter((file) => file.url !== url));
+        return result.payload;
+    };
 
     return (
         <div className={styles.container}>
@@ -253,11 +294,18 @@ function MenuDetail() {
                                 ]}
                             >
                                 <Upload
-                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                    action={`http://localhost:8080/api/food/restaurants/${restaurantOwner.maSoNhaHang}/categories/${foodRender.danhMuc?.maSoDanhMuc}/foods/${id}/image`}
                                     listType="picture-circle"
                                     fileList={fileList}
                                     onPreview={handlePreview}
                                     onChange={handleChange}
+                                    onRemove={(file) =>
+                                        handleDeleteImage({
+                                            restaurantId: restaurantOwner.maSoNhaHang,
+                                            foodId: id,
+                                            url: file.url.replace("https:/themealbucket1.s3.amazonaws.com/", ""),
+                                        })
+                                    }
                                 >
                                     {fileList.length >= 8 ? null : uploadButton}
                                 </Upload>
