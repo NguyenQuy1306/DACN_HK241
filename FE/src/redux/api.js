@@ -113,13 +113,28 @@ export const createComboByUser = async (params) => {
 // Table APIs
 export const getTableForRestaurant = async (params) => {
   try {
+    console.log(
+      "params in al ",
+      await API.get(`api/table/restaurant`, { params })
+    );
     const response = await API.get(`api/table/restaurant`, { params });
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
   }
 };
-
+export const getTableForRestaurantByOwner = async (params) => {
+  try {
+    console.log(
+      "params in al ",
+      await API.get(`api/table/restaurant`, { params })
+    );
+    const response = await API.get(`api/table/restaurant`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
 // Authentication APIs
 export const register = async (params) => {
   try {
@@ -370,6 +385,27 @@ export const loginWithGoogle = async (params) => {
     throw error.response?.data || error;
   }
 };
+export const createTableForRestaurant = async (params) => {
+  try {
+    const response = await API.post(
+      `/api/table/restaurant?restaurantId=${params.restaurantId}`,
+      params.tableRequests
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteTableForRestaurant = async (params) => {
+  try {
+    const response = await API.delete(`api/table`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const createFood = async ({
   restaurantId,
   categoryId,

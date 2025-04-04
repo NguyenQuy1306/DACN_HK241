@@ -37,6 +37,7 @@ public abstract class TableAvailableMapper {
                     group.put("ngay", key.getNgay());
                     group.put("gio", key.getGio());
                     group.put("ban", ban);
+                    group.put("soluong", ban.get(0).getSoLuong());
 
                     return group;
                 })

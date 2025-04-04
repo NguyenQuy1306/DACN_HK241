@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,7 @@ import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.repository.UserRepository;
 import com.capstoneproject.themeal.service.AuthenticationService;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,13 +43,13 @@ import java.util.stream.Collectors;
 
 public class AuthenticationController {
     @Lazy
-    private final AuthenticationService service;
+    private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final SessionRegistry sessionRegistry;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest request,
-            BindingResult bindingResult) {
+                                                              BindingResult bindingResult) {
 
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         Map<String, String> errors = new HashMap<>();
@@ -75,7 +80,7 @@ public class AuthenticationController {
             // }
 
             // Perform registration
-            UserResponse userResponse = service.register(request);
+            UserResponse userResponse = authenticationService.register(request);
             if (userResponse == null) {
                 apiResponse.error(ResponseCode.getError(23));
                 return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,6 +108,7 @@ public class AuthenticationController {
             HttpServletRequest request,
             @Valid @RequestBody AuthenticationRequest authenticationRequest,
             BindingResult bindingResult) { // Đặt BindingResult ngay sau @RequestBody
+        System.out.println("checksession " + "3434");
         ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
         Map<String, String> errors = new HashMap<>();
 
@@ -116,18 +122,25 @@ public class AuthenticationController {
         }
 
         try {
-            LoginResponse loginResponse = service.authenticate(authenticationRequest);
+            LoginResponse loginResponse = authenticationService.authenticate(authenticationRequest);
+            System.out.println("checksession " + "123");
             HttpSession existingSession = request.getSession(false);
+            System.out.println("checksessionsds " + existingSession);
+
             if (existingSession != null) {
                 existingSession.invalidate();
             }
 
             // Tạo session mới
             HttpSession newSession = request.getSession(true);
-
-            newSession.setAttribute("USER_SESSION", loginResponse);
+            System.out.println("checksessionxxx " + existingSession);
+            newSession.setAttribute("JSESSIONID", loginResponse);
             newSession.setMaxInactiveInterval(300); // 5 phút
-
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginResponse, null, Collections.emptyList());
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            securityContext.setAuthentication(auth);
+            newSession.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+            SecurityContextHolder.setContext(securityContext);
             // Đăng ký session với registry
             sessionRegistry.registerSession(newSession.getId(), loginResponse.getMaSoNguoiDung());
             apiResponse.ok(loginResponse);
@@ -164,7 +177,7 @@ public class AuthenticationController {
         HttpSession session = request.getSession(false);
         ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
         if (session != null) {
-            LoginResponse userSession = (LoginResponse) session.getAttribute("USER_SESSION");
+            LoginResponse userSession = (LoginResponse) session.getAttribute("JSESSIONID");
             if (userSession != null) {
                 apiResponse.ok(userSession);
                 return new ResponseEntity<>(apiResponse, HttpStatus.OK);

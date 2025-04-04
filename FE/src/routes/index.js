@@ -22,7 +22,21 @@ import MenuList_Owner from "../pages/MenuList_Owner";
 import MenuDetail from "./../pages/MenuDetail/index";
 import CategoryOwner from "./../pages/CategoyOwner/index";
 import OrderOwner from "./../pages/OrderOwner/index";
+import OwnerInfoForm from "../pages/InforOwner/InforOwner";
+import TableManagement from "../pages/TableManagement/TableManagement";
 export const routes = [
+  {
+    path: "/owner/tablemanagement",
+    component: TableManagement,
+    layout: OwnerLayout,
+    role: ["owner"],
+  },
+  {
+    path: "/admin/ownerdetail",
+    component: OwnerInfoForm,
+    layout: OwnerLayout,
+    role: ["owner"],
+  },
   {
     path: "/owner/restaurant",
     component: RestaurantInfoForm,

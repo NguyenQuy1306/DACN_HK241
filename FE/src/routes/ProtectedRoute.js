@@ -37,9 +37,9 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     if (loginRoute && allowedRoles.includes("guest")) {
       //   dispatch(setLoginRoute(false));
       console.log("navaigate to owner");
-      return <Navigate to="/owner/menu/add" replace />;
+      return <Navigate to="/owner/dashboard" replace />;
     }
-    if (loginRoute && location.pathname == "/owner/menu/add") {
+    if (loginRoute && location.pathname == "/owner/dashboard") {
       dispatch(setLoginRoute(false));
       // console.log("navaigate to owner");
       // return <Navigate to="/owner/menu/add" replace />;

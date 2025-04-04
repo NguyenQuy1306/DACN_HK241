@@ -2,7 +2,7 @@ package com.capstoneproject.themeal.service.impl;
 
 import java.util.Optional;
 
-import com.capstoneproject.themeal.model.entity.AuthProvider;
+import com.capstoneproject.themeal.model.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -12,8 +12,6 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.capstoneproject.themeal.model.entity.CustomOidcUser;
-import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.repository.UserRepository;
 
 @Component
@@ -38,7 +36,7 @@ public class CustomOidcUserService extends OidcUserService {
         }
 
         Optional<User> userOptional = userRepository.findByEmail(email);
-        User user;
+        User user = new Customer();
 
         if (userOptional.isEmpty()) {
             user = new User();
@@ -60,5 +58,6 @@ public class CustomOidcUserService extends OidcUserService {
 
         return new CustomOidcUser(oidcUser, user);
     }
+
 }
 

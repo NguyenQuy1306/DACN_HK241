@@ -12,6 +12,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import com.capstoneproject.themeal.SessionAuthenticationFilter.SessionRegistry;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,7 +34,6 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String email = (String) oauth2User.getAttributes().get("email");
 
-        // Kiểm tra xem User có tồn tại không
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not found");
@@ -55,14 +57,14 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
                 .HoTen(user.getHoTen())
                 .build();
 
-        newSession.setAttribute("USER_SESSION", userSession);
+        newSession.setAttribute("JSESSIONID", userSession);
         sessionRegistry.registerSession(newSession.getId(), user.getMaSoNguoiDung());
 
-        // Gửi response JSON về FE
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        // ✅ Lưu vào SecurityContext để OAuth2 Filter nhận diện
+        SecurityContext securityContext = new SecurityContextImpl(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        newSession.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
         response.sendRedirect("http://localhost:3000/home?userId=" + user.getMaSoNguoiDung());
-
     }
 }

@@ -14,9 +14,11 @@ import com.capstoneproject.themeal.repository.TableAvailableRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.ColumnDefault;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
@@ -44,5 +46,6 @@ public class TableAvailable {
     private LocalDate Ngay;
     @Column(nullable = false)
     private LocalTime Gio;
-
+    @Column(nullable = false)
+    private Long SoLuong;
 }

@@ -154,7 +154,9 @@ function Dashboard_Owner() {
   );
   useEffect(() => {
     dispatch(
-      getAllOrderByRestaurantId({ restaurantId: restaurantOwner.maSoNhaHang })
+      getAllOrderByRestaurantId({
+        restaurantId: restaurantOwner ? restaurantOwner.maSoNhaHang : 1,
+      })
     );
   }, [dispatch]); // Keep dependency to avoid unnecessary calls
 

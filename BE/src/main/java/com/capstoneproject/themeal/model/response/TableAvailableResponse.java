@@ -6,7 +6,9 @@ import java.time.LocalTime;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.TableAvailableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,4 +23,5 @@ public class TableAvailableResponse implements Serializable {
     private Byte SoNguoi;
     private LocalDate Ngay;
     private LocalTime Gio;
+    private Long SoLuong;
 }

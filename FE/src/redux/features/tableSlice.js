@@ -12,13 +12,50 @@ export const getTableForRestaurant = createAsyncThunk(
     }
   }
 );
+export const getTableForRestaurantByOwner = createAsyncThunk(
+  "/table/restaurantOwner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getTableForRestaurantByOwner(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const createTableForRestaurant = createAsyncThunk(
+  "/table/createrestaurant",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.createTableForRestaurant(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteTableForRestaurant = createAsyncThunk(
+  "/table/deleteTable",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.deleteTableForRestaurant(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const tableSlice = createSlice({
   name: "table",
   initialState: {
     tables: [],
+    tablesOwner: null,
     choosedTable: null,
+    deleteTableResposne: null,
     openModalPayment: false,
+    tableCreateResponse: null,
     error: "",
     loading: false,
   },
@@ -30,6 +67,9 @@ export const tableSlice = createSlice({
     },
     setOpenModalPayment(state, action) {
       state.openModalPayment = action.payload;
+    },
+    setDeleteTableResposne(state, action) {
+      state.deleteTableResposne = null;
     },
   },
   extraReducers: (builder) => {
@@ -45,10 +85,50 @@ export const tableSlice = createSlice({
       .addCase(getTableForRestaurant.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      .addCase(getTableForRestaurantByOwner.pending, (state) => {
+        state.loading = true;
+        state.tablesOwner = [];
+      })
+      .addCase(getTableForRestaurantByOwner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tablesOwner = action.payload;
+      })
+      .addCase(getTableForRestaurantByOwner.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(createTableForRestaurant.pending, (state) => {
+        state.loading = true;
+        state.tableCreateResponse = [];
+      })
+      .addCase(createTableForRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tableCreateResponse = action.payload;
+      })
+      .addCase(createTableForRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(deleteTableForRestaurant.pending, (state) => {
+        state.loading = true;
+        state.deleteTableResposne = null;
+      })
+      .addCase(deleteTableForRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.deleteTableResposne = action.meta.requestStatus;
+      })
+      .addCase(deleteTableForRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 export const openModalPayment = (state) => state.table.openModalPayment;
-export const { setChoosedTable, setOpenModalPayment } = tableSlice.actions;
+export const { setChoosedTable, setOpenModalPayment, setDeleteTableResposne } =
+  tableSlice.actions;
 
 export default tableSlice.reducer;

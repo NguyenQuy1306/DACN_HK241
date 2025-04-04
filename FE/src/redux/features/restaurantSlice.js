@@ -39,6 +39,17 @@ export const updateRestaurantInfor = createAsyncThunk(
     }
   }
 );
+export const getRestaurantByOwnerId = createAsyncThunk(
+  "/restaurants/owner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getRestaurantByOnwerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
@@ -49,6 +60,7 @@ export const restaurantSlice = createSlice({
     loading: false,
     openBookingWithMenu: false,
     menuChoosed: [],
+    restaurantOwnerByAdmin: null,
     newMenu: [],
     currentPage: 0,
     updateRestaurantResponse: null,
@@ -104,7 +116,18 @@ export const restaurantSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
+      .addCase(getRestaurantByOwnerId.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwnerByAdmin = [];
+      })
+      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantOwnerByAdmin = action.payload.payload;
+      })
+      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(updateRestaurantInfor.pending, (state) => {
         state.loading = true;
         state.updateRestaurantResponse = [];

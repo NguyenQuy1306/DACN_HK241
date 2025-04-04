@@ -19,4 +19,7 @@ public interface TableAvailableService {
 
     public boolean isTableExists(Short tableId, Long restaurantId);
 
+    public void saveTableAvailableForRestaurant(List<TableRequest> tableRequests, Long restaurantId);
+
+    public void deleteTable(Long restaurantId, Short thuTuBan);
 }
