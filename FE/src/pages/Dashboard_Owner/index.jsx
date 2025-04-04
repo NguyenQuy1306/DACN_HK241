@@ -27,6 +27,7 @@ import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
 
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
+import { getFoodImage } from "../../redux/api";
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -170,9 +171,9 @@ function Dashboard_Owner() {
         dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
     }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
 
-    useEffect(() => {
-        console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
-    }, [messages]);
+    // useEffect(() => {
+    //     console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
+    // }, [messages]);
 
     useEffect(() => {
         if (user) {
@@ -189,7 +190,7 @@ function Dashboard_Owner() {
             onConnect: () => {
                 setStompClient(client);
                 client.subscribe("/topic/messages", (message) => {
-                    console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
+                    // console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
                     setMessages(JSON.parse(message.body));
                 });
             },
@@ -231,23 +232,72 @@ function Dashboard_Owner() {
         .sort((a, b) => b[1] - a[1])
         .map((i) => i[0]);
 
-    console.log("THỜI GIAN ĐẶT: ", timeFrameDetailArray);
-
     const topTrending = [...menuNames].map((i) => {
         return {
             name: i,
             quantity: 0,
             price: 0,
+            url: "",
+            id: null,
         };
     }, []);
+
+    const [foodIdList, setFoodIdList] = useState([]);
+    const [foodImage, setFoodImage] = useState([]);
 
     const topMenuTrending = messages.forEach((item) => {
         item.danhSachMonAn.forEach((i) => {
             const curItem = topTrending.find((item1) => item1.name === i.tenMon);
             curItem.quantity += i.soLuong;
             curItem.price = i.gia;
+            curItem.id = i.maSo.maSoMonAn;
         });
     });
+
+    useEffect(() => {
+        topTrending.forEach((i) => {
+            i.url = foodImage.find((item) => item.foodId === i.id).imageUrl;
+        });
+    }, [foodImage]);
+
+    useEffect(() => {
+        const IdList = messages.reduce((acc, cur) => {
+            const request = cur.danhSachMonAn.map((i) => {
+                return i.maSo.maSoMonAn;
+            });
+            return new Set([...acc, ...request]);
+        }, new Set());
+        setFoodIdList([...IdList]);
+    }, [messages]);
+
+    useEffect(() => {
+        const callFoodImage = async () => {
+            // Tạo imageRequest từ foodIdList
+            const imageRequest = foodIdList.map((foodId) => ({
+                restaurantId: restaurantOwner.maSoNhaHang,
+                foodId,
+            }));
+
+            try {
+                // Gọi API lấy ảnh
+                const result = await getFoodImage(imageRequest);
+                setFoodImage(result.payload);
+            } catch (error) {
+                console.error("Failed to fetch food images:", error);
+            }
+        };
+
+        if (foodIdList.length > 0) {
+            callFoodImage();
+        }
+    }, [foodIdList, restaurantOwner.maSoNhaHang]);
+
+    useEffect(() => {
+        console.log("IMAGE OF FOOD: ", foodImage);
+    }, [foodImage]);
+    useEffect(() => {
+        console.log("TOP TRENDING: ", topTrending);
+    }, [topTrending]);
 
     useEffect(() => {
         setMessages(order);
@@ -426,6 +476,7 @@ function Dashboard_Owner() {
                                             name={item.name}
                                             price={item.price}
                                             quantity={item.quantity}
+                                            url={item.url[0]}
                                         />
                                     );
                                 })}

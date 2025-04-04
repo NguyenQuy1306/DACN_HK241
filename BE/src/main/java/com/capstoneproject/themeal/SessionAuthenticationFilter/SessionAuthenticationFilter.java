@@ -44,7 +44,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/elas/getDocument",
             "api/payments/*",
             "/api/rate/restaurant/*",
-          "/api/payments/create-payment-link", "/api/payments/payment-callback",
+            "/api/payments/create-payment-link", "/api/payments/payment-callback",
             "/api/payments/.*", "/api/payments/getOrderById", "/api/payments/deposit", "/api/payments","/api/food/restaurants/*/categories/*/foods/*/image",
             "/ws/*",
             "/ws/**", "/api/category/.*", "/api/category", "/api/category/*", "/api/food/uploadImage",

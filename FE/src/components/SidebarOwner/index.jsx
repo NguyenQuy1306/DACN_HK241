@@ -23,10 +23,10 @@ const items = [
         label: "Menu",
         icon: <BiFoodMenu />,
         children: [
-            {
-                key: "5",
-                label: "Thêm món ăn",
-            },
+            // {
+            //     key: "5",
+            //     label: "Thêm món ăn",
+            // },
             {
                 key: "6",
                 label: "Danh sách món ăn",

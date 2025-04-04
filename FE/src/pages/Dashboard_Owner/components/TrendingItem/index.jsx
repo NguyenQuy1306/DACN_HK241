@@ -12,7 +12,7 @@ const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
         .format(value)
         .replace("₫", "đ");
 };
-function TrendingItem({ rank, name, price, quantity }) {
+function TrendingItem({ rank, name, price, quantity, url }) {
     return (
         <div className={styles.container}>
             <div className={styles["trending-info"]}>
@@ -21,7 +21,11 @@ function TrendingItem({ rank, name, price, quantity }) {
                     width={92}
                     height={62}
                     style={{ borderRadius: "8px" }}
-                    src="https://1.bp.blogspot.com/-wE1uYgPk628/Vs_daeuy8QI/AAAAAAAAA4Y/OKCz9o7d4P4/s1600/tom-hum.jpg?w=400"
+                    src={
+                        url
+                            ? `https:/themealbucket1.s3.amazonaws.com/${url}`
+                            : "https://kenh14cdn.com/2017/10-crop-1509403824788.jpg"
+                    }
                 />
                 <div className={styles.product}>
                     <h2 className={styles.name}>{name}</h2>
