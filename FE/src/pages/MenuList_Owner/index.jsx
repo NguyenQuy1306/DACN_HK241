@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Input, Pagination, Result } from "antd";
+import { Breadcrumb, Button, Input, notification, Pagination, Result } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,8 +59,27 @@ function MenuList_Owner() {
         navigate(`/owner/menu/${id}`);
     };
 
-    const deleteMenu = (id) => {
-        dispatch(deleteFood({ restaurantId: restaurantOwner.maSoNhaHang, foodId: id }));
+    const deleteMenu = async (id) => {
+        try {
+            const resultAction = await dispatch(deleteFood({ restaurantId: restaurantOwner.maSoNhaHang, foodId: id }));
+            if (deleteFood.fulfilled.match(resultAction)) {
+                // Hiển thị thông báo thành công
+                notification.success({
+                    message: "Xoá món ăn thành công",
+                });
+            } else {
+                // Hiển thị thông báo lỗi (nếu cần)
+                notification.error({
+                    message: "Xoá món ăn thất bại",
+                    description: resultAction.error?.message || "Đã có lỗi xảy ra.",
+                });
+            }
+        } catch (error) {
+            notification.error({
+                message: "Lỗi hệ thống",
+                description: error.message,
+            });
+        }
     };
 
     const duplicateMenu = (id) => {
@@ -87,13 +106,15 @@ function MenuList_Owner() {
     const [foodImage, setFoodImage] = useState([]);
 
     useEffect(() => {
-        const imageRequestTmp = foods.map((food) => {
-            return {
-                restaurantId: restaurantOwner.maSoNhaHang,
-                foodId: food.maSoMonAn,
-            };
-        });
-        setImageRequest(imageRequestTmp);
+        if (foods) {
+            const imageRequestTmp = foods.map((food) => {
+                return {
+                    restaurantId: restaurantOwner.maSoNhaHang,
+                    foodId: food.maSoMonAn,
+                };
+            });
+            setImageRequest(imageRequestTmp);
+        }
     }, [foods, restaurantOwner.maSoNhaHang]);
 
     useEffect(() => {
@@ -104,17 +125,19 @@ function MenuList_Owner() {
         handleGetFoodImage();
     }, [imageRequest]);
 
-    const mixFood = useMemo(() => {
-        return foods.map((food) => ({
+    const [foodRender, setFoodRender] = useState([]);
+
+    useEffect(() => {
+        if (!foods) return;
+        const lsFood = foods.map((food) => ({
             ...food,
             imageUrl:
                 foodImage.find(
                     (img) => img.restaurantId === restaurantOwner.maSoNhaHang && img.foodId === food.maSoMonAn,
                 )?.imageUrl || "",
         }));
-    }, [foods, foodImage]);
-
-    console.log("FOOD PREPARE RENDER: ", mixFood);
+        setFoodRender(lsFood);
+    }, [foods, foodImage, restaurantOwner.maSoNhaHang]);
 
     return (
         <div className={styles.container}>
@@ -155,24 +178,26 @@ function MenuList_Owner() {
                 </div>
                 <div className={styles["menu-wrap"]}>
                     <div className={styles["menu-list"]}>
-                        {mixFood ? (
-                            mixFood.map((food, index) => {
-                                return (
-                                    <MenuItem
-                                        key={index}
-                                        menuName={food.ten}
-                                        category={food.danhMuc?.ten}
-                                        img={
-                                            food.imageUrl.length > 0
-                                                ? `https:/themealbucket1.s3.amazonaws.com/${food.imageUrl[0]}`
-                                                : menuImg
-                                        }
-                                        viewClick={() => toMenuDetail(food.maSoMonAn)}
-                                        deleteClick={() => deleteMenu(food.maSoMonAn)}
-                                        duplicateClick={() => duplicateMenu(food.maSoMonAn)}
-                                    />
-                                );
-                            })
+                        {foodRender ? (
+                            foodRender
+                                .filter((i) => i.trangThai === "Active")
+                                .map((food, index) => {
+                                    return (
+                                        <MenuItem
+                                            key={index}
+                                            menuName={food.ten}
+                                            category={food.danhMuc?.ten}
+                                            img={
+                                                food.imageUrl.length > 0
+                                                    ? `https:/themealbucket1.s3.amazonaws.com/${food.imageUrl[0]}`
+                                                    : menuImg
+                                            }
+                                            viewClick={() => toMenuDetail(food.maSoMonAn)}
+                                            deleteClick={() => deleteMenu(food.maSoMonAn)}
+                                            duplicateClick={() => duplicateMenu(food.maSoMonAn)}
+                                        />
+                                    );
+                                })
                         ) : (
                             <div className={styles["not-found"]}>
                                 <Result
@@ -199,7 +224,7 @@ function MenuList_Owner() {
             <div className={styles.statistics}>
                 <StatisticCard
                     title="Tổng số món ăn"
-                    quantity={foods ? foods.length : 0}
+                    quantity={foods ? foods.filter((i) => i.trangThai === "Active").length : 0}
                     img={foodLogo}
                 />
                 <StatisticCard

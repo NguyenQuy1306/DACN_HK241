@@ -110,9 +110,11 @@ public class FoodServiceImpl implements FoodService {
         try {
             boolean isFoodExist = this.checkFoodExist(List.of(foodId));
             if (isFoodExist) {
-                foodRepository.deleteById(foodId);
-                List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
-                return foodMapper.toFoodFinalResponse(food);
+                Food food = foodRepository.findById(foodId).get();
+                food.setTrangThai("Inactive");
+                foodRepository.save(food);
+                List<Food> availableFoods = foodRepository.findAllFood(restaurantId, pageable);
+                return foodMapper.toFoodFinalResponse(availableFoods.stream().filter(i->i.getTrangThai().equals("Active")).collect(Collectors.toList()));
             } else {
                 throw new IllegalArgumentException("Food ID not found: " + foodId);
             }
