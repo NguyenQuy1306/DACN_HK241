@@ -16,6 +16,7 @@ public class FoodResponse implements Serializable {
     private String MoTa;
     private CategoryResponse DanhMuc;
     private String TrangThai;
+    private Long MaSoMonAnGoc;
 
     @Override
     public String toString() {
@@ -39,7 +40,8 @@ public class FoodResponse implements Serializable {
                 Objects.equals(Ten, that.Ten) &&
                 Objects.equals(Gia, that.Gia) &&
                 Objects.equals(MoTa, that.MoTa) &&
-                Objects.equals(TrangThai, that.TrangThai);
+                Objects.equals(TrangThai, that.TrangThai) &&
+                Objects.equals(MaSoMonAnGoc, that.MaSoMonAnGoc);
     }
 
     @Override

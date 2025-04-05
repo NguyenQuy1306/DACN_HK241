@@ -227,6 +227,7 @@ public class FoodController {
             currentFood.get().setTen(foodUpdateRequest.getName());
             currentFood.get().setGia(foodUpdateRequest.getPrice());
             currentFood.get().setMoTa(foodUpdateRequest.getDescription());
+            currentFood.get().setMaSoMonAnGoc(currentFood.get().getMaSoMonAn());
             foodRepository.save(currentFood.get());
             apiResponse.ok(foodMapper.toFoodFinalResponse(List.of(currentFood.get())));
         }

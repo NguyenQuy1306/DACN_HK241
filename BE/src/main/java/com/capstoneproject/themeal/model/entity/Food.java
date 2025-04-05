@@ -28,6 +28,10 @@ public class Food {
     @Column(name = "MaSoMonAn")
     private Long MaSoMonAn;
 
+    @Column(name = "MaSoMonAnGoc")
+    private Long MaSoMonAnGoc;
+
+
     @Column(nullable = false)
     private String Ten;
     @Column(nullable = false)

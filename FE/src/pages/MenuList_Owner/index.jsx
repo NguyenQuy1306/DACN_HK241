@@ -110,7 +110,7 @@ function MenuList_Owner() {
             const imageRequestTmp = foods.map((food) => {
                 return {
                     restaurantId: restaurantOwner.maSoNhaHang,
-                    foodId: food.maSoMonAn,
+                    foodId: food.maSoMonAnGoc,
                 };
             });
             setImageRequest(imageRequestTmp);
@@ -133,7 +133,7 @@ function MenuList_Owner() {
             ...food,
             imageUrl:
                 foodImage.find(
-                    (img) => img.restaurantId === restaurantOwner.maSoNhaHang && img.foodId === food.maSoMonAn,
+                    (img) => img.restaurantId === restaurantOwner.maSoNhaHang && img.foodId === food.maSoMonAnGoc,
                 )?.imageUrl || "",
         }));
         setFoodRender(lsFood);
