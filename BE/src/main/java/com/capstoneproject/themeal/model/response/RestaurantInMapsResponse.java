@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.capstoneproject.themeal.model.entity.User;
 import lombok.*;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class RestaurantInMapsResponse implements Serializable {
     private String thanhPho;
     private String trangThai;
     private LocalDate ngayThamGia;
+    private User owner;
     private Map<String, Set<String>> imageUrls; // Chứa các ảnh theo loại
 
     @Override

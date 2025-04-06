@@ -293,11 +293,15 @@ export const getRateOfRestaurant = async ({ restaurantId }) => {
 export const getAllRestaurant = async () => {
     try {
         const response = await API.get(`/api/restaurants/all`);
+        console.log("=============================", response.data);
         return response.data;
     } catch (error) {
         throw error.response?.data || error;
     }
 };
+
+
+
 
 //FoodImage APIs
 
@@ -383,6 +387,15 @@ export const updateCategory = async (categoryId, params) => {
 export const getRestaurantByOwnerId = async (params) => {
     try {
         const response = await API.get(`/api/restaurants`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error;
+    }
+};
+
+export const getRestaurantById = async ({id}) => {
+    try {
+        const response = await API.get(`/api/restaurants/${id}`);
         return response.data;
     } catch (error) {
         throw error.response?.data || error;

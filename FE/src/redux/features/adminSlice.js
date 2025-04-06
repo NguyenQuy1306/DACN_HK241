@@ -25,7 +25,6 @@ export const adminSlice = createSlice({
             })
             .addCase(getAllRestaurants.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("Restaurants DATA FROM SERVER: ", action.payload);
                 state.restaurants = action.payload;
             })
             .addCase(getAllRestaurants.rejected, (state, action) => {

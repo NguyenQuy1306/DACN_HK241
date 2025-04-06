@@ -75,6 +75,19 @@ public class RestaurantController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<RestaurantInMapsResponse>> getAllRestaurantById(@PathVariable("id") Long id) {
+        ApiResponse<RestaurantInMapsResponse> apiResponse = new ApiResponse<>();
+        try {
+            RestaurantInMapsResponse restaurant = restaurantService.getRestaurantById(id);
+            apiResponse.ok(restaurant);
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/recommended")
     public List<RestaurantInMapsResponse> getRecommendedList() {
         return restaurantService.getRecommendedList();

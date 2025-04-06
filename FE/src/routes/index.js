@@ -25,6 +25,7 @@ import OrderOwner from "./../pages/OrderOwner/index";
 import RatingOwner from "./../pages/RatingOwner/index";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard_Admin from "../pages/Dashboard_Admin";
+import PartnerList from "../pages/PartnerList";
 export const routes = [
     {
         path: "/owner/restaurant",
@@ -32,6 +33,13 @@ export const routes = [
         layout: OwnerLayout,
         role: ["owner"],
         title: "Thông tin nhà hàng",
+    },
+    {
+        path: "/admin/partner",
+        component: PartnerList,
+        layout: AdminLayout,
+        role: ["owner"],
+        title: "Danh sách nhà hàng",
     },
     {
         path: "/owner/dashboard",

@@ -110,7 +110,7 @@ function MenuList_Owner() {
             const imageRequestTmp = foods.map((food) => {
                 return {
                     restaurantId: restaurantOwner.maSoNhaHang,
-                    foodId: food.maSoMonAnGoc,
+                    foodId: food.maSoMonAn,
                 };
             });
             setImageRequest(imageRequestTmp);

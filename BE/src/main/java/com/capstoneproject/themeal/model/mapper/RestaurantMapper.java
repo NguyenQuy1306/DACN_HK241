@@ -32,6 +32,7 @@ public abstract class RestaurantMapper {
     @Mapping(source = "ngayThamGia", target = "ngayThamGia")
     @Mapping(source = "trangThai", target = "trangThai")
     @Mapping(source = "thanhPho", target = "thanhPho")
+    @Mapping(source = "chuNhaHang", target = "owner")
     @Mapping(source = "danhSachAnhNhaHang", target = "imageUrls", qualifiedByName = "mapImageUrls")
     public abstract RestaurantInMapsResponse toDetailResponse(Restaurant restaurant);
 

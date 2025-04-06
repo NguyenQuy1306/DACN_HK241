@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    gap: 16px;
+    min-height: 100vh;
+}
+
+.body {
+    flex: 1;
+    padding: 8px;
+}
+
+
+.actions {
+    display: flex;
+    gap: 8px;
+
+}
+
+.detail {
+    color: #fff;
+}
