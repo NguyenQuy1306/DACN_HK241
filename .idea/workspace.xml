@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/LocalTimeDeserializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/TableAvailableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/TableAvailableController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/TableRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/TableRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/TableAvailableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/TableAvailableService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +82,7 @@
     "git-widget-placeholder": "foodCRUD",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/LENOVO/Desktop/droppii",
+    "last_opened_file_path": "C:/Users/LENOVO/Desktop/src DACN/DACN_HK241",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -82,12 +91,13 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "database.query.execution",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "redis"
+      "redis",
+      "postgresql"
     ]
   }
 }]]></component>
@@ -165,6 +175,8 @@
       <workItem from="1743328164823" duration="48118000" />
       <workItem from="1743415281493" duration="25000" />
       <workItem from="1743507509230" duration="3480000" />
+      <workItem from="1743899614780" duration="21675000" />
+      <workItem from="1743932181282" duration="391000" />
     </task>
     <servers />
   </component>
@@ -216,11 +228,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
           <line>117</line>
@@ -413,11 +420,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.1.10/spring-web-6.1.10-sources.jar!/org/springframework/web/filter/OncePerRequestFilter.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.1.10/spring-web-6.1.10-sources.jar!/org/springframework/web/filter/OncePerRequestFilter.java</url>
           <line>117</line>
           <option name="timeStamp" value="224" />
         </line-breakpoint>
@@ -462,19 +464,174 @@
           <option name="timeStamp" value="233" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
-          <line>187</line>
-          <option name="timeStamp" value="245" />
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="248" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
-          <line>186</line>
-          <option name="timeStamp" value="246" />
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="249" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
-          <line>185</line>
-          <option name="timeStamp" value="247" />
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="250" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="251" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="252" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="254" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="256" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="258" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="261" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="263" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="264" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="265" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="272" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="273" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="275" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="276" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="277" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="278" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="280" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="286" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>133</line>
+          <option name="timeStamp" value="287" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>139</line>
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>140</line>
+          <option name="timeStamp" value="289" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
@@ -493,6 +650,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/OrderTableController.java</url>
+          <line>82</line>
+          <properties class="com.capstoneproject.themeal.controller.OrderTableController" method="createOrder">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="279" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

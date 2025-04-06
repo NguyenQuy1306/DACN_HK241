@@ -33,29 +33,6 @@ public class CustomOAuth2AuthorizationRequestResolver implements OAuth2Authoriza
                 OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI);
     }
 
-    //    @Override
-//    public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            LoginResponse userSession = (LoginResponse) session.getAttribute("JSESSIONID");
-//            if (userSession != null) {
-//                return null; // Skip OAuth2 if valid session exists
-//            }
-//        }
-//        return defaultResolver.resolve(request);
-//    }
-//    @Override
-//    public OAuth2AuthorizationRequest resolve(
-//            HttpServletRequest request, String clientRegistrationId) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            LoginResponse userSession = (LoginResponse) session.getAttribute("JSESSIONID");
-//            if (userSession != null) {
-//                return null; // Skip OAuth2 if valid session exists
-//            }
-//        }
-//        return defaultResolver.resolve(request, clientRegistrationId);
-//    }
     @Override
     public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

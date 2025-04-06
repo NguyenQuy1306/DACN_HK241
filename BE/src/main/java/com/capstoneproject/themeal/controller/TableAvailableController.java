@@ -103,4 +103,24 @@ public class TableAvailableController {
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
+
+    @PutMapping("")
+    public ResponseEntity<ApiResponse<?>> updateCountOfTable(@RequestParam Long restaurantId,
+                                                             @RequestParam Short thuTuBan) {
+        ApiResponse apiResponse = new ApiResponse<>();
+        try {
+            tableAvailableService.updateCountOfTable(restaurantId, thuTuBan);
+            apiResponse.ok();
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

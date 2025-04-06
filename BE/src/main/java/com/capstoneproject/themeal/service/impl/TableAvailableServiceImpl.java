@@ -129,4 +129,22 @@ public class TableAvailableServiceImpl implements TableAvailableService {
         }
     }
 
+    @Override
+    public void updateCountOfTable(Long restaurantId, Short thuTuBan) {
+        TableAvailableId tableAvailableId = new TableAvailableId(restaurantId, thuTuBan);
+        if (tableAvailableRepository.existsById(tableAvailableId)) {
+            Optional<TableAvailable> tableAvailable = tableAvailableRepository.findById(tableAvailableId);
+            if (tableAvailable.isPresent()) {
+                if (tableAvailable.get().getSoLuong() > 0) {
+                    System.out.println("update count of table" + tableAvailable.get().getSoLuong());
+                    tableAvailable.get().setSoLuong(tableAvailable.get().getSoLuong() - 1);
+                    tableAvailableRepository.save(tableAvailable.get());
+                } else {
+                    deleteTable(restaurantId, thuTuBan);
+                }
+            } else {
+                throw new IllegalArgumentException("Table not found");
+            }
+        }
+    }
 }

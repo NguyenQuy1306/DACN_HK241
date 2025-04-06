@@ -22,4 +22,6 @@ public interface TableAvailableService {
     public void saveTableAvailableForRestaurant(List<TableRequest> tableRequests, Long restaurantId);
 
     public void deleteTable(Long restaurantId, Short thuTuBan);
+
+    public void updateCountOfTable(Long restaurantId, Short thuTuBan);
 }

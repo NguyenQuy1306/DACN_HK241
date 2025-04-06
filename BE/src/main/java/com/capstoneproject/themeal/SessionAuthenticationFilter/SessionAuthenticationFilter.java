@@ -43,45 +43,22 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
 
-        System.out.println("Request URIIIIa: " + requestURI); // Log the request URI
+        System.out.println("Request URIIIIa: " + requestURI);
         if (requestURI.startsWith("/ws/")) {
             System.out.println("pass check websocket");
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("here3323");
 
         System.out.println("here23" + isPublicUrl(requestURI));
 
         if (isPublicUrl(requestURI)) {
-            System.out.println("pass check session");
+            System.out.println("pass check session with publicURI");
             filterChain.doFilter(request, response);
             return;
         }
 
         HttpSession session = request.getSession(false);
-//        if (session != null) {
-////            OAuth2AuthorizationRequest authorizationRequest = getAuthorizationRequest(request);
-//
-////            String stateParameter = request.getParameter("state");
-////            System.out.println("stateParameter: " + stateParameter);
-////            if (authorizationRequest != null) {
-////                System.out.println("true or fallses: " + stateParameter.equals(authorizationRequest.getState()));
-////            }
-//            Object authRequest = session.getAttribute("org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository.AUTHORIZATION_REQUEST");
-//            System.out.println("Authorization Request: " + authRequest);
-//            if (authRequest instanceof OAuth2AuthorizationRequest) {
-//                OAuth2AuthorizationRequest requestDetails = (OAuth2AuthorizationRequest) authRequest;
-//                System.out.println("Client ID: " + requestDetails.getClientId());
-//                System.out.println("Authorization URI: " + requestDetails.getAuthorizationUri());
-//                System.out.println("Scopes: " + requestDetails.getScopes());
-//                System.out.println("Redirect URI: " + requestDetails.getRedirectUri());
-//                System.out.println("State: " + requestDetails.getState());
-//            }
-//        } else {
-//            System.out.println("Session does not exist.");
-//        }
-
 
         if (!isValidSession(session)) {
             sendUnauthorizedResponse(response);
@@ -89,6 +66,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         }
         updateSessionLastAccessTime(session);
         setUserInfoToRequest(request, session);
+        System.out.println("pass check session with session");
         filterChain.doFilter(request, response);
     }
 

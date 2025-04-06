@@ -47,6 +47,18 @@ export const deleteTableForRestaurant = createAsyncThunk(
   }
 );
 
+export const updateCountOfTable = createAsyncThunk(
+  "/table/updateCountTable",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateCountOfTable(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const tableSlice = createSlice({
   name: "table",
   initialState: {

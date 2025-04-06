@@ -37,9 +37,9 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:https://accounts.google.com}")
     private String issuer;
-    private static final String[] WHITE_LIST_URL = { "/v2/api-docs", "/v3/api-docs", "/swagger-resources",
+    private static final String[] WHITE_LIST_URL = {"/v2/api-docs", "/v3/api-docs", "/swagger-resources",
             "/swagger-ui/**", "/api/v1/auth/**", "/api/restaurants/**", "/api/orders/**", "/api/payments/**",
-            "/user-info", "/swagger-ui/index.html#", "/api/table/restaurant" };
+            "/user-info", "/swagger-ui/index.html#", "/api/table/restaurant", "/api/v1/auth/register"};
 
     @Autowired
     void registerProvider(AuthenticationManagerBuilder auth) {
@@ -74,13 +74,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers(WHITE_LIST_URL).permitAll()
-                .requestMatchers(
-                        "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**",
-                        "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/ws/info",
-                        "/ws/info/**", "/ws/**")
-                .permitAll()
-                .anyRequest().authenticated())
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
+                        .requestMatchers(
+                                "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**",
+                                "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/ws/info",
+                                "/ws/info/**", "/ws/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorization -> authorization
                                 .authorizationRequestResolver(customAuthorizationRequestResolver))
@@ -97,6 +97,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Đảm bảo session được tạo nếu cần
                 )
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .anonymous(anonymous -> anonymous.disable()) // Disable anonymous authentication
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(sessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

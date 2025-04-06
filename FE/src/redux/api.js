@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8080",
@@ -8,13 +9,21 @@ const API = axios.create({
   },
 });
 
-// Interceptor để xử lý lỗi authentication
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       // Có thể dispatch action để logout hoặc refresh token
-      // window.location.href = "/login";
+      import("./store").then(({ store }) => {
+        import("./features/authenticationSlice").then(({ logout }) => {
+          store.dispatch(logout());
+        });
+      });
+
+      toast.error("Phiên đăng nhập của bạn đã hết hạn vui lòng đăng nhập lại");
+      setTimeout(() => {
+        window.location.href = "/Home";
+      }, 2000);
     }
     return Promise.reject(error);
   }
@@ -154,7 +163,7 @@ export const login = async (params) => {
   }
 };
 
-export const logout = async () => {
+export const logoutAPI = async () => {
   try {
     const response = await API.post(`/api/v1/auth/logout`);
     return response.data;
@@ -175,7 +184,7 @@ export const checkSession = async () => {
 export const createOrder = async ({ request, totalAmount, deposit }) => {
   try {
     const queryParams = `?totalAmount=${totalAmount}&deposit=${deposit}`;
-
+    console.log("queryParams", queryParams);
     const response = await API.post(
       `api/orders${queryParams}`,
       request // Gửi request body đúng cách
@@ -400,6 +409,17 @@ export const createTableForRestaurant = async (params) => {
 export const deleteTableForRestaurant = async (params) => {
   try {
     const response = await API.delete(`api/table`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateCountOfTable = async (params) => {
+  try {
+    const response = await API.put(
+      `/api/table?restaurantId=${params.restaurantId}&thuTuBan=${params.thuTuBan}`
+    );
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

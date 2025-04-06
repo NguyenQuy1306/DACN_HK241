@@ -62,6 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             User user = switch (request.getUserRole().toUpperCase()) {
                 case "O" -> new OwnerRestaurant();
                 case "C" -> new Customer();
+                case "A" -> new Admin();
                 default -> throw new IllegalArgumentException("Invalid user role: " + request.getUserRole());
             };
             user.setHoTen(request.getHoTen());
