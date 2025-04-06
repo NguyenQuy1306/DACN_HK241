@@ -98,13 +98,6 @@ function Dashboard_Owner() {
   const restaurantOwner = useSelector(
     (state) => state.authentication.restaurantOwner
   );
-  useEffect(() => {
-    dispatch(
-      getAllOrderByRestaurantId({
-        restaurantId: restaurantOwner ? restaurantOwner.maSoNhaHang : 1,
-      })
-    );
-  }, [dispatch]); // Keep dependency to avoid unnecessary calls
 
   const [orderData, setOrderData] = useState({
     labels,
@@ -190,10 +183,14 @@ function Dashboard_Owner() {
   };
 
   useEffect(() => {
-    dispatch(
-      getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang })
-    );
-  }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
+    if (restaurantOwner) {
+      dispatch(
+        getAllOrderByRestaurantId({
+          restaurantId: restaurantOwner ? restaurantOwner.maSoNhaHang : 1,
+        })
+      );
+    }
+  }, [dispatch]); // Keep dependency to avoid unnecessary calls
 
   // useEffect(() => {
   //     console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
@@ -203,7 +200,7 @@ function Dashboard_Owner() {
     if (user) {
       dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
     }
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   useEffect(() => {
     // Khởi tạo kết nối WebSocket khi component mount
@@ -302,7 +299,7 @@ function Dashboard_Owner() {
     const callFoodImage = async () => {
       // Tạo imageRequest từ foodIdList
       const imageRequest = foodIdList.map((foodId) => ({
-        restaurantId: restaurantOwner.maSoNhaHang,
+        restaurantId: restaurantOwner ? restaurantOwner.maSoNhaHang : 1,
         foodId,
       }));
 
@@ -318,7 +315,7 @@ function Dashboard_Owner() {
     if (foodIdList.length > 0) {
       callFoodImage();
     }
-  }, [foodIdList, restaurantOwner.maSoNhaHang]);
+  }, [foodIdList, restaurantOwner]);
 
   useEffect(() => {
     console.log("IMAGE OF FOOD: ", foodImage);

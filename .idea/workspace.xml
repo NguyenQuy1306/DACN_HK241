@@ -6,15 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/SessionAuthenticationFilter/SessionAuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/LocalTimeDeserializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/TableAvailableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/controller/TableAvailableController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/TableRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/request/TableRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/TableAvailableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/TableAvailableService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/FoodMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/FoodMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/FoodServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/FoodServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +67,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.CurcusApplication.executor": "Run",
-    "Application.capstoneprojectApplication.executor": "Run",
+    "Application.capstoneprojectApplication.executor": "Debug",
     "HTTP Request.generated-requests | #1.executor": "Run",
     "Maven.lms [clean].executor": "Run",
     "Maven.lms [install].executor": "Run",
@@ -79,7 +75,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "foodCRUD",
+    "git-widget-placeholder": "mergeAdmin",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/LENOVO/Desktop/src DACN/DACN_HK241",
@@ -177,6 +173,7 @@
       <workItem from="1743507509230" duration="3480000" />
       <workItem from="1743899614780" duration="21675000" />
       <workItem from="1743932181282" duration="391000" />
+      <workItem from="1743950168638" duration="2287000" />
     </task>
     <servers />
   </component>
@@ -465,12 +462,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="248" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
-          <line>63</line>
+          <line>64</line>
           <option name="timeStamp" value="249" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -500,52 +497,52 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>61</line>
+          <line>60</line>
           <option name="timeStamp" value="256" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>62</line>
+          <line>61</line>
           <option name="timeStamp" value="258" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>65</line>
+          <line>64</line>
           <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>63</line>
+          <line>62</line>
           <option name="timeStamp" value="260" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>67</line>
+          <line>66</line>
           <option name="timeStamp" value="261" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>68</line>
+          <line>67</line>
           <option name="timeStamp" value="262" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>69</line>
+          <line>68</line>
           <option name="timeStamp" value="263" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>64</line>
+          <line>63</line>
           <option name="timeStamp" value="264" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>70</line>
+          <line>69</line>
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/AuthenticationServiceImpl.java</url>
-          <line>71</line>
+          <line>70</line>
           <option name="timeStamp" value="266" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -632,6 +629,36 @@
           <url>file://$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
           <line>140</line>
           <option name="timeStamp" value="289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="290" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="291" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/OAuth2AuthorizationRequestRedirectFilter.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="292" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="295" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>

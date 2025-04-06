@@ -20,18 +20,13 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class FoodMapper {
 
-
-
     // Map Food to FoodResponse without danhMuc field
     @Mapping(source = "maSoMonAn", target = "maSoMonAn")
     @Mapping(source = "ten", target = "ten")
     @Mapping(source = "gia", target = "gia")
     @Mapping(source = "moTa", target = "moTa")
-    @Mapping(source = "maSoMonAnGoc", target = "maSoMonAnGoc")
     @Mapping(source = "trangThai", target = "trangThai")
     public abstract FoodResponse toFoodResponse(Food food);
-
-
 
     @Named("mapCategory")
     public CategoryResponse toCategoryResponse(Category category) {

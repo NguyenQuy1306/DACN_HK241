@@ -39,7 +39,8 @@ public class CustomOAuth2AuthorizationRequestResolver implements OAuth2Authoriza
         if (session != null) {
             // Kiểm tra SecurityContext được lưu trong session
             Object context = session.getAttribute("SPRING_SECURITY_CONTEXT");
-            if (context != null) {
+            String requestURI = request.getRequestURI();
+            if (context != null && requestURI != null && !requestURI.startsWith("/login/oauth2/code/")) {
                 return null; // Nếu đã có SecurityContext, skip OAuth2
             }
         }
