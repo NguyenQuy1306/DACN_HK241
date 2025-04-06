@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.mapstruct.Condition;
+import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -44,9 +46,9 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
-    private FoodImageRepository foodImageRepository;
-    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private FoodImageRepository foodImageRepository;
 
     @Override
     public List<FoodFinalReponse> getAllFood(Pageable pageable, Long restaurantId) {
@@ -108,9 +110,11 @@ public class FoodServiceImpl implements FoodService {
         try {
             boolean isFoodExist = this.checkFoodExist(List.of(foodId));
             if (isFoodExist) {
-                foodRepository.deleteById(foodId);
-                List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
-                return foodMapper.toFoodFinalResponse(food);
+                Food food = foodRepository.findById(foodId).get();
+                food.setTrangThai("Inactive");
+                foodRepository.save(food);
+                List<Food> availableFoods = foodRepository.findAllFood(restaurantId, pageable);
+                return foodMapper.toFoodFinalResponse(availableFoods.stream().filter(i->i.getTrangThai().equals("Active")).collect(Collectors.toList()));
             } else {
                 throw new IllegalArgumentException("Food ID not found: " + foodId);
             }
@@ -129,7 +133,7 @@ public class FoodServiceImpl implements FoodService {
 
                 Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc())
                         .MoTa(currentFood.get().getMoTa())
-                        .Ten(currentFood.get().getTen()).TrangThai("Active").build();
+                        .Ten(currentFood.get().getTen()).TrangThai("Active").MaSoMonAnGoc(currentFood.get().getMaSoMonAnGoc()).build();
                 foodRepository.save(newFood);
 
                 List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
@@ -195,8 +199,11 @@ public class FoodServiceImpl implements FoodService {
 
         Food food = Food.builder().Gia(foodRequest.getGia()).DanhMuc(category).MoTa(foodRequest.getMoTa())
                 .Ten(foodRequest.getTen()).TrangThai("Active").build();
-        foodRepository.save(food);
-        return food;
+        food = foodRepository.save(food);
+
+        food.setMaSoMonAnGoc(food.getMaSoMonAn());
+
+        return foodRepository.save(food);
     }
 
 }

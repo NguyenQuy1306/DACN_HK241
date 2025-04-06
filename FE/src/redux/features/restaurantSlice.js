@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 import { create } from "@mui/material/styles/createTransitions";
+import { getRestaurantById } from "./../../api/travelAdvisorAPI";
 
 export const getRestaurants = createAsyncThunk(
   "/restaurants",
@@ -27,12 +28,26 @@ export const getRestaurantsInMaps = createAsyncThunk(
     }
   }
 );
-
-export const updateRestaurantInfor = createAsyncThunk(
-  "/restaurants/update",
+export const getRestaurant = createAsyncThunk(
+  "/restaurant",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await api.updateRestaurantInfor(params);
+      console.log("-params", params);
+
+      const response = await api.getRestaurantByOwnerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getRestaurantId = createAsyncThunk(
+  "/restaurant/id",
+  async (params, { rejectWithValue }) => {
+    try {
+      console.log("-params", params);
+
+      const response = await api.getRestaurantById(params);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -50,6 +65,19 @@ export const getRestaurantByOwnerId = createAsyncThunk(
     }
   }
 );
+
+export const updateRestaurantInfor = createAsyncThunk(
+  "/restaurants/update",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateRestaurantInfor(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
@@ -64,6 +92,7 @@ export const restaurantSlice = createSlice({
     newMenu: [],
     currentPage: 0,
     updateRestaurantResponse: null,
+    selectedRestaurant: null,
     thanhPho: "TP Hồ Chí Minh",
     time: null,
     date: null,
@@ -72,6 +101,7 @@ export const restaurantSlice = createSlice({
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
   },
+
   reducers: {
     setOpenBookingWithMenu: (state, action) => {
       const { openBookingWithMenu, menuChoosed, newMenu, bookingWithNewCombo } =
@@ -100,6 +130,7 @@ export const restaurantSlice = createSlice({
       state.people = people;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getRestaurantsInMaps.pending, (state) => {
@@ -128,6 +159,7 @@ export const restaurantSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
       .addCase(updateRestaurantInfor.pending, (state) => {
         state.loading = true;
         state.updateRestaurantResponse = [];
@@ -137,6 +169,19 @@ export const restaurantSlice = createSlice({
         state.updateRestaurantInfor = action.payload.payload;
       })
       .addCase(updateRestaurantInfor.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getRestaurantId.pending, (state) => {
+        state.loading = true;
+        state.selectedRestaurant = null;
+      })
+      .addCase(getRestaurantId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedRestaurant = action.payload.payload;
+      })
+      .addCase(getRestaurantId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

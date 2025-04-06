@@ -1,5 +1,5 @@
 import { Menu } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { GoCommentDiscussion } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -23,10 +23,10 @@ const items = [
         label: "Menu",
         icon: <BiFoodMenu />,
         children: [
-            {
-                key: "5",
-                label: "Thêm món ăn",
-            },
+            // {
+            //     key: "5",
+            //     label: "Thêm món ăn",
+            // },
             {
                 key: "6",
                 label: "Danh sách món ăn",
@@ -38,7 +38,7 @@ const items = [
         ],
     },
     {
-        key: "8",
+        key: "4",
         icon: <GoCommentDiscussion />,
         label: "Rating",
     },
@@ -50,8 +50,9 @@ const items = [
 ];
 const SidebarOwner = ({ collapsed }) => {
     const navigate = useNavigate();
-
+    const [navKey, setNavKey] = useState(1);
     const handleMenuClick = ({ key }) => {
+        setNavKey(key);
         switch (key) {
             case "1":
                 navigate("/owner/dashboard");
@@ -78,6 +79,12 @@ const SidebarOwner = ({ collapsed }) => {
                 break;
         }
     };
+
+    useEffect(() => {
+        if (navKey === 1) {
+            navigate("/owner/dashboard");
+        }
+    }, [navKey]);
 
     return (
         <div>

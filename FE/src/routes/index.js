@@ -22,8 +22,13 @@ import MenuList_Owner from "../pages/MenuList_Owner";
 import MenuDetail from "./../pages/MenuDetail/index";
 import CategoryOwner from "./../pages/CategoyOwner/index";
 import OrderOwner from "./../pages/OrderOwner/index";
+
 import OwnerInfoForm from "../pages/InforOwner/InforOwner";
 import TableManagement from "../pages/TableManagement/TableManagement";
+import RatingOwner from "./../pages/RatingOwner/index";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard_Admin from "../pages/Dashboard_Admin";
+import PartnerList from "../pages/PartnerList";
 export const routes = [
   {
     path: "/owner/tablemanagement",
@@ -37,11 +42,20 @@ export const routes = [
     layout: OwnerLayout,
     role: ["owner"],
   },
+
   {
     path: "/owner/restaurant",
     component: RestaurantInfoForm,
     layout: OwnerLayout,
     role: ["owner"],
+    title: "Thông tin nhà hàng",
+  },
+  {
+    path: "/admin/partner",
+    component: PartnerList,
+    layout: AdminLayout,
+    role: ["owner"],
+    title: "Danh sách nhà hàng",
   },
   {
     path: "/owner/dashboard",
@@ -65,10 +79,17 @@ export const routes = [
     role: ["owner"],
   },
   {
+    path: "/owner/rating",
+    component: RatingOwner,
+    layout: OwnerLayout,
+    title: "Đánh giá",
+    role: ["owner"],
+  },
+  {
     path: "/owner/menu/add",
     component: MenuAdd,
     layout: OwnerLayout,
-    title: "Danh sách món ăn/thức uống",
+    title: "Thêm món ăn/thức uống",
     role: ["owner"],
   },
   {
@@ -91,12 +112,7 @@ export const routes = [
     // layout: OwnerLayout,
     role: ["guest", "customer", "owner"],
   },
-  {
-    path: "/owner/menu/add",
-    component: MenuAdd,
-    layout: OwnerLayout,
-    role: "owner",
-  },
+
   {
     path: "/deposit-policy",
     component: DepositPolicy,
@@ -161,5 +177,13 @@ export const routes = [
     path: "/DetailRestaurant/:id/menuImages",
     component: ViewImagepage,
     role: ["guest", "customer", "owner"],
+  },
+
+  {
+    path: "/admin/dashboard",
+    component: Dashboard_Admin,
+    layout: AdminLayout,
+    role: "owner",
+    title: "Bảng điều khiển",
   },
 ];

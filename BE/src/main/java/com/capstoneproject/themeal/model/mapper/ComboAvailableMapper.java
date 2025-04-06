@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.model.mapper;
 
+import com.capstoneproject.themeal.repository.FoodImageRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -28,7 +29,8 @@ public abstract class ComboAvailableMapper {
         @Autowired
         private FoodMapper foodMapper;
 
-        public List<ComboAvailableHasFoodResponse> toComboAvailableHasFoodFinalResponse(
+
+    public List<ComboAvailableHasFoodResponse> toComboAvailableHasFoodFinalResponse(
                         List<ComboAvailableHasFood> comboAvailableHasFoodList) {
 
                 if (comboAvailableHasFoodList == null || comboAvailableHasFoodList.isEmpty()) {

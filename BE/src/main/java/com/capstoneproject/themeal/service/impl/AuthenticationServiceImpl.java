@@ -37,7 +37,6 @@ import java.util.Map;
 
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
-
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private static final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -69,7 +68,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setMatKhau(passwordEncoder.encode(request.getMatKhau()));
             user.setEmail(request.getEmail());
             user.setAuthProvider(AuthProvider.LOCAL);
-            user.setSDT(request.getSDT());
+
+            user.setSDT(request.getSdt());
 
             return userMapper.toUserResponse(repository.save(user));
 
@@ -81,11 +81,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public LoginResponse authenticate(AuthenticationRequest request) {
 
-        var user = repository.timEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("Account does not exist"));
+        var user = repository.timEmail(request.getEmail())
+                .orElseThrow(() -> new NotFoundException("Account does not exist"));
         // if (!user.isActivated())
         // throw new InactivatedUserException("Account has not been activated");
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getMatKhau()));
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getMatKhau()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (BadCredentialsException e) {
             throw new IncorrectPasswordException("Incorrect password");
@@ -98,7 +100,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             default -> throw new ValidationException("Invalid Role");
         }).build();
 
-        return LoginResponse.builder().maSoNguoiDung(user.getMaSoNguoiDung()).UserRole(user.getDiscriminatorValue()).HoTen(user.getHoTen()).Email(user.getEmail()).SDT(user.getSDT()).DiaChi(user.getDiaChi()).NgaySinh(user.getNgaySinh()).GioiTinh(user.getGioiTinh()).build();
+        return LoginResponse.builder().maSoNguoiDung(user.getMaSoNguoiDung()).UserRole(user.getDiscriminatorValue())
+                .HoTen(user.getHoTen()).Email(user.getEmail()).SDT(user.getSDT()).DiaChi(user.getDiaChi())
+                .NgaySinh(user.getNgaySinh()).GioiTinh(user.getGioiTinh()).build();
     }
 
     public String getAccessToken(String code) {
@@ -113,7 +117,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        ResponseEntity<Map> response = restTemplate.exchange(GOOGLE_TOKEN_URL, HttpMethod.POST, requestEntity, Map.class);
+        ResponseEntity<Map> response = restTemplate.exchange(GOOGLE_TOKEN_URL, HttpMethod.POST, requestEntity,
+                Map.class);
         Map<String, Object> responseBody = response.getBody();
 
         if (responseBody != null && responseBody.containsKey("access_token")) {

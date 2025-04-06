@@ -32,7 +32,7 @@ public class RateController {
         return ResponseEntity.ok(rateService.findByCustomerId(customerId));
     }
 
-    @GetMapping("/{restaurantId}/restaurant")
+    @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<ApiResponse<List<RatesRestaurantResponse>>> getRatesInRestaurant(
             @PathVariable Long restaurantId) {
 

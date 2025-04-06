@@ -229,7 +229,7 @@ export const getAllOrders = async () => {
 export const getRateInRestaurant = async (params) => {
   try {
     const response = await API.get(
-      `/api/rate/${params.restaurantId}/restaurant`
+      `/api/rate/restaurant/${params.restaurantId}`
     );
     return response.data;
   } catch (error) {
@@ -308,6 +308,69 @@ export const getDepositPolicy = async (params) => {
   }
 };
 
+//Restaurant APIs
+
+export const getRateOfRestaurant = async ({ restaurantId }) => {
+  try {
+    const response = await API.get(`/api/rate/${restaurantId}/restaurant`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const getAllRestaurant = async () => {
+  try {
+    const response = await API.get(`/api/restaurants/all`);
+    console.log("=============================", response.data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+//FoodImage APIs
+
+export const getFoodImage = async (params) => {
+  try {
+    const response = await API.post(`/api/foodImage`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteFoodImage = async (params) => {
+  try {
+    const response = await API.delete(`/api/foodImage`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+export const uploadFoodImage = async ({
+  restaurantId,
+  categoryId,
+  foodId,
+  file,
+}) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await API.post(
+      `/api/food/restaurants/${restaurantId}/categories/${categoryId}/foods/${foodId}/image`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 //Category APIs
 export const getAllCategory = async (params) => {
   try {
@@ -356,9 +419,18 @@ export const updateCategory = async (categoryId, params) => {
   }
 };
 
-export const getRestaurantByOnwerId = async (params) => {
+export const getRestaurantByOwnerId = async (params) => {
   try {
     const response = await API.get(`/api/restaurants`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getRestaurantById = async ({ id }) => {
+  try {
+    const response = await API.get(`/api/restaurants/${id}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

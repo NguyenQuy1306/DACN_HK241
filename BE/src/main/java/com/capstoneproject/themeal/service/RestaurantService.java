@@ -20,7 +20,10 @@ public interface RestaurantService {
 
         List<RestaurantInMapsResponse> getRecommendedList();
 
+        List<RestaurantInMapsResponse> getAll();
         public RestaurantInMapsResponse getRestaurant(Long ownerId);
+        RestaurantInMapsResponse getRestaurantById(Long id);
+
 
         public void findImagesToDelete(List<String> updatedImage, Restaurant restaurant);
 

@@ -14,6 +14,7 @@ import ButtonLogin from "../Button/ButtonLogin/ButtonLogin";
 import { useNavigate } from "react-router-dom";
 function OwnerHeader({ title }) {
     const open = useSelector((state) => state.authentication.openModal);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const showDrawer = () => {
@@ -34,7 +35,9 @@ function OwnerHeader({ title }) {
                 ></img>
                 <p className={styles.title}>{title}</p>
             </div>
-            <p className={styles.welcome}>Xin chào Nhựt, hãy tiếp tục theo dõi và quản lý nhà hàng của bạn!</p>
+            <p
+                className={styles.welcome}
+            >{`Xin chào ${user.hoTen}, hãy tiếp tục theo dõi và quản lý nhà hàng của bạn!`}</p>
             <div className={styles.notifications}>
                 <IoHomeSharp
                     color="#1c451c"

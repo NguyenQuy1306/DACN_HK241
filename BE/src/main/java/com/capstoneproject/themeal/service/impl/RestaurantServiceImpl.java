@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +119,31 @@ public class RestaurantServiceImpl implements RestaurantService {
             throw new ApplicationException();
         }
 
+    }
+
+    @Override
+    public RestaurantInMapsResponse getRestaurantById(Long id) {
+
+        try {
+            Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+            if (restaurant.isEmpty()) {
+                throw new IllegalArgumentException("Restaurant not found: ");
+            }
+            return restaurantMapper.toDetailResponse(restaurant.get());
+        } catch (Exception e) {
+            throw new ApplicationException();
+        }
+
+    }
+
+    @Override
+    public List<RestaurantInMapsResponse> getAll() {
+        try {
+            List<Restaurant> restaurants = restaurantRepository.findAll();
+            return restaurants.stream().map(restaurantMapper::toDetailResponse).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new ApplicationException();
+        }
     }
 
     @Override

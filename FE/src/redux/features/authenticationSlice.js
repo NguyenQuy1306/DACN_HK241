@@ -52,7 +52,7 @@ export const getRestaurantByOwnerId = createAsyncThunk(
   "/restaurants/owner",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await api.getRestaurantByOnwerId(params);
+      const response = await api.getRestaurantByOwnerId(params);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -87,6 +87,7 @@ const authenticationSlice = createSlice({
     errorRegister: null,
     loading: false,
   },
+
   reducers: {
     setLoginRoute: (state, action) => {
       state.loginRoute = action.payload;
@@ -189,7 +190,7 @@ const authenticationSlice = createSlice({
       })
       .addCase(loginWithGoogle.pending, (state) => {
         state.loading = true;
-        state.restaurantOwner = [];
+        state.oath2Callback = [];
       })
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.loading = false;

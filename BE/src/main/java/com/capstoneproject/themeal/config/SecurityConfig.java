@@ -32,77 +32,87 @@ import org.springframework.security.oauth2.jwt.*;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    @Autowired
-    private SessionAuthenticationFilter sessionAuthenticationFilter;
-    private final AuthenticationProvider authenticationProvider;
-    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:https://accounts.google.com}")
-    private String issuer;
-    private static final String[] WHITE_LIST_URL = {"/v2/api-docs", "/v3/api-docs", "/swagger-resources",
-            "/swagger-ui/**", "/api/v1/auth/**", "/api/restaurants/**", "/api/orders/**", "/api/payments/**",
-            "/user-info", "/swagger-ui/index.html#", "/api/table/restaurant", "/api/v1/auth/register"};
+        @Autowired
+        private SessionAuthenticationFilter sessionAuthenticationFilter;
+        private final AuthenticationProvider authenticationProvider;
+        @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:https://accounts.google.com}")
+        private String issuer;
+        private static final String[] WHITE_LIST_URL = { "/v2/api-docs", "/v3/api-docs", "/swagger-resources",
+                        "/swagger-ui/**", "/api/v1/auth/**", "/api/restaurants/**", "/api/orders/**",
+                        "/api/payments/**",
+                        "/user-info", "/swagger-ui/index.html#", "/api/table/restaurant", "/api/v1/auth/register" };
 
-    @Autowired
-    void registerProvider(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider);
-    }
+        @Autowired
+        void registerProvider(AuthenticationManagerBuilder auth) {
+                auth.authenticationProvider(authenticationProvider);
+        }
 
-    @Autowired
-    private OAuth2AuthenticationSuccessHandler successHandler;
-    @Autowired
-    private CustomOidcUserService customOidcUserService;
+        @Autowired
+        private OAuth2AuthenticationSuccessHandler successHandler;
+        @Autowired
+        private CustomOidcUserService customOidcUserService;
 
-    @Bean
-    public JwtDecoderFactory<ClientRegistration> jwtDecoderFactory() {
-        return clientRegistration -> {
-            NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder
-                    .withJwkSetUri(clientRegistration.getProviderDetails().getJwkSetUri()).build();
-            JwtTimestampValidator timestampValidator = new JwtTimestampValidator(Duration.ofMinutes(5));
-            jwtDecoder.setJwtValidator(
-                    new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault(), timestampValidator));
-            return jwtDecoder;
-        };
-    }
+        @Bean
+        public JwtDecoderFactory<ClientRegistration> jwtDecoderFactory() {
+                return clientRegistration -> {
+                        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder
+                                        .withJwkSetUri(clientRegistration.getProviderDetails().getJwkSetUri()).build();
+                        JwtTimestampValidator timestampValidator = new JwtTimestampValidator(Duration.ofMinutes(5));
+                        jwtDecoder.setJwtValidator(
+                                        new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault(),
+                                                        timestampValidator));
+                        return jwtDecoder;
 
-    @Bean
-    public Clock customClock() {
-        return Clock.offset(Clock.systemUTC(), Duration.ofMinutes(3));
-    }
+                };
+        }
 
-    @Autowired
-    private CustomOAuth2AuthorizationRequestResolver customAuthorizationRequestResolver;
+        @Bean
+        public Clock customClock() {
+                return Clock.offset(Clock.systemUTC(), Duration.ofMinutes(3));
+        }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authz -> authz
-                        .requestMatchers(WHITE_LIST_URL).permitAll()
-                        .requestMatchers(
-                                "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**",
-                                "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/ws/info",
-                                "/ws/info/**", "/ws/**")
-                        .permitAll()
-                        .anyRequest().authenticated())
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(authorization -> authorization
-                                .authorizationRequestResolver(customAuthorizationRequestResolver))
-                        .failureHandler((request, response, exception) -> {
-                            response.sendRedirect("/login?error="
-                                    + URLEncoder.encode(exception.getMessage(), StandardCharsets.UTF_8));
-                        })
-                        .successHandler(successHandler))
+        @Autowired
+        private CustomOAuth2AuthorizationRequestResolver customAuthorizationRequestResolver;
 
-                // .oauth2ResourceServer(oauth2 -> oauth2
-                // .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
-                // )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Đảm bảo session được tạo nếu cần
-                )
-                .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
-                .anonymous(anonymous -> anonymous.disable()) // Disable anonymous authentication
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(sessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http.authorizeHttpRequests(authz -> authz
+                                .requestMatchers(WHITE_LIST_URL).permitAll()
+                                .requestMatchers(
+                                                "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**",
+                                                "/swagger-ui/**", "/swagger-ui.html", "/webjars/**",
+                                                "/v3/api-docs/swagger-config", "/ws/info",
+                                                "/ws/info/**", "/ws/**")
+                                .permitAll()
+                                .anyRequest().authenticated())
+                                .oauth2Login(oauth2 -> oauth2
+                                                .authorizationEndpoint(authorization -> authorization
+                                                                .authorizationRequestResolver(
+                                                                                customAuthorizationRequestResolver))
+                                                .failureHandler((request, response, exception) -> {
+                                                        response.sendRedirect("/login?error="
+                                                                        + URLEncoder.encode(exception.getMessage(),
+                                                                                        StandardCharsets.UTF_8));
+                                                })
+                                                .successHandler(successHandler))
 
-        return http.build();
-    }
+                                // .oauth2ResourceServer(oauth2 -> oauth2
+                                // .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
+                                // )
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Đảm bảo
+                                                                                                          // session
+                                                                                                          // được tạo
+                                                                                                          // nếu cần
+                                )
+                                .csrf(csrf -> csrf.disable())
+                                .cors(Customizer.withDefaults())
+                                .anonymous(anonymous -> anonymous.disable()) // Disable anonymous authentication
+                                .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(sessionAuthenticationFilter,
+                                                UsernamePasswordAuthenticationFilter.class);
+
+                return http.build();
+        }
 
 }

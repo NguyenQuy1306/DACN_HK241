@@ -29,9 +29,10 @@ public abstract class RestaurantMapper {
     // @Mapping(source = "phuHop", target = "phuHop")
     // @Mapping(source = "monDacSac", target = "monDacSac")
     // @Mapping(source = "moTaKhongGian", target = "moTaKhongGian")
-    // @Mapping(source = "diemDacTrung", target = "diemDacTrung")
-    // @Mapping(source = "viDo", target = "viDo")
-    // @Mapping(source = "kinhDo", target = "kinhDo")
+    @Mapping(source = "ngayThamGia", target = "ngayThamGia")
+    @Mapping(source = "trangThai", target = "trangThai")
+    @Mapping(source = "thanhPho", target = "thanhPho")
+    @Mapping(source = "chuNhaHang", target = "owner")
     @Mapping(source = "danhSachAnhNhaHang", target = "imageUrls", qualifiedByName = "mapImageUrls")
     public abstract RestaurantInMapsResponse toDetailResponse(Restaurant restaurant);
 

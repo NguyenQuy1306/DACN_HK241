@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.model.response;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import lombok.Getter;

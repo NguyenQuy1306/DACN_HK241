@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class RegisterRequest {
     @NotEmpty(message = "Role is mandatory")
-    private String UserRole;
+    private String userRole;
     @NotEmpty(message = "HoTen is mandatory")
-    private String HoTen;
+    private String hoTen;
     @NotEmpty(message = "SDT is mandatory")
-    private String SDT;
+    private String sdt;
     @NotEmpty(message = "Email is mandatory")
     @Email(message = "Email should be valid")
-    private String Email;
+    private String email;
     @NotEmpty(message = "Password is mandatory")
-    private String MatKhau;
+    private String matKhau;
 
 }

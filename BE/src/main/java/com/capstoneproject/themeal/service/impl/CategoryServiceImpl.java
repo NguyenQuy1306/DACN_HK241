@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryResponses.forEach(q-> {
                 List<FoodFinalReponse> tmp = foodServiceImpl.getFoodByCategoryId(pageable,restaurantId,q.getMaSoDanhMuc());
                 if (tmp.size() > 0) {
-                    q.setSoLuongMon(tmp.get(0).getFoodResponses().size());
+                    q.setSoLuongMon(tmp.get(0).getFoodResponses().stream().filter(f->f.getTrangThai().equals("Active")).toList().size());
                 } else {
                     q.setSoLuongMon(0);
                 }

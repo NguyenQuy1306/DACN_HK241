@@ -1,5 +1,5 @@
 import { Client } from "@stomp/stompjs";
-import { Col, Divider, Input, message, Row, Select } from "antd";
+import { Col, Divider, Row, Select } from "antd";
 import {
   ArcElement,
   BarElement,
@@ -20,17 +20,14 @@ import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
 import orderImg from "../../assets/images/order.png";
 import ship from "../../assets/images/ship.png";
-import { getAllOrders } from "../../redux/features/orderSlice";
+import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
 import CommentCard from "./components/CommentCard";
 import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
-import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
 
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
-
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
+import { getFoodImage } from "../../redux/api";
 
 ChartJS.register(
   ArcElement,
@@ -44,62 +41,24 @@ ChartJS.register(
   Legend
 );
 
-const data = {
-  labels: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
-  datasets: [
-    {
-      label: "Triệu đồng",
-      data: [65, 59, 80, 81, 56, 55, 100, 120, 90, 110, 86, 88],
-      backgroundColor: "rgba(75, 192, 192, 0.2)",
-      borderColor: "rgba(75, 192, 192, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
-
-// Tùy chọn cho biểu đồ
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
+const chartOptions = {
+  revenue: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
     },
   },
-};
 
-const data3 = {
-  labels: ["Lầu thái", "Salad hoa quả", "Tôm hấp bia", "Lẩu cua đồng"],
-  datasets: [
-    {
-      label: "Số lượng",
-      data: [30, 20, 25, 25], // Phần trăm hoặc số lượng
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-      hoverOffset: 4, // Hiệu ứng khi hover
-    },
-  ],
-};
-
-// Tùy chỉnh biểu đồ
-const options3 = {
-  responsive: true,
-  cutout: "60%", // Điều chỉnh độ dày của vòng donut
-  plugins: {
-    legend: {
-      display: true,
-      position: "bottom",
+  category: {
+    responsive: true,
+    cutout: "60%",
+    plugins: {
+      legend: {
+        display: true,
+        position: "bottom",
+      },
     },
   },
 };
@@ -110,18 +69,7 @@ const getMonthLabels = (count) => {
 };
 
 const labels = getMonthLabels(7);
-const data2 = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Đơn đặt bàn",
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
-      borderColor: "rgb(75, 192, 192)",
-      tension: 0.1,
-    },
-  ],
-};
+
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
@@ -132,15 +80,13 @@ const getDayOfWeek = (dateString) => {
   return days[date.getDay()];
 };
 
-const processData = (orders) => {
-  const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-  orders.forEach((order) => {
-    const day = getDayOfWeek(order.ngay);
-    dayData[day] += 1; // Increment the count for the day
-  });
-
-  return Object.values(dayData);
+const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  })
+    .format(value)
+    .replace("₫", "");
 };
 
 function Dashboard_Owner() {
@@ -160,23 +106,8 @@ function Dashboard_Owner() {
     );
   }, [dispatch]); // Keep dependency to avoid unnecessary calls
 
-  useEffect(() => {
-    console.log("Fetching orders...");
-    dispatch(getAllOrders());
-  }, [dispatch]); // Keep dependency to avoid unnecessary calls
-
-  console.log("messages", messages);
-  // useEffect(() => console.log("ORDER LIST FROM REDUX: ", messages), [messages]);
-  const cancelledOrder = messages
-    ? messages.filter((item) => item.trangThai === "CANCELED").length
-    : 0;
-
-  useEffect(() => {
-    console.log("DON HANG NHA VE DASHBOARD: ", message); // Dispatch action getAllOrders
-  }, [message]);
-
-  const [chartData, setChartData] = useState({
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  const [orderData, setOrderData] = useState({
+    labels,
     datasets: [
       {
         label: "Đơn đặt bàn",
@@ -188,62 +119,8 @@ function Dashboard_Owner() {
     ],
   });
 
-  // useEffect(() => {
-  //     sendMessage(); // Dispatch action getAllOrders
-  // }, []);
-  useEffect(() => {
-    if (user) {
-      dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
-    }
-  }, [dispatch, user]);
-  useEffect(() => {
-    // Khởi tạo kết nối WebSocket khi component mount
-    const socket = new SockJS("http://localhost:8080/ws");
-    const client = new Client({
-      webSocketFactory: () => socket,
-      connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
-      onConnect: () => {
-        setStompClient(client);
-        client.subscribe("/topic/messages", (message) => {
-          console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
-          setMessages(JSON.parse(message.body));
-        });
-      },
-      onStompError: (frame) => {
-        console.error("Broker reported error: " + frame.headers["message"]);
-        console.error("Additional details: " + frame.body);
-      },
-      debug: (str) => {
-        console.log(str); // Bật debug để xem log
-      },
-    });
-
-    client.activate(); // Kích hoạt kết nối
-
-    return () => {
-      if (client) {
-        client.deactivate(); // Ngắt kết nối khi component unmount
-      }
-    };
-  }, []);
-
-  const processRevenueData = (orders) => {
-    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-    orders.forEach((order) => {
-      const day = getDayOfWeek(order.ngay);
-      const revenue = order.danhSachMonAn.reduce(
-        (acc, cur) => acc + cur.gia,
-        0
-      );
-      dayData[day] += revenue; // Add the revenue for the day
-    });
-
-    return Object.values(dayData);
-  };
-
   const [revenueData, setRevenueData] = useState({
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels,
     datasets: [
       {
         label: "Doanh thu (VND)",
@@ -255,12 +132,39 @@ function Dashboard_Owner() {
     ],
   });
 
+  const [categoryData, setCategoryData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Số lượng",
+        data: [],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
+        hoverOffset: 4,
+      },
+    ],
+  });
+
   const processOrderData = (orders) => {
     const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
 
     orders.forEach((order) => {
       const day = getDayOfWeek(order.ngay);
       dayData[day] += 1; // Increment the count for the day
+    });
+
+    return Object.values(dayData);
+  };
+
+  const processRevenueData = (orders) => {
+    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+
+    orders.forEach((order) => {
+      const day = getDayOfWeek(order.ngay);
+      const revenue = order.danhSachMonAn.reduce(
+        (acc, cur) => acc + cur.gia,
+        0
+      );
+      dayData[day] += revenue; // Add the revenue for the day
     });
 
     return Object.values(dayData);
@@ -285,24 +189,154 @@ function Dashboard_Owner() {
     return { labels, data };
   };
 
-  const [categoryData, setCategoryData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Số lượng",
-        data: [],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-        hoverOffset: 4,
+  useEffect(() => {
+    dispatch(
+      getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang })
+    );
+  }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
+
+  // useEffect(() => {
+  //     console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
+  // }, [messages]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    // Khởi tạo kết nối WebSocket khi component mount
+    const socket = new SockJS("http://localhost:8080/ws");
+    const client = new Client({
+      webSocketFactory: () => socket,
+      connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
+      onConnect: () => {
+        setStompClient(client);
+        client.subscribe("/topic/messages", (message) => {
+          // console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
+          setMessages(JSON.parse(message.body));
+        });
       },
-    ],
+      onStompError: (frame) => {
+        console.error("Broker reported error: " + frame.headers["message"]);
+        console.error("Additional details: " + frame.body);
+      },
+      debug: (str) => {
+        console.log(str); // Bật debug để xem log
+      },
+    });
+
+    client.activate(); // Kích hoạt kết nối
+
+    return () => {
+      if (client) {
+        client.deactivate(); // Ngắt kết nối khi component unmount
+      }
+    };
+  }, []);
+
+  const menuNames = messages.reduce(
+    (acc, cur) =>
+      new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
+    new Set()
+  );
+
+  const timeFrame = messages.reduce(
+    (acc, cur) => new Set([...acc, cur.gio]),
+    new Set()
+  );
+
+  const timeFrameDetail = [...timeFrame].reduce((acc, cur) => {
+    acc[cur] = 0;
+    return acc;
+  }, {});
+
+  messages.forEach((item) => {
+    timeFrameDetail[item.gio] += 1;
   });
+
+  const timeFrameDetailArray = Object.entries(timeFrameDetail)
+    .sort((a, b) => b[1] - a[1])
+    .map((i) => i[0]);
+
+  const topTrending = [...menuNames].map((i) => {
+    return {
+      name: i,
+      quantity: 0,
+      price: 0,
+      url: "",
+      id: null,
+    };
+  }, []);
+
+  const [foodIdList, setFoodIdList] = useState([]);
+  const [foodImage, setFoodImage] = useState([]);
+
+  const topMenuTrending = messages.forEach((item) => {
+    item.danhSachMonAn.forEach((i) => {
+      const curItem = topTrending.find((item1) => item1.name === i.tenMon);
+      curItem.quantity += i.soLuong;
+      curItem.price = i.gia;
+      curItem.id = i.maSo.maSoMonAn;
+    });
+  });
+
+  useEffect(() => {
+    topTrending.forEach((i) => {
+      i.url = foodImage.find((item) => item.foodId === i.id).imageUrl;
+    });
+  }, [foodImage]);
+
+  useEffect(() => {
+    const IdList = messages.reduce((acc, cur) => {
+      const request = cur.danhSachMonAn.map((i) => {
+        return i.maSo.maSoMonAn;
+      });
+      return new Set([...acc, ...request]);
+    }, new Set());
+    setFoodIdList([...IdList]);
+  }, [messages]);
+
+  useEffect(() => {
+    const callFoodImage = async () => {
+      // Tạo imageRequest từ foodIdList
+      const imageRequest = foodIdList.map((foodId) => ({
+        restaurantId: restaurantOwner.maSoNhaHang,
+        foodId,
+      }));
+
+      try {
+        // Gọi API lấy ảnh
+        const result = await getFoodImage(imageRequest);
+        setFoodImage(result.payload);
+      } catch (error) {
+        console.error("Failed to fetch food images:", error);
+      }
+    };
+
+    if (foodIdList.length > 0) {
+      callFoodImage();
+    }
+  }, [foodIdList, restaurantOwner.maSoNhaHang]);
+
+  useEffect(() => {
+    console.log("IMAGE OF FOOD: ", foodImage);
+  }, [foodImage]);
+  useEffect(() => {
+    console.log("TOP TRENDING: ", topTrending);
+  }, [topTrending]);
+
+  useEffect(() => {
+    setMessages(order);
+  }, [order]);
 
   useEffect(() => {
     if (messages.length > 0) {
       const processedOrderData = processOrderData(messages);
       const processedRevenueData = processRevenueData(messages);
       const processedCategoryData = processCategoryData(messages);
-      setChartData((prevData) => ({
+      setOrderData((prevData) => ({
         ...prevData,
         datasets: [
           {
@@ -341,7 +375,7 @@ function Dashboard_Owner() {
         <div className={styles["dashboard-body"]}>
           <div style={{ display: "flex", alignItems: "center" }}>
             {/* {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
-                    {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
+                        {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
             <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>
               Bạn đang xem thống kê theo
             </p>
@@ -383,7 +417,12 @@ function Dashboard_Owner() {
               <Statistic
                 img={orderImg}
                 title="Tổng đơn bị hủy"
-                quantity={cancelledOrder}
+                quantity={
+                  messages
+                    ? messages.filter((item) => item.trangThai === "CANCELED")
+                        .length
+                    : 0
+                }
                 up={false}
                 rate={12}
                 compare="So với hôm qua"
@@ -393,7 +432,7 @@ function Dashboard_Owner() {
               <Statistic
                 img={ship}
                 title="Khung giờ đặt nhiều nhất"
-                quantity={"17 - 20"}
+                quantity={timeFrameDetailArray[0]?.slice(0, 5)}
                 up={true}
                 compare=""
               />
@@ -403,9 +442,11 @@ function Dashboard_Owner() {
               <Statistic
                 img={money}
                 title="Tổng doanh thu (VND)"
-                quantity={messages
-                  .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
-                  .reduce((acc, cur) => acc + cur.gia, 0)}
+                quantity={formatCurrency(
+                  messages
+                    .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
+                    .reduce((acc, cur) => acc + cur.gia, 0)
+                )}
                 up={true}
                 rate={13}
                 compare="So với hôm qua"
@@ -418,145 +459,65 @@ function Dashboard_Owner() {
               <h2 className={styles["line-title"]}>
                 Biểu đồ chi tiết đơn đặt bàn
               </h2>
-              <Line data={chartData} label={labels} />
+              <Line data={orderData} label={labels} />
             </div>
             <div className={styles["order-statistic"]}>
               <h2 className={styles["bar-title"]}>
                 Biểu đồ chi tiết doanh thu
               </h2>
-              <Bar data={revenueData} options={options} />
+              <Bar data={revenueData} options={chartOptions.revenue} />
             </div>
           </div>
           <Divider />
 
-          <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
+          <h2 style={{ color: "rgb(28,69,28)" }}>
+            Nhận xét gần đây của khách hàng
+          </h2>
 
           <div className={styles["comment-wrap"]}>
+            <CommentCard />
+            <CommentCard />
+            <CommentCard />
+            <CommentCard />
+            <CommentCard />
             <CommentCard />
             <CommentCard />
           </div>
           <div className={styles["trending-wrap"]}>
             <div className={styles.trending}>
-              <h3
+              <h2
                 style={{
                   paddingLeft: "16px",
                   marginTop: "12px",
-                  fontSize: "20px",
                   color: "rgb(28,69,28)",
                 }}
               >
-                Top 10 món ăn bán chạy nhất
-              </h3>
+                Top các món ăn bán chạy nhất
+              </h2>
+              {topTrending
+                .sort((a, b) => b["quantity"] - a["quantity"])
+                .map((item, index) => {
+                  return (
+                    <TrendingItem
+                      rank={index + 1}
+                      key={index}
+                      name={item.name}
+                      price={item.price}
+                      quantity={item.quantity}
+                      url={item.url[0]}
+                    />
+                  );
+                })}
+
               <Divider />
-              <TrendingItem />
-              <Divider />
-              <TrendingItem />
-              <Divider />
-              <TrendingItem />
-              <Divider />
-              <TrendingItem />
-              <Divider />
-              <TrendingItem />
             </div>
             <div className={styles.doughnut}>
               <h2 className={styles["doughnut-title"]}>
                 Tỷ lệ danh mục món ăn được đặt
               </h2>
-              <Doughnut data={categoryData} options={options3} />
+              <Doughnut data={categoryData} options={chartOptions.category} />
             </div>
           </div>
-        </div>
-      </div>
-      <Row gutter={16} className={styles["statistic-wrap"]}>
-        <Col span={6}>
-          <Statistic
-            img={food}
-            title="Tổng đơn đặt"
-            quantity={
-              messages?.filter((item) => item.trangThai === "COMPLETED").length
-            }
-            up={true}
-            rate={3}
-            compare="So với hôm qua"
-          />
-        </Col>
-        <Col span={6}>
-          <Statistic
-            img={ship}
-            title="Khung giờ đặt nhiều nhất"
-            quantity={"17 - 20"}
-            up={true}
-            compare=""
-          />
-        </Col>
-        <Col span={6}>
-          <Statistic
-            img={orderImg}
-            title="Tổng đơn bị hủy"
-            quantity={cancelledOrder}
-            up={false}
-            rate={12}
-            compare="So với hôm qua"
-          />
-        </Col>
-        <Col span={6}>
-          <Statistic
-            img={money}
-            title="Tổng doanh thu (VND)"
-            quantity={4800000}
-            up={true}
-            rate={13}
-            compare="So với hôm qua"
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <div className={styles["chart-wrap"]}>
-        <div className={styles["order-statistic"]}>
-          <h2 className={styles["line-title"]}>Biểu đồ chi tiết đơn đặt bàn</h2>
-          <Line data={data2} label={labels} />
-        </div>
-        <div className={styles["order-statistic"]}>
-          <h2 className={styles["bar-title"]}>Biểu đồ chi tiết doanh thu</h2>
-          <Bar data={data} options={options} />
-        </div>
-      </div>
-      <Divider />
-
-      <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của khách hàng</h2>
-
-      <div className={styles["comment-wrap"]}>
-        <CommentCard />
-        <CommentCard />
-      </div>
-      <div className={styles["trending-wrap"]}>
-        <div className={styles.trending}>
-          <h3
-            style={{
-              paddingLeft: "16px",
-              marginTop: "12px",
-              fontSize: "20px",
-              color: "rgb(28,69,28)",
-            }}
-          >
-            Top 10 món ăn bán chạy nhất
-          </h3>
-          <Divider />
-          <TrendingItem />
-          <Divider />
-          <TrendingItem />
-          <Divider />
-          <TrendingItem />
-          <Divider />
-          <TrendingItem />
-          <Divider />
-          <TrendingItem />
-        </div>
-        <div className={styles.doughnut}>
-          <h2 className={styles["doughnut-title"]}>
-            Tỷ lệ danh mục món ăn được đặt
-          </h2>
-          <Doughnut data={data3} options={options3} />
         </div>
       </div>
     </>

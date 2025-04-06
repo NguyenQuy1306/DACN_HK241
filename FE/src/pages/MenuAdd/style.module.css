@@ -1,6 +1,6 @@
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 32px auto;
     padding: 2rem;
     background-color: #F3F2F7;
     border-radius: 1rem;
@@ -11,6 +11,13 @@
     display: flex;
     gap: 3rem;
     margin-bottom: 2rem;
+  }
+
+  .label::before {
+    content: "*";
+    color: red;
+    margin: 0 4px;
+    font-size: 14px;
   }
   
   .formSection {
@@ -46,6 +53,7 @@
     border-radius: 0.5rem;
     background-color: white;
     transition: all 0.2s;
+    line-height: 1.4;
   }
   
   .input:focus,
@@ -123,6 +131,10 @@
   .submitButton {
     background-color: #10B981;
     color: white;
+  }
+
+  .submitButton:hover, .cancelButton:hover {
+    cursor: pointer;
   }
   
   .submitButton:hover {
