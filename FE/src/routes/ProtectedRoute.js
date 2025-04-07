@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
+  setAdminLogin,
   setLoginRoute,
   setStatusModalAuthentication,
   setUserRole,
@@ -8,24 +9,22 @@ import {
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+//mỗi lần render tới một trang thì function này sẽ được gọi
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const location = useLocation();
-  const loginRoute = useSelector((state) => state.authentication.loginRoute);
+  const ownerLogin = useSelector((state) => state.authentication.ownerLogin);
+  const adminLogin = useSelector((state) => state.authentication.adminLogin);
   const dispatch = useDispatch();
   const userRole = useSelector((state) => state.authentication.userRole);
   console.log("allowedRoles", allowedRoles);
-  console.log("userRole", userRole);
-  // useEffect(() => {
-  //   dispatch(setUserRole("guest"));
-  //   dispatch(setLoginRoute(false));
-  // }, [dispatch]);
+
   console.log("location pathname", location.pathname);
   console.log(
     "allowedRoles.includes(userRole)",
     allowedRoles.includes(userRole)
   );
-  console.log("loginRoute", loginRoute);
-
+  console.log("ownerLogin", ownerLogin);
+  console.log("adminLogin", adminLogin);
   if (!allowedRoles.includes(userRole)) {
     if (userRole === "guest") {
       dispatch(setStatusModalAuthentication({ openModal: true }));
@@ -34,28 +33,41 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
       return <Navigate to="/notfound" replace />;
     }
   } else {
-    if (loginRoute && allowedRoles.includes("guest")) {
-      //   dispatch(setLoginRoute(false));
-      console.log("navaigate to owner");
-      return <Navigate to="/owner/dashboard" replace />;
+    //ownerLogin: flag đánh dấu owner từ trang home vào giao diện owner
+    if (allowedRoles.includes("guest")) {
+      if (ownerLogin) {
+        return <Navigate to="/owner/dashboard" replace />;
+      }
+      if (adminLogin) {
+        return <Navigate to="/admin/dashboard" replace />;
+      }
     }
-    if (loginRoute && location.pathname == "/owner/dashboard") {
+    //Khi owner và admin vào giao diện chính đánh dấu flag thành false
+    if (ownerLogin && location.pathname == "/owner/dashboard") {
       dispatch(setLoginRoute(false));
-      // console.log("navaigate to owner");
-      // return <Navigate to="/owner/menu/add" replace />;
     }
+    if (adminLogin && location.pathname == "/admin/dashboard") {
+      dispatch(setAdminLogin(false));
+    }
+    // xử lý owner hoặc admin muốn truy cập trang khác không cho phép
     if (
       userRole === "owner" &&
       allowedRoles.includes("guest") &&
-      !loginRoute &&
+      !ownerLogin &&
       location.pathname != "/notfound"
     ) {
-      console.log("callllll");
+      return <Navigate to="/notfound" replace />;
+    }
+    if (
+      userRole === "admin" &&
+      allowedRoles.includes("guest") &&
+      !adminLogin &&
+      location.pathname != "/notfound"
+    ) {
       return <Navigate to="/notfound" replace />;
     }
   }
 
-  console.log("callllll34");
   return children;
 };
 

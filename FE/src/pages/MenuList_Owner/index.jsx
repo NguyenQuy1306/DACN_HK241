@@ -40,7 +40,7 @@ function MenuList_Owner() {
     (state) => state.authentication.restaurantOwner
   );
   const foodList = useSelector((state) => state.food);
-  con;
+
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {

@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/config/CustomOAuth2AuthorizationRequestResolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/FoodMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/model/mapper/FoodMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/FoodServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/capstoneproject/themeal/service/impl/FoodServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +62,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.CurcusApplication.executor": "Run",
-    "Application.capstoneprojectApplication.executor": "Debug",
+    "Application.capstoneprojectApplication.executor": "Run",
     "HTTP Request.generated-requests | #1.executor": "Run",
     "Maven.lms [clean].executor": "Run",
     "Maven.lms [install].executor": "Run",
@@ -173,7 +168,8 @@
       <workItem from="1743507509230" duration="3480000" />
       <workItem from="1743899614780" duration="21675000" />
       <workItem from="1743932181282" duration="391000" />
-      <workItem from="1743950168638" duration="2287000" />
+      <workItem from="1743950168638" duration="2598000" />
+      <workItem from="1743984602468" duration="4030000" />
     </task>
     <servers />
   </component>

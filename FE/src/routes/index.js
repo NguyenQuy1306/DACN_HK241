@@ -40,7 +40,7 @@ export const routes = [
     path: "/admin/ownerdetail",
     component: OwnerInfoForm,
     layout: OwnerLayout,
-    role: ["owner"],
+    role: ["admin"],
   },
 
   {
@@ -54,7 +54,7 @@ export const routes = [
     path: "/admin/partner",
     component: PartnerList,
     layout: AdminLayout,
-    role: ["owner"],
+    role: ["admin"],
     title: "Danh sách nhà hàng",
   },
   {
@@ -110,7 +110,7 @@ export const routes = [
     path: "/notfound",
     component: NotFoundPage,
     // layout: OwnerLayout,
-    role: ["guest", "customer", "owner"],
+    role: ["guest", "customer", "owner", "admin"],
   },
 
   {
@@ -183,7 +183,7 @@ export const routes = [
     path: "/admin/dashboard",
     component: Dashboard_Admin,
     layout: AdminLayout,
-    role: "owner",
+    role: ["admin"],
     title: "Bảng điều khiển",
   },
 ];
