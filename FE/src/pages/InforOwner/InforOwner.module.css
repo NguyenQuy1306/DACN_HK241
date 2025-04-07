@@ -19,6 +19,10 @@
     font-weight: 700;
     display: block;
   }
+
+  .restName {
+    color: rgb(0,102,92);
+  }
   
   .input {
     color: #5e5e5e;
@@ -30,6 +34,7 @@
       Segoe UI,
       sans-serif;
     font-size: 14px;
+    line-height: 1.4;
   }
   
   .textarea {

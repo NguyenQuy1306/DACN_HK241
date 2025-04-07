@@ -133,7 +133,7 @@ public class FoodServiceImpl implements FoodService {
 
                 Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc())
                         .MoTa(currentFood.get().getMoTa())
-                        .Ten(currentFood.get().getTen()).TrangThai("Active").MaSoMonAnGoc(currentFood.get().getMaSoMonAnGoc()).build();
+                        .Ten(currentFood.get().getTen()).TrangThai("Active").build();
                 foodRepository.save(newFood);
 
                 List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
@@ -199,9 +199,7 @@ public class FoodServiceImpl implements FoodService {
 
         Food food = Food.builder().Gia(foodRequest.getGia()).DanhMuc(category).MoTa(foodRequest.getMoTa())
                 .Ten(foodRequest.getTen()).TrangThai("Active").build();
-        food = foodRepository.save(food);
 
-        food.setMaSoMonAnGoc(food.getMaSoMonAn());
 
         return foodRepository.save(food);
     }

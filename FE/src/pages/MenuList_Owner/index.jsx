@@ -178,7 +178,7 @@ function MenuList_Owner() {
                 </div>
                 <div className={styles["menu-wrap"]}>
                     <div className={styles["menu-list"]}>
-                        {foodRender ? (
+                        {foodRender.length > 0 ? (
                             foodRender
                                 .filter((i) => i.trangThai === "Active")
                                 .map((food, index) => {
@@ -211,7 +211,7 @@ function MenuList_Owner() {
                     </div>
 
                     <div className={styles.pagination}>
-                        {foods && (
+                        {foods.length > 0 && (
                             <Pagination
                                 defaultCurrent={1}
                                 total={foods ? foods.length : 0}

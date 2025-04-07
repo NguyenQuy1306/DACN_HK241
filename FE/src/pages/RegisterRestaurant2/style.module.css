@@ -73,11 +73,11 @@
     margin-top: 12px;
     background-color: #F8F9FA;
     padding: 16px;
-
 }
 
 .input-wrapper {
     margin-top: 24px;
+    line-height: 1.4;
 }
 
 .form-action {
@@ -88,6 +88,7 @@
 }
 
 .back-icon {
+    
 }
 
 .back-action {

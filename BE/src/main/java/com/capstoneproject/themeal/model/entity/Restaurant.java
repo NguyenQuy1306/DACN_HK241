@@ -53,7 +53,7 @@ public class Restaurant {
     private Double KinhDo;
     private Double ViDo;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String ThanhPho;
     @Column(name = "ngaythamgia", nullable = true)
     private LocalDate ngayThamGia;
