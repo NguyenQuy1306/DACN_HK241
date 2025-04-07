@@ -36,12 +36,12 @@ function MenuList_Owner() {
         if (category) {
             dispatch(
                 getFoodByCategory({
-                    restaurantId: restaurantOwner.maSoNhaHang,
+                    restaurantId: restaurantOwner?.maSoNhaHang,
                     categoryId: category,
                 }),
             );
         } else {
-            dispatch(getFood({ restaurantId: restaurantOwner.maSoNhaHang }));
+            dispatch(getFood({ restaurantId: restaurantOwner?.maSoNhaHang }));
         }
     }, []);
 
@@ -50,7 +50,7 @@ function MenuList_Owner() {
         dispatch(
             searchFood({
                 key: searchKeywords,
-                restaurantId: restaurantOwner.maSoNhaHang,
+                restaurantId: restaurantOwner?.maSoNhaHang,
             }),
         );
     };
@@ -115,7 +115,7 @@ function MenuList_Owner() {
             });
             setImageRequest(imageRequestTmp);
         }
-    }, [foods, restaurantOwner.maSoNhaHang]);
+    }, [foods, restaurantOwner?.maSoNhaHang]);
 
     useEffect(() => {
         const handleGetFoodImage = async () => {
@@ -137,7 +137,7 @@ function MenuList_Owner() {
                 )?.imageUrl || "",
         }));
         setFoodRender(lsFood);
-    }, [foods, foodImage, restaurantOwner.maSoNhaHang]);
+    }, [foods, foodImage, restaurantOwner?.maSoNhaHang]);
 
     return (
         <div className={styles.container}>
