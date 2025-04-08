@@ -114,7 +114,8 @@ public class FoodServiceImpl implements FoodService {
                 food.setTrangThai("Inactive");
                 foodRepository.save(food);
                 List<Food> availableFoods = foodRepository.findAllFood(restaurantId, pageable);
-                return foodMapper.toFoodFinalResponse(availableFoods.stream().filter(i->i.getTrangThai().equals("Active")).collect(Collectors.toList()));
+                return foodMapper.toFoodFinalResponse(availableFoods.stream()
+                        .filter(i -> i.getTrangThai().equals("Active")).collect(Collectors.toList()));
             } else {
                 throw new IllegalArgumentException("Food ID not found: " + foodId);
             }
@@ -133,7 +134,8 @@ public class FoodServiceImpl implements FoodService {
 
                 Food newFood = Food.builder().Gia(currentFood.get().getGia()).DanhMuc(currentFood.get().getDanhMuc())
                         .MoTa(currentFood.get().getMoTa())
-                        .Ten(currentFood.get().getTen()).TrangThai("Active").build();
+                        .Ten(currentFood.get().getTen()).TrangThai("Active")
+                        .MaSoMonAn(currentFood.get().getMaSoMonAn()).build();
                 foodRepository.save(newFood);
 
                 List<Food> food = foodRepository.findAllFood(restaurantId, pageable);
@@ -199,7 +201,9 @@ public class FoodServiceImpl implements FoodService {
 
         Food food = Food.builder().Gia(foodRequest.getGia()).DanhMuc(category).MoTa(foodRequest.getMoTa())
                 .Ten(foodRequest.getTen()).TrangThai("Active").build();
+        food = foodRepository.save(food);
 
+        food.setMaSoMonAn(food.getMaSoMonAn());
 
         return foodRepository.save(food);
     }

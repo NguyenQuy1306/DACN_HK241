@@ -19,6 +19,7 @@ import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment
 import { Client } from "@stomp/stompjs";
 import { useNavigate } from "react-router-dom";
 import {
+  logout,
   setLoginRoute,
   setStatusModalAuthentication,
   setUser,
@@ -188,6 +189,7 @@ function Home(props) {
   }, []);
 
   useEffect(() => {
+    dispatch(logout());
     const getRecommendedList = async () => {
       const response = await axios.get(
         "http://localhost:8080/api/restaurants/recommended",

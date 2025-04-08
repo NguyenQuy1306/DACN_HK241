@@ -174,19 +174,21 @@ function Dashboard_Owner() {
         return { labels, data };
     };
 
-    useEffect(() => {
-        dispatch(getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang }));
-    }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
+  useEffect(() => {
+    dispatch(
+      getAllOrderByRestaurantId({ restaurantId: restaurantOwner?.maSoNhaHang })
+    );
+  }, [restaurantOwner?.maSoNhaHang]); // Keep dependency to avoid unnecessary calls
 
     // useEffect(() => {
     //     console.log("DON HANG NHA VE DASHBOARD: ", messages); // Dispatch action getAllOrders
     // }, [messages]);
 
-    useEffect(() => {
-        if (user) {
-            dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
-        }
-    }, [dispatch, user]);
+  useEffect(() => {
+    if (user) {
+      dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+    }
+  }, [dispatch, user]);
 
     useEffect(() => {
         // Khởi tạo kết nối WebSocket khi component mount
