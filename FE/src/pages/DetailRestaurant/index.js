@@ -1,25 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBar from "../../components/Search/SearchBar/SearchBar";
 import Result1 from "../../components/Search/Result/Result1";
 import ListImage from "../../features/Detail/Image/ImageBox";
 import DetailBox from "../../features/Detail/DetailBox/DetailBox";
 import { useDispatch, useSelector } from "react-redux";
+import { sendUserBehavior } from "../../redux/api";
 
 const DetailRestaurant = () => {
-  const [selectedPlace, setSelectedPlace] = useState(
-    JSON.parse(localStorage.getItem("selectedPlace"))
-  );
-  const metadata = useSelector((state) => state.restaurant.metadata);
+    const [selectedPlace, setSelectedPlace] = useState(JSON.parse(localStorage.getItem("selectedPlace")));
 
-  return (
-    <>
-      <SearchBar></SearchBar>
-      <Result1 keyword={"12"} count={12}></Result1>
+    const startTimeRef = useRef(null);
+    const { user } = useSelector((state) => state.authentication);
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+        return () => {
+            const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
+            if (timeSpent >= 5) {
+                sendUserBehavior({
+                    userId: user?.maSoNguoiDung,
+                    restaurantId: selectedPlace?.maSoNhaHang,
+                    timeSpent: timeSpent,
+                    liked: false,
+                });
+            }
+        };
+    }, []);
 
-      <ListImage></ListImage>
-      <DetailBox selectedPlace={selectedPlace}></DetailBox>
-    </>
-  );
+    return (
+        <>
+            <SearchBar></SearchBar>
+            <Result1
+                keyword={"12"}
+                count={12}
+            ></Result1>
+
+            <ListImage></ListImage>
+            <DetailBox selectedPlace={selectedPlace}></DetailBox>
+        </>
+    );
 };
 
 export default DetailRestaurant;
