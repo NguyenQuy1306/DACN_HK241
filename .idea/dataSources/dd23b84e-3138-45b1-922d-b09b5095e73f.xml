@@ -3,15 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-4||-9223372036854775808|c|G
-4||10|c|G
-4||10|C|G
-4||10|T|G</Grants>
-      <IntrospectionStateNumber>43738</IntrospectionStateNumber>
+      <IntrospectionStateNumber>44496</IntrospectionStateNumber>
       <ServerVersion>17.0</ServerVersion>
       <StartupTime>1743178393</StartupTime>
       <TimeZones>true ACDT
@@ -306,9 +298,9 @@ false Asia/Dili
 false Asia/Dubai
 false Asia/Dushanbe
 true Asia/Famagusta
-false Asia/Gaza
+true Asia/Gaza
 false Asia/Harbin
-false Asia/Hebron
+true Asia/Hebron
 false Asia/Ho_Chi_Minh
 false Asia/Hong_Kong
 false Asia/Hovd
@@ -805,7 +797,7 @@ false Zulu
 14704||10|C|G
 14704||-9223372036854775808|U|G
 14704||10|U|G</Grants>
-      <IntrospectionStateNumber>43738</IntrospectionStateNumber>
+      <IntrospectionStateNumber>44496</IntrospectionStateNumber>
       <ObjectId>41056</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4235,8 +4227,8 @@ false Zulu
     </schema>
     <schema id="266" parent="2" name="public">
       <Current>1</Current>
-      <IntrospectionStateNumber>43738</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-04-06.07:15:22</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>44496</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-04-12.01:31:28</LastIntrospectionLocalTimestamp>
       <ObjectId>83886</ObjectId>
       <StateNumber>33747</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4455,7 +4447,7 @@ false Zulu
     </table>
     <table id="297" parent="266" name="dondatban">
       <ObjectId>96009</ObjectId>
-      <StateNumber>42864</StateNumber>
+      <StateNumber>44491</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4539,7 +4531,7 @@ false Zulu
     </table>
     <table id="311" parent="266" name="nhahang">
       <ObjectId>96097</ObjectId>
-      <StateNumber>42847</StateNumber>
+      <StateNumber>43965</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4587,7 +4579,7 @@ false Zulu
     </table>
     <table id="319" parent="266" name="thanhtoan">
       <ObjectId>96141</ObjectId>
-      <StateNumber>42844</StateNumber>
+      <StateNumber>44382</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4664,7 +4656,7 @@ false Zulu
     <column id="330" parent="284" name="url">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>43730</StateNumber>
+      <StateNumber>44489</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
@@ -4749,7 +4741,7 @@ false Zulu
     <column id="342" parent="285" name="url">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>43731</StateNumber>
+      <StateNumber>44490</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
@@ -5490,28 +5482,41 @@ masonhahang</ColNames>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="445" parent="297" name="fk3drxiqa242gndo4ne1shtom6h">
+    <column id="445" parent="297" name="percentnoshow">
+      <Position>12</Position>
+      <StateNumber>44422</StateNumber>
+      <StoredType>double precision|0s</StoredType>
+      <TypeId>701</TypeId>
+    </column>
+    <column id="446" parent="297" name="orderat">
+      <NotNull>1</NotNull>
+      <Position>13</Position>
+      <StateNumber>44491</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <foreign-key id="447" parent="297" name="fk3drxiqa242gndo4ne1shtom6h">
       <ColNames>masokhachhang</ColNames>
       <ObjectId>96247</ObjectId>
       <StateNumber>42864</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96079</RefTableId>
     </foreign-key>
-    <foreign-key id="446" parent="297" name="fk23gdagtj7ul2ekprk2dfrbh19">
+    <foreign-key id="448" parent="297" name="fk23gdagtj7ul2ekprk2dfrbh19">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96252</ObjectId>
       <StateNumber>42865</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <foreign-key id="447" parent="297" name="fk985iu2bcf62ywc241m3dpbllc">
+    <foreign-key id="449" parent="297" name="fk985iu2bcf62ywc241m3dpbllc">
       <ColNames>masophuongthucthanhtoan</ColNames>
       <ObjectId>96257</ObjectId>
       <StateNumber>42866</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>96130</RefTableId>
     </foreign-key>
-    <index id="448" parent="297" name="dondatban_pkey">
+    <index id="450" parent="297" name="dondatban_pkey">
       <ColNames>masodatban</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96013</ObjectId>
@@ -5520,49 +5525,49 @@ masonhahang</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="449" parent="297" name="dondatban_pkey">
+    <key id="451" parent="297" name="dondatban_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96014</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42822</StateNumber>
       <UnderlyingIndexId>96013</UnderlyingIndexId>
     </key>
-    <column id="450" parent="298" name="masodatban">
+    <column id="452" parent="298" name="masodatban">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42823</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="451" parent="298" name="masogiamgia">
+    <column id="453" parent="298" name="masogiamgia">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42823</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="452" parent="298" name="ngayapdung">
+    <column id="454" parent="298" name="ngayapdung">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42823</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <foreign-key id="453" parent="298" name="fkgagn2p2qk5rk6sm25f67onw9c">
+    <foreign-key id="455" parent="298" name="fkgagn2p2qk5rk6sm25f67onw9c">
       <ColNames>masodatban</ColNames>
       <ObjectId>96262</ObjectId>
       <StateNumber>42867</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96009</RefTableId>
     </foreign-key>
-    <foreign-key id="454" parent="298" name="fk7n0sj22ahiw7a21mwxdqrvuyt">
+    <foreign-key id="456" parent="298" name="fk7n0sj22ahiw7a21mwxdqrvuyt">
       <ColNames>masogiamgia</ColNames>
       <ObjectId>96267</ObjectId>
       <StateNumber>42868</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96031</RefTableId>
     </foreign-key>
-    <index id="455" parent="298" name="dondatban_apdung_giamgia_pkey">
+    <index id="457" parent="298" name="dondatban_apdung_giamgia_pkey">
       <ColNames>masodatban
 masogiamgia</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -5572,42 +5577,42 @@ masogiamgia</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="456" parent="298" name="dondatban_apdung_giamgia_pkey">
+    <key id="458" parent="298" name="dondatban_apdung_giamgia_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96019</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42823</StateNumber>
       <UnderlyingIndexId>96018</UnderlyingIndexId>
     </key>
-    <column id="457" parent="299" name="masocombocosan">
+    <column id="459" parent="299" name="masocombocosan">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42824</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="458" parent="299" name="masodatban">
+    <column id="460" parent="299" name="masodatban">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42824</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="459" parent="299" name="fkb4q0876iyrs2rdutglts18hrt">
+    <foreign-key id="461" parent="299" name="fkb4q0876iyrs2rdutglts18hrt">
       <ColNames>masocombocosan</ColNames>
       <ObjectId>96272</ObjectId>
       <StateNumber>42869</StateNumber>
       <RefKeyColPositions>3</RefKeyColPositions>
       <RefTableId>95952</RefTableId>
     </foreign-key>
-    <foreign-key id="460" parent="299" name="fkcynqd1rhh31659nnmse1g3r06">
+    <foreign-key id="462" parent="299" name="fkcynqd1rhh31659nnmse1g3r06">
       <ColNames>masodatban</ColNames>
       <ObjectId>96277</ObjectId>
       <StateNumber>42870</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96009</RefTableId>
     </foreign-key>
-    <index id="461" parent="299" name="dondatban_co_combocosan_pkey">
+    <index id="463" parent="299" name="dondatban_co_combocosan_pkey">
       <ColNames>masocombocosan
 masodatban</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -5617,49 +5622,49 @@ masodatban</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="462" parent="299" name="dondatban_co_combocosan_pkey">
+    <key id="464" parent="299" name="dondatban_co_combocosan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96024</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42824</StateNumber>
       <UnderlyingIndexId>96023</UnderlyingIndexId>
     </key>
-    <column id="463" parent="300" name="soluong">
+    <column id="465" parent="300" name="soluong">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42825</StateNumber>
       <StoredType>smallint|0s</StoredType>
       <TypeId>21</TypeId>
     </column>
-    <column id="464" parent="300" name="masodatban">
+    <column id="466" parent="300" name="masodatban">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42825</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="465" parent="300" name="masomonan">
+    <column id="467" parent="300" name="masomonan">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42825</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="466" parent="300" name="fkgxe7m99mmh1qj156hn6mhp1hl">
+    <foreign-key id="468" parent="300" name="fkgxe7m99mmh1qj156hn6mhp1hl">
       <ColNames>masodatban</ColNames>
       <ObjectId>96282</ObjectId>
       <StateNumber>42871</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96009</RefTableId>
     </foreign-key>
-    <foreign-key id="467" parent="300" name="fkfvmwhlxma65b04orlyimadut5">
+    <foreign-key id="469" parent="300" name="fkfvmwhlxma65b04orlyimadut5">
       <ColNames>masomonan</ColNames>
       <ObjectId>96287</ObjectId>
       <StateNumber>42872</StateNumber>
       <RefKeyColPositions>4</RefKeyColPositions>
       <RefTableId>96069</RefTableId>
     </foreign-key>
-    <index id="468" parent="300" name="dondatban_co_monan_pkey">
+    <index id="470" parent="300" name="dondatban_co_monan_pkey">
       <ColNames>masodatban
 masomonan</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -5669,21 +5674,21 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="469" parent="300" name="dondatban_co_monan_pkey">
+    <key id="471" parent="300" name="dondatban_co_monan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96029</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42825</StateNumber>
       <UnderlyingIndexId>96028</UnderlyingIndexId>
     </key>
-    <column id="470" parent="301" name="phantramgiam">
+    <column id="472" parent="301" name="phantramgiam">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>smallint|0s</StoredType>
       <TypeId>21</TypeId>
     </column>
-    <column id="471" parent="301" name="masogiamgia">
+    <column id="473" parent="301" name="masogiamgia">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>2</Position>
@@ -5692,68 +5697,68 @@ masomonan</ColNames>
       <SequenceId>96030</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="472" parent="301" name="masomonan">
+    <column id="474" parent="301" name="masomonan">
       <Position>3</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="473" parent="301" name="masonhahang">
+    <column id="475" parent="301" name="masonhahang">
       <Position>4</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="474" parent="301" name="ngaybatdau">
+    <column id="476" parent="301" name="ngaybatdau">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="475" parent="301" name="ngayketthuc">
+    <column id="477" parent="301" name="ngayketthuc">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="476" parent="301" name="ngaytao">
+    <column id="478" parent="301" name="ngaytao">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="477" parent="301" name="code">
+    <column id="479" parent="301" name="code">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="478" parent="301" name="discounttype">
+    <column id="480" parent="301" name="discounttype">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>42826</StateNumber>
       <StoredType>varchar(31)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="479" parent="301" name="fkhvnee276yrhdl60r94krqw9bf">
+    <foreign-key id="481" parent="301" name="fkhvnee276yrhdl60r94krqw9bf">
       <ColNames>masomonan</ColNames>
       <ObjectId>96292</ObjectId>
       <StateNumber>42873</StateNumber>
       <RefKeyColPositions>4</RefKeyColPositions>
       <RefTableId>96069</RefTableId>
     </foreign-key>
-    <foreign-key id="480" parent="301" name="fkh1h0g6h7gbp8ph7nnub68wv8v">
+    <foreign-key id="482" parent="301" name="fkh1h0g6h7gbp8ph7nnub68wv8v">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96297</ObjectId>
       <StateNumber>42874</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <index id="481" parent="301" name="giamgia_pkey">
+    <index id="483" parent="301" name="giamgia_pkey">
       <ColNames>masogiamgia</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96034</ObjectId>
@@ -5762,28 +5767,28 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="482" parent="301" name="giamgia_pkey">
+    <key id="484" parent="301" name="giamgia_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96035</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42826</StateNumber>
       <UnderlyingIndexId>96034</UnderlyingIndexId>
     </key>
-    <column id="483" parent="302" name="masogiamgiatheokhunggio">
+    <column id="485" parent="302" name="masogiamgiatheokhunggio">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42827</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="484" parent="302" name="fkje082xwwtrjbvr0fp9hh4jtpi">
+    <foreign-key id="486" parent="302" name="fkje082xwwtrjbvr0fp9hh4jtpi">
       <ColNames>masogiamgiatheokhunggio</ColNames>
       <ObjectId>96302</ObjectId>
       <StateNumber>42875</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96031</RefTableId>
     </foreign-key>
-    <index id="485" parent="302" name="giamgiatheokhunggio_pkey">
+    <index id="487" parent="302" name="giamgiatheokhunggio_pkey">
       <ColNames>masogiamgiatheokhunggio</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96039</ObjectId>
@@ -5792,28 +5797,28 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="486" parent="302" name="giamgiatheokhunggio_pkey">
+    <key id="488" parent="302" name="giamgiatheokhunggio_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96040</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42827</StateNumber>
       <UnderlyingIndexId>96039</UnderlyingIndexId>
     </key>
-    <column id="487" parent="303" name="masogiamgiatheomonan">
+    <column id="489" parent="303" name="masogiamgiatheomonan">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42828</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="488" parent="303" name="fkk8shsiyjifoui2ft5xs74vyf6">
+    <foreign-key id="490" parent="303" name="fkk8shsiyjifoui2ft5xs74vyf6">
       <ColNames>masogiamgiatheomonan</ColNames>
       <ObjectId>96307</ObjectId>
       <StateNumber>42876</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96031</RefTableId>
     </foreign-key>
-    <index id="489" parent="303" name="giamgiatheomonan_pkey">
+    <index id="491" parent="303" name="giamgiatheomonan_pkey">
       <ColNames>masogiamgiatheomonan</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96044</ObjectId>
@@ -5822,28 +5827,28 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="490" parent="303" name="giamgiatheomonan_pkey">
+    <key id="492" parent="303" name="giamgiatheomonan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96045</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42828</StateNumber>
       <UnderlyingIndexId>96044</UnderlyingIndexId>
     </key>
-    <column id="491" parent="304" name="masogiamgiatheonguoi">
+    <column id="493" parent="304" name="masogiamgiatheonguoi">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42829</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="492" parent="304" name="fkh47dlr7epf1hfgvgx7hc1awkp">
+    <foreign-key id="494" parent="304" name="fkh47dlr7epf1hfgvgx7hc1awkp">
       <ColNames>masogiamgiatheonguoi</ColNames>
       <ObjectId>96312</ObjectId>
       <StateNumber>42877</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96031</RefTableId>
     </foreign-key>
-    <index id="493" parent="304" name="giamgiatheonguoi_pkey">
+    <index id="495" parent="304" name="giamgiatheonguoi_pkey">
       <ColNames>masogiamgiatheonguoi</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96049</ObjectId>
@@ -5852,34 +5857,34 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="494" parent="304" name="giamgiatheonguoi_pkey">
+    <key id="496" parent="304" name="giamgiatheonguoi_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96050</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42829</StateNumber>
       <UnderlyingIndexId>96049</UnderlyingIndexId>
     </key>
-    <column id="495" parent="305" name="diemtichluy">
+    <column id="497" parent="305" name="diemtichluy">
       <Position>1</Position>
       <StateNumber>42830</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="496" parent="305" name="masokhachhang">
+    <column id="498" parent="305" name="masokhachhang">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42830</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="497" parent="305" name="fkf5s05osx59hko04wrjf1do8ww">
+    <foreign-key id="499" parent="305" name="fkf5s05osx59hko04wrjf1do8ww">
       <ColNames>masokhachhang</ColNames>
       <ObjectId>96317</ObjectId>
       <StateNumber>42878</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96079</RefTableId>
     </foreign-key>
-    <index id="498" parent="305" name="khachhang_pkey">
+    <index id="500" parent="305" name="khachhang_pkey">
       <ColNames>masokhachhang</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96054</ObjectId>
@@ -5888,47 +5893,47 @@ masomonan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="499" parent="305" name="khachhang_pkey">
+    <key id="501" parent="305" name="khachhang_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96055</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42830</StateNumber>
       <UnderlyingIndexId>96054</UnderlyingIndexId>
     </key>
-    <column id="500" parent="306" name="soluongroom">
+    <column id="502" parent="306" name="soluongroom">
       <Position>1</Position>
       <StateNumber>42831</StateNumber>
       <StoredType>smallint|0s</StoredType>
       <TypeId>21</TypeId>
     </column>
-    <column id="501" parent="306" name="masonhahang">
+    <column id="503" parent="306" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42831</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="502" parent="306" name="soluongghe">
+    <column id="504" parent="306" name="soluongghe">
       <Position>3</Position>
       <StateNumber>42831</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="503" parent="306" name="tentang">
+    <column id="505" parent="306" name="tentang">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>42831</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="504" parent="306" name="fkjwxsqg3iwrclbv4qextbqic1c">
+    <foreign-key id="506" parent="306" name="fkjwxsqg3iwrclbv4qextbqic1c">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96322</ObjectId>
       <StateNumber>42879</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <index id="505" parent="306" name="khonggiannhahang_pkey">
+    <index id="507" parent="306" name="khonggiannhahang_pkey">
       <ColNames>masonhahang
 tentang</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -5944,49 +5949,49 @@ pg_catalog</CollationParentNames>
       <CollationNames>
 default</CollationNames>
     </index>
-    <key id="506" parent="306" name="khonggiannhahang_pkey">
+    <key id="508" parent="306" name="khonggiannhahang_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96062</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42831</StateNumber>
       <UnderlyingIndexId>96061</UnderlyingIndexId>
     </key>
-    <column id="507" parent="307" name="giodong">
+    <column id="509" parent="307" name="giodong">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42832</StateNumber>
       <StoredType>time(6)|0s</StoredType>
       <TypeId>1083</TypeId>
     </column>
-    <column id="508" parent="307" name="giomo">
+    <column id="510" parent="307" name="giomo">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42832</StateNumber>
       <StoredType>time(6)|0s</StoredType>
       <TypeId>1083</TypeId>
     </column>
-    <column id="509" parent="307" name="masonhahang">
+    <column id="511" parent="307" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42832</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="510" parent="307" name="ngaytrongtuan">
+    <column id="512" parent="307" name="ngaytrongtuan">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>42832</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="511" parent="307" name="fkbustmrgwa24hctu9px9cjmkow">
+    <foreign-key id="513" parent="307" name="fkbustmrgwa24hctu9px9cjmkow">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96327</ObjectId>
       <StateNumber>42880</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <index id="512" parent="307" name="khunggiohoatdong_pkey">
+    <index id="514" parent="307" name="khunggiohoatdong_pkey">
       <ColNames>masonhahang
 ngaytrongtuan</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6002,33 +6007,33 @@ pg_catalog</CollationParentNames>
       <CollationNames>
 default</CollationNames>
     </index>
-    <key id="513" parent="307" name="khunggiohoatdong_pkey">
+    <key id="515" parent="307" name="khunggiohoatdong_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96067</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42832</StateNumber>
       <UnderlyingIndexId>96066</UnderlyingIndexId>
     </key>
-    <column id="514" parent="308" name="gia">
+    <column id="516" parent="308" name="gia">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="515" parent="308" name="masoanh">
+    <column id="517" parent="308" name="masoanh">
       <Position>2</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="516" parent="308" name="masodanhmuc">
+    <column id="518" parent="308" name="masodanhmuc">
       <Position>3</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="517" parent="308" name="masomonan">
+    <column id="519" parent="308" name="masomonan">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>4</Position>
@@ -6037,41 +6042,41 @@ default</CollationNames>
       <SequenceId>96068</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="518" parent="308" name="mota">
+    <column id="520" parent="308" name="mota">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="519" parent="308" name="ten">
+    <column id="521" parent="308" name="ten">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="520" parent="308" name="trangthai">
+    <column id="522" parent="308" name="trangthai">
       <Position>7</Position>
       <StateNumber>42833</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="521" parent="308" name="fkdp7vrrmc163di3x9jasa4prmb">
+    <foreign-key id="523" parent="308" name="fkdp7vrrmc163di3x9jasa4prmb">
       <ColNames>masoanh</ColNames>
       <ObjectId>96337</ObjectId>
       <StateNumber>42882</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>95922</RefTableId>
     </foreign-key>
-    <foreign-key id="522" parent="308" name="fksj9cy3r84xlaw72q0qwvo9gce">
+    <foreign-key id="524" parent="308" name="fksj9cy3r84xlaw72q0qwvo9gce">
       <ColNames>masodanhmuc</ColNames>
       <ObjectId>96332</ObjectId>
       <StateNumber>42881</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>95979</RefTableId>
     </foreign-key>
-    <index id="523" parent="308" name="monan_masoanh_key">
+    <index id="525" parent="308" name="monan_masoanh_key">
       <ColNames>masoanh</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96076</ObjectId>
@@ -6079,7 +6084,7 @@ default</CollationNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="524" parent="308" name="monan_pkey">
+    <index id="526" parent="308" name="monan_pkey">
       <ColNames>masomonan</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96074</ObjectId>
@@ -6088,32 +6093,32 @@ default</CollationNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="525" parent="308" name="monan_pkey">
+    <key id="527" parent="308" name="monan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96075</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42833</StateNumber>
       <UnderlyingIndexId>96074</UnderlyingIndexId>
     </key>
-    <key id="526" parent="308" name="monan_masoanh_key">
+    <key id="528" parent="308" name="monan_masoanh_key">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96077</ObjectId>
       <StateNumber>42833</StateNumber>
       <UnderlyingIndexId>96076</UnderlyingIndexId>
     </key>
-    <check id="527" parent="309" name="nguoidung_authprovider_check">
+    <check id="529" parent="309" name="nguoidung_authprovider_check">
       <ColNames>authprovider</ColNames>
       <ObjectId>96082</ObjectId>
       <Predicate>(authprovider)::text = ANY ((ARRAY[&apos;GOOGLE&apos;::character varying, &apos;LOCAL&apos;::character varying])::text[])</Predicate>
       <StateNumber>42834</StateNumber>
     </check>
-    <column id="528" parent="309" name="ngaysinh">
+    <column id="530" parent="309" name="ngaysinh">
       <Position>1</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>date|0s</StoredType>
       <TypeId>1082</TypeId>
     </column>
-    <column id="529" parent="309" name="masonguoidung">
+    <column id="531" parent="309" name="masonguoidung">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>2</Position>
@@ -6122,61 +6127,61 @@ default</CollationNames>
       <SequenceId>96078</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="530" parent="309" name="vaitro">
+    <column id="532" parent="309" name="vaitro">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(31)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="531" parent="309" name="diachi">
+    <column id="533" parent="309" name="diachi">
       <Position>4</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="532" parent="309" name="email">
+    <column id="534" parent="309" name="email">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="533" parent="309" name="gioitinh">
+    <column id="535" parent="309" name="gioitinh">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="534" parent="309" name="hoten">
+    <column id="536" parent="309" name="hoten">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="535" parent="309" name="matkhau">
+    <column id="537" parent="309" name="matkhau">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="536" parent="309" name="sdt">
+    <column id="538" parent="309" name="sdt">
       <Position>9</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="537" parent="309" name="authprovider">
+    <column id="539" parent="309" name="authprovider">
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StateNumber>42834</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="538" parent="309" name="nguoidung_pkey">
+    <index id="540" parent="309" name="nguoidung_pkey">
       <ColNames>masonguoidung</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96085</ObjectId>
@@ -6185,7 +6190,7 @@ default</CollationNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="539" parent="309" name="nguoidung_email_key">
+    <index id="541" parent="309" name="nguoidung_email_key">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96087</ObjectId>
@@ -6196,7 +6201,7 @@ default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="540" parent="309" name="nguoidung_sdt_key">
+    <index id="542" parent="309" name="nguoidung_sdt_key">
       <ColNames>sdt</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96089</ObjectId>
@@ -6207,61 +6212,61 @@ default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="541" parent="309" name="nguoidung_pkey">
+    <key id="543" parent="309" name="nguoidung_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96086</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42834</StateNumber>
       <UnderlyingIndexId>96085</UnderlyingIndexId>
     </key>
-    <key id="542" parent="309" name="nguoidung_email_key">
+    <key id="544" parent="309" name="nguoidung_email_key">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96088</ObjectId>
       <StateNumber>42834</StateNumber>
       <UnderlyingIndexId>96087</UnderlyingIndexId>
     </key>
-    <key id="543" parent="309" name="nguoidung_sdt_key">
+    <key id="545" parent="309" name="nguoidung_sdt_key">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96090</ObjectId>
       <StateNumber>42834</StateNumber>
       <UnderlyingIndexId>96089</UnderlyingIndexId>
     </key>
-    <column id="544" parent="310" name="masodanhgia">
+    <column id="546" parent="310" name="masodanhgia">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42835</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="545" parent="310" name="masonguoidung">
+    <column id="547" parent="310" name="masonguoidung">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42835</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="546" parent="310" name="thoigian">
+    <column id="548" parent="310" name="thoigian">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42835</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <foreign-key id="547" parent="310" name="fkn1ei11ab4ijytdr3t3b9jkpub">
+    <foreign-key id="549" parent="310" name="fkn1ei11ab4ijytdr3t3b9jkpub">
       <ColNames>masodanhgia</ColNames>
       <ObjectId>96342</ObjectId>
       <StateNumber>42883</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>95971</RefTableId>
     </foreign-key>
-    <foreign-key id="548" parent="310" name="fk6cf33kduwdwmd5b68dl81650m">
+    <foreign-key id="550" parent="310" name="fk6cf33kduwdwmd5b68dl81650m">
       <ColNames>masonguoidung</ColNames>
       <ObjectId>96347</ObjectId>
       <StateNumber>42884</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96079</RefTableId>
     </foreign-key>
-    <index id="549" parent="310" name="nguoidung_thich_danhgia_pkey">
+    <index id="551" parent="310" name="nguoidung_thich_danhgia_pkey">
       <ColNames>masodanhgia
 masonguoidung</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6271,38 +6276,38 @@ masonguoidung</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="550" parent="310" name="nguoidung_thich_danhgia_pkey">
+    <key id="552" parent="310" name="nguoidung_thich_danhgia_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96095</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42835</StateNumber>
       <UnderlyingIndexId>96094</UnderlyingIndexId>
     </key>
-    <column id="551" parent="311" name="kinhdo">
+    <column id="553" parent="311" name="kinhdo">
       <Position>1</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="552" parent="311" name="vido">
+    <column id="554" parent="311" name="vido">
       <Position>2</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="553" parent="311" name="masochunhahang">
+    <column id="555" parent="311" name="masochunhahang">
       <Position>3</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="554" parent="311" name="masodanhmucnhahang">
+    <column id="556" parent="311" name="masodanhmucnhahang">
       <Position>4</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="555" parent="311" name="masonhahang">
+    <column id="557" parent="311" name="masonhahang">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>5</Position>
@@ -6311,116 +6316,122 @@ masonguoidung</ColNames>
       <SequenceId>96096</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="556" parent="311" name="diachi">
+    <column id="558" parent="311" name="diachi">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="557" parent="311" name="diemdactrung">
+    <column id="559" parent="311" name="diemdactrung">
       <NotNull>1</NotNull>
       <Position>7</Position>
-      <StateNumber>43732</StateNumber>
+      <StateNumber>44492</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="558" parent="311" name="giohoatdong">
+    <column id="560" parent="311" name="giohoatdong">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="559" parent="311" name="khoanggia">
+    <column id="561" parent="311" name="khoanggia">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="560" parent="311" name="kieunhahang">
+    <column id="562" parent="311" name="kieunhahang">
       <Position>10</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="561" parent="311" name="loaiamthuc">
+    <column id="563" parent="311" name="loaiamthuc">
       <Position>11</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="562" parent="311" name="loaihinh">
+    <column id="564" parent="311" name="loaihinh">
       <NotNull>1</NotNull>
       <Position>12</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="563" parent="311" name="motakhonggian">
+    <column id="565" parent="311" name="motakhonggian">
       <NotNull>1</NotNull>
       <Position>13</Position>
-      <StateNumber>43733</StateNumber>
+      <StateNumber>44493</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="564" parent="311" name="mondacsac">
+    <column id="566" parent="311" name="mondacsac">
       <NotNull>1</NotNull>
       <Position>14</Position>
-      <StateNumber>43734</StateNumber>
+      <StateNumber>44494</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="565" parent="311" name="phuhop">
+    <column id="567" parent="311" name="phuhop">
       <NotNull>1</NotNull>
       <Position>15</Position>
-      <StateNumber>43735</StateNumber>
+      <StateNumber>44495</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="566" parent="311" name="ten">
+    <column id="568" parent="311" name="ten">
       <NotNull>1</NotNull>
       <Position>16</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="567" parent="311" name="thanhpho">
+    <column id="569" parent="311" name="thanhpho">
       <NotNull>1</NotNull>
       <Position>17</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="568" parent="311" name="trangthai">
+    <column id="570" parent="311" name="trangthai">
       <Position>18</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="569" parent="311" name="url">
+    <column id="571" parent="311" name="url">
       <NotNull>1</NotNull>
       <Position>19</Position>
       <StateNumber>42836</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="570" parent="311" name="fk3i9msgvyqkpm4khdn0n6yr5ga">
+    <column id="572" parent="311" name="ngaythamgia">
+      <Position>20</Position>
+      <StateNumber>43965</StateNumber>
+      <StoredType>date|0s</StoredType>
+      <TypeId>1082</TypeId>
+    </column>
+    <foreign-key id="573" parent="311" name="fk3i9msgvyqkpm4khdn0n6yr5ga">
       <ColNames>masochunhahang</ColNames>
       <ObjectId>96352</ObjectId>
       <StateNumber>42885</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>96079</RefTableId>
     </foreign-key>
-    <foreign-key id="571" parent="311" name="fk9uxvxcwtewgdjqa447102e4wn">
+    <foreign-key id="574" parent="311" name="fk9uxvxcwtewgdjqa447102e4wn">
       <ColNames>masodanhmucnhahang</ColNames>
       <ObjectId>96357</ObjectId>
       <StateNumber>42886</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>95985</RefTableId>
     </foreign-key>
-    <index id="572" parent="311" name="nhahang_pkey">
+    <index id="575" parent="311" name="nhahang_pkey">
       <ColNames>masonhahang</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96102</ObjectId>
@@ -6429,42 +6440,42 @@ masonguoidung</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="573" parent="311" name="nhahang_pkey">
+    <key id="576" parent="311" name="nhahang_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96103</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42836</StateNumber>
       <UnderlyingIndexId>96102</UnderlyingIndexId>
     </key>
-    <column id="574" parent="312" name="masomonan">
+    <column id="577" parent="312" name="masomonan">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42837</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="575" parent="312" name="masonhahang">
+    <column id="578" parent="312" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42837</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="576" parent="312" name="fkcm5tf1f69k0ckv45yko6ulyah">
+    <foreign-key id="579" parent="312" name="fkcm5tf1f69k0ckv45yko6ulyah">
       <ColNames>masomonan</ColNames>
       <ObjectId>96367</ObjectId>
       <StateNumber>42888</StateNumber>
       <RefKeyColPositions>4</RefKeyColPositions>
       <RefTableId>96069</RefTableId>
     </foreign-key>
-    <foreign-key id="577" parent="312" name="fk1fglbpsd4ypy58tffy8h0s96t">
+    <foreign-key id="580" parent="312" name="fk1fglbpsd4ypy58tffy8h0s96t">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96362</ObjectId>
       <StateNumber>42887</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <index id="578" parent="312" name="nhahang_co_food_pkey">
+    <index id="581" parent="312" name="nhahang_co_food_pkey">
       <ColNames>masomonan
 masonhahang</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6474,42 +6485,42 @@ masonhahang</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="579" parent="312" name="nhahang_co_food_pkey">
+    <key id="582" parent="312" name="nhahang_co_food_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96108</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42837</StateNumber>
       <UnderlyingIndexId>96107</UnderlyingIndexId>
     </key>
-    <column id="580" parent="313" name="masonhahang">
+    <column id="583" parent="313" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42838</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="581" parent="313" name="masophuongthucthanhtoan">
+    <column id="584" parent="313" name="masophuongthucthanhtoan">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42838</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="582" parent="313" name="fk9uqef9cd7mimopost9td8i5ap">
+    <foreign-key id="585" parent="313" name="fk9uqef9cd7mimopost9td8i5ap">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96372</ObjectId>
       <StateNumber>42889</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <foreign-key id="583" parent="313" name="fkc7x6q5i1wfu28961m92sxdepf">
+    <foreign-key id="586" parent="313" name="fkc7x6q5i1wfu28961m92sxdepf">
       <ColNames>masophuongthucthanhtoan</ColNames>
       <ObjectId>96377</ObjectId>
       <StateNumber>42890</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>96130</RefTableId>
     </foreign-key>
-    <index id="584" parent="313" name="nhahang_co_phuongthucthanhtoan_pkey">
+    <index id="587" parent="313" name="nhahang_co_phuongthucthanhtoan_pkey">
       <ColNames>masonhahang
 masophuongthucthanhtoan</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6519,42 +6530,42 @@ masophuongthucthanhtoan</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="585" parent="313" name="nhahang_co_phuongthucthanhtoan_pkey">
+    <key id="588" parent="313" name="nhahang_co_phuongthucthanhtoan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96113</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42838</StateNumber>
       <UnderlyingIndexId>96112</UnderlyingIndexId>
     </key>
-    <column id="586" parent="314" name="masonhahang">
+    <column id="589" parent="314" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42839</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="587" parent="314" name="masotag">
+    <column id="590" parent="314" name="masotag">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42839</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="588" parent="314" name="fkkam7jayirc20qafh7mlafvrv0">
+    <foreign-key id="591" parent="314" name="fkkam7jayirc20qafh7mlafvrv0">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96382</ObjectId>
       <StateNumber>42891</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <foreign-key id="589" parent="314" name="fke0i8et2xnyvfvsrgnggthj07">
+    <foreign-key id="592" parent="314" name="fke0i8et2xnyvfvsrgnggthj07">
       <ColNames>masotag</ColNames>
       <ObjectId>96387</ObjectId>
       <StateNumber>42892</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>96136</RefTableId>
     </foreign-key>
-    <index id="590" parent="314" name="nhahang_co_tag_pkey">
+    <index id="593" parent="314" name="nhahang_co_tag_pkey">
       <ColNames>masonhahang
 masotag</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6564,42 +6575,42 @@ masotag</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="591" parent="314" name="nhahang_co_tag_pkey">
+    <key id="594" parent="314" name="nhahang_co_tag_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96118</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42839</StateNumber>
       <UnderlyingIndexId>96117</UnderlyingIndexId>
     </key>
-    <column id="592" parent="315" name="masonhahang">
+    <column id="595" parent="315" name="masonhahang">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42840</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="593" parent="315" name="masotienich">
+    <column id="596" parent="315" name="masotienich">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42840</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="594" parent="315" name="fkeqn2sb0wjf7d3rxpsx3m72efk">
+    <foreign-key id="597" parent="315" name="fkeqn2sb0wjf7d3rxpsx3m72efk">
       <ColNames>masonhahang</ColNames>
       <ObjectId>96392</ObjectId>
       <StateNumber>42893</StateNumber>
       <RefKeyColPositions>5</RefKeyColPositions>
       <RefTableId>96097</RefTableId>
     </foreign-key>
-    <foreign-key id="595" parent="315" name="fk2etos86clpxfgqj07vqsl9jq7">
+    <foreign-key id="598" parent="315" name="fk2etos86clpxfgqj07vqsl9jq7">
       <ColNames>masotienich</ColNames>
       <ObjectId>96397</ObjectId>
       <StateNumber>42894</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>96150</RefTableId>
     </foreign-key>
-    <index id="596" parent="315" name="nhahang_co_tienich_pkey">
+    <index id="599" parent="315" name="nhahang_co_tienich_pkey">
       <ColNames>masonhahang
 masotienich</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -6609,41 +6620,41 @@ masotienich</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="597" parent="315" name="nhahang_co_tienich_pkey">
+    <key id="600" parent="315" name="nhahang_co_tienich_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96123</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42840</StateNumber>
       <UnderlyingIndexId>96122</UnderlyingIndexId>
     </key>
-    <column id="598" parent="316" name="masodanhgia">
+    <column id="601" parent="316" name="masodanhgia">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42841</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="599" parent="316" name="masophanhoi">
+    <column id="602" parent="316" name="masophanhoi">
       <Position>2</Position>
       <StateNumber>42841</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="600" parent="316" name="fk11kho3sdbo6b4n3je0ykd8tcr">
+    <foreign-key id="603" parent="316" name="fk11kho3sdbo6b4n3je0ykd8tcr">
       <ColNames>masodanhgia</ColNames>
       <ObjectId>96402</ObjectId>
       <StateNumber>42895</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>95971</RefTableId>
     </foreign-key>
-    <foreign-key id="601" parent="316" name="fkfjq7bsg790d7wfyuiihhe9c2d">
+    <foreign-key id="604" parent="316" name="fkfjq7bsg790d7wfyuiihhe9c2d">
       <ColNames>masophanhoi</ColNames>
       <ObjectId>96407</ObjectId>
       <StateNumber>42896</StateNumber>
       <RefKeyColPositions>2</RefKeyColPositions>
       <RefTableId>95971</RefTableId>
     </foreign-key>
-    <index id="602" parent="316" name="phanhoi_pkey">
+    <index id="605" parent="316" name="phanhoi_pkey">
       <ColNames>masodanhgia</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96127</ObjectId>
@@ -6652,14 +6663,14 @@ masotienich</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="603" parent="316" name="phanhoi_pkey">
+    <key id="606" parent="316" name="phanhoi_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96128</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42841</StateNumber>
       <UnderlyingIndexId>96127</UnderlyingIndexId>
     </key>
-    <column id="604" parent="317" name="masophuongthucthanhtoan">
+    <column id="607" parent="317" name="masophuongthucthanhtoan">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -6668,14 +6679,14 @@ masotienich</ColNames>
       <SequenceId>96129</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="605" parent="317" name="ten">
+    <column id="608" parent="317" name="ten">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42842</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="606" parent="317" name="phuongthucthanhtoan_pkey">
+    <index id="609" parent="317" name="phuongthucthanhtoan_pkey">
       <ColNames>masophuongthucthanhtoan</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96133</ObjectId>
@@ -6684,14 +6695,14 @@ masotienich</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="607" parent="317" name="phuongthucthanhtoan_pkey">
+    <key id="610" parent="317" name="phuongthucthanhtoan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96134</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42842</StateNumber>
       <UnderlyingIndexId>96133</UnderlyingIndexId>
     </key>
-    <column id="608" parent="318" name="masotag">
+    <column id="611" parent="318" name="masotag">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -6700,14 +6711,14 @@ masotienich</ColNames>
       <SequenceId>96135</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="609" parent="318" name="noidung">
+    <column id="612" parent="318" name="noidung">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42843</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="610" parent="318" name="tag_pkey">
+    <index id="613" parent="318" name="tag_pkey">
       <ColNames>masotag</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96139</ObjectId>
@@ -6716,48 +6727,62 @@ masotienich</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="611" parent="318" name="tag_pkey">
+    <key id="614" parent="318" name="tag_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96140</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42843</StateNumber>
       <UnderlyingIndexId>96139</UnderlyingIndexId>
     </key>
-    <check id="612" parent="319" name="thanhtoan_paymentstatus_check">
+    <check id="615" parent="319" name="thanhtoan_paymentstatus_check">
       <ColNames>paymentstatus</ColNames>
       <ObjectId>96144</ObjectId>
       <Predicate>(paymentstatus)::text = ANY ((ARRAY[&apos;PAID&apos;::character varying, &apos;REFUND&apos;::character varying, &apos;NONE&apos;::character varying])::text[])</Predicate>
       <StateNumber>42844</StateNumber>
     </check>
-    <column id="613" parent="319" name="isdeposit">
+    <column id="616" parent="319" name="isdeposit">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>42844</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="614" parent="319" name="sotienthanhtoan">
+    <column id="617" parent="319" name="sotienthanhtoan">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42844</StateNumber>
       <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
-    <column id="615" parent="319" name="masothanhtoan">
+    <column id="618" parent="319" name="masothanhtoan">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42844</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="616" parent="319" name="paymentstatus">
+    <column id="619" parent="319" name="paymentstatus">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>42844</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="617" parent="319" name="thanhtoan_pkey">
+    <column id="620" parent="319" name="masodatban">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>44381</StateNumber>
+      <StoredType>bigint|0s</StoredType>
+      <TypeId>20</TypeId>
+    </column>
+    <foreign-key id="621" parent="319" name="fk95k2fbm69kj624ok4aswcqox8">
+      <ColNames>masodatban</ColNames>
+      <ObjectId>96430</ObjectId>
+      <StateNumber>44382</StateNumber>
+      <RefKeyColPositions>5</RefKeyColPositions>
+      <RefTableId>96009</RefTableId>
+    </foreign-key>
+    <index id="622" parent="319" name="thanhtoan_pkey">
       <ColNames>masothanhtoan</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96147</ObjectId>
@@ -6769,14 +6794,14 @@ masotienich</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="618" parent="319" name="thanhtoan_pkey">
+    <key id="623" parent="319" name="thanhtoan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96148</ObjectId>
       <Primary>1</Primary>
       <StateNumber>42844</StateNumber>
       <UnderlyingIndexId>96147</UnderlyingIndexId>
     </key>
-    <column id="619" parent="320" name="masotienich">
+    <column id="624" parent="320" name="masotienich">
       <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -6785,21 +6810,21 @@ masotienich</ColNames>
       <SequenceId>96149</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="620" parent="320" name="mota">
+    <column id="625" parent="320" name="mota">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>42845</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="621" parent="320" name="ten">
+    <column id="626" parent="320" name="ten">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>42845</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="622" parent="320" name="tienich_pkey">
+    <index id="627" parent="320" name="tienich_pkey">
       <ColNames>masotienich</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96155</ObjectId>
@@ -6808,7 +6833,7 @@ masotienich</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="623" parent="320" name="tienich_pkey">
+    <key id="628" parent="320" name="tienich_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>96156</ObjectId>
       <Primary>1</Primary>

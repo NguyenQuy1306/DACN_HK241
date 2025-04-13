@@ -213,14 +213,16 @@ public class PaymentController {
             Long orderCode = callbackRequest.getOrderCode();
             String status = callbackRequest.getStatus();
             String paymentCode = callbackRequest.getPaymentCode();
+            Double distanceKm = callbackRequest.getDistanceKm();
             if ("PAID".equalsIgnoreCase(status)) {
                 // Update order status
 
                 orderTableService.updateOrderStatusAfterPayment(orderCode, true, paymentCode);
+                orderTableService.sendOrderEvent(orderCode, distanceKm);
                 return ResponseEntity.ok("Payment processed successfully");
             } else {
                 orderTableService.updateOrderStatusAfterPayment(orderCode, false, paymentCode);
-
+                orderTableService.sendOrderEvent(orderCode, distanceKm);
                 return ResponseEntity.badRequest().body("Payment failed");
             }
         } catch (Exception e) {
@@ -250,10 +252,10 @@ public class PaymentController {
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<PaymentResponse>> createPayment(@RequestParam Long paymentAmount,
-            @RequestParam String maSoThanhToan) {
+                                                                      @RequestParam String maSoThanhToan, @RequestParam Long maSoDatBan) {
         ApiResponse<PaymentResponse> apiResponse = new ApiResponse<>();
         try {
-            PaymentResponse paymentResponse = orderTableService.createPayment(paymentAmount, maSoThanhToan);
+            PaymentResponse paymentResponse = orderTableService.createPayment(paymentAmount, maSoThanhToan, maSoDatBan);
             apiResponse.ok(paymentResponse);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));

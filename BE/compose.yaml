@@ -10,6 +10,7 @@ services:
       # - db
       - elasticsearch
       - kafka
+      - mongodb
     develop:
       watch:
         - action: rebuild
@@ -28,6 +29,8 @@ services:
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_APPLICATION_JSON={"spring.data.mongodb.uri":"mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin"}
+
     ports:
       - "8080:8080"
     networks:
@@ -120,12 +123,25 @@ services:
       - DATABASE_INCLUDE_PUBLIC=true
     networks:
       - app_network
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=nguyenquy
+      - MONGO_INITDB_ROOT_PASSWORD=Ngocquynguyen1
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app_network
 volumes:
   elasticsearch-data:
   postgres-data:
   kafka-data:
   zookeeper-data:
   zookeeper-logs:
+  mongo-data:
 networks:
   app_network:
     driver: bridge

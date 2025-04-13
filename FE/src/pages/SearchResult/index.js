@@ -8,6 +8,7 @@ import Reservation from "../../components/Dropdown/Reservation";
 import Filter from "../../components/Filter/Filter";
 import ResultSearch from "../../components/Search/Result/ResultSearch";
 import ButtonBooking from "../../components/Button/ButtonBooking/ButtonBooking";
+import { trackUserBehavior } from "../../redux/features/restaurantSlice";
 // Function to convert degrees to radians
 const toRadians = (degrees) => (degrees * Math.PI) / 180;
 
@@ -40,9 +41,20 @@ export const calculateDistance = (myCoords, restaurantCoords) => {
 };
 
 const RestaurantCard = ({ restaurant }) => {
+  const user = useSelector((state) => state.authentication.user);
+  const dispatch = useDispatch();
   const handleClickDetailRestaurant = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(restaurant));
     localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    if (user) {
+      dispatch(
+        trackUserBehavior({
+          restaurantId: id,
+          userId: user.maSoNguoiDung,
+          timestamp: new Date().toISOString(),
+        })
+      );
+    }
     window.open("/DetailRestaurant/${id}", "_blank");
   };
   return (

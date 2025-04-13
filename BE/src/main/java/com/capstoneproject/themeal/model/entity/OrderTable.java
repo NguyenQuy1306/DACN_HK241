@@ -53,6 +53,12 @@ public class OrderTable {
     @Column(nullable = false)
     private Long TongTienThanhToan;
 
+    @Column
+    private Double PercentNoShow;
+
+    @Column(nullable = false)
+    private LocalDateTime orderAt;
+
     @ManyToOne
     @JoinColumn(name = "MaSoPhuongThucThanhToan")
     private PaymentMethod PhuongThucThanhToan;
@@ -67,6 +73,7 @@ public class OrderTable {
 
     @OneToMany(mappedBy = "DonDatBan")
     private Set<OrderTableHasComboAvailable> DanhSachDonDatBanCoComboCoSan;
+
 
     public Long getMaSoDatBan() {
         return MaSoDatBan;

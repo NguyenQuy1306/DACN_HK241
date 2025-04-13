@@ -31,6 +31,7 @@ import {
 } from "../../../redux/features/paymentSlice";
 import { setOpenModalPayment } from "../../../redux/features/tableSlice";
 import "./ModalPayment.css";
+import { trackUserBehavior } from "../../../redux/features/restaurantSlice";
 
 const { formatCurrency } = require("../../../helper/helper");
 const ModalPayment = ({ open, selectedPlace }) => {
@@ -204,9 +205,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
       if (!orderResponse || orderResponse.error) {
         throw new Error("Tạo đơn hàng thất bại!");
       }
-      console.log("menuChoosed", menuChoosed);
-      console.log("paymentAmount", paymentAmount);
       // const deposit = 10000;
+      console.log("orderResponse", orderResponse);
       const response = await dispatch(
         createPaymentLink({
           request: orderPayload,
@@ -214,7 +214,6 @@ const ModalPayment = ({ open, selectedPlace }) => {
           RETURN_URL,
         })
       ).unwrap();
-      console.log("responseresponse", response.data);
 
       if (!response || response.error) {
         sendMessage();
@@ -224,8 +223,10 @@ const ModalPayment = ({ open, selectedPlace }) => {
         createPayment({
           paymentAmount: paymentAmount,
           maSoThanhToan: response.data.paymentLinkId,
+          maSoDatBan: orderResponse.maSoDatBan,
         })
       );
+
       localStorage.setItem(
         "pendingOrder",
         JSON.stringify({
@@ -235,6 +236,8 @@ const ModalPayment = ({ open, selectedPlace }) => {
           checkoutUrl: response.data.checkoutUrl,
           restaurantName: selectedPlace.ten,
           tableId: choosedTable?.maSo,
+          lat: selectedPlace.viDo,
+          lon: selectedPlace.kinhDo,
         })
       );
       console.log("response.data", response.data);

@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonGreen from "../../components/Button/ButtonGreen/ButtonBooking/ButtonGreen";
 import { useNavigate } from "react-router-dom";
 import { updateCountOfTable } from "../../redux/features/tableSlice";
+const { calculateDistance } = require("../../helper/caculateDistance");
+
 export default function ResultPayment() {
   const [stompClient, setStompClient] = useState(null);
 
@@ -31,6 +33,7 @@ export default function ResultPayment() {
     };
     localStorage.setItem(key, JSON.stringify(item));
   };
+  const myCoords = useSelector((state) => state.persist.myCoords);
 
   const getOrderWithExpiry = (key) => {
     const itemStr = localStorage.getItem(key);
@@ -127,7 +130,6 @@ export default function ResultPayment() {
   useEffect(() => {
     if (!orderLoading && orderResponse && orderResponse.error === 0) {
       setLoading(false);
-      console.log("set order", orderResponse);
 
       const pendingOrderString = localStorage.getItem("pendingOrder");
       console.log("pendingOrderString", pendingOrderString);
@@ -135,12 +137,21 @@ export default function ResultPayment() {
 
       const pendingOrder = JSON.parse(pendingOrderString);
       console.log("pendingOrder23", pendingOrder);
+      console.log("mycoords", myCoords);
+      const distance = calculateDistance(
+        myCoords,
+        pendingOrder.lat,
+        pendingOrder.lon
+      );
+      console.log("distance", distance);
+
       if (!isCallbackSent) {
         dispatch(
           paymentCallback({
             status: orderResponse.data.status,
             orderCode: pendingOrder.orderCode,
             paymentCode: pendingOrder.orderCodePayOs,
+            distanceKm: distance,
           })
         );
         dispatch(

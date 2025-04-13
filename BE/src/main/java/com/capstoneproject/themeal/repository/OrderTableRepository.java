@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.repository;
 
+import com.capstoneproject.themeal.model.entity.OrderTableStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +14,18 @@ import java.util.List;
 public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
     @Query("SELECT DISTINCT o FROM OrderTable o WHERE o.KhachHang.MaSoNguoiDung = :customerId")
     List<OrderTable> findByMaSoKhachHang(@Param("customerId") Long customerId);
+
     @Query("SELECT DISTINCT o FROM OrderTable o WHERE o.NhaHang.MaSoNhaHang = :restaurantId")
     List<OrderTable> findByRestaurantId(@Param("restaurantId") Long restaurantId);
 
+    @Query("""
+              SELECT COUNT(o)
+              FROM OrderTable o
+              WHERE o.KhachHang.MaSoNguoiDung = :customerId
+                AND o.TrangThai = :status
+            """)
+    Long countByCustomerAndStatus(
+            @Param("customerId") Long customerId,
+            @Param("status") OrderTableStatus status
+    );
 }

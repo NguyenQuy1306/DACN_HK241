@@ -1,10 +1,16 @@
 package com.capstoneproject.themeal.controller;
 
+import com.capstoneproject.themeal.exception.NotFoundException;
+import com.capstoneproject.themeal.exception.ValidationException;
+import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
+import com.capstoneproject.themeal.model.request.ClickEvent;
+import com.capstoneproject.themeal.model.request.ComboRequest;
+import com.capstoneproject.themeal.model.response.ApiResponse;
+import com.capstoneproject.themeal.model.response.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.capstoneproject.themeal.model.response.CustomerResponse;
 import com.capstoneproject.themeal.service.impl.CustomerServiceImpl;
@@ -21,4 +27,25 @@ public class CustomerController {
     public Optional<CustomerResponse> getCustomerById(@PathVariable Long customerId) {
         return customerService.getCustomerById(customerId);
     }
+
+    @PostMapping("/trackUserBehavior")
+    public ResponseEntity<ApiResponse<?>> trackUserBehavior(@RequestBody ClickEvent clickEvent) {
+
+        ApiResponse<OrderTableHasFood> apiResponse = new ApiResponse<>();
+        try {
+            System.out.println("User " + clickEvent.getUserId() + " clicked restaurant " + clickEvent.getRestaurantId());
+            customerService.trackUserBehavior(clickEvent);
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            apiResponse.error(ResponseCode.getError(23));
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
 }

@@ -9,4 +9,5 @@ public class PaymentCallbackRequest {
     private String status;
     private Long orderCode;
     private String paymentCode;
+    private Double distanceKm;
 }

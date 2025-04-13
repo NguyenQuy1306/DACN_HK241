@@ -77,7 +77,17 @@ export const updateRestaurantInfor = createAsyncThunk(
     }
   }
 );
-
+export const trackUserBehavior = createAsyncThunk(
+  "/restaurants/trackUserBehavior",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.trackUserBehavior(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
@@ -92,6 +102,7 @@ export const restaurantSlice = createSlice({
     newMenu: [],
     currentPage: 0,
     updateRestaurantResponse: null,
+    trackUserBehaviorResponse: null,
     selectedRestaurant: null,
     thanhPho: "TP Hồ Chí Minh",
     time: null,
@@ -182,6 +193,18 @@ export const restaurantSlice = createSlice({
         state.selectedRestaurant = action.payload.payload;
       })
       .addCase(getRestaurantId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(trackUserBehavior.pending, (state) => {
+        state.loading = true;
+        state.trackUserBehaviorResponse = null;
+      })
+      .addCase(trackUserBehavior.fulfilled, (state, action) => {
+        state.loading = false;
+        state.trackUserBehaviorResponse = action.payload.payload;
+      })
+      .addCase(trackUserBehavior.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

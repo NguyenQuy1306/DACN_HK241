@@ -25,6 +25,8 @@ import {
   setUser,
   setUserRole,
 } from "../../redux/features/authenticationSlice";
+const { calculateDistance } = require("../../helper/caculateDistance");
+
 function Home(props) {
   const [pendingPayment, setPendingPayment] = useState(null);
   const categoryRef = useRef();
@@ -43,6 +45,7 @@ function Home(props) {
   const [nextSate, setNextState] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const myCoords = useSelector((state) => state.persist.myCoords);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -207,12 +210,16 @@ function Home(props) {
 
   const checkPendingPayment = () => {
     const pendingOrderString = localStorage.getItem("pendingOrder");
-
     if (!pendingOrderString) return; // Nếu không có đơn hàng nào, thoát
 
     const pendingOrder = JSON.parse(pendingOrderString); // Chuyển về object
     console.log("pendingOrder.orderCode:", pendingOrder);
-
+    const distance = calculateDistance(
+      myCoords,
+      pendingOrder.lat,
+      pendingOrder.lon
+    );
+    console.log("distance", distance);
     const elapsedTime = Date.now() - pendingOrder.timeStamp;
 
     if (elapsedTime >= 180000) {
@@ -223,6 +230,7 @@ function Home(props) {
           status: "FAIL",
           orderCode: pendingOrder.orderCode,
           paymentCode: pendingOrder.orderCodePayOs,
+          distanceKm: distance,
         })
       );
       sendMessage();
