@@ -2,12 +2,14 @@ import { Button, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 
-import { getAllRestaurant } from "../../redux/api";
-import { getRestaurant, getRestaurantId } from "./../../redux/features/restaurantSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getAllRestaurant } from "../../redux/api";
+import { getRestaurantId } from "./../../redux/features/restaurantSlice";
 
 function PartnerList() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const columns = [
         {
             title: "STT",
@@ -38,20 +40,24 @@ function PartnerList() {
             dataIndex: "trangThai",
             key: "status",
             render: (text, record) => {
-                let color = text.length > 5 ? "green" : "brown";
-                if (text === "pending") {
-                    color = "blue";
-                } else if (text === "inactive") {
-                    color = "red";
+                if (text) {
+                    let color = text.length > 5 ? "green" : "brown";
+                    if (text === "pending") {
+                        color = "blue";
+                    } else if (text === "inactive") {
+                        color = "red";
+                    }
+                    return (
+                        <Tag
+                            color={color}
+                            key={text}
+                        >
+                            {text.toUpperCase()}
+                        </Tag>
+                    );
+                } else {
+                    return;
                 }
-                return (
-                    <Tag
-                        color={color}
-                        key={text}
-                    >
-                        {text.toUpperCase()}
-                    </Tag>
-                );
             },
         },
         // {
@@ -76,8 +82,8 @@ function PartnerList() {
                     <Button
                         className={styles.detail}
                         onClick={() => {
-                            alert("Chi tiết nhà hàng: " + record.maSoNhaHang);
                             dispatch(getRestaurantId({ id: record.maSoNhaHang }));
+                            navigate(`/admin/ownerdetail/${record.maSoNhaHang}`);
                         }}
                     >
                         Chi tiết

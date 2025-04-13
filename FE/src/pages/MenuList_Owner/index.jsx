@@ -124,17 +124,17 @@ function MenuList_Owner() {
   const [imageRequest, setImageRequest] = useState([]);
   const [foodImage, setFoodImage] = useState([]);
 
-  useEffect(() => {
-    if (foods) {
-      const imageRequestTmp = foods.map((food) => {
-        return {
-          restaurantId: restaurantOwner.maSoNhaHang,
-          foodId: food.maSoMonAn,
-        };
-      });
-      setImageRequest(imageRequestTmp);
-    }
-  }, [foods, restaurantOwner.maSoNhaHang]);
+    useEffect(() => {
+        if (foods) {
+            const imageRequestTmp = foods.map((food) => {
+                return {
+                    restaurantId: restaurantOwner.maSoNhaHang,
+                    foodId: food.maSoMonAn,
+                };
+            });
+            setImageRequest(imageRequestTmp);
+        }
+    }, [foods, restaurantOwner?.maSoNhaHang]);
 
   useEffect(() => {
     const handleGetFoodImage = async () => {
@@ -160,110 +160,112 @@ function MenuList_Owner() {
     setFoodRender(lsFood);
   }, [foods, foodImage, restaurantOwner.maSoNhaHang]);
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.body}>
-        <Search
-          placeholder="Nhập tên món cần tìm..."
-          onSearch={onSearch}
-          onChange={(e) => setSearchKeywords(e.target.value)}
-          enterButton
-          style={{ padding: "12px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "0 12px",
-          }}
-        >
-          <Breadcrumb
-            style={{ margin: "8px" }}
-            items={[
-              {
-                title: "Danh sách món ăn",
-              },
-              {
-                title: titleBreadCrumb,
-              },
-            ]}
-          />
-          <Button
-            type="primary"
-            icon={<IoIosAddCircleOutline />}
-            color="cyan"
-            onClick={() => navigate("/owner/menu/add")}
-          >
-            Thêm món ăn
-          </Button>
-        </div>
-        <div className={styles["menu-wrap"]}>
-          <div className={styles["menu-list"]}>
-            {foodRender ? (
-              foodRender
-                .filter((i) => i.trangThai === "Active")
-                .map((food, index) => {
-                  return (
-                    <MenuItem
-                      key={index}
-                      menuName={food.ten}
-                      category={food.danhMuc?.ten}
-                      img={
-                        food.imageUrl.length > 0
-                          ? `https:/themealbucket1.s3.amazonaws.com/${food.imageUrl[0]}`
-                          : menuImg
-                      }
-                      viewClick={() => toMenuDetail(food.maSoMonAn)}
-                      deleteClick={() => deleteMenu(food.maSoMonAn)}
-                      duplicateClick={() => duplicateMenu(food.maSoMonAn)}
-                    />
-                  );
-                })
-            ) : (
-              <div className={styles["not-found"]}>
-                <Result
-                  style={{ textAlign: "center" }}
-                  status="404"
-                  title="404"
-                  subTitle="Xin lỗi, Không tìm thấy món ăn!"
+    return (
+        <div className={styles.container}>
+            <div className={styles.body}>
+                <Search
+                    placeholder="Nhập tên món cần tìm..."
+                    onSearch={onSearch}
+                    onChange={(e) => setSearchKeywords(e.target.value)}
+                    enterButton
+                    style={{ padding: "12px" }}
                 />
-              </div>
-            )}
-          </div>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "0 12px",
+                    }}
+                >
+                    <Breadcrumb
+                        style={{ margin: "8px" }}
+                        items={[
+                            {
+                                title: "Danh sách món ăn",
+                            },
+                            {
+                                title: titleBreadCrumb,
+                            },
+                        ]}
+                    />
+                    <Button
+                        type="primary"
+                        icon={<IoIosAddCircleOutline />}
+                        color="cyan"
+                        onClick={() => navigate("/owner/menu/add")}
+                    >
+                        Thêm món ăn
+                    </Button>
+                </div>
+                <div className={styles["menu-wrap"]}>
+                    <div className={styles["menu-list"]}>
+                        {foodRender.length > 0 ? (
+                            foodRender
+                                .filter((i) => i.trangThai === "Active")
+                                .map((food, index) => {
+                                    return (
+                                        <MenuItem
+                                            key={index}
+                                            menuName={food.ten}
+                                            category={food.danhMuc?.ten}
+                                            img={
+                                                food.imageUrl.length > 0
+                                                    ? `https:/themealbucket1.s3.amazonaws.com/${food.imageUrl[0]}`
+                                                    : menuImg
+                                            }
+                                            viewClick={() => toMenuDetail(food.maSoMonAn)}
+                                            deleteClick={() => deleteMenu(food.maSoMonAn)}
+                                            duplicateClick={() => duplicateMenu(food.maSoMonAn)}
+                                        />
+                                    );
+                                })
+                        ) : (
+                            <div className={styles["not-found"]}>
+                                <Result
+                                    style={{ textAlign: "center" }}
+                                    status="404"
+                                    title="404"
+                                    subTitle="Xin lỗi, Không tìm thấy món ăn!"
+                                />
+                            </div>
+                        )}
+                    </div>
 
-          <div className={styles.pagination}>
-            {foods && (
-              <Pagination
-                defaultCurrent={1}
-                total={foods ? foods.length : 0}
-                pageSize={8}
-              />
-            )}
-          </div>
+                    <div className={styles.pagination}>
+                        {foods.length > 0 && (
+                            <Pagination
+                                defaultCurrent={1}
+                                total={foods ? foods.length : 0}
+                                pageSize={8}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div className={styles.statistics}>
+                <StatisticCard
+                    title="Tổng số món ăn"
+                    quantity={foods ? foods.filter((i) => i.trangThai === "Active").length : 0}
+                    img={foodLogo}
+                />
+                <StatisticCard
+                    title="Tổng số thức uống"
+                    quantity={0}
+                    img={drinkLogo}
+                />
+                <StatisticCard
+                    title="Món ăn bán chạy nhất"
+                    quantity={"Lẩu gà Bình Thuận"}
+                    img={foodIncLogo}
+                />
+                <StatisticCard
+                    title="Thức uống bán chạy nhất"
+                    quantity={"Trà mãng cầu"}
+                    img={drinkIncLogo}
+                />
+            </div>
         </div>
-      </div>
-      <div className={styles.statistics}>
-        <StatisticCard
-          title="Tổng số món ăn"
-          quantity={
-            foods ? foods.filter((i) => i.trangThai === "Active").length : 0
-          }
-          img={foodLogo}
-        />
-        <StatisticCard title="Tổng số thức uống" quantity={0} img={drinkLogo} />
-        <StatisticCard
-          title="Món ăn bán chạy nhất"
-          quantity={"Lẩu gà Bình Thuận"}
-          img={foodIncLogo}
-        />
-        <StatisticCard
-          title="Thức uống bán chạy nhất"
-          quantity={"Trà mãng cầu"}
-          img={drinkIncLogo}
-        />
-      </div>
-    </div>
-  );
+    );
 }
 
 export default MenuList_Owner;

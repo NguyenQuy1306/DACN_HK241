@@ -1,76 +1,58 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 
-export const checkSession = createAsyncThunk(
-  "auth/checkSession",
-  async (_, { rejectWithValue }) => {
+export const checkSession = createAsyncThunk("auth/checkSession", async (_, { rejectWithValue }) => {
     try {
-      const response = await api.checkSession();
-      return response.payload;
+        const response = await api.checkSession();
+        return response.payload;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Session check failed");
+        return rejectWithValue(error.response?.data || "Session check failed");
     }
-  }
-);
+});
 
-export const register = createAsyncThunk(
-  "auth/register",
-  async (params, { rejectWithValue }) => {
+export const register = createAsyncThunk("auth/register", async (params, { rejectWithValue }) => {
     try {
-      const response = await api.register(params);
-      return response.status;
+        const response = await api.register(params);
+        return response.status;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Registration failed");
+        return rejectWithValue(error.response?.data || "Registration failed");
     }
-  }
-);
+});
 
-export const login = createAsyncThunk(
-  "auth/login",
-  async (params, { rejectWithValue }) => {
+export const login = createAsyncThunk("auth/login", async (params, { rejectWithValue }) => {
     try {
-      const response = await api.login(params);
-      return response.payload;
+        const response = await api.login(params);
+        return response.payload;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Login failed");
+        return rejectWithValue(error.response?.data || "Login failed");
     }
-  }
-);
+});
 
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
+export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
     try {
-      await api.logoutAPI();
-      return true;
+        await api.logoutAPI();
+        return true;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Logout failed");
+        return rejectWithValue(error.response?.data || "Logout failed");
     }
-  }
-);
-export const getRestaurantByOwnerId = createAsyncThunk(
-  "/restaurants/owner",
-  async (params, { rejectWithValue }) => {
+});
+export const getRestaurantByOwnerId = createAsyncThunk("/restaurants/owner", async (params, { rejectWithValue }) => {
     try {
-      const response = await api.getRestaurantByOwnerId(params);
-      return response;
+        const response = await api.getRestaurantByOwnerId(params);
+        return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response.data);
     }
-  }
-);
+});
 
-export const loginWithGoogle = createAsyncThunk(
-  "/oauth2/google",
-  async (params, { rejectWithValue }) => {
+export const loginWithGoogle = createAsyncThunk("/oauth2/google", async (params, { rejectWithValue }) => {
     try {
-      const response = await api.loginWithGoogle(params);
-      return response.payload;
+        const response = await api.loginWithGoogle(params);
+        return response.payload;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Login failed");
+        return rejectWithValue(error.response?.data || "Login failed");
     }
-  }
-);
+});
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState: {
@@ -185,31 +167,31 @@ const authenticationSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(getRestaurantByOwnerId.pending, (state) => {
-        state.loading = true;
-        state.restaurantOwner = [];
-      })
-      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
-        state.loading = false;
-        state.restaurantOwner = action.payload.payload;
-      })
-      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(loginWithGoogle.pending, (state) => {
-        state.loading = true;
-        state.oath2Callback = [];
-      })
-      .addCase(loginWithGoogle.fulfilled, (state, action) => {
-        state.loading = false;
-        state.oath2Callback = action.payload.payload;
-      })
-      .addCase(loginWithGoogle.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
-  },
+            .addCase(getRestaurantByOwnerId.pending, (state) => {
+                state.loading = true;
+                state.restaurantOwner = [];
+            })
+            .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+                state.loading = false;
+                state.restaurantOwner = action.payload.payload;
+            })
+            .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(loginWithGoogle.pending, (state) => {
+                state.loading = true;
+                state.oath2Callback = [];
+            })
+            .addCase(loginWithGoogle.fulfilled, (state, action) => {
+                state.loading = false;
+                state.oath2Callback = action.payload.payload;
+            })
+            .addCase(loginWithGoogle.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    },
 });
 
 export const {

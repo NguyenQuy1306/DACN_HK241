@@ -529,6 +529,15 @@ export const createFood = async ({
   }
 };
 
+export const sendUserBehavior = async (params) => {
+  try {
+    const response = await API.post(`/api/behavior`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const trackUserBehavior = async (params) => {
   try {
     const response = await API.post(`/api/customer/trackUserBehavior`, params);

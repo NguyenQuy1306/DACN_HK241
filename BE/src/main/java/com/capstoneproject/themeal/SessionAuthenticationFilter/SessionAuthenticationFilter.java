@@ -34,11 +34,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private final String sessionAttributeName = DEFAULT_AUTHORIZATION_REQUEST_ATTR_NAME;
     private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
-            "/api/v1/auth/logout", "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*", "/api/restaurants",
+            "/api/v1/auth/logout", "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*", "/api/restaurants","/api/behavior",
             "/api/restaurants/**", "/api/restaurants", // Match any restaurant-related URL
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories", "/v2/api-docs",
-            "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources", "/swagger-resources/.*",
-            "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**",
+            "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources", "/swagger-resources/.*","/api/restaurant-categories",
+            "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**","/export/users","/export/restaurants","/export/ratings",
             "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/configuration/ui", "/configuration/security",
             "/swagger-ui/.*", "/webjars/.*", "/api/food", "/api/combo", "/api/table/restaurant",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
