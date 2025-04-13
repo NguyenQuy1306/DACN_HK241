@@ -135,6 +135,20 @@ services:
       - mongo-data:/data/db
     networks:
       - app_network
+    ai-service:
+      image: ai-service:latest  
+      build:
+        context: ./AI_Service  
+      container_name: ai-service
+      depends_on:
+        - mongodb
+      environment:
+        - MONGODB_URI=mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin
+      ports:
+        - "5000:5000" 
+      networks:
+        - app_network
+
 volumes:
   elasticsearch-data:
   postgres-data:
