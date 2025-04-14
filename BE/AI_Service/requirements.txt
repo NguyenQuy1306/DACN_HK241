@@ -1,0 +1,6 @@
+flask
+pymongo
+joblib
+pandas
+schedule
+scikit-learn

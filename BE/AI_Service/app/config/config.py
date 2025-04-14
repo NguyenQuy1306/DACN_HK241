@@ -1,0 +1,4 @@
+BROKER_URL = "localhost:9092"
+CANCEL_TOPIC = "cancel_prediction"
+MONGODB_URI = "mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin"
+MODEL_PATH = "app/models/cancel_prediction/cancel_predictor.joblib"
