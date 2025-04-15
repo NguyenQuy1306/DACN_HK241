@@ -56,6 +56,9 @@ public class OrderTable {
     @Column
     private Double PercentNoShow;
 
+    @Column
+    private Boolean isArrival;
+
     @Column(nullable = false)
     private LocalDateTime orderAt;
 

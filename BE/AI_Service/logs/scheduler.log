@@ -64,3 +64,13 @@
  * Running on http://127.0.0.1:5000
 2025-04-14 16:17:48,521 - INFO - [33mPress CTRL+C to quit[0m
 2025-04-14 16:17:50,068 - INFO - 127.0.0.1 - - [14/Apr/2025 16:17:50] "[35m[1mPOST /cancel-predict HTTP/1.1[0m" 500 -
+2025-04-14 16:19:19,693 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-14 16:19:19,693 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-14 16:22:32,340 - INFO - 127.0.0.1 - - [14/Apr/2025 16:22:32] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:22:52,642 - INFO - 127.0.0.1 - - [14/Apr/2025 16:22:52] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:22:53,615 - INFO - 127.0.0.1 - - [14/Apr/2025 16:22:53] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:23:00,599 - INFO - 127.0.0.1 - - [14/Apr/2025 16:23:00] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:23:03,868 - INFO - 127.0.0.1 - - [14/Apr/2025 16:23:03] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:23:06,734 - INFO - 127.0.0.1 - - [14/Apr/2025 16:23:06] "POST /cancel-predict HTTP/1.1" 200 -
+2025-04-14 16:23:31,173 - INFO - 127.0.0.1 - - [14/Apr/2025 16:23:31] "POST /cancel-predict HTTP/1.1" 200 -

@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.capstoneproject.themeal.model.request.OrderEvent;
+import com.capstoneproject.themeal.model.entity.OrderPredict;
+import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.*;
-import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +68,11 @@ public class OrderTableServiceImpl implements OrderTableService {
     @Autowired
     private OrderTableMapper orderTableMapper;
     @Autowired
-    private OrderProducerService orderProducerService;
+    private OrderPredictProducerService orderPredictProducerService;
+    @Autowired
+    private OrderTrainingProducerService orderTrainingProducerService;
+    @Autowired
+    private OrderPredictRepository orderPredictRepository;
 
     @Override
     public List<OrderTableResponse> getOrderTableByCustomerId(Long customerId) {
@@ -109,6 +113,7 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .orderAt(LocalDateTime.now())
                 .KhachHang(user)
                 .NhaHang(restaurant)
+                .isArrival(false)
                 .build();
         orderTableRepository.save(orderTable);
         return orderTable;
@@ -222,6 +227,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         return this.mapping(orderTable);
 
     }
+
     @Override
     public void sendOrderEvent(Long orderId, Double distanceKm) {
         OrderTable order = orderTableRepository.findById(orderId)
@@ -236,7 +242,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         System.out.println("check12383233333211");
         double roundedRate = Math.round(avgUserCancelRate * 100.0) / 100.0;
         System.out.println("distanceKM:: " + distanceKm);
-        OrderEvent orderEvent = OrderEvent.builder()
+        OrderPredict orderPredict = OrderPredict.builder()
                 .paymentStatus(order.getTrangThai().toString())
                 .avgUserCancelRate(roundedRate)
                 .userId(order.getKhachHang().getMaSoNguoiDung())
@@ -249,7 +255,8 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .numGuests(order.getSoKhach())
                 .isFirstBooking(totalCount == 0 ? Boolean.TRUE : Boolean.FALSE)
                 .build();
-        orderProducerService.sendBookingRequestEvent(orderEvent);
+        orderPredictRepository.save(orderPredict);
+        orderPredictProducerService.sendBookingRequestEvent(orderPredict);
     }
 
     @Transactional
@@ -273,6 +280,35 @@ public class OrderTableServiceImpl implements OrderTableService {
         paymentRepository.save(payment);
 
     }
+
+    @Override
+    public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        OrderTable order = orderTableRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order not found"));
+
+        order.setIsArrival(isArrival);
+        orderTableRepository.save(order);
+        OrderPredict orderPredict = orderPredictRepository.findOrder(userId, orderId).orElseThrow(() -> new NotFoundException("OrderPredict not found"));
+        OrderTrainingEvent orderTrainingEvent = OrderTrainingEvent
+                .builder()
+                .paymentStatus(order.getTrangThai().toString())
+                .avgUserCancelRate(orderPredict.getAvgUserCancelRate())
+                .userId(order.getKhachHang().getMaSoNguoiDung())
+                .orderId(orderId)
+                .bookingTime(order.getOrderAt().toString())
+                .dayOfWeek(order.getOrderAt().getDayOfWeek().getValue())
+                .reservationTime(order.getGio().toString())
+                .reservationDate(order.getNgay().toString())
+                .userDistanceKm(orderPredict.getUserDistanceKm())
+                .numGuests(order.getSoKhach())
+                .isFirstBooking(orderPredict.getIsFirstBooking())
+                .isArrival(isArrival)
+                .build();
+        orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
+    }
+
 
     @Override
     public PaymentResponse createPayment(Long paymentAmount,

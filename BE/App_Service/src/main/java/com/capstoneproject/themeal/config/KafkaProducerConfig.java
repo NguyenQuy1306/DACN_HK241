@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.config;
 
-import com.capstoneproject.themeal.model.request.OrderEvent;
+import com.capstoneproject.themeal.model.entity.OrderPredict;
+import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,16 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, OrderEvent> orderEventProducerFactory() {
+    public ProducerFactory<String, OrderPredict> orderEventProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public ProducerFactory<String, OrderTrainingEvent> orderTrainingProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -43,7 +53,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean(name = "orderEventKafkaTemplate")
-    public KafkaTemplate<String, OrderEvent> orderEventKafkaTemplate() {
+    public KafkaTemplate<String, OrderPredict> orderEventKafkaTemplate() {
         return new KafkaTemplate<>(orderEventProducerFactory());
+    }
+
+    @Bean(name = "orderTrainingKafkaTemplate")
+    public KafkaTemplate<String, OrderTrainingEvent> ordeTrainingKafkaTemplate() {
+        return new KafkaTemplate<>(orderTrainingProducerFactory());
     }
 }

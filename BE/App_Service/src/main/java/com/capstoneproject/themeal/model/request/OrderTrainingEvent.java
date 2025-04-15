@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderEvent {
+public class OrderTrainingEvent {
     private Long orderId;
     private Long userId;
     private String bookingTime;
@@ -19,6 +19,8 @@ public class OrderEvent {
     private Boolean isFirstBooking;
     private Integer dayOfWeek;
     private Double avgUserCancelRate;
-    private String paymentStatus;
     private Double userDistanceKm;
+    private String paymentStatus;
+    private Boolean usedTraining;
+    private Boolean isArrival;
 }

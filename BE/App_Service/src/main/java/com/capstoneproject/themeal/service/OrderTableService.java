@@ -45,4 +45,6 @@ public interface OrderTableService {
     List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId);
 
     public void sendOrderEvent(Long orderId, Double distanceKm);
+
+    public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId);
 }

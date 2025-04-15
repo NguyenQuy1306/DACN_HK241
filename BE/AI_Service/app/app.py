@@ -3,9 +3,10 @@ import logging
 from flask import Flask
 import threading
 import time
+import schedule
 from app.routers.recommend import recommend_bp
 from app.routers.cancel import predict_router
-import schedule
+from app.kafka.consumers.cancel_consumer import run_kafka_cancel_consumer
 
 # Import file cancel_scheduler.py
 from app.models.cancel_prediction.batch_trainer import retrain_if_enough_data
@@ -52,5 +53,8 @@ app.register_blueprint(predict_router)
 # scheduler_thread.daemon = True  # Khi Flask app tắt, scheduler cũng sẽ tắt
 # scheduler_thread.start()
 
+kafka_thread = threading.Thread(target=run_kafka_cancel_consumer)
+kafka_thread.daemon = True
+kafka_thread.start()
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)  # `use_reloader=False` giúp tránh việc Flask khởi động lại nhiều lần

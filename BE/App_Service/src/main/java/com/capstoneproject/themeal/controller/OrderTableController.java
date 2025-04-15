@@ -102,4 +102,26 @@ public class OrderTableController {
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
+
+    @PutMapping("")
+    public ResponseEntity<ApiResponse<String>> updateIsArrivalCustormer(@RequestBody Long userId, @RequestBody Long orderID, @RequestBody Boolean isArrival) {
+
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        try {
+            orderTableService.updateIsArrivalCustomer(userId, isArrival, orderID);
+            apiResponse.ok("Update order arrival success");
+        } catch (NotFoundException e) {
+            apiResponse.error(ResponseCode.getError(10));
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        } catch (ValidationException e) {
+            apiResponse.error(ResponseCode.getError(1));
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            Map<String, String> errorMap = new HashMap<>();
+            errorMap.put("message", e.getMessage() != null ? e.getMessage() : "Internal Server Error");
+            apiResponse.error(errorMap);
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

@@ -1,13 +1,15 @@
 package com.capstoneproject.themeal.service;
 
-import com.capstoneproject.themeal.model.entity.RestaurantElasticsearch;
 import com.capstoneproject.themeal.model.entity.RestaurantMongoDB;
 import com.capstoneproject.themeal.repository.ElasticSearchQuery;
 import com.capstoneproject.themeal.repository.RestaurantMongoDbRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -46,10 +48,12 @@ public class MongoConsumerService {
 
             restaurantMongoDbRepository.save(restaurant);
             kafkaProducerService.sendMessages("user-behavior-data", message);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error processing Kafka with mongoDB, message: " + message);
         }
     }
+
+
 }
