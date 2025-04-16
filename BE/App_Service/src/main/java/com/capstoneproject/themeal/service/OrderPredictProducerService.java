@@ -16,7 +16,9 @@ public class OrderPredictProducerService {
     private String bookingRequestTopic;
 
     public void sendBookingRequestEvent(OrderPredict event) {
+        System.out.println("sendBookingRequestEvent");
         kafkaTemplate.send(bookingRequestTopic, event.getOrderId().toString(), event);
+        System.out.println("afterSendBookingRequestEvent");
     }
 
 }

@@ -12,7 +12,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import roc_auc_score, classification_report
-from config.config import MODEL_PATH
+from app.config.config import MODEL_PATH
 import logging
 
 def train_and_save_model(df: pd.DataFrame):
@@ -69,7 +69,7 @@ def train_and_save_model(df: pd.DataFrame):
         "num_guests", "is_first_booking", "day_of_week", "is_weekend",
          "avg_user_cancel_rate","payment_status","user_distance_km"
     ]
-    TARGET = "is_cancelled"
+    TARGET = "is_arrival"
 
     X = df[FEATURES]
     y = df[TARGET]
@@ -86,10 +86,10 @@ def train_and_save_model(df: pd.DataFrame):
     numeric_features = [
         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week",
-        "is_weekend", "avg_user_cancel_rate","payment_status","user_distance_km"
+        "is_weekend", "avg_user_cancel_rate","user_distance_km"
     ]
 
-    categorical_features = ["user_id"]
+    categorical_features = ["user_id","payment_status"]
 
     numeric_transformer = StandardScaler()
     categorical_transformer = OneHotEncoder(handle_unknown="ignore", sparse_output=False)

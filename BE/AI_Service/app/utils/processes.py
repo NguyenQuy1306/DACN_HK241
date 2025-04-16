@@ -1,12 +1,18 @@
 import pandas as pd
+import logging
+import re
+def camel_to_snake(data):
+    return {
+        re.sub(r'(?<!^)(?=[A-Z])', '_', k).lower(): v for k, v in data.items()
+    }
 def enrich_booking_data(data):
-    print("checkking123")
+    logging.info("checkking123")
 
     booking_time = pd.to_datetime(data["booking_time"])
-    print("checkking1234")
+    logging.info("checkking1234")
 
     reservation_datetime = pd.to_datetime(data["reservation_date"] + " " + data["reservation_time"])
-    print("checkking1235")
+    logging.info("checkking1235")
     return {
         "user_id": data["user_id"],
         "booking_hour": booking_time.hour,

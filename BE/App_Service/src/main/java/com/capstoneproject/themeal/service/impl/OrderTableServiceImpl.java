@@ -255,8 +255,12 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .numGuests(order.getSoKhach())
                 .isFirstBooking(totalCount == 0 ? Boolean.TRUE : Boolean.FALSE)
                 .build();
+        System.out.println("distanceKM2323:: " + distanceKm);
         orderPredictRepository.save(orderPredict);
+        System.out.println("distanceKM232444:: " + distanceKm);
         orderPredictProducerService.sendBookingRequestEvent(orderPredict);
+        System.out.println("distanceKM232444323232:: " + distanceKm);
+
     }
 
     @Transactional

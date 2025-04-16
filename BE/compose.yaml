@@ -1,40 +1,40 @@
 version: '3.8'
 
 services:
-  # app:
-  #   image: 'spring-app:latest'
-  #   build:
-  #     context: App_Service
-  #   container_name: spring
-  #   depends_on:
-  #     # - db
-  #     - elasticsearch
-  #     - kafka
-  #     - mongodb
-  #   develop:
-  #     watch:
-  #       - action: rebuild
-  #         path: App_Service/src
-  #       - action: rebuild
-  #         path: App_Service/pom.xml
-  #   volumes:
-  #     - ./src:/app/src
-  #     - ./target:/app/target
-  #     - ./logs:/app/logs
-  #   environment:
-  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/curcus
-  #     - SPRING_DATASOURCE_USERNAME=postgres
-  #     - SPRING_DATASOURCE_PASSWORD=Ngocquynguyen1
-  #     - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-  #     - ELASTICSEARCH_HOST=elasticsearch
-  #     - ELASTICSEARCH_PORT=9200
-  #     - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-  #     - SPRING_APPLICATION_JSON={"spring.data.mongodb.uri":"mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin"}
+  app:
+    image: 'spring-app:latest'
+    build:
+      context: App_Service
+    container_name: spring
+    depends_on:
+      # - db
+      - elasticsearch
+      - kafka
+      - mongodb
+    develop:
+      watch:
+        - action: rebuild
+          path: App_Service/src
+        - action: rebuild
+          path: App_Service/pom.xml
+    volumes:
+      - ./src:/app/src
+      - ./target:/app/target
+      - ./logs:/app/logs
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/curcus
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Ngocquynguyen1
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_APPLICATION_JSON={"spring.data.mongodb.uri":"mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin"}
 
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - app_network
+    ports:
+      - "8080:8080"
+    networks:
+      - app_network
 
   # db:
   #   image: 'postgres:17.2-alpine3.21'
@@ -50,79 +50,79 @@ services:
   #   networks:
   #     - app_network
 
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
-  #   container_name: elasticsearch
-  #   environment:
-  #     - discovery.type=single-node
-  #     - xpack.security.enabled=false
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #   ports:
-  #     - "9200:9200"
-  #   volumes:
-  #     - elasticsearch-data:/usr/share/elasticsearch/data
-  #   networks:
-  #     - app_network
-  # zookeeper:
-  #   image: wurstmeister/zookeeper
-  #   container_name: zookeeper
-  #   environment:
-  #     - ZOOKEEPER_CLIENT_PORT=2181
-  #     - ZOOKEEPER_TICK_TIME=2000
-  #   ports:
-  #     - "2181:2181"
-  #     - "2888:2888"
-  #     - "3888:3888"
-  #   networks:
-  #     - app_network
-  #   volumes:
-  #     - zookeeper-data:/data
-  #     - zookeeper-logs:/datalog
-  # kafka:
-  #   image: wurstmeister/kafka
-  #   container_name: kafka
-  #   ports:
-  #     - "9092:9092"
-  #   depends_on:
-  #     - zookeeper
-  #   environment:
-  #     - KAFKA_BROKER_ID=1
-  #     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-  #     - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
-  #     - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-  #     - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-  #     - KAFKA_MESSAGE_MAX_BYTES=200000000
-  #     - KAFKA_SOCKET_REQUEST_MAX_BYTES=210000000
-  #   networks:
-  #     - app_network
-  #   volumes:
-  #     - kafka-data:/var/lib/kafka/data
-  # debezium:
-    # image: debezium/connect:2.7.3.Final
-    # ports:
-    #   - "8083:8083"
-    # depends_on:
-    #   - kafka
-    # environment:
-    #   - BOOTSTRAP_SERVERS= kafka:9092
-    #   - GROUP_ID=1
-    #   - CONFIG_STORAGE_TOPIC=debezium_config
-    #   - OFFSET_STORAGE_TOPIC=debezium_offsets
-    #   - STATUS_STORAGE_TOPIC=debezium_status
-    #   - PRODUCER_MAX_REQUEST_SIZE=200000000
-    #   - CONSUMER_MAX_PARTITION_FETCH_BYTES=200000000
-    #   - FETCH_MESSAGE_MAX_BYTES=200000000
-    #   - DATABASE_HOST=172.17.0.1  # IP mặc định của host trong Docker network
-    #   - DATABASE_PORT=5432  # Cổng PostgreSQL local
-    #   - DATABASE_USER=postgres  # User PostgreSQL local
-    #   - DATABASE_PASSWORD=Ngocquynguyen1  # Password PostgreSQL local
-    #   - DATABASE_DBNAME=curcus  # Database cần theo dõi
-    #   - DATABASE_SERVER_ID=1
-    #   - DATABASE_SERVER_NAME=pgserver  # Tên server trong Kafka topic
-    #   - DATABASE_INCLUDE_SCHEMA=true
-    #   - DATABASE_INCLUDE_PUBLIC=true
-    # networks:
-    #   - app_network
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - app_network
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    networks:
+      - app_network
+    volumes:
+      - zookeeper-data:/data
+      - zookeeper-logs:/datalog
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_MESSAGE_MAX_BYTES=200000000
+      - KAFKA_SOCKET_REQUEST_MAX_BYTES=210000000
+    networks:
+      - app_network
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+  debezium:
+    image: debezium/connect:2.7.3.Final
+    ports:
+      - "8083:8083"
+    depends_on:
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS= kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=debezium_config
+      - OFFSET_STORAGE_TOPIC=debezium_offsets
+      - STATUS_STORAGE_TOPIC=debezium_status
+      - PRODUCER_MAX_REQUEST_SIZE=200000000
+      - CONSUMER_MAX_PARTITION_FETCH_BYTES=200000000
+      - FETCH_MESSAGE_MAX_BYTES=200000000
+      - DATABASE_HOST=172.17.0.1  # IP mặc định của host trong Docker network
+      - DATABASE_PORT=5432  # Cổng PostgreSQL local
+      - DATABASE_USER=postgres  # User PostgreSQL local
+      - DATABASE_PASSWORD=Ngocquynguyen1  # Password PostgreSQL local
+      - DATABASE_DBNAME=curcus  # Database cần theo dõi
+      - DATABASE_SERVER_ID=1
+      - DATABASE_SERVER_NAME=pgserver  # Tên server trong Kafka topic
+      - DATABASE_INCLUDE_SCHEMA=true
+      - DATABASE_INCLUDE_PUBLIC=true
+    networks:
+      - app_network
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -141,21 +141,21 @@ services:
       context: ./AI_Service
     container_name: ai-service
     depends_on:
-    - mongodb
+      - mongodb
     environment:
-    - MONGODB_URI=mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin
+      - MONGODB_URI=mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin
     ports:
-    - "5000:5000"
+      - "5000:5000"
     networks:
-    - app_network
+      - app_network
 
 
 volumes:
-  # elasticsearch-data:
-  # postgres-data:
-  # kafka-data:
-  # zookeeper-data:
-  # zookeeper-logs:
+  elasticsearch-data:
+  postgres-data:
+  kafka-data:
+  zookeeper-data:
+  zookeeper-logs:
   mongo-data:
 networks:
   app_network:

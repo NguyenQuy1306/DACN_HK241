@@ -12,6 +12,7 @@ RUN pip install -r requirements.txt
 # Tạo thư mục logs nếu cần
 RUN mkdir -p /app/logs
 
+EXPOSE 5000
 
 CMD ["python", "-m", "app.app"]
 
