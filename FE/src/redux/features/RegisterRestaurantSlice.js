@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const registerRestaurantSlice = createSlice({
-    name: "restaurant-register",
+    name: "restaurantRegister",
     initialState: initialState,
     reducers: {
         setLastName: (state, action) => {

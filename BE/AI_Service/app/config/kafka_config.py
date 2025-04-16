@@ -1,5 +1,5 @@
 from kafka import KafkaConsumer, KafkaProducer
-from config import BROKER_URL
+from app.config.config import BROKER_URL
 import json
 
 def get_producer():

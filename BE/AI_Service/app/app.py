@@ -6,7 +6,7 @@ import time
 import schedule
 from app.routers.recommend import recommend_bp
 from app.routers.cancel import predict_router
-from app.kafka.consumers.cancel_consumer import run_kafka_cancel_consumer
+from app.kafka_local.consumers.cancel_consumer import run_kafka_cancel_consumer
 
 # Import file cancel_scheduler.py
 from app.models.cancel_prediction.batch_trainer import retrain_if_enough_data

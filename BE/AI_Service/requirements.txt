@@ -4,3 +4,4 @@ joblib
 pandas
 schedule
 scikit-learn
+kafka-python

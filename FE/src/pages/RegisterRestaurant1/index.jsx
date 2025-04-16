@@ -12,6 +12,7 @@ function RegisterRestaurant1() {
     const dispatch = useDispatch();
     const userInfo = useSelector((state) => state.restaurantRegister);
     const loginUser = useSelector((state) => state.authentication.user);
+    const restaurantInfo = useSelector((state) => state.restaurantRegister);
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -72,7 +73,7 @@ function RegisterRestaurant1() {
                                 type="email"
                                 label="Email"
                                 labelColor="white"
-                                value={loginUser ? loginUser.email : ""}
+                                value={restaurantInfo ? restaurantInfo.email : ""}
                                 placeholder="Hãy nhập email của bạn..."
                                 onChange={(name) => {
                                     dispatch(setEmail(name));
@@ -84,7 +85,7 @@ function RegisterRestaurant1() {
                                 type="text"
                                 label="Số điện thoại"
                                 labelColor="white"
-                                value={loginUser ? loginUser.sdt : ""}
+                                value={restaurantInfo ? restaurantInfo.phone : ""}
                                 placeholder="Hãy nhập SĐT của bạn..."
                                 onChange={(name) => {
                                     dispatch(setPhone(name));
