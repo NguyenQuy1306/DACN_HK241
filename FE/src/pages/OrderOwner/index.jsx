@@ -4,10 +4,12 @@ import MenuInOrder from "./MenuInOrder";
 import styles from "./style.module.css";
 import "./OrderOwner.css";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import { QqSquareFilled, SearchOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 import { format } from "date-fns";
+import dayjs from "dayjs";
+
 const { Search } = Input;
 function OrderOwner() {
   const [searchText, setSearchText] = useState("");
@@ -19,6 +21,12 @@ function OrderOwner() {
   const onSearch = () => {
     console.log("onSearch");
   };
+  const { overbookingSettings } = useSelector((state) => state.overbooking);
+  console.log("overbookingSettings", overbookingSettings);
+  console.log(
+    "overbookingSettings.thresholds[2].min/100",
+    overbookingSettings.thresholds[0].min / 100
+  );
   const restaurantOwner = useSelector(
     (state) => state.authentication.restaurantOwner
   );
@@ -123,18 +131,14 @@ function OrderOwner() {
       key: "name",
     },
     {
-      title: "Ngày",
+      title: "Ngày tới",
       dataIndex: "date",
       key: "date",
       render: (_, { date }) => {
-        return <p>{formatDate(date)}</p>;
+        return <p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>;
       },
     },
-    {
-      title: "Giờ",
-      dataIndex: "timezone",
-      key: "timezone",
-    },
+
     {
       title: "Số khách",
       dataIndex: "quantity",
@@ -188,6 +192,62 @@ function OrderOwner() {
       },
     },
     {
+      title: "Tỷ lệ huỷ",
+      dataIndex: "tylehuy",
+      key: "tylehuy",
+      render: (_, record) => {
+        const hour = new Date(record.time).getHours(); // dùng record.time
+        const cancelRate = record.tylehuy;
+
+        let label = "";
+        let color = "";
+        let icon = "";
+        if (
+          overbookingSettings &&
+          overbookingSettings.enabled === true &&
+          overbookingSettings.thresholds.length > 2
+        ) {
+          if (
+            cancelRate > overbookingSettings.thresholds[2].min / 100 &&
+            !(hour >= 19 && hour <= 21)
+          ) {
+            label = "Overbooking";
+            color = "red";
+            icon = "⚠️";
+          } else if (
+            cancelRate >=
+            overbookingSettings.thresholds[1].min / 100
+          ) {
+            label = "Tự huỷ sau 20’";
+            color = "orange";
+            icon = "🟠";
+          } else {
+            label = "Đã xác nhận";
+            color = "green";
+            icon = "🟢";
+          }
+        }
+        return overbookingSettings &&
+          overbookingSettings.enabled === true &&
+          overbookingSettings.thresholds.length > 2 ? (
+          <span style={{ color }}>
+            {icon} {Math.round(cancelRate * 100)}% ({label})
+          </span>
+        ) : (
+          <span style={{ color: "#999", fontStyle: "italic" }}>
+            Bạn chưa bật cấu hình hoặc cấu hình chưa đủ Overbooking.{" "}
+            {/* <a
+              href="/owner/overbooking"
+              style={{ color: "#1677ff", textDecoration: "underline" }}
+            >
+              Nhấn vào đây để cấu hình
+            </a> */}
+          </span>
+        );
+      },
+    },
+
+    {
       title: "Thời gian tạo",
       dataIndex: "time",
       key: "time",
@@ -234,6 +294,7 @@ function OrderOwner() {
           name: order.tenKhachHang,
           status: order.trangThai,
           price: order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0),
+          tylehuy: order.tyLeHuy,
           description: (
             <MenuInOrder
               menu={
@@ -243,9 +304,8 @@ function OrderOwner() {
               }
             />
           ),
-          time: "12-03-2025 14:21:21",
-          timezone: order.gio,
-          date: order.ngay,
+          time: order.thoiGianTao,
+          date: `${order.ngay}T${order.gio}`,
           quantity: order.soKhach,
           remain: 500000,
           prePay: Number(order.tienCoc) || 0, // Đảm bảo `tienCoc` không bị NaN

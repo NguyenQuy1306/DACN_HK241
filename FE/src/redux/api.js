@@ -546,3 +546,83 @@ export const trackUserBehavior = async (params) => {
     throw error.response?.data || error;
   }
 };
+
+export const getOverbookingSettings = async (params) => {
+  try {
+    const response = await API.get(`/api/overbooking/settings`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const saveSettings = async (params) => {
+  try {
+    const response = await API.post(`/api/overbooking/settings`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const addThreshold = async (params) => {
+  try {
+    const response = await API.post(`/api/overbooking/thresholds`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const removeThreshold = async ({ id }) => {
+  try {
+    const response = await API.delete(`api/overbooking/thresholds/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateThreshold = async (params) => {
+  try {
+    console.log("params", params);
+    const response = await API.put(
+      `/api/overbooking/thresholds/${params.id}`,
+      params
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const createOverrides = async (params) => {
+  try {
+    const response = await API.post(`/api/overbooking/overrides`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteOverrides = async ({ id }) => {
+  try {
+    const response = await API.delete(`api/overbooking/overrides/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateOverrides = async (params) => {
+  try {
+    console.log("params", params);
+    const response = await API.put(
+      `/api/overbooking/overrides/${params.id}`,
+      params
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

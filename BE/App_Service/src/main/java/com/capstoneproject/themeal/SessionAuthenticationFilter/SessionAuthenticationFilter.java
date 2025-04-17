@@ -34,11 +34,11 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
 
     private final String sessionAttributeName = DEFAULT_AUTHORIZATION_REQUEST_ATTR_NAME;
     private static final List<String> PUBLIC_URLS = Arrays.asList("/api/v1/auth/authenticate", "/api/v1/auth/register",
-            "/api/v1/auth/logout", "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*", "/api/restaurants","/api/behavior",
+            "/api/v1/auth/logout", "/api/restaurant", "/api/restaurants/.*", "/api/restaurants/*", "/api/restaurants", "/api/behavior",
             "/api/restaurants/**", "/api/restaurants", // Match any restaurant-related URL
             "/api/auth/reset-password", "/api/restaurants/recommended", "/api/restaurant-categories", "/v2/api-docs",
-            "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources", "/swagger-resources/.*","/api/restaurant-categories",
-            "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**","/export/users","/export/restaurants","/export/ratings",
+            "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-resources", "/swagger-resources/.*", "/api/restaurant-categories",
+            "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**", "/export/users", "/export/restaurants", "/export/ratings",
             "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/configuration/ui", "/configuration/security",
             "/swagger-ui/.*", "/webjars/.*", "/api/food", "/api/combo", "/api/table/restaurant",
             "/elas/createOrUpdateDocument", "/elas/searchDocument", "/elas/.*", "/elas/searchByKeyword",
@@ -50,7 +50,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/food/*", "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
             "/api/food/restaurants/*/categories/*", "/oauth2/authorization/infor", "/callbackOauthen2",
             "/callbackOauthen2/*", "/login", "/login/*", "/favicon.ico", "/user", "/welcome",
-            "login/oauth2/code/google", "/secure", "/callbackOauth2Google");
+            "login/oauth2/code/google", "/secure", "/callbackOauth2Google", "/api/orders/*/confirm-arrival");
     @Autowired
     private SessionRegistry sessionRegistry;
 
@@ -99,7 +99,8 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         // requestURI.matches(pattern))
         // || requestURI.contains("/swagger");
         boolean isPublic = PUBLIC_URLS.stream().anyMatch(requestURI::startsWith) || requestURI.contains("/swagger");
-        return isPublic;
+        boolean check2 = PUBLIC_URLS.stream().anyMatch(pattern -> requestURI.matches(pattern.replace("*", ".*")));
+        return isPublic || check2;
     }
 
     private boolean isValidSession(HttpSession session) {

@@ -44,7 +44,6 @@ public interface OrderTableMapper {
     OrderTable toOrderTable(OrderTableResponse orderTableResponse);
 
 
-
     @Mapping(source = "maSoDatBan", target = "maSoDatBan")
     @Mapping(source = "soKhach", target = "soKhach")
     @Mapping(source = "ngay", target = "ngay")
@@ -54,6 +53,8 @@ public interface OrderTableMapper {
     @Mapping(source = "khachHang.hoTen", target = "tenKhachHang")
     @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
     @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
+    @Mapping(source = "orderAt", target = "thoiGianTao")
+    @Mapping(source = "percentNoShow", target = "tyLeHuy")
     FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context FoodRepository foodRepository);
 
     @Named("addFoodInfo")

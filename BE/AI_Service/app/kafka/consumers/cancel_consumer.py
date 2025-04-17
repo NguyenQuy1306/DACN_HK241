@@ -23,7 +23,7 @@ def run_kafka_cancel_consumer():
             logging.info("[Kafka AI Service] OUTSIDE: %.2f", float(prob))
             result_payload = {
                 "user_id": enriched.get("user_id"),
-                "order_id": enriched.get("order_id"),
+                "order_id": data_snake.get("order_id"),
                 "cancel_probability": round(float(prob), 4)
             }
 

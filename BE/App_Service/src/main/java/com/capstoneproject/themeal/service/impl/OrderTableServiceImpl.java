@@ -233,15 +233,15 @@ public class OrderTableServiceImpl implements OrderTableService {
         OrderTable order = orderTableRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found"));
         Long paidCount = orderTableRepository.countByCustomerAndStatus(order.getKhachHang().getMaSoNguoiDung(), OrderTableStatus.COMPLETED);
-        System.out.println("check1238323");
+        System.out.println("check1238323" + paidCount);
         Long cancelCount = orderTableRepository.countByCustomerAndStatus(order.getKhachHang().getMaSoNguoiDung(), OrderTableStatus.CANCELED);
-        System.out.println("check123823323");
+        System.out.println("check123823323" + cancelCount);
         Long totalCount = paidCount + cancelCount;
-        System.out.println("check12383232233");
-        double avgUserCancelRate = paidCount == 0 ? 0 : (paidCount / (double) cancelCount);
-        System.out.println("check12383233333211");
+        System.out.println("check12383232233" + totalCount);
+        double avgUserCancelRate = cancelCount == 1 ? 0 : (paidCount / (double) cancelCount);
+        System.out.println("check12383233333211" + avgUserCancelRate);
         double roundedRate = Math.round(avgUserCancelRate * 100.0) / 100.0;
-        System.out.println("distanceKM:: " + distanceKm);
+        System.out.println("roundedRate:: " + roundedRate);
         OrderPredict orderPredict = OrderPredict.builder()
                 .paymentStatus(order.getTrangThai().toString())
                 .avgUserCancelRate(roundedRate)
@@ -330,6 +330,12 @@ public class OrderTableServiceImpl implements OrderTableService {
         return PaymentResponse.builder().IsDeposit(payment.getIsDeposit())
                 .MaSoThanhToan(payment.getMaSoThanhToan()).PaymentStatus(payment.getPaymentStatus())
                 .SoTienThanhToan(paymentAmount).build();
+    }
+
+    @Override
+    public void markAsConfirmed(Long orderId) {
+        OrderTable orderTable = orderTableRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order table not found"));
+        orderTable.setIsArrival(true);
     }
 //        public int getTotalBookings(Long customerID) {
 //

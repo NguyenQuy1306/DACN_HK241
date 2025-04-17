@@ -22,6 +22,7 @@ public class OrderTableResponse {
     private String TrangThai;
     private Long MaSoKhachHang;
 
+
     public String getTenPhuongThucThanhToan() {
         return TenPhuongThucThanhToan;
     }

@@ -29,20 +29,34 @@ import RatingOwner from "./../pages/RatingOwner/index";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard_Admin from "../pages/Dashboard_Admin";
 import PartnerList from "../pages/PartnerList";
+import OverbookingSettings from "../pages/Overbooking/OverbookingSettings";
+import ThankYouPage from "../pages/ThankCustomer/ThankYouPage";
 export const routes = [
-    {
-        path: "/owner/tablemanagement",
-        component: TableManagement,
-        layout: OwnerLayout,
-        role: ["owner"],
-    },
-    {
-        path: "/admin/ownerdetail/:id",
-        component: OwnerInfoForm,
-        layout: AdminLayout,
-        role: ["admin"],
-        title: "Thông tin nhà hàng",
-    },
+  {
+    path: "/thank-you",
+    component: ThankYouPage,
+    // layout: OwnerLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/owner/overbooking",
+    component: OverbookingSettings,
+    layout: OwnerLayout,
+    role: ["owner"],
+  },
+  {
+    path: "/owner/tablemanagement",
+    component: TableManagement,
+    layout: OwnerLayout,
+    role: ["owner"],
+  },
+  {
+    path: "/admin/ownerdetail/:id",
+    component: OwnerInfoForm,
+    layout: AdminLayout,
+    role: ["admin"],
+    title: "Thông tin nhà hàng",
+  },
 
   {
     path: "/owner/restaurant",
@@ -114,71 +128,71 @@ export const routes = [
     role: ["guest", "customer", "owner", "admin"],
   },
 
-    {
-        path: "/deposit-policy",
-        component: DepositPolicy,
-        layout: MainLayout,
-        role: "customer",
-    },
-    {
-        path: "/DetailRestaurant/:id/ResultPayment",
-        component: ResultPayment,
-        layout: MainLayout,
-        role: "customer",
-    },
-    {
-        path: "/SearchResult/:keyword",
-        component: SearchResult,
-        layout: MainLayout,
-        role: ["guest", "customer", "owner"],
-    },
-    {
-        path: "/Search",
-        component: Search,
-        layout: MainLayout,
-        role: ["customer", "guest", "owner"],
-    },
-    {
-        path: "/DetailRestaurant/:id",
-        component: DetailRestaurant,
-        layout: MainLayout,
-        role: ["guest", "customer", "owner"],
-    },
-    {
-        path: "/Home",
-        component: Home,
-        layout: MainLayout,
-        role: ["guest", "customer", "owner", "admin"],
-    },
-    {
-        path: "/favorite-list/:id",
-        component: FavoriteList,
-        layout: MainLayout,
-        role: "customer",
-    },
-    {
-        path: "/register-restaurant",
-        component: RegisterRestaurant1,
-        layout: MainLayout,
-        role: ["guest", "customer", "owner"],
-    },
-    {
-        path: "/register-restaurant2",
-        component: RegisterRestaurant2,
-        layout: MainLayout,
-        role: ["guest", "customer", "owner"],
-    },
-    {
-        path: "/owner/dashboard",
-        component: OwnerDashboard,
-        layout: OwnerLayout,
-        role: "owner",
-    },
-    {
-        path: "/DetailRestaurant/:id/menuImages",
-        component: ViewImagepage,
-        role: ["guest", "customer", "owner"],
-    },
+  {
+    path: "/deposit-policy",
+    component: DepositPolicy,
+    layout: MainLayout,
+    role: "customer",
+  },
+  {
+    path: "/DetailRestaurant/:id/ResultPayment",
+    component: ResultPayment,
+    layout: MainLayout,
+    role: "customer",
+  },
+  {
+    path: "/SearchResult/:keyword",
+    component: SearchResult,
+    layout: MainLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/Search",
+    component: Search,
+    layout: MainLayout,
+    role: ["customer", "guest", "owner"],
+  },
+  {
+    path: "/DetailRestaurant/:id",
+    component: DetailRestaurant,
+    layout: MainLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/Home",
+    component: Home,
+    layout: MainLayout,
+    role: ["guest", "customer", "owner", "admin"],
+  },
+  {
+    path: "/favorite-list/:id",
+    component: FavoriteList,
+    layout: MainLayout,
+    role: "customer",
+  },
+  {
+    path: "/register-restaurant",
+    component: RegisterRestaurant1,
+    layout: MainLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/register-restaurant2",
+    component: RegisterRestaurant2,
+    layout: MainLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/owner/dashboard",
+    component: OwnerDashboard,
+    layout: OwnerLayout,
+    role: "owner",
+  },
+  {
+    path: "/DetailRestaurant/:id/menuImages",
+    component: ViewImagepage,
+    role: ["guest", "customer", "owner"],
+  },
 
   {
     path: "/admin/dashboard",
