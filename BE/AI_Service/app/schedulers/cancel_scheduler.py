@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import logging
 import schedule
 import time
-from models.cancel_prediction.batch_trainer import retrain_if_enough_data
+from app.models.cancel_prediction.batch_trainer import retrain_if_enough_data
 
 # Cấu hình logging
 logging.basicConfig(

@@ -25,10 +25,13 @@ public class RegisterRestaurantImpl implements RegisterRestaurantService {
 
     @Override
     public RegisterRestaurantResponse addNewRequest(RegisterRestaurantRequest registerRestaurantRequest) {
+        System.out.println("=================================////=================================: RESTAURANT REQUEST"+registerRestaurantRequest);
         Restaurant newRestaurant = new Restaurant();
         newRestaurant.setDiaChi(registerRestaurantRequest.getDiaChi());
-        newRestaurant.setTen(registerRestaurantRequest.getTen());
+        newRestaurant.setTen(registerRestaurantRequest.getTenNhaHang());
+        newRestaurant.setKhoangGia(registerRestaurantRequest.getKhoangGia());
         newRestaurant.setNgayThamGia(LocalDate.now());
+        newRestaurant.setTrangThai("PENDING");
         restaurantRepository.save(newRestaurant);
         RegisterRestaurant registerRestaurant = RegisterRestaurantMapper.INSTANCE
                 .toRegisterRestaurant(registerRestaurantRequest);

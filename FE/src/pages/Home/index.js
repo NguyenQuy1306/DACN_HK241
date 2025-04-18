@@ -1,23 +1,20 @@
-import { Button, Drawer, Tooltip } from "antd";
+import { Client } from "@stomp/stompjs";
+import { Button, Tooltip } from "antd";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { CiFilter, CiUser } from "react-icons/ci";
+import { CiFilter } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight, FaCalendarCheck } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { MdChevronRight, MdOutlineLoyalty, MdStars } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SockJS from "sockjs-client";
 import FilterItem from "../../components/FilterItem";
+import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment";
 import Search from "../../components/Search/SearchBar/SearchBar";
 import CategoryItem from "../../features/Cetegogy/CategoryItem";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
 import SlideCard from "../../features/Selections/components/SlideCard";
-import SockJS from "sockjs-client";
-import "./Home.css";
-import { useDispatch, useSelector } from "react-redux";
-import { saveMyCoords } from "../../redux/features/persistSlice";
-import { paymentCallback } from "../../redux/features/paymentSlice";
-import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment";
-import { Client } from "@stomp/stompjs";
-import { useNavigate } from "react-router-dom";
 import {
     logout,
     setLoginRoute,
@@ -25,6 +22,10 @@ import {
     setUser,
     setUserRole,
 } from "../../redux/features/authenticationSlice";
+import { paymentCallback } from "../../redux/features/paymentSlice";
+import { saveMyCoords } from "../../redux/features/persistSlice";
+import "./Home.css";
+import { getAllRestaurant } from "../../redux/api";
 const { calculateDistance } = require("../../helper/caculateDistance");
 
 function Home(props) {
@@ -39,13 +40,14 @@ function Home(props) {
     const [startIndex, setStartIndex] = useState(0);
     const [categories, setCategories] = useState([]);
     const [childrenDrawer, setChildrenDrawer] = useState(false);
-    const [recommendedList, setRecommendedList] = useState([]);
+    const [allRestaurant, setAllRestaurant] = useState([]);
     const [isScrolled, setIsScrolled] = useState(false);
     const [previousState, setPreviousState] = useState(false);
     const [nextSate, setNextState] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const myCoords = useSelector((state) => state.persist.myCoords);
+    const { user } = useSelector((state) => state.authentication);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -98,6 +100,17 @@ function Home(props) {
             },
         );
     }, [dispatch]);
+    useEffect(() => {
+        const fetchRestaurant = async () => {
+            const result = await getAllRestaurant();
+            setAllRestaurant(result.payload);
+        };
+
+        fetchRestaurant();
+    }, []);
+    useEffect(() => {
+        console.log("allRestaurant: ", allRestaurant);
+    }, [allRestaurant]);
     const handleNext = () => {
         if (categoryRef.current) {
             setTestScroll(categoryRef.current?.scrollLeft);
@@ -170,9 +183,27 @@ function Home(props) {
     useEffect(() => {
         const fetchRecommendedList = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/api/restaurants/recommended", {
-                    withCredentials: true,
-                });
+                let response = {};
+                if (user) {
+                    // alert(user?.maSoNguoiDung);
+                    const result = await axios.get(
+                        `http://localhost:5000/recommend/online?user_id=${user.maSoNguoiDung}&top_n=10`,
+                        // {
+                        //     withCredentials: true,
+                        // },
+                    );
+                    console.log("=================result of recommendations============: ", allRestaurant);
+                    response.status = 200;
+                    response.data = allRestaurant.filter((res) => {
+                        console.log("ma SO NHA HANG", res.maSoNhaHang);
+                        return result.data.recommendations.includes(res.maSoNhaHang);
+                    });
+                } else {
+                    // alert("No user found, fetching default recommendations.");
+                    response = await axios.get("http://localhost:8080/api/restaurants/recommended", {
+                        withCredentials: true,
+                    });
+                }
                 if (response.status === 200) {
                     setRecommendList(response.data);
                 } else {
@@ -183,21 +214,21 @@ function Home(props) {
             }
         };
         fetchRecommendedList();
-    }, []);
+    }, [user, allRestaurant]);
 
-    useEffect(() => {
-        dispatch(logout());
-        const getRecommendedList = async () => {
-            const response = await axios.get("http://localhost:8080/api/restaurants/recommended", {
-                withCredentials: true,
-            });
-            if (response.status === 200) {
-                setRecommendedList(response.data);
-            }
-        };
+    // useEffect(() => {
+    //     dispatch(logout());
+    //     const getRecommendedList = async () => {
+    //         const response = await axios.get("http://localhost:8080/api/restaurants/recommended", {
+    //             withCredentials: true,
+    //         });
+    //         if (response.status === 200) {
+    //             setRecommendedList(response.data);
+    //         }
+    //     };
 
-        getRecommendedList();
-    }, []);
+    //     getRecommendedList();
+    // }, []);
 
     const checkPendingPayment = () => {
         const pendingOrderString = localStorage.getItem("pendingOrder");
@@ -241,7 +272,7 @@ function Home(props) {
     const prev = () => {
         carouselRef.current.prev();
     };
-    console.log("recommenlist", recommendList);
+    // console.log("recommenlist", recommendList);
     useEffect(() => {
         const handleScroll = () => {
             if (categoryRef.current?.scrollLeft !== 0) {
@@ -389,7 +420,10 @@ function Home(props) {
                             className="category-link"
                         >
                             <CategoryItem
-                                imgUrl={cate.linkAnh}
+                                imgUrl={
+                                    // cate.linkAnh ||
+                                    "http://reviewvilla.vn/wp-content/uploads/2022/06/Top-20-nha-hang-Hoi-An-14.jpg"
+                                }
                                 name={cate.ten}
                             />
                         </div>

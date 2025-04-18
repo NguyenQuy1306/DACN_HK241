@@ -1,5 +1,6 @@
-BROKER_URL = "localhost:9092"
+BROKER_URL = "kafka:9092"
 CANCEL_TOPIC = "predict-request-events"
 TRAINING_TOPIC = "training-request-events"
 MONGODB_URI = "mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin"
 MODEL_PATH = "app/models/cancel_prediction/cancel_predictor.joblib"
+CANCEL_RESULT_TOPIC = "cancel-result-topic"

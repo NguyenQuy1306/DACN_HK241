@@ -36,8 +36,8 @@ const Authentication = ({ open }) => {
   const user = useSelector((state) => state.authentication.user);
   const parsedUser = user ? user : null;
 
-  console.log("Redux User:", parsedUser);
-  console.log("user2323", user);
+  // console.log("Redux User:", parsedUser);
+  // console.log("user2323", user);
   const handleLogout = () => {
     persistor.purge(); // Xóa Redux Persist
 

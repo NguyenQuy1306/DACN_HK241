@@ -5,7 +5,7 @@ import pickle
 model = preprocessing.StandardScaler() | linear_model.LogisticRegression()
 
 # Lưu lại vào file
-with open("online_model.pkl", "wb") as f:
+with open("model.pkl", "wb") as f:
     pickle.dump(model, f)
 
-print("✅ Đã tạo model online_model.pkl thành công!")
+print("✅ Đã tạo model model.pkl thành công!")

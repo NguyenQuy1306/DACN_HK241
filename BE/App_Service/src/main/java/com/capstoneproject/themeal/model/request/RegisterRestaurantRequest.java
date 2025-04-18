@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.model.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,11 +12,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class RegisterRestaurantRequest implements Serializable {
-    private String HoTenDem;
-    private String Ten;
-    private String SDT;
-    private String Email;
-    private String TenNhaHang;
-    private String DiaChi;
-    private String KhoangGia;
+    @JsonProperty("HoTenDem")
+    private String hoTenDem;
+    @JsonProperty("Ten")
+    private String ten;
+    @JsonProperty("SDT")
+    private String sdt;
+    @JsonProperty("Email")
+    private String email;
+    @JsonProperty("TenNhaHang")
+    private String tenNhaHang;
+    @JsonProperty("DiaChi")
+    private String diaChi;
+    @JsonProperty("KhoangGia")
+    private String khoangGia;
 }

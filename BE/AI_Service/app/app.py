@@ -7,8 +7,6 @@ import schedule
 from app.routers.recommend import recommend_bp
 from app.routers.cancel import predict_router
 from app.kafka_local.consumers.cancel_consumer import run_kafka_cancel_consumer
-
-# Import file cancel_scheduler.py
 from app.models.cancel_prediction.batch_trainer import retrain_if_enough_data
 
 # # Cấu hình logging
@@ -48,13 +46,22 @@ app = Flask(__name__)
 app.register_blueprint(recommend_bp, url_prefix="/recommend")
 app.register_blueprint(predict_router)
 
-# Tạo một thread để chạy scheduler đồng thời với Flask app
-# scheduler_thread = threading.Thread(target=run_scheduler)
-# scheduler_thread.daemon = True  # Khi Flask app tắt, scheduler cũng sẽ tắt
-# scheduler_thread.start()
+def start_background_threads():
+    kafka_thread = threading.Thread(target=run_kafka_cancel_consumer, daemon=True)
+    kafka_thread.start()
+    logging.info("[Kafka] Consumer thread started")
 
-kafka_thread = threading.Thread(target=run_kafka_cancel_consumer)
-kafka_thread.daemon = True
-kafka_thread.start()
+    # Nếu muốn bật scheduler luôn, bật đoạn sau:
+    scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+    scheduler_thread.start()
+    logging.info("[Scheduler] Scheduler thread started")
+
+# Sử dụng with app.app_context() để khởi tạo các background threads
+def create_app():
+    with app.app_context():
+        start_background_threads()
+    return app
+
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)  # `use_reloader=False` giúp tránh việc Flask khởi động lại nhiều lần
+    app = create_app()
+    app.run(host='0.0.0.0', debug=True, use_reloader=False)

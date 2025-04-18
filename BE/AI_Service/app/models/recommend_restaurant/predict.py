@@ -4,7 +4,7 @@ import pandas as pd
 restaurants_df = pd.read_csv('restaurants.csv')  # Đặt file CSV ở gốc hoặc config sau
 
 def load_model():
-    with open("models/recommend_restaurant/model.pkl", "rb") as f:
+    with open("app/models/recommend_restaurant/model.pkl", "rb") as f:
         return pickle.load(f)
 
 def predict_top_n(user_features, top_n=5):

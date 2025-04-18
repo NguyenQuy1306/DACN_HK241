@@ -12,17 +12,38 @@ const DetailRestaurant = () => {
     const startTimeRef = useRef(null);
     const { user } = useSelector((state) => state.authentication);
     useEffect(() => {
-        startTimeRef.current = Date.now();
+        // startTimeRef.current = Date.now();
+        // return () => {
+        //     const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        //     if (timeSpent >= 5) {
+        //         sendUserBehavior({
+        //             userId: user?.maSoNguoiDung,
+        //             restaurantId: selectedPlace?.maSoNhaHang,
+        //             timeSpent: timeSpent,
+        //             liked: false,
+        //         });
+        //     }
+        // };
+
+        // const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        // if (timeSpent >= 5) {
+        // sendUserBehavior({
+        //     userId: user?.maSoNguoiDung,
+        //     restaurantId: selectedPlace?.maSoNhaHang,
+        //     timeSpent: timeSpent,
+        //     liked: false,
+        // });
+        // }
+        const time = setTimeout(() => {
+            sendUserBehavior({
+                userId: user?.maSoNguoiDung,
+                restaurantId: selectedPlace?.maSoNhaHang,
+                timeSpent: 5,
+                liked: false,
+            });
+        }, 5000);
         return () => {
-            const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
-            if (timeSpent >= 5) {
-                sendUserBehavior({
-                    userId: user?.maSoNguoiDung,
-                    restaurantId: selectedPlace?.maSoNhaHang,
-                    timeSpent: timeSpent,
-                    liked: false,
-                });
-            }
+            clearTimeout(time);
         };
     }, []);
 

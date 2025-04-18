@@ -30,25 +30,25 @@ public class Restaurant {
     @Column(name = "MaSoNhaHang")
     private Long MaSoNhaHang;
 
-    @Column(nullable = false)
+    @Column()
     private String URL;
-    @Column(nullable = false)
+    @Column()
     private String Ten;
-    @Column(nullable = false)
+    @Column()
     private String DiaChi;
-    @Column(nullable = false)
+    @Column()
     private String LoaiHinh;
-    @Column(nullable = false)
+    @Column()
     private String KhoangGia;
-    @Column(nullable = false)
+    @Column()
     private String GioHoatDong;
-    @Column(nullable = false, columnDefinition = "VARCHAR")
+    @Column(columnDefinition = "VARCHAR")
     private String PhuHop;
-    @Column(nullable = false, columnDefinition = "VARCHAR")
+    @Column(columnDefinition = "VARCHAR")
     private String MonDacSac;
-    @Column(nullable = false, columnDefinition = "VARCHAR")
+    @Column(columnDefinition = "VARCHAR")
     private String MoTaKhongGian;
-    @Column(nullable = false, columnDefinition = "VARCHAR")
+    @Column(columnDefinition = "VARCHAR")
     private String DiemDacTrung;
     private Double KinhDo;
     private Double ViDo;

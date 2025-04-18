@@ -11,13 +11,13 @@ collection = db["order_prediction_log"]
 def get_latest_bookings(limit=10):
     """
     Lấy các bản ghi đặt bàn mới nhất từ MongoDB để huấn luyện,
-    chỉ lấy những bản ghi chưa được huấn luyện (used_in_training != True).
+    chỉ lấy những bản ghi chưa được huấn luyện (used_training != True).
     """
     logging.info("Getting data...")
     query = {
         "$or": [
-            {"used_in_training": {"$exists": False}},  # chưa có field này
-            {"used_in_training": {"$ne": True}}        # có field nhưng không phải True
+            {"used_training": {"$exists": False}},  
+            {"used_training": {"$ne": True}}       
         ]
     }
     logging.info("(Getting data23...")
@@ -42,13 +42,13 @@ def train_and_save_model(df):
     # 📦 Đánh dấu các bản ghi đã dùng để train
     used_for_training = df.to_dict(orient="records")
     for doc in used_for_training:
-        doc["used_in_training"] = True
+        doc["used_training"] = True
         collection.update_one(
-            {"orderId": doc["orderId"]},
+            {"order_id": doc["order_id"]},
             {"$set": doc},
-            upsert=True
+            upsert=False
         )
-
+    logging.info("train succesfullyyyyyyyyy")
 
 def retrain_if_enough_data(batch_size=10):
     """
