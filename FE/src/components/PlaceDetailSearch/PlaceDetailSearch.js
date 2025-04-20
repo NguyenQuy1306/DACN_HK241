@@ -8,6 +8,7 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "../PlaceDetails/StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
+import { calculateDistance } from "../../pages/SearchResult/index.js";
 import {
   setHoveredMarkerIndex,
   trackUserBehavior,
@@ -151,6 +152,15 @@ const PlaceDetailSearch = ({
               <p className="PlaceDetailSearch_H1_detail_p">
                 <span className="PlaceDetailSearch_H1_detail_p123">
                   {place.khoangGia} đ/người
+                </span>
+              </p>
+              <p className="PlaceDetailSearch_H1_detail_p">
+                <span className="PlaceDetailSearch_H1_detail_p456">
+                  {calculateDistance(
+                    { longitude: 106.6983125, latitude: 10.7802256 },
+                    { lat: place.viDo, lng: place.kinhDo }
+                  )}{" "}
+                  km
                 </span>
               </p>
               <Button

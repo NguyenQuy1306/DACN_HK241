@@ -1,346 +1,310 @@
-import { Button, Drawer, Tooltip } from "antd";
+import { Client } from "@stomp/stompjs";
+import { Button, Tooltip } from "antd";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { CiFilter, CiUser } from "react-icons/ci";
+import { CiFilter } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight, FaCalendarCheck } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { MdChevronRight, MdOutlineLoyalty, MdStars } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SockJS from "sockjs-client";
 import FilterItem from "../../components/FilterItem";
+import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment";
 import Search from "../../components/Search/SearchBar/SearchBar";
 import CategoryItem from "../../features/Cetegogy/CategoryItem";
 import RecommendCard from "../../features/RecommendRestaurant/RecommendCard";
 import SlideCard from "../../features/Selections/components/SlideCard";
-import SockJS from "sockjs-client";
-import "./Home.css";
-import { useDispatch, useSelector } from "react-redux";
-import { saveMyCoords } from "../../redux/features/persistSlice";
-import { paymentCallback } from "../../redux/features/paymentSlice";
-import ModalRePayment from "../../components/Modal/ModalRePayment/ModalRePayment";
-import { Client } from "@stomp/stompjs";
-import { useNavigate } from "react-router-dom";
 import {
-  logout,
   setLoginRoute,
   setStatusModalAuthentication,
   setUser,
   setUserRole,
 } from "../../redux/features/authenticationSlice";
-const { calculateDistance } = require("../../helper/caculateDistance");
-
+import { paymentCallback } from "../../redux/features/paymentSlice";
+import { saveMyCoords } from "../../redux/features/persistSlice";
+import "./Home.css";
+import { getAllRestaurant } from "../../redux/api";
 function Home(props) {
-  const [pendingPayment, setPendingPayment] = useState(null);
-  const categoryRef = useRef();
-  const [itemWidth, setItemWidth] = useState(0);
-  const categoryItemPerPage = 9;
-  const [stompClient, setStompClient] = useState(null);
-  const navigate = useNavigate();
-  const [testScroll, setTestScroll] = useState(0);
-  const [recommendList, setRecommendList] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [categories, setCategories] = useState([]);
-  const [childrenDrawer, setChildrenDrawer] = useState(false);
-  const [recommendedList, setRecommendedList] = useState([]);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [previousState, setPreviousState] = useState(false);
-  const [nextSate, setNextState] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const myCoords = useSelector((state) => state.persist.myCoords);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.authentication);
+  const paymentStatus = useSelector((state) => state.payment.paymentStatus);
+
+  // State consolidation
+  const [state, setState] = useState({
+    pendingPayment: null,
+    itemWidth: 0,
+    testScroll: 0,
+    startIndex: 0,
+    childrenDrawer: false,
+    isScrolled: false,
+    previousState: false,
+    nextState: false,
+    openModal: false,
+    isLoading: true,
+  });
+
+  // Data state
+  const [stompClient, setStompClient] = useState(null);
+  const [allRestaurant, setAllRestaurant] = useState([]);
+  const [recommendList, setRecommendList] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  // Refs
+  const categoryRef = useRef();
+  const carouselRef = useRef(null);
+
+  // Helper function to update state partially
+  const updateState = (newState) =>
+    setState((prev) => ({ ...prev, ...newState }));
+
+  // WebSocket connection setup
   useEffect(() => {
-    // Khởi tạo kết nối WebSocket khi component mount
     const socket = new SockJS("http://localhost:8080/ws");
     const client = new Client({
       webSocketFactory: () => socket,
-      connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
-      onConnect: () => {
-        setStompClient(client);
-        // alert("Connecting to  websocket server.....");
-        // client.subscribe("/topic/messages", (message) => {
-        //     console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
-        // });
-      },
+      connectHeaders: { withCredentials: true },
+      onConnect: () => setStompClient(client),
       onStompError: (frame) => {
         console.error("Broker reported error: " + frame.headers["message"]);
         console.error("Additional details: " + frame.body);
       },
-      debug: (str) => {
-        console.log(str); // Bật debug để xem log
-      },
+      debug:
+        process.env.NODE_ENV === "development"
+          ? (str) => console.log(str)
+          : false,
     });
 
-    client.activate(); // Kích hoạt kết nối
-
-    return () => {
-      if (client) {
-        client.deactivate(); // Ngắt kết nối khi component unmount
-      }
-    };
+    client.activate();
+    return () => client && client.deactivate();
   }, []);
 
-  const sendMessage = () => {
-    if (stompClient) {
-      // alert("Sent message to websocket");
-      stompClient.publish({
-        destination: "/app/sendMessage", // Đích đến trên server
-        body: "Hello Websocket", // Nội dung message
-      });
-    }
-  };
+  // Get user geolocation
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        dispatch(saveMyCoords(position.coords));
-      },
-      (error) => {
-        console.error("Error fetching geolocation:", error);
-      }
+      (position) => dispatch(saveMyCoords(position.coords)),
+      (error) => console.error("Error fetching geolocation:", error)
     );
   }, [dispatch]);
-  const handleNext = () => {
-    if (categoryRef.current) {
-      setTestScroll(categoryRef.current?.scrollLeft);
-      categoryRef.current.scrollBy({
-        left: itemWidth + 16,
-        behavior: "smooth",
-      });
-    }
-  };
-  const handleCloseModal = () => setOpenModal(false);
-  const handleContinuePayment = () => {
-    if (pendingPayment) {
-      window.location.href = pendingPayment.checkoutUrl;
-    }
-  };
-  const paymentStatus = useSelector((state) => state.payment.paymentStatus);
-  console.log("paymentstatus", paymentStatus);
-  const handlePrevious = () => {
-    if (categoryRef.current) {
-      setTestScroll(categoryRef.current?.scrollLeft);
 
-      categoryRef.current.scrollBy({
-        left: -itemWidth - 16,
-        behavior: "smooth",
-      });
-    }
-  };
-
+  // Fetch all restaurants
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 555) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+    const fetchAllRestaurant = async () => {
+      try {
+        const response = await getAllRestaurant();
+        setAllRestaurant(response.payload);
+      } catch (error) {
+        console.error("Error fetching restaurants:", error);
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    fetchAllRestaurant();
   }, []);
 
-  useEffect(() => {
-    if (categoryRef.current && categoryRef.current.firstChild) {
-      const firstItem = categoryRef.current.firstChild;
-
-      setItemWidth(firstItem.getBoundingClientRect().width);
-    }
-  }, [categories]);
-
+  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
           "http://localhost:8080/api/restaurant-categories",
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
         if (response.status === 200) {
           setCategories(response.data);
-        } else {
-          console.log("Fail to fetch categories!");
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching categories:", error);
       }
     };
     fetchCategories();
   }, []);
+
+  // Fetch recommendations based on user
   useEffect(() => {
-    const fetchRecommendedList = async () => {
+    const fetchRecommendations = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/restaurants/recommended",
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.status === 200) {
+        if (!allRestaurant.length) return;
+
+        let response;
+        if (!user) {
+          response = await axios.get(
+            "http://localhost:8080/api/restaurants/recommended",
+            { withCredentials: true }
+          );
           setRecommendList(response.data);
         } else {
-          console.log("Fail to fetch categories!");
+          response = await axios.get(
+            `http://localhost:5000/recommend?user_id=${user.maSoNguoiDung}&top_n=10`,
+            { withCredentials: true }
+          );
+
+          if (response.status === 200) {
+            const filteredRecommendations = allRestaurant.filter((item) =>
+              response.data.includes(item.maSoNhaHang)
+            );
+            setRecommendList(filteredRecommendations);
+          }
         }
       } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchRecommendedList();
-  }, []);
-
-  useEffect(() => {
-    dispatch(logout());
-    const getRecommendedList = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/restaurants/recommended",
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
-        setRecommendedList(response.data);
+        console.error("Error fetching recommendations:", error);
       }
     };
 
-    getRecommendedList();
-  }, []);
+    fetchRecommendations();
+  }, [user, allRestaurant]);
 
-  const checkPendingPayment = () => {
-    const pendingOrderString = localStorage.getItem("pendingOrder");
-    if (!pendingOrderString) return; // Nếu không có đơn hàng nào, thoát
-
-    const pendingOrder = JSON.parse(pendingOrderString); // Chuyển về object
-    console.log("pendingOrder.orderCode:", pendingOrder);
-    const distance = calculateDistance(
-      myCoords,
-      pendingOrder.lat,
-      pendingOrder.lon
-    );
-    console.log("distance", distance);
-    const elapsedTime = Date.now() - pendingOrder.timeStamp;
-
-    if (elapsedTime >= 180000) {
-      // Nếu đã quá hạn 3 phút
-      localStorage.removeItem("pendingOrder");
-      dispatch(
-        paymentCallback({
-          status: "FAIL",
-          orderCode: pendingOrder.orderCode,
-          paymentCode: pendingOrder.orderCodePayOs,
-          distanceKm: distance,
-        })
-      );
-      sendMessage();
-    } else {
-      setPendingPayment(pendingOrder);
-      setOpenModal(true);
-    }
-  };
-
-  // Gọi hàm khi trang home load
+  // Check for pending payments
   useEffect(() => {
+    const checkPendingPayment = () => {
+      const pendingOrderString = localStorage.getItem("pendingOrder");
+      if (!pendingOrderString) return;
+
+      const pendingOrder = JSON.parse(pendingOrderString);
+      const elapsedTime = Date.now() - pendingOrder.timeStamp;
+
+      if (elapsedTime >= 180000) {
+        localStorage.removeItem("pendingOrder");
+        dispatch(
+          paymentCallback({
+            status: "FAIL",
+            orderCode: pendingOrder.orderCode,
+            paymentCode: pendingOrder.orderCodePayOs,
+          })
+        );
+        sendMessage();
+      } else {
+        updateState({
+          pendingPayment: pendingOrder,
+          openModal: true,
+        });
+      }
+    };
+
     checkPendingPayment();
-  }, []);
+  }, [dispatch]);
 
-  const carouselRef = React.useRef(null);
-
-  const next = () => {
-    carouselRef.current.next();
-  };
-
-  const prev = () => {
-    carouselRef.current.prev();
-  };
-  console.log("recommenlist", recommendList);
+  // Scroll event listener for header behavior
   useEffect(() => {
     const handleScroll = () => {
-      if (categoryRef.current?.scrollLeft !== 0) {
-        setPreviousState(true);
-      } else {
-        setPreviousState(false);
-      }
-      if (
-        categoryRef.current?.scrollLeft + categoryRef.current?.clientWidth >=
-        categoryRef.current?.scrollWidth
-      ) {
-        setNextState(false);
-      } else {
-        setNextState(true);
-      }
+      updateState({ isScrolled: window.scrollY > 555 });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Calculate item width for category scrolling
+  useEffect(() => {
+    if (categoryRef.current?.firstChild) {
+      const firstItem = categoryRef.current.firstChild;
+      updateState({ itemWidth: firstItem.getBoundingClientRect().width });
+    }
+  }, [categories]);
+
+  // Handle category scroll state
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!categoryRef.current) return;
+
+      updateState({
+        previousState: categoryRef.current.scrollLeft !== 0,
+        nextState:
+          categoryRef.current.scrollLeft + categoryRef.current.clientWidth <
+          categoryRef.current.scrollWidth,
+      });
     };
 
     const refCurrent = categoryRef.current;
-
     refCurrent?.addEventListener("scroll", handleScroll);
+    return () => refCurrent?.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    return () => {
-      refCurrent?.removeEventListener("scroll", handleScroll);
-    };
-  }, [categoryRef.current?.scrollLeft]);
-  //   useEffect(() => {
-  //     const urlParams = new URLSearchParams(window.location.search);
-  //     const sessionId = urlParams.get("sessionId");
-  //     const name = urlParams.get("name");
-  //     const userId = urlParams.get("userId");
-  //     if (sessionId) {
-  //       localStorage.setItem("sessionId", sessionId);
-  //       localStorage.setItem("userName", name);
-  //       localStorage.setItem("userId", userId);
-  //       // Xóa sessionId khỏi URL
-  //       navigate("/home", { replace: true });
-  //     }
-  //   }, []);
+  // SSO authentication handling
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("userId");
 
-  // Khi redirect về FE, gọi API để lấy thông tin user từ session
-  const fetchUserInfo = async () => {
-    try {
-      console.log("Fetching user info...");
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const userId = urlParams.get("userId");
-      if (!userId) {
-        setIsLoading(false);
-        return;
-      }
-
-      dispatch(setStatusModalAuthentication({ openModal: false }));
-
-      const response = await fetch(
-        `http://localhost:8080/user-info?userId=${userId}`,
-        {
-          credentials: "include",
+        if (!userId) {
+          updateState({ isLoading: false });
+          return;
         }
-      );
-      const data = await response.json();
-      console.log("User:", data);
 
-      dispatch(setUser(data));
+        dispatch(setStatusModalAuthentication({ openModal: false }));
 
-      switch (data.userRole) {
-        case "C":
-          dispatch(setUserRole("customer"));
-          break;
-        case "O":
-          dispatch(setUserRole("owner"));
+        const response = await fetch(
+          `http://localhost:8080/user-info?userId=${userId}`,
+          { credentials: "include" }
+        );
+
+        const data = await response.json();
+        dispatch(setUser(data));
+
+        const roleMap = {
+          C: "customer",
+          O: "owner",
+        };
+
+        dispatch(setUserRole(roleMap[data.userRole] || "guest"));
+
+        if (data.userRole === "O") {
           dispatch(setLoginRoute(true));
-          break;
-        default:
-          dispatch(setUserRole("guest"));
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      } finally {
+        updateState({ isLoading: false });
       }
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-    } finally {
-      setIsLoading(false);
+    };
+
+    fetchUserInfo();
+  }, [dispatch]);
+
+  // Event handlers
+  const sendMessage = () => {
+    if (stompClient) {
+      stompClient.publish({
+        destination: "/app/sendMessage",
+        body: "Hello Websocket",
+      });
     }
   };
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-  if (isLoading) {
+  const handleNext = () => {
+    if (categoryRef.current) {
+      updateState({ testScroll: categoryRef.current.scrollLeft });
+      categoryRef.current.scrollBy({
+        left: state.itemWidth + 16,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (categoryRef.current) {
+      updateState({ testScroll: categoryRef.current.scrollLeft });
+      categoryRef.current.scrollBy({
+        left: -(state.itemWidth + 16),
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleCloseModal = () => updateState({ openModal: false });
+
+  const handleContinuePayment = () => {
+    if (state.pendingPayment) {
+      window.location.href = state.pendingPayment.checkoutUrl;
+    }
+  };
+
+  const carouselControls = {
+    next: () => carouselRef.current?.next(),
+    prev: () => carouselRef.current?.prev(),
+  };
+
+  if (state.isLoading) {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
@@ -350,10 +314,10 @@ function Home(props) {
 
   return (
     <div style={{ position: "relative" }}>
-      <div className={`home-header ${isScrolled ? "hidden" : "visible"}`}>
+      <div className={`home-header ${state.isScrolled ? "hidden" : "visible"}`}>
         <Search></Search>
       </div>
-      <div className={`main-header ${isScrolled ? "visible" : "hidden"}`}>
+      <div className={`main-header ${state.isScrolled ? "visible" : "hidden"}`}>
         <Search></Search>
       </div>
       <div className="banner">
@@ -407,7 +371,7 @@ function Home(props) {
           <Button
             onClick={handlePrevious}
             shape="circle"
-            disabled={!previousState}
+            disabled={!state.previousState}
             icon={<FaAngleLeft />}
           />
         </Tooltip>
@@ -600,9 +564,9 @@ function Home(props) {
         </div>
       </div>
       <ModalRePayment
-        open={openModal}
+        open={state.openModal}
         handleClose={handleCloseModal}
-        pendingPayment={pendingPayment}
+        pendingPayment={state.pendingPayment}
         handleContinuePayment={handleContinuePayment}
       ></ModalRePayment>
     </div>

@@ -4,16 +4,12 @@ import os
 import pandas as pd
 # import sys
 import logging
-# Add the parent directory to sys.path
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
 from app.config.config import MODEL_PATH
 # MODEL_PATH_FINAL = os.path.join(os.path.dirname(__file__), MODEL_PATH)
 
 def predict_cancel_probability(enriched_booking_data):
-    # Tải mô hình đã huấn luyện
-    logging.info(f"checkking1234xcxsssscxxxcx: {MODEL_PATH}")
     model = joblib.load(MODEL_PATH)
-    logging.info("chcxcxc", enriched_booking_data) 
     # Dự đoán xác suất hủy
     if isinstance(enriched_booking_data, dict):
         enriched_booking_data = pd.DataFrame([enriched_booking_data])

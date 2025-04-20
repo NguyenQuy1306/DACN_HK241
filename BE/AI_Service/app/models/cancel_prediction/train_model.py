@@ -19,7 +19,6 @@ def train_and_save_model(df: pd.DataFrame):
     # 1. Parse datetime safely
     def safe_parse_datetime(series, column_name):
         try:
-            # thử định dạng phổ biến nhất: "2025-04-14 10:00:00"
             return pd.to_datetime(series, format="%Y-%m-%d %H:%M:%S", errors="coerce")
         except Exception as e:
             print(f"[!] Error parsing {column_name}: {e}")
