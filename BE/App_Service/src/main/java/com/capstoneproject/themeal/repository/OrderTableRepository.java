@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.capstoneproject.themeal.model.entity.OrderTable;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -28,4 +30,17 @@ public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
             @Param("customerId") Long customerId,
             @Param("status") OrderTableStatus status
     );
+
+    @Query("""
+                SELECT o FROM OrderTable o
+                WHERE o.Ngay = :currentDate
+                  AND o.Gio  <= :oneHourLater
+                  AND o.Gio > :now
+            """)
+    List<OrderTable> findBookingsToConfirmByCancelRate(
+            @Param("currentDate") LocalDate currentDate,
+            @Param("now") LocalTime now,
+            @Param("oneHourLater") LocalTime oneHourLater
+    );
+
 }

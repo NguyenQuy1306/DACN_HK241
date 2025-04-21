@@ -47,4 +47,6 @@ public interface OrderTableService {
     public void sendOrderEvent(Long orderId, Double distanceKm);
 
     public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId);
+
+    public void markAsConfirmed(Long bookingId);
 }

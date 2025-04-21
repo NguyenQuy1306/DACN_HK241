@@ -62,6 +62,10 @@ public class OrderTable {
     @Column(nullable = false)
     private LocalDateTime orderAt;
 
+    @Column(nullable = false)
+    @ColumnDefault("false")
+    private Boolean emailConfirmSent = false;
+
     @ManyToOne
     @JoinColumn(name = "MaSoPhuongThucThanhToan")
     private PaymentMethod PhuongThucThanhToan;

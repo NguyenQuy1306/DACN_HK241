@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.controller;
 
 import com.capstoneproject.themeal.model.response.*;
+import com.capstoneproject.themeal.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +24,9 @@ import com.capstoneproject.themeal.model.request.TableRequest;
 import com.capstoneproject.themeal.repository.PaymentMethodRepository;
 import com.capstoneproject.themeal.repository.RestaurantRepository;
 import com.capstoneproject.themeal.repository.UserRepository;
-import com.capstoneproject.themeal.service.ComboAvailableService;
-import com.capstoneproject.themeal.service.FoodService;
-import com.capstoneproject.themeal.service.OrderTableService;
-import com.capstoneproject.themeal.service.TableAvailableService;
 import com.capstoneproject.themeal.service.impl.OrderTableServiceImpl;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,18 +46,6 @@ public class OrderTableController {
     // Assign Waiter PUT/PATCH /api/orders/{orderId}/waiter
     @Autowired
     private OrderTableService orderTableService;
-    @Autowired
-    private TableAvailableService tableAvailableService;
-    @Autowired
-    private ComboAvailableService comboAvailableService;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-    @Autowired
-    private FoodService foodService;
 
     @GetMapping("/customer/{customerId}/history")
     List<OrderTableResponse> getAllOrderByCustomerId(@PathVariable Long customerId) {
@@ -67,7 +53,8 @@ public class OrderTableController {
     }
 
     @GetMapping("/all/{restaurantId}")
-    ResponseEntity<ApiResponse<List<FinalOrderTableResponse>>> getAllOrderByRestaurantId(@PathVariable Long restaurantId) {
+    ResponseEntity<ApiResponse<List<FinalOrderTableResponse>>> getAllOrderByRestaurantId(
+            @PathVariable Long restaurantId) {
         ApiResponse<List<FinalOrderTableResponse>> apiResponse = new ApiResponse<>();
         List<FinalOrderTableResponse> orderTableResponses = orderTableService.getAllOrdersByRestaurantId(restaurantId);
         apiResponse.ok(orderTableResponses);
@@ -104,7 +91,8 @@ public class OrderTableController {
     }
 
     @PutMapping("")
-    public ResponseEntity<ApiResponse<String>> updateIsArrivalCustormer(@RequestBody Long userId, @RequestBody Long orderID, @RequestBody Boolean isArrival) {
+    public ResponseEntity<ApiResponse<String>> updateIsArrivalCustormer(@RequestBody Long userId,
+                                                                        @RequestBody Long orderID, @RequestBody Boolean isArrival) {
 
         ApiResponse<String> apiResponse = new ApiResponse<>();
         try {
@@ -123,5 +111,13 @@ public class OrderTableController {
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/{bookingId}/confirm-arrival")
+    public ResponseEntity<String> confirmArrival(@PathVariable Long bookingId) {
+        orderTableService.markAsConfirmed(bookingId);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create("http://localhost:3000/thank-you"))
+                .build();
     }
 }

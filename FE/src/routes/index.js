@@ -29,12 +29,27 @@ import RatingOwner from "./../pages/RatingOwner/index";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard_Admin from "../pages/Dashboard_Admin";
 import PartnerList from "../pages/PartnerList";
+import OverbookingSettings from "../pages/Overbooking/OverbookingSettings";
+import ThankYouPage from "../pages/ThankCustomer/ThankYouPage";
 export const routes = [
+    {
+        path: "/thank-you",
+        component: ThankYouPage,
+        // layout: OwnerLayout,
+        role: ["guest", "customer", "owner"],
+    },
+    {
+        path: "/owner/overbooking",
+        component: OverbookingSettings,
+        layout: OwnerLayout,
+        role: ["owner"],
+    },
     {
         path: "/owner/tablemanagement",
         component: TableManagement,
         layout: OwnerLayout,
         role: ["owner"],
+        title: "Quản lý bàn",
     },
     {
         path: "/admin/ownerdetail/:id",
@@ -160,7 +175,7 @@ export const routes = [
         path: "/register-restaurant",
         component: RegisterRestaurant1,
         layout: MainLayout,
-        role: ["guest", "customer", "owner", "admin"],
+        role: ["guest", "customer", "owner"],
     },
     {
         path: "/register-restaurant2",

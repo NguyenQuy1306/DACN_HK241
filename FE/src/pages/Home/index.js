@@ -195,7 +195,6 @@ function Home(props) {
                     console.log("=================result of recommendations============: ", allRestaurant);
                     response.status = 200;
                     response.data = allRestaurant.filter((res) => {
-                        console.log("ma SO NHA HANG", res.maSoNhaHang);
                         return result.data.recommendations.includes(res.maSoNhaHang);
                     });
                 } else {

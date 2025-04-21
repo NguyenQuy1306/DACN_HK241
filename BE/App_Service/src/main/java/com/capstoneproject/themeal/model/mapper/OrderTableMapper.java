@@ -29,6 +29,11 @@ public interface OrderTableMapper {
     @Mapping(source = "nhaHang.diaChi", target = "diaChiNhaHang")
     @Mapping(source = "nhaHang.maSoNhaHang", target = "maSoNhaHang")
     @Mapping(source = "phuongThucThanhToan.ten", target = "tenPhuongThucThanhToan")
+    @Mapping(source = "tongTienThanhToan", target = "tongTienThanhToan")
+    @Mapping(source = "tienDatCoc", target = "tienDatCoc")
+    @Mapping(source = "nhaHang.kinhDo", target = "kinhDo")
+    @Mapping(source = "nhaHang.viDo", target = "viDo")
+    @Mapping(source = "orderAt", target = "thoiGianDat")
     @Mapping(source = "nhaHang.danhSachAnhNhaHang", target = "anhNhaHang", qualifiedByName = "getImageUrl")
     OrderTableResponse toOrderTableResponse(OrderTable orderTable);
 
@@ -44,7 +49,6 @@ public interface OrderTableMapper {
     OrderTable toOrderTable(OrderTableResponse orderTableResponse);
 
 
-
     @Mapping(source = "maSoDatBan", target = "maSoDatBan")
     @Mapping(source = "soKhach", target = "soKhach")
     @Mapping(source = "ngay", target = "ngay")
@@ -54,6 +58,8 @@ public interface OrderTableMapper {
     @Mapping(source = "khachHang.hoTen", target = "tenKhachHang")
     @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
     @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
+    @Mapping(source = "orderAt", target = "thoiGianTao")
+    @Mapping(source = "percentNoShow", target = "tyLeHuy")
     FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context FoodRepository foodRepository);
 
     @Named("addFoodInfo")

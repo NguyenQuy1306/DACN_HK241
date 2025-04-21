@@ -20,7 +20,11 @@ const items = [
     icon: <MdOutlineLibraryBooks />,
     label: "Orders",
   },
-
+  {
+    key: "3",
+    icon: <MdOutlineLibraryBooks />,
+    label: "Overbooking",
+  },
   {
     key: "sub1",
     label: "Menu",
@@ -67,6 +71,9 @@ const SidebarOwner = ({ collapsed }) => {
         break;
       case "2":
         navigate("/owner/orders");
+        break;
+      case "3":
+        navigate("/owner/overbooking");
         break;
       case "5":
         navigate("/owner/menu/add");

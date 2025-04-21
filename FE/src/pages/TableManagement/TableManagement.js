@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createTableForRestaurant,
-  deleteTableForRestaurant,
-  getTableForRestaurantByOwner,
-  setDeleteTableResposne
+    createTableForRestaurant,
+    deleteTableForRestaurant,
+    getTableForRestaurantByOwner,
+    setDeleteTableResposne,
 } from "../../redux/features/tableSlice";
 import styles from "./TableManagement.module.css";
 
@@ -140,6 +140,8 @@ function TableManagement() {
                         value={time}
                         onChange={(e) => setTime(e.target.value)}
                     >
+                        <option value="03:00">03:00</option>
+                        <option value="03:30">03:30</option>
                         <option value="09:30">09:30</option>
                         <option value="10:00">10:00</option>
                         <option value="10:30">10:30</option>

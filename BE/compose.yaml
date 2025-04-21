@@ -22,6 +22,7 @@ services:
       - ./target:/app/target
       - ./logs:/app/logs
     environment:
+      - TZ=Asia/Ho_Chi_Minh
       - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/themealv3
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=Nhut3030

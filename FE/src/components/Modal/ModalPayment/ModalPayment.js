@@ -226,7 +226,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
           maSoDatBan: orderResponse.maSoDatBan,
         })
       );
-
+      // console.log("selectedPlace", selectedPlace);
       localStorage.setItem(
         "pendingOrder",
         JSON.stringify({
@@ -236,11 +236,11 @@ const ModalPayment = ({ open, selectedPlace }) => {
           checkoutUrl: response.data.checkoutUrl,
           restaurantName: selectedPlace.ten,
           tableId: choosedTable?.maSo,
-          lat: selectedPlace.viDo,
-          lon: selectedPlace.kinhDo,
+          lat: selectedPlace.viDo ? selectedPlace.viDo : selectedPlace.lat,
+          lon: selectedPlace.kinhDo ? selectedPlace.kinhDo : selectedPlace.lng,
         })
       );
-      console.log("response.data", response.data);
+      // console.log("response.data", response.data);
       callbackFunction(response.data);
     } catch (error) {
       console.error("Lỗi khi tạo link thanh toán:", error);

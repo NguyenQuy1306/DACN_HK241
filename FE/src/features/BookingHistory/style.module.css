@@ -21,6 +21,16 @@
     margin-left: 12px; 
 }
 
+.status-item:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.status-item--active {
+    background-color: #007bff;
+    color: white;
+}
+
 .status-item:first-child {
     margin-left: 0;
 }
