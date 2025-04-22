@@ -21,9 +21,9 @@ API.interceptors.response.use(
       });
 
       toast.error("Phiên đăng nhập của bạn đã hết hạn vui lòng đăng nhập lại");
-      setTimeout(() => {
-        window.location.href = "/Home";
-      }, 2000);
+      // setTimeout(() => {
+      //   window.location.href = "/Home";
+      // }, 2000);
     }
     return Promise.reject(error);
   }
@@ -613,7 +613,16 @@ export const deleteOverrides = async ({ id }) => {
     throw error.response?.data || error;
   }
 };
-
+export const updateStatusRefund = async (params) => {
+  try {
+    const response = await API.put(
+      `/api/orders/orderRefund?status=${params.status}&totalRefund=${params.totalRefund}&orderId=${params.orderId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
 export const updateOverrides = async (params) => {
   try {
     console.log("params", params);

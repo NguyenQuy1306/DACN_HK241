@@ -76,6 +76,17 @@ export const createPayment = createAsyncThunk(
     }
   }
 );
+export const updateStatusRefund = createAsyncThunk(
+  "/payment/update-status-refund",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateStatusRefund(params);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const paymentSlice = createSlice({
   name: "payment",
@@ -86,6 +97,7 @@ export const paymentSlice = createSlice({
     cancelOrder: [],
     paymentCallback: null,
     depositPolicy: null,
+    updateStatusRefundResponse: null,
     deposit: 0,
     paymentAmount: 0,
     amount: 0,
@@ -169,6 +181,18 @@ export const paymentSlice = createSlice({
         state.depositPolicy = action.payload;
       })
       .addCase(getDepositPolicy.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateStatusRefund.pending, (state) => {
+        state.loading = true;
+        state.updateStatusRefundResponse = null;
+      })
+      .addCase(updateStatusRefund.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updateStatusRefundResponse = action.payload;
+      })
+      .addCase(updateStatusRefund.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

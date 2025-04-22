@@ -1,5 +1,9 @@
 package com.capstoneproject.themeal.model.entity;
 
 public enum OrderTableStatus {
-    COMPLETED, CANCELED, PENDING
+    PENDING,
+    PAID_PENDING_USE,
+    NOT_PAID,
+    CANCELLED_REFUNDED,
+    COMPLETED
 }

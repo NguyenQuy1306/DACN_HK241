@@ -13,5 +13,7 @@ import java.util.List;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, String> {
+    @Query("SELECT r FROM Payment r JOIN r.orderTable c WHERE c.MaSoDatBan =:orderId")
+    Payment findByOrderTable(@Param("orderId") Long orderId);
 
 }

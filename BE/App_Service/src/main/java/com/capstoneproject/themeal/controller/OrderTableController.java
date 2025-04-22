@@ -1,7 +1,11 @@
 package com.capstoneproject.themeal.controller;
 
+import com.capstoneproject.themeal.model.entity.*;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.service.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
-import com.capstoneproject.themeal.model.entity.OrderTable;
-import com.capstoneproject.themeal.model.entity.PaymentMethod;
-import com.capstoneproject.themeal.model.entity.Restaurant;
-import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.model.mapper.OrderTableMapper;
 import com.capstoneproject.themeal.model.request.ComboRequest;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
@@ -115,9 +115,81 @@ public class OrderTableController {
 
     @GetMapping("/{bookingId}/confirm-arrival")
     public ResponseEntity<String> confirmArrival(@PathVariable Long bookingId) {
-        orderTableService.markAsConfirmed(bookingId);
+        Boolean check = orderTableService.isConfirmed(bookingId);
+        if (check) {
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create("http://localhost:3000/confirmed-order"))
+                    .build();
+        }
+        orderTableService.markAsConfirmed(bookingId, OrderTableStatus.COMPLETED.toString());
+
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("http://localhost:3000/thank-you"))
                 .build();
+
     }
+
+    @GetMapping("/{bookingId}/cancel-arrival")
+    public ResponseEntity<String> cancelArrival(@PathVariable Long bookingId) {
+        Boolean check = orderTableService.isConfirmed(bookingId);
+
+        if (check) {
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create("http://localhost:3000/confirmed-order"))
+                    .build();
+        }
+        orderTableService.markAsConfirmed(
+                bookingId,
+                OrderTableStatus.CANCELLED_REFUNDED.toString()
+        );
+
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create("http://localhost:3000/thank-you"))
+                .build();
+
+
+    }
+
+    @GetMapping("/refundByOwner/{bookingId}")
+    public ResponseEntity<String> refundByOwner(@PathVariable Long bookingId) {
+
+        ObjectNode paymentLink = orderTableService.refundByOwner(bookingId);
+
+        String checkoutUrl = null;
+        if (paymentLink != null && paymentLink.has("data")) {
+            JsonNode dataNode = paymentLink.get("data");
+            if (dataNode.has("checkoutUrl")) {
+                checkoutUrl = dataNode.get("checkoutUrl").asText();
+            }
+        }
+
+        if (checkoutUrl != null) {
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create(checkoutUrl))
+                    .build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error");
+        }
+
+    }
+
+    @PutMapping(path = "/orderRefund")
+    public ResponseEntity<?> updateStatusRefund(@RequestParam Boolean status, @RequestParam Long totalRefund, @RequestParam Long orderId) {
+        try {
+            ApiResponse<String> apiResponse = new ApiResponse<>();
+            orderTableService.updateStatusRefund(status, totalRefund, orderId);
+            apiResponse.ok("Update order arrival success");
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectNode response = objectMapper.createObjectNode();
+            response.put("error", -1);
+            response.put("message", e.getMessage());
+            response.set("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }

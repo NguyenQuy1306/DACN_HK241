@@ -32,16 +32,23 @@ public class CancelRateScheduler {
 
     @Scheduled(fixedRate = 60 * 1000) // Mỗi 10 phút
     public void checkAndNotifyCancelRate() {
+        System.out.println("scheduled checkAndNotifyCancelRate");
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime targetTime = now.plusHours(1);
+        System.out.println("targetTime.toLocalDate():: " + targetTime.toLocalDate());
+        System.out.println("now.toLocalTime():: " + now.toLocalTime());
+        System.out.println("targetTime.toLocalTime():: " + targetTime.toLocalTime());
         List<OrderTable> orderTables = orderTableRepository.findBookingsToConfirmByCancelRate(
                 targetTime.toLocalDate(), now.toLocalTime(), targetTime.toLocalTime()
 
         );
+        System.out.println("orderTables:: " + orderTables.isEmpty());
         for (OrderTable orderTable : orderTables) {
             OverbookingSettings overbookingSettings = overbookingSettingsRepository.findByRestaurantId(orderTable.getNhaHang().getMaSoNhaHang());
             ThresholdRule thresholdRule = thresholdRuleRepository.findByOverbookingId(overbookingSettings.getId(), "email-warning");
             Double percent = orderTable.getPercentNoShow() * 100;
+            System.out.println("percent:: " + percent);
+            System.out.println("thresholdRule.getMin(:: " + thresholdRule.getMin());
             if (percent > thresholdRule.getMin() && percent < thresholdRule.getMax() && orderTable.getEmailConfirmSent() == false) {
                 emailService.sendConfirmArrivalEmail(orderTable);
                 System.out.println("Check Scheduled 6");

@@ -50,7 +50,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             "/api/food/*", "/api/food/test-upload", "/api/food/restaurants/*/categories/*/foods/*/image",
             "/api/food/restaurants/*/categories/*", "/oauth2/authorization/infor", "/callbackOauthen2",
             "/callbackOauthen2/*", "/login", "/login/*", "/favicon.ico", "/user", "/welcome",
-            "login/oauth2/code/google", "/secure", "/callbackOauth2Google", "/api/orders/*/confirm-arrival");
+            "login/oauth2/code/google", "/secure", "/callbackOauth2Google", "/api/orders/*/confirm-arrival", "/api/orders/*/cancel-arrival", "/api/orders/orderRefund", "/api/orders/refundByOwner/**");
     @Autowired
     private SessionRegistry sessionRegistry;
 

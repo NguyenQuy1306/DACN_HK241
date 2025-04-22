@@ -30,8 +30,22 @@ import AdminLayout from "../layouts/AdminLayout";
 import Dashboard_Admin from "../pages/Dashboard_Admin";
 import PartnerList from "../pages/PartnerList";
 import OverbookingSettings from "../pages/Overbooking/OverbookingSettings";
-import ThankYouPage from "../pages/ThankCustomer/ThankYouPage";
+import ThankYouPage from "../pages/ResponseConfirmOrder/ThankCustomer/ThankYouPage";
+import ConfirmOrder from "../pages/ResponseConfirmOrder/ConfirmOrder/ConfirmOrder";
+import RefundSuccess from "../pages/RefundOwner/RefundSuccess";
 export const routes = [
+  {
+    path: "/refund-status/:orderIdFromPath",
+    component: RefundSuccess,
+    // layout: OwnerLayout,
+    role: ["guest", "customer", "owner"],
+  },
+  {
+    path: "/confirmed-order",
+    component: ConfirmOrder,
+    // layout: OwnerLayout,
+    role: ["guest", "customer", "owner"],
+  },
   {
     path: "/thank-you",
     component: ThankYouPage,

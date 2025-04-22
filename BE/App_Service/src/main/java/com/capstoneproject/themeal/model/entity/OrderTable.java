@@ -51,6 +51,9 @@ public class OrderTable {
     private Boolean StatusDepositRefund;
 
     @Column(nullable = false)
+    private Long TotalRefund;
+
+    @Column
     private Long TongTienThanhToan;
 
     @Column
@@ -65,6 +68,10 @@ public class OrderTable {
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean emailConfirmSent = false;
+
+    @Column(nullable = false)
+    @ColumnDefault("false")
+    private Boolean emailConfirmByUser = false;
 
     @ManyToOne
     @JoinColumn(name = "MaSoPhuongThucThanhToan")

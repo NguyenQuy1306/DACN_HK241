@@ -3,6 +3,7 @@ package com.capstoneproject.themeal.service;
 import java.util.List;
 
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capstoneproject.themeal.model.entity.OrderTable;
@@ -35,7 +36,6 @@ public interface OrderTableService {
     public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
                                           Long deposit);
 
-    public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess, String paymentCode);
 
     public PaymentResponse createPayment(Long paymentAmount,
                                          String maSoThanhToan, Long maSoDatBan);
@@ -44,9 +44,15 @@ public interface OrderTableService {
 
     List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId);
 
-    public void sendOrderEvent(Long orderId, Double distanceKm);
 
     public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId);
 
-    public void markAsConfirmed(Long bookingId);
+    public void markAsConfirmed(Long orderId, String statusOrder);
+
+    public Boolean isConfirmed(Long bookingId);
+
+    public void updateStatusRefund(Boolean status, Long totalRefund, Long orderId);
+
+    public ObjectNode refundByOwner(Long orderId);
+
 }

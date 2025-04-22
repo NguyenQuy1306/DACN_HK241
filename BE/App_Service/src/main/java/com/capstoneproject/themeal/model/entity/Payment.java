@@ -17,7 +17,7 @@ public class Payment {
     @Id
     @Column(name = "MaSoThanhToan")
     private String MaSoThanhToan;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaSoDatBan", nullable = false)
     private OrderTable orderTable;
     @Column(name = "SoTienThanhToan", nullable = false)

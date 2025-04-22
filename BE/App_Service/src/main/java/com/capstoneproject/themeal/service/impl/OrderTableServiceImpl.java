@@ -1,34 +1,25 @@
 package com.capstoneproject.themeal.service.impl;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.capstoneproject.themeal.model.entity.OrderPredict;
+import com.capstoneproject.themeal.model.entity.*;
 import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.*;
+import com.cloudinary.api.exceptions.BadRequest;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
-import com.capstoneproject.themeal.model.entity.ComboAvailable;
-import com.capstoneproject.themeal.model.entity.Food;
-import com.capstoneproject.themeal.model.entity.OrderTable;
-import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailable;
-import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailableId;
-import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
-import com.capstoneproject.themeal.model.entity.OrderTableHasFoodId;
-import com.capstoneproject.themeal.model.entity.OrderTableStatus;
-import com.capstoneproject.themeal.model.entity.Payment;
-import com.capstoneproject.themeal.model.entity.PaymentMethod;
-import com.capstoneproject.themeal.model.entity.PaymentStatus;
-import com.capstoneproject.themeal.model.entity.Restaurant;
-import com.capstoneproject.themeal.model.entity.TableAvailable;
-import com.capstoneproject.themeal.model.entity.TableAvailableId;
-import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.model.mapper.OrderTableMapper;
 import com.capstoneproject.themeal.model.request.CreateOrderRequest;
 import com.capstoneproject.themeal.model.request.FoodOrderRequest;
@@ -64,7 +55,6 @@ public class OrderTableServiceImpl implements OrderTableService {
     @Autowired
     private TableAvailableService tableAvailableService;
 
-
     @Autowired
     private OrderTableMapper orderTableMapper;
     @Autowired
@@ -73,6 +63,13 @@ public class OrderTableServiceImpl implements OrderTableService {
     private OrderTrainingProducerService orderTrainingProducerService;
     @Autowired
     private OrderPredictRepository orderPredictRepository;
+
+    @Autowired
+    private PaymentService paymentService;
+    @Autowired
+    private DepositRepository depositRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<OrderTableResponse> getOrderTableByCustomerId(Long customerId) {
@@ -92,7 +89,9 @@ public class OrderTableServiceImpl implements OrderTableService {
     @Override
     public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
         List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
-        return orderTables.stream().map(orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository)).collect(Collectors.toList());
+        return orderTables.stream().map(
+                        orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -101,7 +100,6 @@ public class OrderTableServiceImpl implements OrderTableService {
         TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
         TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                 .orElseThrow(() -> new NotFoundException("Table not found"));
-        System.out.println("OrderTableStatus.valueOf(statusOrder)" + OrderTableStatus.valueOf(statusOrder));
         OrderTable orderTable = OrderTable.builder()
                 .SoKhach(tableAvailable.getSoNguoi())
                 .Ngay(tableAvailable.getNgay())
@@ -114,6 +112,7 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .KhachHang(user)
                 .NhaHang(restaurant)
                 .isArrival(false)
+                .TotalRefund(0L)
                 .build();
         orderTableRepository.save(orderTable);
         return orderTable;
@@ -196,7 +195,6 @@ public class OrderTableServiceImpl implements OrderTableService {
                         "Combo IDs not found: " + comboId);
             }
         }
-        // Check exist Food with id
 
         if (foodOrderRequests.size() > 0) {
             List<Long> listIdFood = foodOrderRequests.stream()
@@ -208,13 +206,10 @@ public class OrderTableServiceImpl implements OrderTableService {
         PaymentMethod paymentMethod = new PaymentMethod();
         User customer = userRepository.findById(customerID)
                 .orElseThrow(() -> new NotFoundException("Customer not found"));
-        // create Restaurant entity
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new NotFoundException("Restaurant not found"));
-        // Create OderTalbe entity
         OrderTable orderTable = this.saveOrderTable(customer, paymentMethod, restaurant,
                 tableId, statusOrder, totalAmount, deposit);
-        // Create OderTableHasCombo entity if Menu is not null
         if (comboId != null) {
             this.saveOrderTableHasComboAvailable(comboId, orderTable);
         }
@@ -228,62 +223,6 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     }
 
-    @Override
-    public void sendOrderEvent(Long orderId, Double distanceKm) {
-        OrderTable order = orderTableRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException("Order not found"));
-        Long paidCount = orderTableRepository.countByCustomerAndStatus(order.getKhachHang().getMaSoNguoiDung(), OrderTableStatus.COMPLETED);
-        System.out.println("check1238323" + paidCount);
-        Long cancelCount = orderTableRepository.countByCustomerAndStatus(order.getKhachHang().getMaSoNguoiDung(), OrderTableStatus.CANCELED);
-        System.out.println("check123823323" + cancelCount);
-        Long totalCount = paidCount + cancelCount;
-        System.out.println("check12383232233" + totalCount);
-        double avgUserCancelRate = cancelCount == 1 ? 0 : (paidCount / (double) cancelCount);
-        System.out.println("check12383233333211" + avgUserCancelRate);
-        double roundedRate = Math.round(avgUserCancelRate * 100.0) / 100.0;
-        System.out.println("roundedRate:: " + roundedRate);
-        OrderPredict orderPredict = OrderPredict.builder()
-                .paymentStatus(order.getTrangThai().toString())
-                .avgUserCancelRate(roundedRate)
-                .userId(order.getKhachHang().getMaSoNguoiDung())
-                .orderId(orderId)
-                .bookingTime(order.getOrderAt().toString())
-                .dayOfWeek(order.getOrderAt().getDayOfWeek().getValue())
-                .reservationTime(order.getGio().toString())
-                .reservationDate(order.getNgay().toString())
-                .userDistanceKm(distanceKm)
-                .numGuests(order.getSoKhach())
-                .isFirstBooking(totalCount == 0 ? Boolean.TRUE : Boolean.FALSE)
-                .build();
-        System.out.println("distanceKM2323:: " + distanceKm);
-        orderPredictRepository.save(orderPredict);
-        System.out.println("distanceKM232444:: " + distanceKm);
-        orderPredictProducerService.sendBookingRequestEvent(orderPredict);
-        System.out.println("distanceKM232444323232:: " + distanceKm);
-
-    }
-
-    @Transactional
-    public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess, String paymentCode) {
-        System.out.println("check123");
-        OrderTable order = orderTableRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException("Order not found"));
-        Payment payment = paymentRepository.findById(paymentCode)
-                .orElseThrow(() -> new NotFoundException("Payment not found"));
-        System.out.println("check1234");
-        if (isSuccess) {
-            order.setTrangThai(OrderTableStatus.COMPLETED);
-            payment.setPaymentStatus(PaymentStatus.PAID);
-        } else {
-            System.out.println("cancellleed");
-            order.setTrangThai(OrderTableStatus.CANCELED);
-            payment.setPaymentStatus(PaymentStatus.NONE);
-        }
-        System.out.println("check12345 " + order.getTrangThai());
-        orderTableRepository.save(order);
-        paymentRepository.save(payment);
-
-    }
 
     @Override
     public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId) {
@@ -294,7 +233,8 @@ public class OrderTableServiceImpl implements OrderTableService {
 
         order.setIsArrival(isArrival);
         orderTableRepository.save(order);
-        OrderPredict orderPredict = orderPredictRepository.findOrder(userId, orderId).orElseThrow(() -> new NotFoundException("OrderPredict not found"));
+        OrderPredict orderPredict = orderPredictRepository.findOrder(userId, orderId)
+                .orElseThrow(() -> new NotFoundException("OrderPredict not found"));
         OrderTrainingEvent orderTrainingEvent = OrderTrainingEvent
                 .builder()
                 .paymentStatus(order.getTrangThai().toString())
@@ -313,12 +253,11 @@ public class OrderTableServiceImpl implements OrderTableService {
         orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
     }
 
-
     @Override
     public PaymentResponse createPayment(Long paymentAmount,
                                          String maSoThanhToan, Long maSoDatBan) {
-        OrderTable orderTable = orderTableRepository.findById(maSoDatBan).orElseThrow(() ->
-                new NotFoundException("Order table not found"));
+        OrderTable orderTable = orderTableRepository.findById(maSoDatBan)
+                .orElseThrow(() -> new NotFoundException("Order table not found"));
         Payment payment = Payment.builder()
                 .MaSoThanhToan(maSoThanhToan)
                 .SoTienThanhToan(paymentAmount)
@@ -333,32 +272,88 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Override
-    public void markAsConfirmed(Long orderId) {
-        OrderTable orderTable = orderTableRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order table not found"));
-        orderTable.setIsArrival(true);
-    }
-//        public int getTotalBookings(Long customerID) {
-//
-//        }
-//        public OrderEvent toRequestEvent(OrderTable order) {
-//                User user = userRepository.findById(order.getKhachHang().getMaSoNguoiDung()).orElseThrow();
-//
-//                double total = paymentRepository.getTotalPaidPayment(user.getMaSoNguoiDung());
-//                double canceled = bookingHistoryService.getCanceledBookings(user.getId());
-//
-//                return new BookingRequestEvent(
-//                        order.getId().toString(),
-//                        user.getId().toString(),
-//                        order.getBookingTime().toString(),
-//                        order.getReservationTime().toString(),
-//                        order.getNumGuests(),
-//                        total == 0,
-//                        order.getBookingTime().getDayOfWeek().getValue(),
-//                        total > 0 ?  canceled / total : 0.0,
-//                        order.getPaymentMethod(),
-//                        locationService.calculateDistanceKm(user.getAddress(), order.getRestaurant().getAddress())
-//                );
-//        }
+    public ObjectNode refundByOwner(Long orderId) {
+        OrderTable orderTable = orderTableRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order table not found"));
+        Payment payment = paymentRepository.findByOrderTable(orderId);
+        if (payment == null) throw new NotFoundException("Payment not found");
+        if (payment.getPaymentStatus() != PaymentStatus.PAID)
+            throw new IllegalArgumentException("Payment status is not PAID");
 
+        long paymentAmount = payment.getSoTienThanhToan();
+
+        Deposit deposit = depositRepository.findDepositByRestaurantId(orderTable.getNhaHang().getMaSoNhaHang());
+        if (deposit == null) throw new IllegalArgumentException("Policy is not available");
+
+        LocalDateTime dateTime = orderTable.getNgay().atTime(orderTable.getGio());
+        Byte hourLeft = (byte) Duration.between(LocalDateTime.now(), dateTime).toHours();
+
+        int refund = 0;
+        if (hourLeft >= deposit.getKhoangThoiGianHoanCocToanBo()) {
+            refund = (int) Math.round(paymentAmount);
+        } else if (hourLeft < deposit.getKhoangThoiGianHoanCocToanBo()) {
+            refund = (int) Math.round(paymentAmount * 0.5);
+        } else {
+            // Không hoàn tiền
+            return null;
+        }
+
+        String returnUrl = String.format("http://localhost:3000/refund-status/%s", orderId);
+        return paymentService.createPaymentLink(refund, null, returnUrl, true, orderTable);
+    }
+
+    @Transactional
+    public void markAsConfirmed(Long orderId, String statusOrder) {
+        OrderTable orderTable = orderTableRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order table not found"));
+        if (statusOrder.equals("CANCELLED_REFUNDED")) {
+            orderTable.setTrangThai(OrderTableStatus.CANCELLED_REFUNDED);
+            orderTable.setIsArrival(false);
+            emailService.sendRefundEmail(orderTable);
+
+        } else {
+            orderTable.setTrangThai(OrderTableStatus.COMPLETED);
+        }
+        orderTable.setEmailConfirmByUser(true);
+        orderTableRepository.save(orderTable);
+    }
+
+    public Boolean isConfirmed(Long bookingId) {
+        OrderTable orderTable = orderTableRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Order table not found"));
+        return orderTable.getEmailConfirmByUser();
+    }
+
+    @Transactional
+    public void updateStatusRefund(Boolean status, Long totalRefund, Long orderId) {
+        OrderTable orderTable = orderTableRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order table not found"));
+        orderTable.setStatusDepositRefund(status);
+        orderTable.setTotalRefund(totalRefund);
+        orderTableRepository.save(orderTable);
+    }
+    // public int getTotalBookings(Long customerID) {
+    //
+    // }
+    // public OrderEvent toRequestEvent(OrderTable order) {
+    // User user =
+    // userRepository.findById(order.getKhachHang().getMaSoNguoiDung()).orElseThrow();
+    //
+    // double total =
+    // paymentRepository.getTotalPaidPayment(user.getMaSoNguoiDung());
+    // double canceled = bookingHistoryService.getCanceledBookings(user.getId());
+    //
+    // return new BookingRequestEvent(
+    // order.getId().toString(),
+    // user.getId().toString(),
+    // order.getBookingTime().toString(),
+    // order.getReservationTime().toString(),
+    // order.getNumGuests(),
+    // total == 0,
+    // order.getBookingTime().getDayOfWeek().getValue(),
+    // total > 0 ? canceled / total : 0.0,
+    // order.getPaymentMethod(),
+    // locationService.calculateDistanceKm(user.getAddress(),
+    // order.getRestaurant().getAddress())
+    // );
+    // }
 
 }
