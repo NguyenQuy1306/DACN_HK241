@@ -29,6 +29,11 @@ public interface OrderTableMapper {
     @Mapping(source = "nhaHang.diaChi", target = "diaChiNhaHang")
     @Mapping(source = "nhaHang.maSoNhaHang", target = "maSoNhaHang")
     @Mapping(source = "phuongThucThanhToan.ten", target = "tenPhuongThucThanhToan")
+    @Mapping(source = "tongTienThanhToan", target = "tongTienThanhToan")
+    @Mapping(source = "tienDatCoc", target = "tienDatCoc")
+    @Mapping(source = "nhaHang.kinhDo", target = "kinhDo")
+    @Mapping(source = "nhaHang.viDo", target = "viDo")
+    @Mapping(source = "orderAt", target = "thoiGianDat")
     @Mapping(source = "nhaHang.danhSachAnhNhaHang", target = "anhNhaHang", qualifiedByName = "getImageUrl")
     OrderTableResponse toOrderTableResponse(OrderTable orderTable);
 

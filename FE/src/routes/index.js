@@ -46,6 +46,7 @@ export const routes = [
     // layout: OwnerLayout,
     role: ["guest", "customer", "owner"],
   },
+
   {
     path: "/thank-you",
     component: ThankYouPage,
@@ -63,6 +64,7 @@ export const routes = [
     component: TableManagement,
     layout: OwnerLayout,
     role: ["owner"],
+    title: "Quản lý bàn",
   },
   {
     path: "/admin/ownerdetail/:id",

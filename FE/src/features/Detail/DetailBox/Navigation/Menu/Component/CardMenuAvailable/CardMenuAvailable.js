@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "./CardMenuAvailable.css";
-import { Button, Modal, Box } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import BasicModal from "../ModalMenu/ModalMenu";
 import CloseIcon from "@mui/icons-material/Close";
-import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
+import { Button, Modal } from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setComboType } from "../../../../../../../redux/features/comboSlice";
+
 import axios from "axios";
 import { usePayOS } from "@payos/payos-checkout";
+
+import "./CardMenuAvailable.css";
 const { formatCurrency } = require("../../../../../../../helper/helper");
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {

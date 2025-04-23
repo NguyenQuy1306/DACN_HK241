@@ -6,15 +6,36 @@ import { MdOutlineDelete } from "react-icons/md";
 import PaymentConfirm from "../../../components/PaymentConfirm";
 import VNPayButton from "../../../components/VNPayButton";
 import styles from "./style.module.css";
+import formatCurrencyVND from "./../../../helper/formatCurrency";
+import CountdownTimer from "../../../helper/countDownTime";
 
-function HistoryCard({ status, imgUrl, name, address, time, date, numOfCustomers, payment }) {
+const handleOpenGoogleMap = (latitude, longitude) => {
+    const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    window.open(gmapsUrl, "_blank");
+};
+
+function HistoryCard({
+    status,
+    imgUrl,
+    name,
+    address,
+    time,
+    date,
+    numOfCustomers,
+    payment,
+    totalPay,
+    deposit,
+    latitude,
+    longitude,
+    bookingTime,
+}) {
     return (
         <div className={styles.container}>
             <div
                 className={
                     status === "Confirmed"
                         ? styles["confirm-status"]
-                        : status === "Completed"
+                        : status === "COMPLETED"
                         ? styles["complete-status"]
                         : styles["cancel-status"]
                 }
@@ -43,8 +64,32 @@ function HistoryCard({ status, imgUrl, name, address, time, date, numOfCustomers
                             <p className={styles["time-frame__title"]}>SỐ KHÁCH</p>
                             <span className={styles["time-frame__detail"]}>{numOfCustomers}</span>
                         </div>
+
+                        <div style={{ textAlign: "center" }}>
+                            <p className={styles["time-frame__title"]}>Còn lại</p>
+
+                            <CountdownTimer
+                                bookingTime={bookingTime}
+                                targetDate={`${date}T${time}`}
+                            />
+                        </div>
                     </div>
                     <Divider style={{ margin: "12px 0" }} />
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <p className={styles["price-title"]}>Tổng hóa đơn:</p>
+                        <span className={styles["total-price"]}>{formatCurrencyVND(totalPay)}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <p className={styles["deposit-title"]}>Đã cọc:</p>
+                        <span className={styles["deposit-price"]}>{formatCurrencyVND(deposit)}</span>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h4 className={styles["deposit-title"]}>Chờ thanh toán:</h4>
+                        <span className={styles["remain-price"]}>{formatCurrencyVND(totalPay - deposit)}</span>
+                    </div>
+                    <p>Timestamp: {bookingTime.split(".")[0].split("T").join(" ")}</p>
+
                     {payment === "Thanh toán tại nhà hàng" && (
                         <div className={styles.prepayment}>
                             <VNPayButton />
@@ -59,16 +104,20 @@ function HistoryCard({ status, imgUrl, name, address, time, date, numOfCustomers
             </div>
 
             <div className={styles["card-actions"]}>
-                {status === "Confirmed" && (
-                    <>
-                        <div className={styles["card-delete"]}>
-                            <div className={styles["delete-icon"]}>
-                                <MdOutlineDelete size={26} />
+                {status === "COMPLETED" && (
+                    <div className={styles["card-action"]}>
+                        <div className={styles["card-direction"]}>
+                            <div className={styles["direction-icon"]}>
+                                <GrDirections size={26} />
                             </div>
-                            <p className={[styles["action-content"], styles["action-content--delete"]].join(" ")}>
-                                XÓA
+                            <p
+                                onClick={() => handleOpenGoogleMap(latitude, longitude)}
+                                className={[styles["action-content"], styles["action-content--direction"]].join(" ")}
+                            >
+                                ĐƯỜNG ĐI ĐẾN NHÀ HÀNG
                             </p>
                         </div>
+
                         <div className={styles["card-modify"]}>
                             <div className={styles["modify-icon"]}>
                                 <FaRegEdit size={26} />
@@ -77,17 +126,17 @@ function HistoryCard({ status, imgUrl, name, address, time, date, numOfCustomers
                                 CHỈNH SỬA
                             </p>
                         </div>
-                        <div className={styles["card-direction"]}>
-                            <div className={styles["direction-icon"]}>
-                                <GrDirections size={26} />
+                        <div className={styles["card-delete"]}>
+                            <div className={styles["delete-icon"]}>
+                                <MdOutlineDelete size={26} />
                             </div>
-                            <p className={[styles["action-content"], styles["action-content--direction"]].join(" ")}>
-                                ĐƯỜNG ĐI ĐẾN NHÀ HÀNG
+                            <p className={[styles["action-content"], styles["action-content--delete"]].join(" ")}>
+                                HỦY
                             </p>
                         </div>
-                    </>
+                    </div>
                 )}
-                {status !== "Confirmed" && (
+                {status !== "COMPLETED" && (
                     <>
                         <div className={styles["card-booking"]}>
                             <div className={styles["booking-icon"]}>

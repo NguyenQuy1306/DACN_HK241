@@ -21,9 +21,9 @@ API.interceptors.response.use(
       });
 
       toast.error("Phiên đăng nhập của bạn đã hết hạn vui lòng đăng nhập lại");
-      // setTimeout(() => {
-      //   window.location.href = "/Home";
-      // }, 2000);
+      setTimeout(() => {
+        window.location.href = "/Home";
+      }, 2000);
     }
     return Promise.reject(error);
   }
@@ -37,6 +37,40 @@ export const getRestaurantsInMaps = async (params) => {
     const response = await API.get(`api/restaurants/list-in-boundary`, {
       params: params,
     });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+//Order history
+
+export const getOrderHistory = async ({ userId }) => {
+  try {
+    const response = await API.get(`api/orders/customer/${userId}/history`);
+    console.log(" RAW Order history:", response.data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+//favorite APIs
+
+export const addNewList = async ({ userId }) => {
+  try {
+    const response = await API.post(`api/favorite-list/add-new-card/${userId}`);
+    console.log(" RAW Order history:", response.data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getList = async ({ userId }) => {
+  try {
+    const response = await API.get(`api/favorite-list/${userId}`);
+    console.log(" RAW Order history:", response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -321,7 +355,7 @@ export const getRateOfRestaurant = async ({ restaurantId }) => {
 export const getAllRestaurant = async () => {
   try {
     const response = await API.get(`/api/restaurants/all`);
-    console.log("=============================", response.data);
+    // console.log("=============================", response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

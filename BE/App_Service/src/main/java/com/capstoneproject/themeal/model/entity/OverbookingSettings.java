@@ -1,14 +1,20 @@
 package com.capstoneproject.themeal.model.entity;
 
 
-import com.capstoneproject.themeal.repository.OverbookingSettingsRepository;
+//import com.capstoneproject.themeal.repository.OverbookingSettingsRepository;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 @Table(name = "overbooking_settings")
 public class OverbookingSettings {
     @Id

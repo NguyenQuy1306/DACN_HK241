@@ -39,7 +39,7 @@ public class SecurityConfig {
     private String issuer;
     private static final String[] WHITE_LIST_URL = {"/v2/api-docs", "/v3/api-docs", "/swagger-resources",
             "/swagger-ui/**", "/api/v1/auth/**", "/api/restaurants/**", "/api/orders/**", "/api/restaurant-categories",
-            "/api/payments/**", "/api/behavior",
+            "/api/payments/**", "/api/behavior","/api/overbooking/*","/api/orders/customer/*/history",
             "/user-info", "/swagger-ui/index.html#", "/api/table/restaurant", "/api/v1/auth/register", "/export/users", "/export/restaurants", "/export/ratings",
             "/api/orders/*/confirm-arrival", "/elas/**", "/api/combo", "/api/food"};
 

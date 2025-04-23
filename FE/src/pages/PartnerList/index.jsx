@@ -42,7 +42,7 @@ function PartnerList() {
             render: (text, record) => {
                 if (text) {
                     let color = text.length > 5 ? "green" : "brown";
-                    if (text === "pending") {
+                    if (text === "PENDING") {
                         color = "blue";
                     } else if (text === "inactive") {
                         color = "red";

@@ -9,11 +9,12 @@ import com.capstoneproject.themeal.model.entity.PaymentMethod;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import com.capstoneproject.themeal.model.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
-
+@Data
 @Getter
 @Setter
-@Data
+
 public class OrderTableResponse {
     private Long MaSoDatBan;
     private String SoKhach;
@@ -21,6 +22,52 @@ public class OrderTableResponse {
     private String Gio;
     private String TrangThai;
     private Long MaSoKhachHang;
+    private Long TienDatCoc;
+    private Long TongTienThanhToan;
+    private Double KinhDo;
+    private Double ViDo;
+
+    public Long getTienDatCoc() {
+        return TienDatCoc;
+    }
+
+    public void setTienDatCoc(Long tienDatCoc) {
+        TienDatCoc = tienDatCoc;
+    }
+
+    public Long getTongTienThanhToan() {
+        return TongTienThanhToan;
+    }
+
+    public void setTongTienThanhToan(Long tongTienThanhToan) {
+        TongTienThanhToan = tongTienThanhToan;
+    }
+
+    public Double getKinhDo() {
+        return KinhDo;
+    }
+
+    public void setKinhDo(Double kinhDo) {
+        KinhDo = kinhDo;
+    }
+
+    public Double getViDo() {
+        return ViDo;
+    }
+
+    public void setViDo(Double viDo) {
+        ViDo = viDo;
+    }
+
+    public LocalDateTime getThoiGianDat() {
+        return ThoiGianDat;
+    }
+
+    public void setThoiGianDat(LocalDateTime thoiGianDat) {
+        ThoiGianDat = thoiGianDat;
+    }
+
+    private LocalDateTime ThoiGianDat;
 
 
     public String getTenPhuongThucThanhToan() {
@@ -30,6 +77,8 @@ public class OrderTableResponse {
     public void setTenPhuongThucThanhToan(String tenPhuongThucThanhToan) {
         TenPhuongThucThanhToan = tenPhuongThucThanhToan;
     }
+
+
 
     private String AnhNhaHang;
     private String TenPhuongThucThanhToan;

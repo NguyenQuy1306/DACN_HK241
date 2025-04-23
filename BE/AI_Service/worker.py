@@ -1,56 +1,53 @@
-# worker.py
-
+from kafka import KafkaConsumer
 import pickle
 import json
-import redis
 from river import linear_model, preprocessing
 
-# Kết nối Redis
-r = redis.Redis(host='localhost', port=6379, db=0)
+TOPIC_NAME = "user-behavior-topic"
+BOOTSTRAP_SERVERS = ['kafka:9092']  # hoặc localhost:9092 nếu chạy local
 
-# Load model nếu có, hoặc khởi tạo model mới
+# Load model hoặc khởi tạo mới nếu chưa có
 try:
-    with open("online_model.pkl", "rb") as f:
+    with open("./app/models/recommend_restaurant/model.pkl", "rb") as f:
         model = pickle.load(f)
     print("✅ Loaded existing model")
 except FileNotFoundError:
     model = preprocessing.StandardScaler() | linear_model.LogisticRegression()
     print("🆕 Initialized new model")
 
-# Lắng nghe channel Redis
-pubsub = r.pubsub()
-pubsub.subscribe('user_behavior')
+# Kết nối Kafka
+consumer = KafkaConsumer(
+    TOPIC_NAME,
+    bootstrap_servers=BOOTSTRAP_SERVERS,
+    value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='ai-worker-group'
+)
 
-print("👂 Listening for user behavior...")
+print(f"👂 Listening to Kafka topic: {TOPIC_NAME}")
 
-for message in pubsub.listen():
-    if message['type'] != 'message':
-        continue
-
+for message in consumer:
     try:
-        # Parse dữ liệu hành vi
-        event = json.loads(message['data'])
+        event = message.value
 
-        # Giả sử sự kiện có dạng:
-        # { "user_id": "u123", "restaurant_id": "r456", "time_spent": 35, "liked": 1, "clicked": 1 }
         X = {
-            "time_spent": event.get("time_spent", 0),
-            "liked": event.get("liked", 0),
-            # Có thể thêm các đặc trưng khác tại đây
+            "time_spent": event.get("timeSpent", 0),
+            "liked": int(event.get("liked", False)),
+            # Bạn có thể thêm feature như "clicked", "device", etc.
         }
-        y = event.get("clicked", 0)
+        y = int(event.get("clicked", 1))  # mặc định là đã click
 
-        # Dự đoán trước khi học (tuỳ chọn)
+        # Dự đoán trước khi học (nếu cần)
         pred = model.predict_one(X)
 
         # Học từ hành vi mới
         model = model.learn_one(X, y)
 
-        # Ghi log
         print(f"🧠 Learned: X={X}, y={y}, pred={pred}")
 
-        # Lưu model lại
-        with open("online_model.pkl", "wb") as f:
+        # Lưu lại model
+        with open("./app/models/recommend_restaurant/model.pkl", "wb") as f:
             pickle.dump(model, f)
 
     except Exception as e:

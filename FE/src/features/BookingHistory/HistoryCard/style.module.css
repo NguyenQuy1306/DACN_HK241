@@ -79,12 +79,54 @@
     font-weight: 700;
 }
 
+.remain-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FF0000;
+}
+
+.card-action > div {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-action > div::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 100%;
+    right: -16px;
+    background-color: #ccc;
+    position: absolute;
+}
+
+.card-action > div:last-child::after {
+    display: none;
+}
+
+
+
+
+
 .card-actions {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-around;
     padding: 20px 0;
+    
+}
+
+.card-action {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
 }
 
 .card-delete, .card-modify, .card-direction, .card-booking {
@@ -93,8 +135,12 @@
 
 }
 
-.card-modify {
-
+.action-content:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.action-content--delete:hover {
+    cursor: pointer;
 }
 
 .card-direction {

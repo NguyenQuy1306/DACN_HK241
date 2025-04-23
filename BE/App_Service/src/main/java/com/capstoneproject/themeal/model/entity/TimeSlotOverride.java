@@ -3,10 +3,16 @@ package com.capstoneproject.themeal.model.entity;
 import java.time.LocalTime;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 @Table(name = "time_slot_overrides")
 public class TimeSlotOverride {
     @Id

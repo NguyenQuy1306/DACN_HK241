@@ -10,7 +10,7 @@ services:
       # - db
       #      - elasticsearch
       - kafka
-      - mongodb
+    #      - mongodb
     develop:
       watch:
         - action: rebuild
@@ -22,9 +22,10 @@ services:
       - ./target:/app/target
       - ./logs:/app/logs
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/curcus
+      - TZ=Asia/Ho_Chi_Minh
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/themealv3
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=Ngocquynguyen1
+      - SPRING_DATASOURCE_PASSWORD=Nhut3030
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
@@ -80,6 +81,7 @@ services:
       - zookeeper-logs:/datalog
   kafka:
     image: wurstmeister/kafka
+    platform: linux/amd64
     container_name: kafka
     ports:
       - "9092:9092"
@@ -149,15 +151,12 @@ services:
     networks:
       - app_network
 
-
 volumes:
   #  elasticsearch-data:
   postgres-data:
   kafka-data:
   zookeeper-data:
-  zookeeper-logs:
-  mongo-data:
+  zookeeper-logs: #  mongo-data:
 networks:
   app_network:
     driver: bridge
-
