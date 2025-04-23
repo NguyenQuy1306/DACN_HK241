@@ -67,6 +67,7 @@ export const tableSlice = createSlice({
     choosedTable: null,
     deleteTableResposne: null,
     openModalPayment: false,
+    updateCountOfTableResponse: null,
     tableCreateResponse: null,
     error: "",
     loading: false,
@@ -134,6 +135,19 @@ export const tableSlice = createSlice({
         state.deleteTableResposne = action.meta.requestStatus;
       })
       .addCase(deleteTableForRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(updateCountOfTable.pending, (state) => {
+        state.loading = true;
+        state.updateCountOfTableResponse = null;
+      })
+      .addCase(updateCountOfTable.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updateCountOfTableResponse = action.meta.requestStatus;
+      })
+      .addCase(updateCountOfTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

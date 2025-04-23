@@ -24,11 +24,11 @@ public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
               SELECT COUNT(o)
               FROM OrderTable o
               WHERE o.KhachHang.MaSoNguoiDung = :customerId
-                AND o.TrangThai = :status
+                AND o.isArrival = :isArrival
             """)
     Long countByCustomerAndStatus(
             @Param("customerId") Long customerId,
-            @Param("status") OrderTableStatus status
+            @Param("isArrival") Boolean isArrival
     );
 
     @Query("""
@@ -41,6 +41,17 @@ public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
             @Param("currentDate") LocalDate currentDate,
             @Param("now") LocalTime now,
             @Param("oneHourLater") LocalTime oneHourLater
+    );
+
+    @Query("""
+              SELECT COUNT(o)
+              FROM OrderTable o
+              WHERE o.TrangThai= :statusOrder
+                AND o.isArrival = :isArrival
+            """)
+    Long countByStatusOrderAndIsArrival(
+            @Param("statusOrder") OrderTableStatus statusOrder,
+            @Param("isArrival") Boolean isArrival
     );
 
 }

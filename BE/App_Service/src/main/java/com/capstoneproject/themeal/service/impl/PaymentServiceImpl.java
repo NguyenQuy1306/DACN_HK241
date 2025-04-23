@@ -197,7 +197,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-    @Transactional
+    @Override
     public void updateOrderStatusAfterPayment(Long orderId, boolean isSuccess, String paymentCode) {
         OrderTable order = orderTableRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found"));
@@ -220,9 +220,9 @@ public class PaymentServiceImpl implements PaymentService {
         OrderTable order = orderTableRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found"));
         Long paidCount = orderTableRepository.countByCustomerAndStatus(order.getKhachHang().getMaSoNguoiDung(),
-                OrderTableStatus.COMPLETED);
+                true);
         Long cancelCount = orderTableRepository.countByCustomerAndStatus(
-                order.getKhachHang().getMaSoNguoiDung(), OrderTableStatus.CANCELLED_REFUNDED);
+                order.getKhachHang().getMaSoNguoiDung(), false);
         Long totalCount = paidCount + cancelCount;
         double avgUserCancelRate = cancelCount == 1 ? 0 : (paidCount / (double) cancelCount);
         double roundedRate = Math.round(avgUserCancelRate * 100.0) / 100.0;
@@ -250,8 +250,9 @@ public class PaymentServiceImpl implements PaymentService {
         String status = callbackRequest.getStatus();
         String paymentCode = callbackRequest.getPaymentCode();
         Double distanceKm = callbackRequest.getDistanceKm();
-
+        System.out.println("status: " + status);
         boolean isPaid = "PAID".equalsIgnoreCase(status);
+        System.out.println("isPaid: " + isPaid);
 
         // Update order status
         updateOrderStatusAfterPayment(orderCode, isPaid, paymentCode);

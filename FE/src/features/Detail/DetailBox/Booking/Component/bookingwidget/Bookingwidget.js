@@ -138,7 +138,7 @@ const Bookingwidget = ({ selectedPlace }) => {
 
       const times = tableAvailable
         .filter((item) => {
-          return item.ngay === formattedDate;
+          return item.ngay === formattedDate && item.soluong > 0;
         })
         .map((item) => item.gio);
 
@@ -159,7 +159,11 @@ const Bookingwidget = ({ selectedPlace }) => {
         .join("-");
       const persons = tableAvailable
         .filter((item) => {
-          return item.ngay === formattedDate && item.gio.slice(0, -3) === time;
+          return (
+            item.ngay === formattedDate &&
+            item.gio.slice(0, -3) === time &&
+            item.soluong > 0
+          );
         })
         .map((item) => item.ban)
         .flat();

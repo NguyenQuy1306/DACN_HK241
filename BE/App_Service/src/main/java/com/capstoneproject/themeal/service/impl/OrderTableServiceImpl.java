@@ -30,6 +30,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OrderTableServiceImpl implements OrderTableService {
+    private final static double DEFAULT_ALPHA = 0.3;
     @Autowired
     private OrderTableRepository orderTableRepository;
     @Autowired
@@ -312,7 +313,8 @@ public class OrderTableServiceImpl implements OrderTableService {
             emailService.sendRefundEmail(orderTable);
 
         } else {
-            orderTable.setTrangThai(OrderTableStatus.COMPLETED);
+            orderTable.setTrangThai(OrderTableStatus.COMFIRMED_GOING_TO);
+            reducePercentNoShow(orderTable);
         }
         orderTable.setEmailConfirmByUser(true);
         orderTableRepository.save(orderTable);
@@ -330,6 +332,17 @@ public class OrderTableServiceImpl implements OrderTableService {
         orderTable.setTotalRefund(totalRefund);
         orderTableRepository.save(orderTable);
     }
+
+
+    public void reducePercentNoShow(OrderTable orderTable) {
+        Long arrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, true);
+        Long notArrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, false);
+        double total = arrival + notArrival;
+        double alpha = total == 0 ? 0.0 : (double) arrival / total;
+        alpha = Math.max(alpha, DEFAULT_ALPHA);
+        orderTable.setPercentNoShow(alpha * orderTable.getPercentNoShow());
+    }
+
     // public int getTotalBookings(Long customerID) {
     //
     // }

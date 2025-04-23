@@ -121,7 +121,7 @@ public class OrderTableController {
                     .location(URI.create("http://localhost:3000/confirmed-order"))
                     .build();
         }
-        orderTableService.markAsConfirmed(bookingId, OrderTableStatus.COMPLETED.toString());
+        orderTableService.markAsConfirmed(bookingId, OrderTableStatus.COMFIRMED_GOING_TO.toString());
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("http://localhost:3000/thank-you"))
