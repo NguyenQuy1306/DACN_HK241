@@ -6,10 +6,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setComboType } from "../../../../../../../redux/features/comboSlice";
 
-import axios from "axios";
 import { usePayOS } from "@payos/payos-checkout";
 
 import "./CardMenuAvailable.css";
+import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
 const { formatCurrency } = require("../../../../../../../helper/helper");
 
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
