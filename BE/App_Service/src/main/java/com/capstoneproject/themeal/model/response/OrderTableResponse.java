@@ -11,6 +11,7 @@ import com.capstoneproject.themeal.model.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
 @Data
 @Getter
 @Setter
@@ -77,7 +78,6 @@ public class OrderTableResponse {
     public void setTenPhuongThucThanhToan(String tenPhuongThucThanhToan) {
         TenPhuongThucThanhToan = tenPhuongThucThanhToan;
     }
-
 
 
     private String AnhNhaHang;

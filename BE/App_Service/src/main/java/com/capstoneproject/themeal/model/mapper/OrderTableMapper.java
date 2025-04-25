@@ -59,6 +59,7 @@ public interface OrderTableMapper {
     @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
     @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
     @Mapping(source = "orderAt", target = "thoiGianTao")
+    @Mapping(source = "tongTienThanhToan", target = "tongTienThanhToan")
     @Mapping(source = "percentNoShow", target = "tyLeHuy")
     FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context FoodRepository foodRepository);
 

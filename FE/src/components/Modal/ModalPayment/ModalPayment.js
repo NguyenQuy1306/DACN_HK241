@@ -198,7 +198,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
         createOrder({
           request: orderPayload,
           totalAmount: totalAmount,
-          deposit: deposit,
+          deposit: paymentAmount,
         })
       ).unwrap();
 

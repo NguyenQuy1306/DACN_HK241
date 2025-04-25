@@ -292,7 +292,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         int refund = 0;
         if (hourLeft >= deposit.getKhoangThoiGianHoanCocToanBo()) {
             refund = (int) Math.round(paymentAmount);
-        } else if (hourLeft < deposit.getKhoangThoiGianHoanCocToanBo()) {
+        } else if (hourLeft < deposit.getKhoangThoiGianHoanCocToanBo() || hourLeft > deposit.getKhoangThoiGianHoanCocToanBo()) {
             refund = (int) Math.round(paymentAmount * 0.5);
         } else {
             // Không hoàn tiền
