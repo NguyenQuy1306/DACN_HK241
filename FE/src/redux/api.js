@@ -532,6 +532,16 @@ export const updateCountOfTable = async (params) => {
   }
 };
 
+export const updateOrderStatus = async (params) => {
+  try {
+    const response = await API.put(
+      `/api/orders/updateOrderStatus?orderId=${params.orderId}&newStatus=${params.newStatus}&restaurantId=${params.restaurantId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
 export const createFood = async ({
   restaurantId,
   categoryId,

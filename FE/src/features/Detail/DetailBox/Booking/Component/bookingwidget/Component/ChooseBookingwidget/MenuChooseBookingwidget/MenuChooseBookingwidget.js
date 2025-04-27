@@ -9,7 +9,6 @@ import {
   selectUser,
   setStatusModalAuthentication,
 } from "../../../../../../../../../redux/features/authenticationSlice";
-import { createOrder } from "../../../../../../../../../redux/features/orderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setOpenBookingWithMenu } from "../../../../../../../../../redux/features/restaurantSlice";
@@ -89,7 +88,7 @@ const MenuChooseBookingwidget = ({
       //   autoClose: 3000,
       //   hideProgressBar: false,
       // });
-      
+
       dispatch(
         setOpenBookingWithMenu({
           openBookingWithMenu: false,

@@ -55,4 +55,6 @@ public interface OrderTableService {
 
     public ObjectNode refundByOwner(Long orderId);
 
+    public void updateOrderStatus(Long restaurantId, Long orderId, String newStatus);
+
 }

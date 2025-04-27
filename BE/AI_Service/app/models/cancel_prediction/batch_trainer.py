@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from app.config.config import MODEL_PATH, MONGODB_URI
 from app.models.cancel_prediction.train_model import train_and_save_model as actual_model_trainer
 import logging
+
 client = MongoClient(MONGODB_URI)
 db = client["themeal"]
 collection = db["order_prediction_log"]
@@ -15,13 +16,18 @@ def get_latest_bookings(limit=10):
     """
     logging.info("Getting data...")
     query = {
-        "$or": [
-            {"used_training": {"$exists": False}},  
-            {"used_training": {"$ne": True}}       
-        ]
+        "used_training": False,
     }
-    logging.info("(Getting data23...")
-    cursor = collection.find(query).sort("booking_time", -1).limit(limit)
+
+    logging.info("(Getting data...)")
+
+    # Log số lượng document matching query
+    matching_count = collection.count_documents(query)
+    logging.info(f"Number of documents matching query: {matching_count}")
+
+    # Thực hiện query
+    cursor = collection.find(query).sort("booking_time", 1).limit(limit)
+
     logging.info("(Getting data45...")
     df = pd.DataFrame(list(cursor))
     logging.info("(Getting data67...")
@@ -31,7 +37,6 @@ def get_latest_bookings(limit=10):
     return df
 
 
-
 def train_and_save_model(df):
     """
     Gọi hàm huấn luyện mô hình và ghi lại dữ liệu đã sử dụng.
@@ -39,8 +44,11 @@ def train_and_save_model(df):
     # 🧠 Gọi huấn luyện mô hình (ví dụ dùng sklearn bên trong)
     actual_model_trainer(df)
 
+
     # 📦 Đánh dấu các bản ghi đã dùng để train
     used_for_training = df.to_dict(orient="records")
+    logging.info(f"Number of documents to update: {len(used_for_training)}")  # 👉 log size ở đây
+
     for doc in used_for_training:
         doc["used_training"] = True
         collection.update_one(
@@ -49,6 +57,7 @@ def train_and_save_model(df):
             upsert=False
         )
     logging.info("train succesfullyyyyyyyyy")
+
 
 def retrain_if_enough_data(batch_size=10):
     """

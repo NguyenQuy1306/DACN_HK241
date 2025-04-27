@@ -41,6 +41,19 @@ export const getAllOrderByRestaurantId = createAsyncThunk(
   }
 );
 
+export const updateOrderStatus = createAsyncThunk(
+  "/order/updateOrderStatus",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.updateOrderStatus(params);
+      console.log("DATA ORDER LIST FROM SERVER: ", response);
+      return response.payload;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const orderSlice = createSlice({
   name: "order",
   initialState: {

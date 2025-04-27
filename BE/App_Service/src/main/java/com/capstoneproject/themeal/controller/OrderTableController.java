@@ -61,6 +61,15 @@ public class OrderTableController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/updateOrderStatus")
+    ResponseEntity<ApiResponse<?>> updateOrderStatus(
+            @RequestParam Long restaurantId, @RequestParam String newStatus, @RequestParam Long orderId) {
+        ApiResponse apiResponse = new ApiResponse<>();
+        orderTableService.updateOrderStatus(restaurantId, orderId, newStatus);
+        apiResponse.ok("Update order status by owner successful");
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     List<OrderTableResponse> getAllOrders() {
         return orderTableService.getAllOrders();

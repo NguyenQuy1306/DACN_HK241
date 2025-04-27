@@ -268,10 +268,10 @@ function Dashboard_Owner() {
       curItem.id = i.maSo.maSoMonAn;
     });
   });
-
+  console.log("foodImage", foodImage);
   useEffect(() => {
     topTrending.forEach((i) => {
-      i.url = foodImage.find((item) => item.foodId === i.id).imageUrl;
+      i.url = foodImage.find((item) => item.foodId === i.id).imageUrl || "";
     });
   }, [foodImage]);
 

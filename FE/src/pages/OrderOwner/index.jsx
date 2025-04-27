@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Input, Space, Table, Tag } from "antd";
+import { Breadcrumb, Button, Input, Space, Table, Tag, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import MenuInOrder from "./MenuInOrder";
 import styles from "./style.module.css";
@@ -6,7 +6,10 @@ import "./OrderOwner.css";
 import Highlighter from "react-highlight-words";
 import { QqSquareFilled, SearchOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
+import {
+  getAllOrderByRestaurantId,
+  updateOrderStatus,
+} from "./../../redux/features/orderSlice";
 import { format } from "date-fns";
 import dayjs from "dayjs";
 
@@ -22,11 +25,6 @@ function OrderOwner() {
     console.log("onSearch");
   };
   const { overbookingSettings } = useSelector((state) => state.overbooking);
-  // console.log("overbookingSettings", overbookingSettings);
-  // console.log(
-  //   "overbookingSettings.thresholds[2].min/100",
-  //   overbookingSettings.thresholds[0].min / 100
-  // );
   const restaurantOwner = useSelector(
     (state) => state.authentication.restaurantOwner
   );
@@ -114,6 +112,29 @@ function OrderOwner() {
     return date.toLocaleDateString("vi-VN"); // Kết quả: "25/03/2025"
   };
 
+  const handleUpdateStatus = (orderId, status) => {
+    // Assuming you have an action to update order status in your Redux store
+    dispatch(
+      updateOrderStatus({
+        orderId: orderId,
+        newStatus: status,
+        restaurantId: restaurantOwner.maSoNhaHang,
+      })
+    )
+      .then(() => {
+        message.success("Cập nhật trạng thái thành công");
+        // Refresh order list
+        dispatch(
+          getAllOrderByRestaurantId({
+            restaurantId: restaurantOwner.maSoNhaHang,
+          })
+        );
+      })
+      .catch((error) => {
+        message.error("Lỗi khi cập nhật trạng thái: " + error.message);
+      });
+  };
+
   const columns = [
     {
       title: "STT",
@@ -154,6 +175,8 @@ function OrderOwner() {
           color = "blue";
         } else if (status === "Đã hủy") {
           color = "red";
+        } else if (status === "PAID_PENDING_USE") {
+          color = "orange";
         }
         return (
           <Tag color={color} key={status}>
@@ -181,7 +204,6 @@ function OrderOwner() {
     },
     {
       title: "Còn lại",
-      // dataIndex: "remain",
       key: "remain",
       render: (row) => {
         return (
@@ -220,7 +242,7 @@ function OrderOwner() {
             cancelRate >=
             overbookingSettings.thresholds[1].min / 100
           ) {
-            label = "Tự huỷ sau 20’";
+            label = "Tự huỷ sau 20'";
             color = "orange";
             icon = "🟠";
           } else {
@@ -238,12 +260,6 @@ function OrderOwner() {
         ) : (
           <span style={{ color: "#999", fontStyle: "italic" }}>
             Bạn chưa bật cấu hình hoặc cấu hình chưa đủ Overbooking.{" "}
-            {/* <a
-              href="/owner/overbooking"
-              style={{ color: "#1677ff", textDecoration: "underline" }}
-            >
-              Nhấn vào đây để cấu hình
-            </a> */}
           </span>
         );
       },
@@ -253,6 +269,42 @@ function OrderOwner() {
       title: "Thời gian tạo",
       dataIndex: "time",
       key: "time",
+    },
+    {
+      title: "Thao tác",
+      key: "action",
+      render: (_, record) => {
+        return record.status === "PAID_PENDING_USE" ? (
+          <>
+            <Button
+              type="primary"
+              onClick={() => handleUpdateStatus(record.id, "COMPLETED")}
+              style={{
+                backgroundColor: "#52c41a",
+                border: "none",
+                color: "#fff",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                marginRight: "10px",
+              }}
+            >
+              Hoàn thành
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => handleUpdateStatus(record.id, "CANCELLED")}
+              style={{
+                marginTop: "5px",
+                backgroundColor: "#f5222d",
+                border: "none",
+                color: "#fff",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              Không hoàn thành
+            </Button>
+          </>
+        ) : null;
+      },
     },
   ];
 
@@ -309,7 +361,6 @@ function OrderOwner() {
 
   return (
     <div className={styles.container}>
-      {/* <SidebarOwner collapsed={collapsed} /> */}
       <div className={styles.body}>
         <Search
           placeholder="Nhập thông tin tìm kiếm"

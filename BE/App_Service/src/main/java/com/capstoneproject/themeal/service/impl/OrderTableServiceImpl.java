@@ -91,13 +91,13 @@ public class OrderTableServiceImpl implements OrderTableService {
     public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
         List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
         return orderTables.stream().map(
-                        orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
+                orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
                 .collect(Collectors.toList());
     }
 
     @Override
     public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-                                     String statusOrder, Long totalAmount, Long deposit) {
+            String statusOrder, Long totalAmount, Long deposit) {
         TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
         TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                 .orElseThrow(() -> new NotFoundException("Table not found"));
@@ -162,7 +162,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
         if (request.getComboId() != null
                 && !comboAvailableService.isComboExists(request.getComboId(),
-                request.getRestaurantId())) {
+                        request.getRestaurantId())) {
             throw new ValidationException("Combo does not exist");
         }
         if (!request.getFoodOrderRequests().isEmpty()) {
@@ -174,8 +174,23 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Transactional
+    public void updateOrderStatus(Long restaurantId, Long orderId, String newStatus) {
+        OrderTable orderTable = orderTableRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order not found"));
+        if (newStatus.equals("COMPLETED")) {
+            orderTable.setTrangThai(OrderTableStatus.COMPLETED);
+            orderTable.setIsArrival(true);
+        } else {
+            orderTable.setTrangThai(OrderTableStatus.CANCELLED_REFUNDED);
+            orderTable.setIsArrival(false);
+        }
+        updateIsArrivalCustomer(orderTable.getKhachHang().getMaSoNguoiDung(), orderTable.getIsArrival(), orderId);
+        orderTableRepository.save(orderTable);
+    }
+
+    @Transactional
     public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
-                                          Long deposit) {
+            Long deposit) {
         Long customerID = request.getCustomerID();
         Short tableId = request.getTableId();
         Long comboId = request.getComboId();
@@ -224,7 +239,6 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     }
 
-
     @Override
     public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId) {
         User user = userRepository.findById(userId)
@@ -256,7 +270,7 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Override
     public PaymentResponse createPayment(Long paymentAmount,
-                                         String maSoThanhToan, Long maSoDatBan) {
+            String maSoThanhToan, Long maSoDatBan) {
         OrderTable orderTable = orderTableRepository.findById(maSoDatBan)
                 .orElseThrow(() -> new NotFoundException("Order table not found"));
         Payment payment = Payment.builder()
@@ -277,14 +291,16 @@ public class OrderTableServiceImpl implements OrderTableService {
         OrderTable orderTable = orderTableRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order table not found"));
         Payment payment = paymentRepository.findByOrderTable(orderId);
-        if (payment == null) throw new NotFoundException("Payment not found");
+        if (payment == null)
+            throw new NotFoundException("Payment not found");
         if (payment.getPaymentStatus() != PaymentStatus.PAID)
             throw new IllegalArgumentException("Payment status is not PAID");
 
         long paymentAmount = payment.getSoTienThanhToan();
 
         Deposit deposit = depositRepository.findDepositByRestaurantId(orderTable.getNhaHang().getMaSoNhaHang());
-        if (deposit == null) throw new IllegalArgumentException("Policy is not available");
+        if (deposit == null)
+            throw new IllegalArgumentException("Policy is not available");
 
         LocalDateTime dateTime = orderTable.getNgay().atTime(orderTable.getGio());
         Byte hourLeft = (byte) Duration.between(LocalDateTime.now(), dateTime).toHours();
@@ -292,7 +308,8 @@ public class OrderTableServiceImpl implements OrderTableService {
         int refund = 0;
         if (hourLeft >= deposit.getKhoangThoiGianHoanCocToanBo()) {
             refund = (int) Math.round(paymentAmount);
-        } else if (hourLeft < deposit.getKhoangThoiGianHoanCocToanBo() || hourLeft > deposit.getKhoangThoiGianHoanCocToanBo()) {
+        } else if (hourLeft < deposit.getKhoangThoiGianHoanCocToanBo()
+                || hourLeft > deposit.getKhoangThoiGianHoanCocToanBo()) {
             refund = (int) Math.round(paymentAmount * 0.5);
         } else {
             // Không hoàn tiền
@@ -321,22 +338,24 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     public Boolean isConfirmed(Long bookingId) {
-        OrderTable orderTable = orderTableRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Order table not found"));
+        OrderTable orderTable = orderTableRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Order table not found"));
         return orderTable.getEmailConfirmByUser();
     }
 
     @Transactional
     public void updateStatusRefund(Boolean status, Long totalRefund, Long orderId) {
-        OrderTable orderTable = orderTableRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order table not found"));
+        OrderTable orderTable = orderTableRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order table not found"));
         orderTable.setStatusDepositRefund(status);
         orderTable.setTotalRefund(totalRefund);
         orderTableRepository.save(orderTable);
     }
 
-
     public void reducePercentNoShow(OrderTable orderTable) {
         Long arrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, true);
-        Long notArrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, false);
+        Long notArrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO,
+                false);
         double total = arrival + notArrival;
         double alpha = total == 0 ? 0.0 : (double) arrival / total;
         alpha = Math.max(alpha, DEFAULT_ALPHA);

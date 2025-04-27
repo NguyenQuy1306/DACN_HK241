@@ -3,15 +3,22 @@ from app.config.config import BROKER_URL
 import json
 import time
 import logging
-def get_producer():
-    return KafkaProducer(
-        bootstrap_servers=BROKER_URL,
-        value_serializer=lambda v: json.dumps(v).encode("utf-8")
-    )
 
-def get_consumer(topic):
-    while True:
-        try: 
+def get_producer(retries=5, delay=5):
+    for attempt in range(retries):
+        try:
+            return KafkaProducer(
+                bootstrap_servers=BROKER_URL,
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+            )
+        except Exception as e:
+            logging.warning(f"[KafkaProducer] Attempt {attempt+1}/{retries} failed. Retrying in {delay} seconds... Error: {e}")
+            time.sleep(delay)
+    raise Exception("[KafkaProducer] All retry attempts failed. Could not connect to Kafka.")
+
+def get_consumer(topic, retries=5, delay=5):
+    for attempt in range(retries):
+        try:
             return KafkaConsumer(
                 topic,
                 bootstrap_servers=BROKER_URL,
@@ -20,5 +27,6 @@ def get_consumer(topic):
                 auto_offset_reset='latest',
             )
         except Exception as e:
-            logging.info(f"[Kafka] Not ready yet, retrying in 5 seconds... Error: {e}")
-            time.sleep(5)
+            logging.warning(f"[KafkaConsumer] Attempt {attempt+1}/{retries} failed. Retrying in {delay} seconds... Error: {e}")
+            time.sleep(delay)
+    raise Exception("[KafkaConsumer] All retry attempts failed. Could not connect to Kafka.")
