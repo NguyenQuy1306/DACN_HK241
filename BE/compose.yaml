@@ -148,6 +148,8 @@ services:
       - MONGODB_URI=mongodb://nguyenquy:Ngocquynguyen1@mongodb:27017/themeal?authSource=admin
     ports:
       - "5000:5000"
+    volumes:
+      - ai-models-data:/app/app/models/cancel_prediction
     networks:
       - app_network
 
@@ -158,6 +160,7 @@ volumes:
   zookeeper-data:
   zookeeper-logs:
   mongo-data:
+  ai-models-data:
 networks:
   app_network:
     driver: bridge

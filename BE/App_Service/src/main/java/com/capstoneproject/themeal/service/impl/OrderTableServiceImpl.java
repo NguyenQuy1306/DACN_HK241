@@ -1,19 +1,14 @@
 package com.capstoneproject.themeal.service.impl;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.capstoneproject.themeal.model.entity.*;
-import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.*;
-import com.cloudinary.api.exceptions.BadRequest;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +66,8 @@ public class OrderTableServiceImpl implements OrderTableService {
     private DepositRepository depositRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private OrderTrainingEventRepository orderTrainingEventRepository;
 
     @Override
     public List<OrderTableResponse> getOrderTableByCustomerId(Long customerId) {
@@ -91,13 +88,13 @@ public class OrderTableServiceImpl implements OrderTableService {
     public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
         List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
         return orderTables.stream().map(
-                orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
+                        orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
                 .collect(Collectors.toList());
     }
 
     @Override
     public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-            String statusOrder, Long totalAmount, Long deposit) {
+                                     String statusOrder, Long totalAmount, Long deposit) {
         TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
         TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                 .orElseThrow(() -> new NotFoundException("Table not found"));
@@ -162,7 +159,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
         if (request.getComboId() != null
                 && !comboAvailableService.isComboExists(request.getComboId(),
-                        request.getRestaurantId())) {
+                request.getRestaurantId())) {
             throw new ValidationException("Combo does not exist");
         }
         if (!request.getFoodOrderRequests().isEmpty()) {
@@ -190,7 +187,7 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Transactional
     public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
-            Long deposit) {
+                                          Long deposit) {
         Long customerID = request.getCustomerID();
         Short tableId = request.getTableId();
         Long comboId = request.getComboId();
@@ -261,16 +258,20 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .reservationTime(order.getGio().toString())
                 .reservationDate(order.getNgay().toString())
                 .userDistanceKm(orderPredict.getUserDistanceKm())
+                .usedTraining(false)
                 .numGuests(order.getSoKhach())
                 .isFirstBooking(orderPredict.getIsFirstBooking())
                 .isArrival(isArrival)
                 .build();
-        orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
+        System.out.println(" check orderTrainingEvent");
+        orderTrainingEventRepository.save(orderTrainingEvent);
+        System.out.println(" check after save orderTrainingEvent");
+//        orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
     }
 
     @Override
     public PaymentResponse createPayment(Long paymentAmount,
-            String maSoThanhToan, Long maSoDatBan) {
+                                         String maSoThanhToan, Long maSoDatBan) {
         OrderTable orderTable = orderTableRepository.findById(maSoDatBan)
                 .orElseThrow(() -> new NotFoundException("Order table not found"));
         Payment payment = Payment.builder()

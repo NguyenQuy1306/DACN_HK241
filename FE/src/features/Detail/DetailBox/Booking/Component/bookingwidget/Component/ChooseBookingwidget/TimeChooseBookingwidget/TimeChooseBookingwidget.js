@@ -16,10 +16,16 @@ const TimeChooseBookingwidget = ({
   // const [haveLunch, setHaveLunch] = useState(true);
   const [lunchTime, setLunchTime] = useState([]);
   const [dinnerTime, setDinnerTime] = useState([]);
+  const [morningTime, setMorningTimes] = useState([]);
   const [personCount, setPersonCount] = useState([]);
 
   useEffect(() => {
     if (type === "Time") {
+      const morningTimes = timeTableAvailable.filter((item) => {
+        const [hours, minutes] = item.split(":").map(Number);
+        const timeInMinutes = hours * 60 + minutes;
+        return timeInMinutes >= 0 * 60 && timeInMinutes < 11 * 60;
+      });
       const lunchTimes = timeTableAvailable.filter((item) => {
         const [hours, minutes] = item.split(":").map(Number);
         const timeInMinutes = hours * 60 + minutes;
@@ -34,6 +40,7 @@ const TimeChooseBookingwidget = ({
 
       setLunchTime(lunchTimes);
       setDinnerTime(dinnerTimes);
+      setMorningTimes(morningTimes);
     } else {
       setPersonCount(timeTableAvailable);
     }
@@ -69,6 +76,13 @@ const TimeChooseBookingwidget = ({
                 <span>Chọn {text}</span>
               </h3>
             </div>
+            {morningTime && type === "Time" && (
+              <PickTimeChooseBookingwidget
+                text={"Morning"}
+                listTime={morningTime}
+                setTime={setTime}
+              ></PickTimeChooseBookingwidget>
+            )}
             {lunchTime && type === "Time" && (
               <PickTimeChooseBookingwidget
                 text={"Lunch"}

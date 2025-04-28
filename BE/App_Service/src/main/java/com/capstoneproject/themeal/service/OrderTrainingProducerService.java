@@ -1,6 +1,6 @@
 package com.capstoneproject.themeal.service;
 
-import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
+import com.capstoneproject.themeal.model.entity.OrderTrainingEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,10 @@ public class OrderTrainingProducerService {
     private String bookingRequestTopic;
 
     public void sendBookingRequestEvent(OrderTrainingEvent event) {
+        System.out.println("sendBookingRequestEvent");
         kafkaTemplate.send(bookingRequestTopic, event.getOrderId().toString(), event);
+        System.out.println("after clal sendBookingRequestEvent");
+
     }
 
 }

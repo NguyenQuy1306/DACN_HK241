@@ -1,8 +1,8 @@
 package com.capstoneproject.themeal.config;
 
 import com.capstoneproject.themeal.model.entity.OrderPredict;
+import com.capstoneproject.themeal.model.entity.OrderTrainingEvent;
 import com.capstoneproject.themeal.model.request.BehaviorRequest;
-import com.capstoneproject.themeal.model.request.OrderTrainingEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
