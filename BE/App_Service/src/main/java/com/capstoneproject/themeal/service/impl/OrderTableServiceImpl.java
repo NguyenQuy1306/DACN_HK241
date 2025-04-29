@@ -113,7 +113,7 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .KhachHang(user)
                 .NhaHang(restaurant)
                 .isArrival(false)
-                .TotalRefund(0L)
+                .totalRefund(0L)
                 .build();
         orderTableRepository.save(orderTable);
         return orderTable;

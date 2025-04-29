@@ -8,6 +8,8 @@ import VNPayButton from "../../../components/VNPayButton";
 import styles from "./style.module.css";
 import formatCurrencyVND from "./../../../helper/formatCurrency";
 import CountdownTimer from "../../../helper/countDownTime";
+import formatDate from "../../../helper/formatDate";
+import { cancelOrder } from "../../../redux/api";
 
 const handleOpenGoogleMap = (latitude, longitude) => {
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
@@ -18,6 +20,7 @@ function HistoryCard({
     status,
     imgUrl,
     name,
+    id,
     address,
     time,
     date,
@@ -29,6 +32,11 @@ function HistoryCard({
     longitude,
     bookingTime,
 }) {
+    const hanldeCancelOrder = async () => {
+        const result = await cancelOrder({ orderId: id });
+        console.log(result.data);
+    };
+
     return (
         <div className={styles.container}>
             <div
@@ -43,18 +51,27 @@ function HistoryCard({
                 {status}
             </div>
             <div className={styles["card-body"]}>
-                <img
-                    className={styles["card-img"]}
-                    alt="History booking"
-                    src={imgUrl}
-                ></img>
+                <div style={{ textAlign: "center" }}>
+                    <img
+                        className={styles["card-img"]}
+                        alt="History booking"
+                        src={imgUrl}
+                    ></img>
+                    <p className={styles["order-time"]}>
+                        Đặt bàn lúc:{" "}
+                        {`${formatDate(bookingTime.split(".")[0].split("T")[0])} ${
+                            bookingTime.split(".")[0].split("T")[1]
+                        }`}
+                    </p>
+                </div>
+
                 <div className={styles["card-content"]}>
                     <h2 className={styles["restaurant-name"]}>{name}</h2>
                     <p className={styles["restaurant-address"]}>{address}</p>
                     <div className={styles["time-frame"]}>
                         <div className={styles["time-frame__day"]}>
                             <p className={styles["time-frame__title"]}>NGÀY</p>
-                            <span className={styles["time-frame__detail"]}>{date}</span>
+                            <span className={styles["time-frame__detail"]}>{formatDate(date)}</span>
                         </div>
                         <div className={styles["time-frame__hour"]}>
                             <p className={styles["time-frame__title"]}>THỜI GIAN</p>
@@ -64,31 +81,34 @@ function HistoryCard({
                             <p className={styles["time-frame__title"]}>SỐ KHÁCH</p>
                             <span className={styles["time-frame__detail"]}>{numOfCustomers}</span>
                         </div>
-
-                        <div style={{ textAlign: "center" }}>
-                            <p className={styles["time-frame__title"]}>Còn lại</p>
-
-                            <CountdownTimer
-                                bookingTime={bookingTime}
-                                targetDate={`${date}T${time}`}
-                            />
-                        </div>
                     </div>
                     <Divider style={{ margin: "12px 0" }} />
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <p className={styles["price-title"]}>Tổng hóa đơn:</p>
-                        <span className={styles["total-price"]}>{formatCurrencyVND(totalPay)}</span>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <p className={styles["deposit-title"]}>Đã cọc:</p>
-                        <span className={styles["deposit-price"]}>{formatCurrencyVND(deposit)}</span>
-                    </div>
+                    <div className={styles["payment-wrapper"]}>
+                        <div className={styles["payment-info"]}>
+                            <div style={{ display: "flex", justifyContent: "space-between", minWidth: "200px" }}>
+                                <p className={styles["price-title"]}>Tổng hóa đơn:</p>
+                                <span className={styles["total-price"]}>{formatCurrencyVND(totalPay)}</span>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "space-between", minWidth: "200px" }}>
+                                <p className={styles["deposit-title"]}>Đã cọc:</p>
+                                <span className={styles["deposit-price"]}>{formatCurrencyVND(deposit)}</span>
+                            </div>
 
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h4 className={styles["deposit-title"]}>Chờ thanh toán:</h4>
-                        <span className={styles["remain-price"]}>{formatCurrencyVND(totalPay - deposit)}</span>
+                            <div style={{ display: "flex", justifyContent: "space-between", minWidth: "200px" }}>
+                                <h4 className={styles["deposit-title"]}>Chờ thanh toán:</h4>
+                                <span className={styles["remain-price"]}>{formatCurrencyVND(totalPay - deposit)}</span>
+                            </div>
+                        </div>
+                        <div style={{ textAlign: "center" }}>
+                            <p className={styles["time-frame__title"]}>Thời gian còn lại</p>
+                            <div style={{ marginLeft: "24px" }}>
+                                <CountdownTimer
+                                    bookingTime={bookingTime}
+                                    targetDate={`${date}T${time}`}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <p>Timestamp: {bookingTime.split(".")[0].split("T").join(" ")}</p>
 
                     {payment === "Thanh toán tại nhà hàng" && (
                         <div className={styles.prepayment}>
@@ -130,7 +150,10 @@ function HistoryCard({
                             <div className={styles["delete-icon"]}>
                                 <MdOutlineDelete size={26} />
                             </div>
-                            <p className={[styles["action-content"], styles["action-content--delete"]].join(" ")}>
+                            <p
+                                onClick={() => hanldeCancelOrder(id)}
+                                className={[styles["action-content"], styles["action-content--delete"]].join(" ")}
+                            >
                                 HỦY
                             </p>
                         </div>

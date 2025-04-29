@@ -38,12 +38,14 @@ function FavoriteList() {
         setOpen(false);
         document.body.style.overflow = "auto";
     };
-      const user=useSelector((state)=>state.authentication.user)
-    
+    const user = useSelector((state) => state.authentication.user);
+
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/favorite-restaurants/${listId.id}`,{ withCredentials: true});
+                const response = await axios.get(`http://localhost:8080/api/favorite-restaurants/${listId.id}`, {
+                    withCredentials: true,
+                });
                 if (response.status === 200) {
                     setRestaurants(response.data);
                 } else {
@@ -148,7 +150,7 @@ function FavoriteList() {
                     onClick={showDrawer}
                 >
                     <HeaderInfo
-                        userName={user? user.hoTen:""}
+                        userName={user ? user.hoTen : ""}
                         avatar={require("../../assets/images/avatar.png")}
                     />
                 </div>

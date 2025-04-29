@@ -119,6 +119,10 @@ public class User {
 
     @Transient
     public String getDiscriminatorValue() {
-        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+        DiscriminatorValue annotation = this.getClass().getAnnotation(DiscriminatorValue.class);
+        if (annotation != null) {
+            return annotation.value();
+        }
+        return null; // hoặc return mặc định "User" chẳng hạn
     }
 }

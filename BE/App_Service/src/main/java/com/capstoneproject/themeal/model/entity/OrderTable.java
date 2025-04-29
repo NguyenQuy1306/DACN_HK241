@@ -51,7 +51,7 @@ public class OrderTable {
     private Boolean StatusDepositRefund;
 
     @Column(nullable = false)
-    private Long TotalRefund;
+    private Long totalRefund;
 
     @Column
     private Long TongTienThanhToan;

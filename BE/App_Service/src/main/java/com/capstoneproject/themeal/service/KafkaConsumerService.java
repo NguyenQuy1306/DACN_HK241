@@ -39,6 +39,7 @@
 //            if (afterNode.isMissingNode() || afterNode.isNull()) {
 //                return;
 //            }
+//
 //            // Chuyển đổi dữ liệu từ JSON sang đối tượng RestaurantElasticsearch
 //            RestaurantElasticsearch restaurant = new RestaurantElasticsearch();
 //            restaurant.setMaSoNhaHang(afterNode.has("masonhahang") ? afterNode.get("masonhahang").asLong() : null);

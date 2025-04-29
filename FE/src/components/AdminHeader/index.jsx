@@ -50,7 +50,6 @@ function AdminHeader({ title }) {
                     size={24}
                 />
                 {/* <img
-
                     className={styles.avt}
                     alt="Owner's avatar"
                     src={avatar}

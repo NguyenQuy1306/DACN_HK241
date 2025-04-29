@@ -23,7 +23,7 @@ function BookingHistory({ customerId }) {
 
     const upcomingBookings = useMemo(() => historyList.filter((card) => card.trangThai === "COMPLETED"), [historyList]);
     const completedOrCancelled = useMemo(
-        () => historyList.filter((card) => card.trangThai === "Completed" || card.trangThai === "CANCELED"),
+        () => historyList.filter((card) => card.trangThai === "Completed" || card.trangThai === "CANCELLED_REFUNDED"),
         [historyList],
     );
 
@@ -61,7 +61,7 @@ function BookingHistory({ customerId }) {
                             : styles["status-item"]
                     }
                 >
-                    Hoàn thành hoặc hủy ({completedOrCancelled.length})
+                    Hoàn thành hoặc hủy ({historyList.length - upcomingBookings.length})
                 </li>
             </ul>
 
@@ -70,6 +70,7 @@ function BookingHistory({ customerId }) {
                 historyList.map((his, index) => (
                     <HistoryCard
                         key={index}
+                        id={his.maSoDatBan}
                         imgUrl={his.anhNhaHang}
                         name={his.tenNhaHang}
                         address={his.diaChiNhaHang}
