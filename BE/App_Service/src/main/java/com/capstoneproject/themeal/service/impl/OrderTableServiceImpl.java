@@ -1,11 +1,15 @@
 package com.capstoneproject.themeal.service.impl;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.capstoneproject.themeal.model.entity.*;
+import com.capstoneproject.themeal.model.request.OverbookingRateRequest;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.*;
@@ -266,7 +270,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         System.out.println(" check orderTrainingEvent");
         orderTrainingEventRepository.save(orderTrainingEvent);
         System.out.println(" check after save orderTrainingEvent");
-//        orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
+        // orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
     }
 
     @Override
@@ -361,6 +365,70 @@ public class OrderTableServiceImpl implements OrderTableService {
         double alpha = total == 0 ? 0.0 : (double) arrival / total;
         alpha = Math.max(alpha, DEFAULT_ALPHA);
         orderTable.setPercentNoShow(alpha * orderTable.getPercentNoShow());
+    }
+
+    @Override
+    public List<OverbookingRateRequest> getOverbookingRatesByDate(Long restaurantId, LocalDate date) {
+        List<OverbookingRateRequest> result = new ArrayList<>();
+
+        // Định nghĩa các khung giờ (ví dụ: 1 giờ một khung)
+        LocalTime[] timeSlots = {
+                LocalTime.of(8, 0), LocalTime.of(9, 0), LocalTime.of(10, 0),
+                LocalTime.of(11, 0), LocalTime.of(12, 0), LocalTime.of(13, 0),
+                LocalTime.of(14, 0), LocalTime.of(15, 0), LocalTime.of(16, 0),
+                LocalTime.of(17, 0), LocalTime.of(18, 0), LocalTime.of(19, 0),
+                LocalTime.of(20, 0), LocalTime.of(21, 0), LocalTime.of(22, 0)
+        };
+
+        for (int i = 0; i < timeSlots.length - 1; i++) {
+            LocalTime startTime = timeSlots[i];
+            LocalTime endTime = timeSlots[i + 1];
+
+            List<OverbookingRateRequest> dto = calculateWeeklyOverbookingRates(
+                    restaurantId, startTime, endTime);
+
+            result = dto;
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<OverbookingRateRequest> getOverbookingRateByTimeSlot(Long restaurantId,
+                                                                     LocalTime startTime, LocalTime endTime) {
+        return calculateWeeklyOverbookingRates(restaurantId, startTime, endTime);
+    }
+
+    private List<OverbookingRateRequest> calculateWeeklyOverbookingRates(Long restaurantId,
+                                                                         LocalTime startTime,
+                                                                         LocalTime endTime) {
+        List<OverbookingRateRequest> weeklyRates = new ArrayList<>();
+
+        for (int dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) {
+            Long totalBookings = orderTableRepository.countOrdersByWeekdayAndTimeSlot(
+                    restaurantId, dayOfWeek, startTime, endTime);
+
+            Long canceledOrNoShowBookings = orderTableRepository.countCanceledOrNoShowOrdersByWeekdayAndTimeSlot(
+                    restaurantId, dayOfWeek, startTime, endTime);
+
+            Double overbookingRate = 0.0;
+            if (totalBookings > 0) {
+                overbookingRate = (canceledOrNoShowBookings.doubleValue() / totalBookings.doubleValue()) * 100;
+            }
+
+            OverbookingRateRequest rateRequest = OverbookingRateRequest.builder()
+                    .startTime(startTime)
+                    .endTime(endTime)
+                    .totalBookings(totalBookings)
+                    .dayOfWeek(dayOfWeek) // 1 = Chủ nhật, 2 = Thứ hai, 3 = Thứ ba, v.v.
+                    .canceledOrNoShowBookings(canceledOrNoShowBookings)
+                    .overbookingRate(overbookingRate)
+                    .build();
+
+            weeklyRates.add(rateRequest);
+        }
+
+        return weeklyRates;
     }
 
     // public int getTotalBookings(Long customerID) {

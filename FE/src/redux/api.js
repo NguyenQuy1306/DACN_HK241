@@ -600,6 +600,20 @@ export const getOverbookingSettings = async (params) => {
   }
 };
 
+export const getOverBookingByTimeSlot = async (params) => {
+  try {
+    const response = await API.get(`/api/orders/rate/${params.restaurantId}`, {
+      params: {
+        startTime: params.startTime,
+        endTime: params.endTime,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
 export const saveSettings = async (params) => {
   try {
     const response = await API.post(`/api/overbooking/settings`, params);

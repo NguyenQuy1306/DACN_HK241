@@ -1,6 +1,7 @@
 package com.capstoneproject.themeal.controller;
 
 import com.capstoneproject.themeal.model.entity.*;
+import com.capstoneproject.themeal.model.request.*;
 import com.capstoneproject.themeal.model.response.*;
 import com.capstoneproject.themeal.service.*;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.expression.spel.ast.Assign;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +19,14 @@ import org.springframework.web.bind.annotation.*;
 import com.capstoneproject.themeal.exception.NotFoundException;
 import com.capstoneproject.themeal.exception.ValidationException;
 import com.capstoneproject.themeal.model.mapper.OrderTableMapper;
-import com.capstoneproject.themeal.model.request.ComboRequest;
-import com.capstoneproject.themeal.model.request.CreateOrderRequest;
-import com.capstoneproject.themeal.model.request.FoodOrderRequest;
-import com.capstoneproject.themeal.model.request.TableRequest;
 import com.capstoneproject.themeal.repository.PaymentMethodRepository;
 import com.capstoneproject.themeal.repository.RestaurantRepository;
 import com.capstoneproject.themeal.repository.UserRepository;
 import com.capstoneproject.themeal.service.impl.OrderTableServiceImpl;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,13 +149,11 @@ public class OrderTableController {
         }
         orderTableService.markAsConfirmed(
                 bookingId,
-                OrderTableStatus.CANCELLED_REFUNDED.toString()
-        );
+                OrderTableStatus.CANCELLED_REFUNDED.toString());
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("http://localhost:3000/thank-you"))
                 .build();
-
 
     }
 
@@ -184,7 +182,8 @@ public class OrderTableController {
     }
 
     @PutMapping(path = "/orderRefund")
-    public ResponseEntity<?> updateStatusRefund(@RequestParam Boolean status, @RequestParam Long totalRefund, @RequestParam Long orderId) {
+    public ResponseEntity<?> updateStatusRefund(@RequestParam Boolean status, @RequestParam Long totalRefund,
+                                                @RequestParam Long orderId) {
         try {
             ApiResponse<String> apiResponse = new ApiResponse<>();
             orderTableService.updateStatusRefund(status, totalRefund, orderId);
@@ -200,5 +199,21 @@ public class OrderTableController {
         }
     }
 
+    @GetMapping("/rate/{restaurantId}")
+    public ResponseEntity<List<OverbookingRateRequest>> getOverbookingRateByTimeSlot(
+            @PathVariable Long restaurantId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
+
+        if (startTime == null) {
+            startTime = LocalTime.of(0, 0);  // 00:00
+        }
+        if (endTime == null) {
+            endTime = LocalTime.of(23, 59, 59, 999999999);  // 24:00 (the last moment of the day)
+        }
+        List<OverbookingRateRequest> rate = orderTableService.getOverbookingRateByTimeSlot(
+                restaurantId, startTime, endTime);
+        return ResponseEntity.ok(rate);
+    }
 
 }

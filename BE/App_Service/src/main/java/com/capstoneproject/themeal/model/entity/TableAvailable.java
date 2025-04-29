@@ -48,4 +48,6 @@ public class TableAvailable {
     private LocalTime Gio;
     @Column(nullable = false)
     private Long SoLuong;
+    @Column
+    private Long SoLuongOverBookingMax;
 }

@@ -50,6 +50,10 @@ public class Restaurant {
     private String MoTaKhongGian;
     @Column(columnDefinition = "VARCHAR")
     private String DiemDacTrung;
+
+    @Column()
+    private Long maxTable;
+
     private Double KinhDo;
     private Double ViDo;
 

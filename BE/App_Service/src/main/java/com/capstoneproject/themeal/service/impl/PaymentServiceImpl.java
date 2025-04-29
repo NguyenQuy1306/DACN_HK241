@@ -42,7 +42,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private ComboAvailableHasFoodRepository comboAvailableHasFoodRepository;
 
-
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private OrderTableRepository orderTableRepository;
@@ -54,15 +53,15 @@ public class PaymentServiceImpl implements PaymentService {
     private OrderPredictProducerService orderPredictProducerService;
 
     public PaymentServiceImpl() {
-        String clientId = "c52168d1-0b63-47b4-ab92-09a6138f05b5";
-        String apiKey = "265ad092-714c-4684-982f-7906eea50584";
-        String checksumKey = "bdc07e1452e175a62a5f439e1640faf1103e2188545d16050dab43c73f65a070";
+        String clientId = "09d22a9f-e92e-452d-a720-8b04ac4337be";
+        String apiKey = "07bdbe11-4887-4ae2-ad34-08a0a8d16aa4";
+        String checksumKey = "56f81312e215aae9ba9eaa35a895cf54e61cfb8e10cdfe3cde80343e70839162";
         this.payOS = new PayOS(clientId, apiKey, checksumKey);
     }
 
     @Override
     public ObjectNode createPaymentLink(Integer deposit, CreateOrderRequest request, String returnUrl,
-                                        Boolean isRefund, OrderTable orderTable) {
+            Boolean isRefund, OrderTable orderTable) {
         ObjectNode response = objectMapper.createObjectNode();
 
         try {

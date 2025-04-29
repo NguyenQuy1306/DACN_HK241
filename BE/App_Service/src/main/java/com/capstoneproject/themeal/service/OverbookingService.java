@@ -4,6 +4,8 @@ import com.capstoneproject.themeal.model.request.OverbookingSettingsRequest;
 import com.capstoneproject.themeal.model.request.ThresholdRuleRequest;
 import com.capstoneproject.themeal.model.request.TimeSlotOverrideRequest;
 
+import java.math.BigDecimal;
+
 public interface OverbookingService {
     public OverbookingSettingsRequest getSettings(Long restaurantId);
 
@@ -20,4 +22,6 @@ public interface OverbookingService {
     public void deleteOverride(Long id);
 
     public void deleteThreshold(Long id);
+
+    public void updateOverbookingRateForAllRestaurants();
 }

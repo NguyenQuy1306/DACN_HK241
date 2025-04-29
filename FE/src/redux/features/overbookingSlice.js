@@ -14,6 +14,18 @@ export const getOverbookingSettings = createAsyncThunk(
   }
 );
 
+export const getOverBookingByTimeSlot = createAsyncThunk(
+  "/overbooking/timeslot",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getOverBookingByTimeSlot(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const removeThreshold = createAsyncThunk(
   "/removeThreshold",
   async (params, { rejectWithValue }) => {
@@ -103,6 +115,7 @@ export const overbookingSlice = createSlice({
     overbookingSettings: null,
     thresholdResponse: null,
     timeOveridingResponse: null,
+    timeSlot: null,
     error: "",
     loading: false,
   },
@@ -209,6 +222,17 @@ export const overbookingSlice = createSlice({
         state.timeOveridingResponse = action.payload;
       })
       .addCase(deleteOverrides.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getOverBookingByTimeSlot.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getOverBookingByTimeSlot.fulfilled, (state, action) => {
+        state.loading = false;
+        state.timeSlot = action.payload;
+      })
+      .addCase(getOverBookingByTimeSlot.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

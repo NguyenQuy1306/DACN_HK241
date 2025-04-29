@@ -54,4 +54,43 @@ public interface OrderTableRepository extends JpaRepository<OrderTable, Long> {
             @Param("isArrival") Boolean isArrival
     );
 
+    @Query(value = "SELECT COUNT(*) FROM \"dondatban\" o " +
+            "WHERE o.\"masonhahang\" = :restaurantId " +
+            "AND EXTRACT(DOW FROM o.\"ngay\") = :dayOfWeek " +
+            "AND o.\"gio\" >= :startTime " +
+            "AND o.\"gio\" < :endTime",
+            nativeQuery = true)
+    Long countOrdersByWeekdayAndTimeSlot(
+            @Param("restaurantId") Long restaurantId,
+            @Param("dayOfWeek") int dayOfWeek,
+            @Param("startTime") LocalTime startTime,
+            @Param("endTime") LocalTime endTime
+    );
+
+
+    @Query(value = "SELECT COUNT(*) FROM \"dondatban\" o " +
+            "WHERE o.\"masonhahang\" = :restaurantId " +
+            "AND EXTRACT(DOW FROM o.\"ngay\") = :dayOfWeek " +
+            "AND o.\"gio\" >= :startTime AND o.\"gio\" < :endTime " +
+            "AND (o.\"isarrival\" = false AND o.\"trangthai\" = 'CANCELLED_REFUNDED')",
+            nativeQuery = true)
+    Long countCanceledOrNoShowOrdersByWeekdayAndTimeSlot(
+            @Param("restaurantId") Long restaurantId,
+            @Param("dayOfWeek") int dayOfWeek,
+            @Param("startTime") LocalTime startTime,
+            @Param("endTime") LocalTime endTime
+    );
+
+
+    @Query(value = "SELECT COUNT(*) FROM \"dondatban\" o " +
+            "WHERE o.\"masonhahang\" = :restaurantId " +
+            "AND o.\"ngay\" = :date " +
+            "AND (o.\"isarrival\" = false AND o.\"trangthai\" = 'CANCELLED_REFUNDED')",
+            nativeQuery = true)
+    Long countCanceledOrNoShowOrdersByDateAndTimeSlot(
+            @Param("restaurantId") Long restaurantId,
+            @Param("date") LocalDate date
+
+    );
+
 }

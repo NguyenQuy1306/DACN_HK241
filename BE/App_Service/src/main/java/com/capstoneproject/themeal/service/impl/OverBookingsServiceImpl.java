@@ -1,27 +1,24 @@
 package com.capstoneproject.themeal.service.impl;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
-import com.capstoneproject.themeal.model.entity.OverbookingSettings;
-import com.capstoneproject.themeal.model.entity.Restaurant;
-import com.capstoneproject.themeal.model.entity.ThresholdRule;
-import com.capstoneproject.themeal.model.entity.TimeSlotOverride;
+import com.capstoneproject.themeal.model.entity.*;
 import com.capstoneproject.themeal.model.request.OverbookingSettingsRequest;
 import com.capstoneproject.themeal.model.request.ThresholdRuleRequest;
 import com.capstoneproject.themeal.model.request.TimeSlotOverrideRequest;
-import com.capstoneproject.themeal.repository.OverbookingSettingsRepository;
-import com.capstoneproject.themeal.repository.RestaurantRepository;
-import com.capstoneproject.themeal.repository.ThresholdRuleRepository;
-import com.capstoneproject.themeal.repository.TimeSlotOverrideRepository;
+import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.OverbookingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +38,10 @@ public class OverBookingsServiceImpl implements OverbookingService {
     private OverbookingSettingsRepository overbookingSettingsRepository;
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private WeeklyOverbookingRateRepository weeklyOverbookingRateRepository;
+    @Autowired
+    private OrderTableRepository orderTableRepository;
 
     public OverbookingSettingsRequest getSettings(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() ->
@@ -266,5 +267,71 @@ public class OverBookingsServiceImpl implements OverbookingService {
         dto.setMaxExtra(override.getMaxExtra());
         return dto;
     }
+
+    @Override
+    public void updateOverbookingRateForAllRestaurants() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();  // Lấy danh sách tất cả nhà hàng
+
+        for (Restaurant restaurant : restaurants) {
+            updateOverbookingRateForRestaurant(restaurant.getMaSoNhaHang());
+        }
+    }
+
+    public void updateOverbookingRateAndMax(Long restaurantId, int dayOfWeek, Double overbookingRate, Long overbookingMax) {
+        // Kiểm tra xem nhà hàng và ngày trong tuần đã có tỷ lệ overbooking hay chưa
+        WeeklyOverbookingRate existingRate = weeklyOverbookingRateRepository
+                .findByRestaurantIdAndDayOfWeek(restaurantId, dayOfWeek);
+
+        if (existingRate != null) {
+            // Nếu đã có, cập nhật lại tỷ lệ overbooking
+            existingRate.setOverbookingRate(overbookingRate);
+            weeklyOverbookingRateRepository.save(existingRate);  // Cập nhật vào cơ sở dữ liệu
+        } else {
+            // Nếu chưa có, tạo mới một bản ghi tỷ lệ overbooking
+            WeeklyOverbookingRate newRate = new WeeklyOverbookingRate();
+            newRate.setRestaurantId(restaurantId);
+            newRate.setDayOfWeek(dayOfWeek);
+            newRate.setOverbookingRate(overbookingRate);
+            newRate.setMaxoverbooking(overbookingMax);
+
+            weeklyOverbookingRateRepository.save(newRate);  // Lưu vào cơ sở dữ liệu
+        }
+    }
+
+    public void updateOverbookingRateForRestaurant(Long restaurantId) {
+        for (int dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) {
+            LocalTime startTime = LocalTime.of(0, 0);  // 00:00
+            LocalTime endTime = LocalTime.of(23, 59, 59, 999999999);  // 24:00
+
+            // Đếm tổng số đơn
+            Long totalBookings = orderTableRepository.countOrdersByWeekdayAndTimeSlot(
+                    restaurantId, dayOfWeek, startTime, endTime);
+
+            // Đếm đơn bị huỷ hoặc no-show
+            Long canceledOrNoShowBookings = orderTableRepository.countCanceledOrNoShowOrdersByWeekdayAndTimeSlot(
+                    restaurantId, dayOfWeek, startTime, endTime);
+
+            // Tính overbookingRate %
+            Double overbookingRate = 0.0;
+            if (totalBookings > 0) {
+                overbookingRate = (canceledOrNoShowBookings.doubleValue() / totalBookings.doubleValue()) * 100;
+            }
+
+            // --- Thêm phần tính overbookingMax ---
+            // Lấy số lượng bàn available của tuần sau cho đúng dayOfWeek
+            Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
+            Long overbookingMax = null;
+
+            Long soLuongBan = restaurant.getMaxTable(); // available.getSoLuong() là Long
+
+            // Công thức tính overbookingMax
+            overbookingMax = (long) Math.ceil((soLuongBan + 1L) * (1 + overbookingRate / 100.0));
+
+
+            // Cập nhật tỷ lệ overbooking và số lượng max vào cơ sở dữ liệu
+            updateOverbookingRateAndMax(restaurantId, dayOfWeek, overbookingRate, overbookingMax);
+        }
+    }
+
 
 }

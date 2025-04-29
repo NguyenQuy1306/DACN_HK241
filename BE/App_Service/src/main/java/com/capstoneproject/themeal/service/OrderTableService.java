@@ -1,7 +1,10 @@
 package com.capstoneproject.themeal.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
+import com.capstoneproject.themeal.model.request.OverbookingRateRequest;
 import com.capstoneproject.themeal.model.response.FinalOrderTableResponse;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,14 +39,12 @@ public interface OrderTableService {
     public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
                                           Long deposit);
 
-
     public PaymentResponse createPayment(Long paymentAmount,
                                          String maSoThanhToan, Long maSoDatBan);
 
     public List<OrderTableResponse> getAllOrders();
 
     List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId);
-
 
     public void updateIsArrivalCustomer(Long userId, boolean isArrival, Long orderId);
 
@@ -57,4 +58,8 @@ public interface OrderTableService {
 
     public void updateOrderStatus(Long restaurantId, Long orderId, String newStatus);
 
+    public List<OverbookingRateRequest> getOverbookingRatesByDate(Long restaurantId, LocalDate date);
+
+    public List<OverbookingRateRequest> getOverbookingRateByTimeSlot(Long restaurantId,
+                                                                     LocalTime startTime, LocalTime endTime);
 }

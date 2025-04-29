@@ -41,6 +41,7 @@ public interface TableAvailableRepository extends JpaRepository<TableAvailable, 
             @Param("soNguoiList") List<Byte> soNguoiList
     );
 
+
 //    @Query("SELECT t.MaSo.thuTuBan FROM TableAvailable t WHERE t.NhaHang.MaSoNhaHang = :maSoNhaHang ORDER BY t.MaSo DESC LIMIT 1")
 //    Optional<Short> findMaxThuTuBan(@Param("maSoNhaHang") Long maSoNhaHang);
 }
