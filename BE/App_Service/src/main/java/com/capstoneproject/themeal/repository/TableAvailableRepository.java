@@ -3,6 +3,7 @@ package com.capstoneproject.themeal.repository;
 import ch.qos.logback.core.pattern.color.BoldYellowCompositeConverter;
 import com.capstoneproject.themeal.model.entity.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface TableAvailableRepository extends JpaRepository<TableAvailable, TableAvailableId> {
@@ -41,7 +43,10 @@ public interface TableAvailableRepository extends JpaRepository<TableAvailable, 
             @Param("soNguoiList") List<Byte> soNguoiList
     );
 
-
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM TableAvailable t WHERE t.Ngay < :currentDate")
+    void deleteByNgayBefore(LocalDate currentDate);
 //    @Query("SELECT t.MaSo.thuTuBan FROM TableAvailable t WHERE t.NhaHang.MaSoNhaHang = :maSoNhaHang ORDER BY t.MaSo DESC LIMIT 1")
 //    Optional<Short> findMaxThuTuBan(@Param("maSoNhaHang") Long maSoNhaHang);
 }

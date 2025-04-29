@@ -18,15 +18,28 @@ public class ScheduledOverbookingUpdater {
     private OverbookingService overbookingService;
     @Autowired
     private OrderTableRepository orderTableRepository;
+    @Autowired
+    private TableAvailableService tableAvailableService;
 
 //    @PostConstruct
 //    public void initUpdateWeeklyOverbookingRates() {
 //        overbookingService.updateOverbookingRateForAllRestaurants();
 //    }
 
+//    @PostConstruct
+//    public void initDeleteOverdueTableAvailable() {
+//        tableAvailableService.deleteOverdueTableAvailable();
+//    }
+
     @Scheduled(cron = "0 0 2 * * SUN")  // Chạy vào lúc 2:00 sáng Chủ nhật mỗi tuần
     public void updateWeeklyOverbookingRatesForAllRestaurants() {
         // Gọi phương thức cập nhật tỷ lệ overbooking cho tất cả nhà hàng
         overbookingService.updateOverbookingRateForAllRestaurants();
+    }
+
+    @Scheduled(cron = "0 0 2 * * SUN")  // Chạy vào lúc 2:00 sáng Chủ nhật mỗi tuần
+    public void deleteOverdueTableAvailable() {
+        // Gọi phương thức cập nhật tỷ lệ overbooking cho tất cả nhà hàng
+        tableAvailableService.deleteOverdueTableAvailable();
     }
 }

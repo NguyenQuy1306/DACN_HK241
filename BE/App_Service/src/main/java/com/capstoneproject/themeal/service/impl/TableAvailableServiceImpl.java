@@ -17,6 +17,7 @@ import com.capstoneproject.themeal.service.TableAvailableService;
 
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -146,5 +147,10 @@ public class TableAvailableServiceImpl implements TableAvailableService {
                 throw new IllegalArgumentException("Table not found");
             }
         }
+    }
+
+    @Override
+    public void deleteOverdueTableAvailable() {
+        tableAvailableRepository.deleteByNgayBefore(LocalDate.now());
     }
 }

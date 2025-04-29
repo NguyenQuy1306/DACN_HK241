@@ -24,4 +24,5 @@ public interface TableAvailableService {
     public void deleteTable(Long restaurantId, Short thuTuBan);
 
     public void updateCountOfTable(Long restaurantId, Short thuTuBan);
+    public void deleteOverdueTableAvailable();
 }
