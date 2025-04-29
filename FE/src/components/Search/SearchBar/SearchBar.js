@@ -7,10 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setStatusModalAuthentication } from "../../../redux/features/authenticationSlice";
 import ButtonLogin from "../../Button/ButtonLogin/ButtonLogin";
 import avatar from "../../../assets/images/avatar.png";
+import { message } from "antd";
 
 const SearchBar = ({ border }) => {
     const dispatch = useDispatch();
     const showDrawer = () => {
+        // message.success("Drawer opened!");
         dispatch(setStatusModalAuthentication({ openModal: true }));
         // document.body.style.overflow = "hidden";
     };

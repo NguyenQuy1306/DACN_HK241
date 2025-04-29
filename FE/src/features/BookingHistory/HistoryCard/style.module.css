@@ -38,6 +38,7 @@
 
 .card-img {
     width: 236px;
+    height: 212px;
     border-top-left-radius: 8px;
 }
 
@@ -67,12 +68,16 @@
     width: 310px;
     justify-content: space-between;
     margin-top: 16px;
+    /* gap: 64px; */
+}
+
+.time-info {
+    display: flex;;
 }
 
 .time-frame__title {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     font-size: 14px;
-    
 }
 
 .time-frame__detail {
@@ -98,7 +103,7 @@
     display: block;
     width: 1px;
     height: 100%;
-    right: -16px;
+    right: 0px;
     background-color: #ccc;
     position: absolute;
 }
@@ -107,6 +112,30 @@
     display: none;
 }
 
+.payment-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-info {
+    position: relative;
+}
+
+.payment-info::after {
+    width: 1px;
+    content: '';
+    position: absolute;
+    display: block;
+    height: 80%;
+    background-color: #ccc;
+    top: 0;
+    right: -50px;
+}
+
+.order-time {
+    font-style: italic;
+    margin-top: 8px;
+}
 
 
 
@@ -132,7 +161,11 @@
 .card-delete, .card-modify, .card-direction, .card-booking {
     display: flex;
     align-items: center;
+    
+}
 
+.card-delete, .card-modify, .card-direction {
+    flex: 1;
 }
 
 .action-content:hover {

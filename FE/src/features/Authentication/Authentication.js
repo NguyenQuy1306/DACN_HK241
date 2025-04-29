@@ -1,43 +1,35 @@
-import React, { useState, useEffect } from "react";
+import { CloseOutlined } from "@mui/icons-material";
 import { Drawer } from "antd";
-import { CloseOutlined, Draw } from "@mui/icons-material";
-import PersonalInfo from "../PersonalInfo";
-import ReviewList from "../ReviewList";
+import React, { useEffect, useState } from "react";
+import { CiUser } from "react-icons/ci";
+import { FiEdit2 } from "react-icons/fi";
+import { IoIosHeartEmpty } from "react-icons/io";
+import { IoBookOutline, IoStorefrontOutline } from "react-icons/io5";
+import { MdOutlineLogout } from "react-icons/md";
+import { TfiComment } from "react-icons/tfi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { logout, setStatusModalAuthentication } from "../../redux/features/authenticationSlice";
+import { persistor } from "../../redux/store";
 import BookingHistory from "../BookingHistory/index";
 import FavoriteList from "../FavoriteCardList";
-import { FiEdit2 } from "react-icons/fi";
-import { IoIosHeartEmpty, IoIosStar } from "react-icons/io";
-import { IoBookOutline, IoStorefrontOutline } from "react-icons/io5";
-import { TfiComment } from "react-icons/tfi";
-import { CiUser } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
-import { MdOutlineLogout } from "react-icons/md";
+import PersonalInfo from "../PersonalInfo";
+import ReviewList from "../ReviewList";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
-import {
-    checkSession,
-    logout,
-    selectUser,
-    setStatusModalAuthentication,
-    setUser,
-} from "../../redux/features/authenticationSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { persistor } from "../../redux/store";
 
 const Authentication = ({ open }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [navItem, setNavItem] = useState("");
-
     const [isCLickLogout, setIsClickLogout] = useState(false);
     const [modalType, setModalType] = useState("");
     const user = useSelector((state) => state.authentication.user);
     const parsedUser = user ? user : null;
 
-    // console.log("Redux User:", parsedUser);
-    // console.log("user2323", user);
     const handleLogout = () => {
         persistor.purge(); // Xóa Redux Persist
 
@@ -103,7 +95,7 @@ const Authentication = ({ open }) => {
                 onClose={onClose}
                 width={302}
                 closeIcon={childrenDrawer ? null : <CloseOutlined />}
-                open={modalType == "checked"}
+                open={modalType === "checked"}
                 placement="right"
                 style={{
                     backgroundColor: "#F9FAFA",
@@ -139,7 +131,10 @@ const Authentication = ({ open }) => {
                             Lịch sử đặt bàn
                         </p>
                     </li>
-                    <li className="user-menu__item">
+                    <li
+                        onClick={showChildrenDrawer}
+                        className="user-menu__item"
+                    >
                         <div className="menu-icon">
                             <IoIosHeartEmpty size={28} />
                         </div>
@@ -150,7 +145,10 @@ const Authentication = ({ open }) => {
                             Yêu thích
                         </p>
                     </li>
-                    <li className="user-menu__item">
+                    <li
+                        onClick={showChildrenDrawer}
+                        className="user-menu__item"
+                    >
                         <div className="menu-icon">
                             <TfiComment size={24} />
                         </div>
@@ -161,7 +159,10 @@ const Authentication = ({ open }) => {
                             Bình luận
                         </p>
                     </li>
-                    <li className="user-menu__item">
+                    <li
+                        onClick={showChildrenDrawer}
+                        className="user-menu__item"
+                    >
                         <div className="menu-icon">
                             <CiUser size={28} />
                         </div>
@@ -172,7 +173,10 @@ const Authentication = ({ open }) => {
                             Thông tin tài khoản
                         </p>
                     </li>
-                    <li className="user-menu__item">
+                    <li
+                        onClick={showChildrenDrawer}
+                        className="user-menu__item"
+                    >
                         <div className="menu-icon">
                             <IoStorefrontOutline size={24} />
                         </div>

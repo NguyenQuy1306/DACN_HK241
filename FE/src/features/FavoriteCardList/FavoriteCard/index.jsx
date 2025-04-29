@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style.module.css";
 import { FcLike } from "react-icons/fc";
 import { MdOutlineLock } from "react-icons/md";
-
+import formatDate from "../../../helper/formatDate";
 function FavoriteCard({ name, quantity, updateTime }) {
     return (
         <div className={styles.container}>
@@ -22,7 +22,12 @@ function FavoriteCard({ name, quantity, updateTime }) {
                 </div>
                 <div className={styles["card-footer"]}>
                     <p className={styles.quantity}>{quantity} nhà hàng</p>
-                    <p className={styles["update-time"]}>Cập nhật: {updateTime}</p>
+                    <p className={styles["update-time"]}>
+                        Cập nhật:{" "}
+                        {`${formatDate(updateTime.split(".")[0].split("T")[0])} ${
+                            updateTime.split(".")[0].split("T")[1]
+                        }`}
+                    </p>
                 </div>
             </div>
         </div>

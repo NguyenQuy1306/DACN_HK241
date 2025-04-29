@@ -144,8 +144,6 @@ function Dashboard_Owner() {
       const day = getDayOfWeek(order.ngay);
       dayData[day] += 1; // Increment the count for the day
     });
-
-    return Object.values(dayData);
   };
 
   const processRevenueData = (orders) => {
@@ -268,7 +266,7 @@ function Dashboard_Owner() {
       curItem.id = i.maSo.maSoMonAn;
     });
   });
-  console.log("foodImage", foodImage);
+
   useEffect(() => {
     topTrending.forEach((i) => {
       i.url = foodImage.find((item) => item.foodId === i.id).imageUrl || "";
@@ -406,8 +404,9 @@ function Dashboard_Owner() {
                 title="Tổng đơn bị hủy"
                 quantity={
                   messages
-                    ? messages.filter((item) => item.trangThai === "CANCELED")
-                        .length
+                    ? messages.filter(
+                        (item) => item.trangThai === "CANCELLED_REFUNDED"
+                      ).length
                     : 0
                 }
                 up={false}

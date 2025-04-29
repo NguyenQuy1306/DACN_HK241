@@ -4,7 +4,9 @@ import "react-circular-progressbar/dist/styles.css";
 
 const CircularCountdownTimer = ({ targetDate, bookingTime }) => {
     const target = new Date(targetDate).getTime();
+
     const booking = new Date(bookingTime.split(".")[0]).getTime();
+
     const now = new Date().getTime();
 
     const totalSecondsRef = useRef(Math.max(0, Math.floor((target - now) / 1000)));
@@ -13,8 +15,8 @@ const CircularCountdownTimer = ({ targetDate, bookingTime }) => {
 
     const [remainingSeconds, setRemainingSeconds] = useState(totalSecondsRef.current);
 
-    console.log("Tong thoi gian: ", total);
-    console.log("Thoi gian con lai: ", remainingSeconds);
+    // console.log("Tong thoi gian: ", total);
+    // console.log("Thoi gian con lai: ", remainingSeconds);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -52,7 +54,7 @@ const CircularCountdownTimer = ({ targetDate, bookingTime }) => {
     };
 
     return (
-        <div style={{ width: 100, height: 100 }}>
+        <div style={{ width: 60, height: 60 }}>
             <CircularProgressbar
                 value={getPercentage()}
                 text={formatTime()}

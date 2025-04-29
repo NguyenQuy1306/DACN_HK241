@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "./style.module.css";
-import {
-    Button,
-    Cascader,
-    Col,
-    DatePicker,
-    Form,
-    Input,
-    InputNumber,
-    Mentions,
-    Radio,
-    Row,
-    Select,
-    TreeSelect,
-} from "antd";
-import axios from "axios";
+import { Button, Col, DatePicker, Form, Input, message, Row } from "antd";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { updateUserInfo } from "../../redux/api";
+import styles from "./style.module.css";
 
 function PersonalInfo() {
     const [form] = Form.useForm();
-    const id = 1;
-    const [sex, setSex] = useState("Nam");
-    const { RangePicker } = DatePicker;
-    const [customerInfo, setCustomerInfo] = useState({});
+    const { user } = useSelector((state) => state.authentication);
+
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -42,34 +28,60 @@ function PersonalInfo() {
         },
     };
 
-    useEffect(() => {
-        const fetchInfo = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/customer/${id}`,{ withCredentials: true});
-                if (response.status === 200) {
-                    setCustomerInfo(response.data);
-                    console.log("CUSTOMER: ", customerInfo);
-                } else {
-                    console.log("Failed to fetch customer information!");
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        fetchInfo();
-    }, [id]);
+    // useEffect(() => {
+    //     const fetchInfo = async () => {
+    //         try {
+    //             const response = await axios.get(`http://localhost:8080/api/customer/${id}`,{ withCredentials: true});
+    //             if (response.status === 200) {
+    //                 setCustomerInfo(response.data);
+    //                 console.log("CUSTOMER: ", customerInfo);
+    //             } else {
+    //                 console.log("Failed to fetch customer information!");
+    //             }
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     };
+    //     fetchInfo();
+    // }, [id]);
 
     useEffect(() => {
-        if (customerInfo) {
+        if (user) {
             form.setFieldsValue({
-                fname: customerInfo.hoTen?.split(" ").slice(0, 2).join(" "),
-                lname: customerInfo.hoTen?.split(" ")[2],
-                phone: customerInfo.sdt,
-                dob: moment(customerInfo.ngaySinh, "YYYY-MM-DD"),
-                address: customerInfo.diaChi,
+                name: user.hoTen,
+                phone: user.sdt,
+                dob: user.ngaySinh ? moment(user.ngaySinh) : null,
+                address: user.diaChi,
+                email: user.email,
             });
         }
-    }, [customerInfo, form]);
+    }, [user, form]);
+
+    const handleUpdateInfo = async () => {
+        try {
+            const values = await form.validateFields();
+
+            const payload = {
+                id: user?.maSoNguoiDung, // ensure this matches your backend field
+                fullName: values.name,
+                email: values.email,
+                phoneNumber: values.phone,
+                address: values.address,
+                birthDate: values.dob ? moment(values.dob).format("YYYY-MM-DD") : null,
+            };
+
+            console.log("Payload: ", payload);
+
+            const response = await updateUserInfo(payload);
+            console.log("Update successful", response);
+            message.success("Cập nhật thông tin thành công!");
+            // You can show a success message here
+        } catch (error) {
+            console.error("Update failed", error);
+            // You can show an error message here
+            // message.error("Cập nhật thông tin thất bại!");
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -85,13 +97,13 @@ function PersonalInfo() {
                         marginTop: "36px",
                     }}
                     form={form}
-                    initialValues={customerInfo}
+                    onFinish={handleUpdateInfo}
                 >
                     <Row gutter={24}>
                         <Col span={12}>
                             <Form.Item
-                                label="Họ và tên đệm"
-                                name="fname"
+                                label="Họ và tên"
+                                name="name"
                                 labelCol={{ span: 8 }}
                                 wrapperCol={8}
                                 rules={[
@@ -101,24 +113,31 @@ function PersonalInfo() {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Nhập họ và tên đệm" />
+                                <Input
+                                    value={user.hoTen}
+                                    placeholder="Nhập họ và tên"
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                label="Tên"
-                                name="lname"
+                                label="Email"
+                                name="email"
                                 labelCol={{ span: 6 }}
                                 labelAlign="right"
-                                wrapperCol={{ span: 10 }}
+                                wrapperCol={{ span: 18 }}
                                 rules={[
                                     {
                                         required: true,
-                                        message: "Vui lòng nhập tên của bạn!",
+                                        type: "email",
+                                        message: "Vui lòng nhập email hợp lệ!",
                                     },
                                 ]}
                             >
-                                <Input placeholder="Nhập tên" />
+                                <Input
+                                    disabled
+                                    placeholder="Nhập email"
+                                />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -133,7 +152,7 @@ function PersonalInfo() {
                                 rules={[
                                     {
                                         required: true,
-                                        message: "Vui lòng nhập đầy đủ số điện thoại của bạn!",
+                                        message: "Vui lòng nhập số điện thoại của bạn!",
                                     },
                                 ]}
                             >

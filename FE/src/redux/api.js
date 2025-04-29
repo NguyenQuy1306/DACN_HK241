@@ -315,14 +315,16 @@ export const getOrder = async (params) => {
     throw error.response?.data || error;
   }
 };
-export const cancelOrder = async (params) => {
+
+export const cancelOrder = async ({ orderId }) => {
   try {
-    const response = await API.post(`/api/payments/${params.orderId}`);
+    const response = await API.get(`/api/orders/${orderId}/cancel-arrival`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
   }
 };
+
 export const paymentCallback = async (params) => {
   try {
     console.log("paymentCallback", params);
@@ -585,6 +587,15 @@ export const sendUserBehavior = async (params) => {
 export const trackUserBehavior = async (params) => {
   try {
     const response = await API.post(`/api/customer/trackUserBehavior`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateUserInfo = async (params) => {
+  try {
+    const response = await API.post(`/api/customer/update`, params);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
