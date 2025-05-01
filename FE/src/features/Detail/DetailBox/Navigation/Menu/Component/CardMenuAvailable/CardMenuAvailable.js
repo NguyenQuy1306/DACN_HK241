@@ -9,8 +9,9 @@ import { usePayOS } from "@payos/payos-checkout";
 
 import "./CardMenuAvailable.css";
 import { setOpenBookingWithMenu } from "../../../../../../../redux/features/restaurantSlice";
-const { formatCurrency } = require("../../../../../../../helper/helper");
+import { FRONTEND_URL } from "../../../../../../../utils/util";
 
+const { formatCurrency } = require("../../../../../../../helper/helper");
 const CardMenuAvailable = ({ selectedPlace, menu }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -25,7 +26,7 @@ const CardMenuAvailable = ({ selectedPlace, menu }) => {
       //TODO: Hành động sau khi người dùng thanh toán đơn hàng thành công
       setIsOpen(false);
       setMessage("Thanh toan thanh cong");
-      window.location.href = "http://localhost:3000/home";
+      window.location.href = `${FRONTEND_URL}/home`;
     },
   });
 

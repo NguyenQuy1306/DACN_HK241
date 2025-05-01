@@ -1,8 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BACKEND_URL } from "../utils/util";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8080",
+  baseURL: BACKEND_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

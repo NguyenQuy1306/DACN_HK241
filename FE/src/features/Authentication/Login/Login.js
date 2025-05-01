@@ -20,6 +20,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"; // Import icon Google từ react-icons
+import { BACKEND_URL } from "../../../utils/util";
 
 export default function Login({
   setModalType,
@@ -92,7 +93,7 @@ export default function Login({
     setPassword(e.target.value);
   };
   const handleGoogleLogin = async () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    window.location.href = `${BACKEND_URL}/oauth2/authorization/google`;
   };
 
   return (

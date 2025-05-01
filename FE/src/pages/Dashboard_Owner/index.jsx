@@ -28,6 +28,7 @@ import styles from "./style.module.css";
 
 import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 import { getFoodImage } from "../../redux/api";
+import { BACKEND_URL } from "../../utils/util";
 
 ChartJS.register(
   ArcElement,
@@ -192,7 +193,7 @@ function Dashboard_Owner() {
 
   useEffect(() => {
     // Khởi tạo kết nối WebSocket khi component mount
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`${BACKEND_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport

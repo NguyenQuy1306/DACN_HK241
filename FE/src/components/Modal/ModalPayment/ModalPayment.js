@@ -32,6 +32,7 @@ import {
 import { setOpenModalPayment } from "../../../redux/features/tableSlice";
 import "./ModalPayment.css";
 import { trackUserBehavior } from "../../../redux/features/restaurantSlice";
+import { BACKEND_URL } from "../../../utils/util";
 
 const { formatCurrency } = require("../../../helper/helper");
 const ModalPayment = ({ open, selectedPlace }) => {
@@ -71,7 +72,7 @@ const ModalPayment = ({ open, selectedPlace }) => {
 
   useEffect(() => {
     // Khởi tạo kết nối WebSocket khi component mount
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`${BACKEND_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport

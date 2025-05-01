@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonGreen from "../../components/Button/ButtonGreen/ButtonBooking/ButtonGreen";
 import { useNavigate } from "react-router-dom";
 import { updateCountOfTable } from "../../redux/features/tableSlice";
+import { BACKEND_URL } from "../../utils/util";
+
 const { calculateDistance } = require("../../helper/caculateDistance");
 
 export default function ResultPayment() {
@@ -67,7 +69,7 @@ export default function ResultPayment() {
 
   useEffect(() => {
     // Khởi tạo kết nối WebSocket khi component mount
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`${BACKEND_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport

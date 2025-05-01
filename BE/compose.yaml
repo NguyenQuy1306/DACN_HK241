@@ -1,7 +1,22 @@
 version: '3.8'
 
 services:
-  app:
+  react-frontend:
+    build:
+      context: .
+    container_name: react-nginx
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_URL_BACKEND=${URL_SERVER_APP}
+      - REACT_APP_URL_FRONTEND=${URL_CLIENT}
+      - REACT_APP_URL_AI=${URL_AI}
+    depends_on:
+      - app
+    networks:
+      - app_network
+
+  spring-backend:
     image: 'spring-app:latest'
     build:
       context: App_Service

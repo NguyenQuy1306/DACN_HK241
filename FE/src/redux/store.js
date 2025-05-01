@@ -78,4 +78,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-export const host = process.env.REACT_APP_BASE_URL || "http://localhost:8080";
