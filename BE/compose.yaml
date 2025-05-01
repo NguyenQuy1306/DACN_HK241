@@ -3,7 +3,7 @@ version: '3.8'
 services:
   react-frontend:
     build:
-      context: .
+      context: .././FE
     container_name: react-nginx
     ports:
       - "3000:80"
@@ -11,8 +11,12 @@ services:
       - REACT_APP_URL_BACKEND=${URL_SERVER_APP}
       - REACT_APP_URL_FRONTEND=${URL_CLIENT}
       - REACT_APP_URL_AI=${URL_AI}
+      - REACT_APP_GOOGLE_MAPS_API_KEY=${REACT_APP_GOOGLE_MAPS_API_KEY}
+      - REACT_APP_RAPID_API_TRAVEL_API_KEY=${REACT_APP_RAPID_API_TRAVEL_API_KEY}
+      - REACT_APP_RAPID_API_WEATHER_API_KEY=${REACT_APP_RAPID_API_WEATHER_API_KEY}
+      - REACT_APP_PAYOS_SCRIPT=${REACT_APP_PAYOS_SCRIPT}
     depends_on:
-      - app
+      - spring-backend
     networks:
       - app_network
 
