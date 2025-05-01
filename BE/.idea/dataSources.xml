@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="themeal@localhost" uuid="546e2ad0-684e-46f5-9923-f5ca29a41555">
+    <data-source source="LOCAL" name="themeal@mongodb" uuid="546e2ad0-684e-46f5-9923-f5ca29a41555">
       <driver-ref>mongo.4</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>

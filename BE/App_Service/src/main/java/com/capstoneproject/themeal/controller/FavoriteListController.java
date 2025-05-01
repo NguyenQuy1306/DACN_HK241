@@ -27,4 +27,9 @@ public class FavoriteListController {
     ResponseEntity<FavoriteListResponse> addNewList(@PathVariable Long customerId) {
         return ResponseEntity.ok(favoriteListService.addNewList(null,customerId));
     }
+
+    @PostMapping("/update/{listId}")
+    ResponseEntity<FavoriteListResponse> updateList(@PathVariable Long listId, @RequestBody String listName) {
+        return ResponseEntity.ok(favoriteListService.updateListById(listId,listName));
+    }
 }

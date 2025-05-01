@@ -33,7 +33,7 @@ const CircularCountdownTimer = ({ targetDate, bookingTime }) => {
     }, []);
 
     const getPercentage = () => {
-        console.log("Phan tram: ", (remainingSeconds / total) * 100);
+        // console.log("Phan tram: ", (remainingSeconds / total) * 100);
         return (remainingSeconds / total) * 100;
     };
 

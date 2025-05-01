@@ -130,7 +130,7 @@ function Home(props) {
                     // message.success("User detected, fetching recommendations...");
 
                     response = await axios.get(
-                        `http://localhost:5000/recommend/online?user_id=${user.maSoNguoiDung}&top_n=10`,
+                        `http://localhost:5000/recommend/online?user_id=${user?.maSoNguoiDung}&top_n=10`,
                     );
 
                     // message.success("Recommendations fetched successfully");

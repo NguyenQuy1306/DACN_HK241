@@ -53,119 +53,141 @@ export const loginWithGoogle = createAsyncThunk("/oauth2/google", async (params,
         return rejectWithValue(error.response?.data || "Login failed");
     }
 });
+
+export const fetchUser = createAsyncThunk("/customer/information", async (params, { rejectWithValue }) => {
+    try {
+        const response = await api.getUserInfo(params);
+        return response.payload;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Login failed");
+    }
+});
+
 const authenticationSlice = createSlice({
-  name: "authentication",
-  initialState: {
-    user: null,
-    userRole: "guest",
-    registerStatus: "",
-    oath2Callback: null,
-    restaurantOwner: null,
-    openModal: false,
-    error: null,
-    ownerLogin: false,
-    adminLogin: false,
-    errorCheckSession: null,
-    isAuthenticated: false,
-    errorRegister: null,
-    loading: false,
-  },
+    name: "authentication",
+    initialState: {
+        user: null,
+        userRole: "guest",
+        registerStatus: "",
+        oath2Callback: null,
+        restaurantOwner: null,
+        openModal: false,
+        error: null,
+        ownerLogin: false,
+        adminLogin: false,
+        errorCheckSession: null,
+        isAuthenticated: false,
+        errorRegister: null,
+        loading: false,
+    },
 
-  reducers: {
-    setLoginRoute: (state, action) => {
-      state.ownerLogin = action.payload;
+    reducers: {
+        setLoginRoute: (state, action) => {
+            state.ownerLogin = action.payload;
+        },
+        setAdminLogin: (state, action) => {
+            state.adminLogin = action.payload;
+        },
+        setUser: (state, action) => {
+            state.user = action.payload;
+            console.log("action.payload", action.payload);
+            state.isAuthenticated = true;
+            // state.userRole=action.payload.
+        },
+        setUserRole: (state, action) => {
+            state.userRole = action.payload;
+        },
+        clearError(state) {
+            state.error = null;
+        },
+        clearRegisterStatus(state) {
+            state.registerStatus = "";
+        },
+        clearLogin(state) {
+            state.user = null;
+        },
+        setStatusModalAuthentication(state, action) {
+            const { openModal } = action.payload;
+            state.openModal = openModal;
+        },
     },
-    setAdminLogin: (state, action) => {
-      state.adminLogin = action.payload;
-    },
-    setUser: (state, action) => {
-      state.user = action.payload;
-      console.log("action.payload", action.payload);
-      state.isAuthenticated = true;
-      // state.userRole=action.payload.
-    },
-    setUserRole: (state, action) => {
-      state.userRole = action.payload;
-    },
-    clearError(state) {
-      state.error = null;
-    },
-    clearRegisterStatus(state) {
-      state.registerStatus = "";
-    },
-    clearLogin(state) {
-      state.user = null;
-    },
-    setStatusModalAuthentication(state, action) {
-      const { openModal } = action.payload;
-      state.openModal = openModal;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(register.pending, (state) => {
-        state.loading = true;
-        state.errorRegister = null;
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.loading = false;
-        state.registerStatus = action.payload;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.loading = false;
-        state.errorRegister = action.payload;
-      })
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
+    extraReducers: (builder) => {
+        builder
+            .addCase(register.pending, (state) => {
+                state.loading = true;
+                state.errorRegister = null;
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.loading = false;
+                state.registerStatus = action.payload;
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.loading = false;
+                state.errorRegister = action.payload;
+            })
+            .addCase(fetchUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(login.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.loading = false;
 
-        state.user = action.payload;
-        switch (action.payload.userRole) {
-          case "C":
-            state.userRole = "customer";
-            break;
-          case "O":
-            state.userRole = "owner";
-            state.ownerLogin = true;
-            break;
-          case "A":
-            state.userRole = "admin";
-            state.adminLogin = true;
-            break;
-          default:
-            state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role
-        }
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(checkSession.pending, (state) => {
-        state.loading = true;
-        state.errorCheckSession = null;
-      })
-      .addCase(checkSession.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      })
-      .addCase(checkSession.rejected, (state, action) => {
-        state.loading = false;
-        state.user = null;
-        state.errorCheckSession = action.payload;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.userRole = "guest";
-        state.ownerLogin = false;
-        state.adminLogin = false;
-        state.restaurantOwner = null;
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.error = action.payload;
-      })
+                state.user = action.payload;
+                switch (action.payload.userRole) {
+                    case "C":
+                        state.userRole = "customer";
+                        break;
+                    case "O":
+                        state.userRole = "owner";
+                        state.ownerLogin = true;
+                        break;
+                    case "A":
+                        state.userRole = "admin";
+                        state.adminLogin = true;
+                        break;
+                    default:
+                        state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role
+                }
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(checkSession.pending, (state) => {
+                state.loading = true;
+                state.errorCheckSession = null;
+            })
+            .addCase(checkSession.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(checkSession.rejected, (state, action) => {
+                state.loading = false;
+                state.user = null;
+                state.errorCheckSession = action.payload;
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.user = null;
+                state.userRole = "guest";
+                state.ownerLogin = false;
+                state.adminLogin = false;
+                state.restaurantOwner = null;
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.error = action.payload;
+            })
 
             .addCase(getRestaurantByOwnerId.pending, (state) => {
                 state.loading = true;
@@ -195,14 +217,14 @@ const authenticationSlice = createSlice({
 });
 
 export const {
-  clearError,
-  clearRegisterStatus,
-  clearLogin,
-  setLoginRoute,
-  setUser,
-  setUserRole,
-  setStatusModalAuthentication,
-  setAdminLogin,
+    clearError,
+    clearRegisterStatus,
+    clearLogin,
+    setLoginRoute,
+    setUser,
+    setUserRole,
+    setStatusModalAuthentication,
+    setAdminLogin,
 } = authenticationSlice.actions;
 
 export const selectUser = (state) => state.authentication.user;

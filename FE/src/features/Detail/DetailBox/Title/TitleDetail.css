@@ -64,3 +64,15 @@
   cursor: pointer;
   color: #ff0050;
 }
+
+.heart_favorite_button_icon,
+.heart_favorite_button_icon1 {
+  font-size: 28px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.heart_favorite_button_icon:hover,
+.heart_favorite_button_icon1:hover {
+  transform: scale(1.1);
+}

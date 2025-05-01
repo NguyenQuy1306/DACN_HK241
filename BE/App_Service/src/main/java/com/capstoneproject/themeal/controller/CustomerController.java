@@ -35,11 +35,11 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<ApiResponse<CustomerResponse>> updateCustomerInformation(@RequestBody UserInformationRequest userInformationRequest) {
-        ApiResponse<CustomerResponse> apiResponse = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<String>> updateCustomerInformation(@RequestBody UserInformationRequest userInformationRequest) {
+        ApiResponse<String> apiResponse = new ApiResponse<>();
         try {
-            CustomerResponse userResponse = userInformationServiceImpl.updateUserInformation(userInformationRequest);
-            apiResponse.ok(userResponse);
+            userInformationServiceImpl.updateUserInformation(userInformationRequest);
+            apiResponse.ok("Cập nhật thông tin cá nhân thành công!");
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         } catch (NotFoundException e) {
             apiResponse.error(ResponseCode.getError(10));

@@ -16,7 +16,7 @@ function RecommendCard({ place, tags, point, discountPercent }) {
       dispatch(
         trackUserBehavior({
           restaurantId: id,
-          userId: user.maSoNguoiDung,
+          userId: user?.maSoNguoiDung,
           timestamp: new Date().toISOString(),
         })
       );

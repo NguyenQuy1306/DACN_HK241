@@ -3,6 +3,7 @@ package com.capstoneproject.themeal.service.impl;
 import com.capstoneproject.themeal.model.entity.FavoriteList;
 import com.capstoneproject.themeal.model.entity.User;
 import com.capstoneproject.themeal.repository.UserRepository;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,29 @@ public class FavoriteListServiceImpl implements FavoriteListService {
         favoriteList.setThoiGianCapNhat(LocalDateTime.now());
         favoriteListRepository.save(favoriteList);
         return favoriteListMapper.toFavoriteListResponse(favoriteList);
+    }
+
+    @Override
+    public FavoriteListResponse deleteListById(Long listId) {
+        Optional<FavoriteList> favoriteList = favoriteListRepository.findById(listId);
+        if (favoriteList.isEmpty()) {
+            throw new IllegalArgumentException("Danh sách không tồn tại!");
+        }
+
+        return favoriteListMapper.toFavoriteListResponse(favoriteList.get());
+
+
+    }
+
+    @Override
+    public FavoriteListResponse updateListById(Long listId, String newName) {
+        Optional<FavoriteList> favoriteList = favoriteListRepository.findById(listId);
+        if (favoriteList.isEmpty()) {
+            throw new ResourceNotFoundException("List not found!");
+        }
+        favoriteList.get().setTen(newName);
+        favoriteListRepository.save(favoriteList.get());
+        return favoriteListMapper.toFavoriteListResponse(favoriteList.get());
     }
 
 }

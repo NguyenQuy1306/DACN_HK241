@@ -33,7 +33,7 @@ const PlaceDetailSearch = ({
       dispatch(
         trackUserBehavior({
           restaurantId: id,
-          userId: user.maSoNguoiDung,
+          userId: user?.maSoNguoiDung,
           timestamp: new Date().toISOString(),
         })
       );
@@ -63,7 +63,7 @@ const PlaceDetailSearch = ({
       dispatch(
         trackUserBehavior({
           restaurantId: id,
-          userId: user.maSoNguoiDung,
+          userId: user?.maSoNguoiDung,
           timestamp: new Date().toISOString(),
         })
       );
