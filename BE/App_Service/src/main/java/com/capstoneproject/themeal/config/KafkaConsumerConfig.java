@@ -19,7 +19,8 @@ public class KafkaConsumerConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
-    private static final String GROUP_ID = "elasticsearch-group";
+    @Value("${kafka.group.id}")
+    private String GROUP_ID;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {

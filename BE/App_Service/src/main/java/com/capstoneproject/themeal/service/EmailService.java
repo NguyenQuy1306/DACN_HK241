@@ -4,6 +4,7 @@ import com.capstoneproject.themeal.model.entity.OrderTable;
 import com.capstoneproject.themeal.repository.OrderTableHasFoodRepository;
 import com.capstoneproject.themeal.repository.OrderTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
@@ -12,10 +13,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 @Service
 public class EmailService {
-
+    @Value("${url.server.app}")
+    private String urlServerApp;
     @Autowired
     private JavaMailSender mailSender;
-
     @Autowired
     private OrderTableRepository orderTableRepository;
 
@@ -24,8 +25,8 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            String confirmLink = "http://localhost:8080/api/orders/" + orderTable.getMaSoDatBan() + "/confirm-arrival";
-            String cancelLink = "http://localhost:8080/api/orders/" + orderTable.getMaSoDatBan() + "/cancel-arrival";
+            String confirmLink = urlServerApp + "/api/orders/" + orderTable.getMaSoDatBan() + "/confirm-arrival";
+            String cancelLink = urlServerApp + "/api/orders/" + orderTable.getMaSoDatBan() + "/cancel-arrival";
             String restaurantName = orderTable.getNhaHang().getTen() != null ? orderTable.getNhaHang().getTen() : "Nhà hàng";
             String customerName = orderTable.getKhachHang().getHoTen() != null ? orderTable.getKhachHang().getHoTen() : "Quý khách";
 
@@ -117,7 +118,7 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            String confirmUrl = "http://localhost:8080/api/orders/refundByOwner/" + orderTable.getMaSoDatBan();
+            String confirmUrl = urlServerApp + "/api/orders/refundByOwner/" + orderTable.getMaSoDatBan();
             String ownerName = orderTable.getNhaHang().getChuNhaHang().getHoTen();
             String customerName = orderTable.getKhachHang().getHoTen();
             String reservationDate = orderTable.getNgay().toString(); // format nếu cần

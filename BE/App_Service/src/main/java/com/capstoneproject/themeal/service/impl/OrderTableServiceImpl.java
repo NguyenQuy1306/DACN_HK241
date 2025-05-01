@@ -15,6 +15,7 @@ import com.capstoneproject.themeal.repository.*;
 import com.capstoneproject.themeal.service.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.capstoneproject.themeal.exception.NotFoundException;
@@ -29,6 +30,8 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OrderTableServiceImpl implements OrderTableService {
+    @Value("${url.client}")
+    private String urlClient;
     private final static double DEFAULT_ALPHA = 0.3;
     @Autowired
     private OrderTableRepository orderTableRepository;
@@ -321,7 +324,7 @@ public class OrderTableServiceImpl implements OrderTableService {
             return null;
         }
 
-        String returnUrl = String.format("http://localhost:3000/refund-status/%s", orderId);
+        String returnUrl = String.format(urlClient + "/refund-status/%s", orderId);
         return paymentService.createPaymentLink(refund, null, returnUrl, true, orderTable);
     }
 

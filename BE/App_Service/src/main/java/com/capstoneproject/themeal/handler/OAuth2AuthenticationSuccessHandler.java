@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -23,7 +24,8 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-
+    @Value("${url.client}")
+    private String urlClient;
     private final UserRepository userRepository;
     private final SessionRegistry sessionRegistry;
     private static final int SESSION_TIMEOUT = 300;  // 5 phút
@@ -65,6 +67,6 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
         SecurityContextHolder.setContext(securityContext);
         newSession.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
-        response.sendRedirect("http://localhost:3000/home?userId=" + user.getMaSoNguoiDung());
+        response.sendRedirect(urlClient + "/home?userId=" + user.getMaSoNguoiDung());
     }
 }

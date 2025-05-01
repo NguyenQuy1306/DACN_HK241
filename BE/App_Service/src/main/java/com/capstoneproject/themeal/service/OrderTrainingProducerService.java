@@ -18,7 +18,7 @@ public class OrderTrainingProducerService {
     public void sendBookingRequestEvent(OrderTrainingEvent event) {
         System.out.println("sendBookingRequestEvent");
         kafkaTemplate.send(bookingRequestTopic, event.getOrderId().toString(), event);
-        System.out.println("after clal sendBookingRequestEvent");
+        System.out.println("after call sendBookingRequestEvent");
 
     }
 

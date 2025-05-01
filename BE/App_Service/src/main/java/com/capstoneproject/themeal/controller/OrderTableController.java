@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.expression.spel.ast.Assign;
@@ -31,19 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/orders")
 public class OrderTableController {
 
-    // Create Order POST /api/orders
-    // Get All Orders GET /api/orders
-    // Get Order by ID GET /api/orders/{orderId}
-    // Update Order PUT/PATCH /api/orders/{orderId}
-    // Cancel Order DELETE /api/orders/{orderId}
-    // Get Orders by Table GET /api/orders/table/{tableId}
-    // Get Orders by Status GET /api/orders/status/{status}
-    // Assign Waiter PUT/PATCH /api/orders/{orderId}/waiter
+    @Value("${url.client}")
+    private String urlClient;
     @Autowired
     private OrderTableService orderTableService;
 
@@ -127,13 +121,13 @@ public class OrderTableController {
         Boolean check = orderTableService.isConfirmed(bookingId);
         if (check) {
             return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create("http://localhost:3000/confirmed-order"))
+                    .location(URI.create(urlClient + "/confirmed-order"))
                     .build();
         }
         orderTableService.markAsConfirmed(bookingId, OrderTableStatus.COMFIRMED_GOING_TO.toString());
 
         return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create("http://localhost:3000/thank-you"))
+                .location(URI.create(urlClient + "/thank-you"))
                 .build();
 
     }
@@ -144,7 +138,7 @@ public class OrderTableController {
 
         if (check) {
             return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create("http://localhost:3000/confirmed-order"))
+                    .location(URI.create(urlClient + "/confirmed-order"))
                     .build();
         }
         orderTableService.markAsConfirmed(
@@ -152,7 +146,7 @@ public class OrderTableController {
                 OrderTableStatus.CANCELLED_REFUNDED.toString());
 
         return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create("http://localhost:3000/thank-you"))
+                .location(URI.create(urlClient + "/thank-you"))
                 .build();
 
     }

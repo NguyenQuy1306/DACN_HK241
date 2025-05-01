@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,11 +40,15 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    @Value("${url.server.app}")
+    private String urlServer;
     private static final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
     private static final String GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
-    private static final String CLIENT_ID = "142229183760-20ifo7r71hsn1sdbs8r86n4i61qitm4g.apps.googleusercontent.com";
-    private static final String CLIENT_SECRET = "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";
-    private static final String REDIRECT_URI = "http://localhost:8080/callbackOauth2Google";
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String CLIENT_ID;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String CLIENT_SECRET;
+    private final String REDIRECT_URI = urlServer + "/callbackOauth2Google";
 
     private final RestTemplate restTemplate = new RestTemplate();
     @Autowired

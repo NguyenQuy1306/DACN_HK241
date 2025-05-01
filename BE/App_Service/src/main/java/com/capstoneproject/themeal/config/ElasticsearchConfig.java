@@ -10,10 +10,10 @@ import org.springframework.data.elasticsearch.client.ClientConfiguration;
 @Configuration
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
-    @Value("${elasticsearch.host:elasticsearch}")
+    @Value("${elasticsearch.host}")
     private String host;
 
-    @Value("${elasticsearch.port:9200}")
+    @Value("${elasticsearch.port}")
     private int port;
 
     @Override

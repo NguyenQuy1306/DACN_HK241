@@ -1,5 +1,6 @@
 package com.capstoneproject.themeal.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
@@ -20,6 +21,7 @@ import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.nio.file.Paths;
 
 @Configuration
@@ -27,19 +29,20 @@ public class S3Config {
 
     private final ApplicationConfig applicationConfig;
     private static final Logger logger = LoggerFactory.getLogger(S3Config.class);
-    private static final String BUCKET_NAME = "themealbucket1"; // Change to your bucket name
+    @Value("${aws.s3.bucket}")
+    private String BUCKET_NAME;
     private static final Region AWS_REGION = Region.AP_SOUTHEAST_1;
 
     S3Config(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
-    } // Set your AWS region
+    }
 
     @Bean
     public S3Presigner s3Presigner() {
         DefaultCredentialsProvider credentialsProvider = DefaultCredentialsProvider.create();
         return S3Presigner.builder().region(Region.AP_SOUTHEAST_1)
                 .endpointOverride(URI.create("http://s3.ap-southeast-1.amazonaws.com")) // 🔥 Fix lỗi
-                                                                                        // URL
+                // URL
                 .credentialsProvider(credentialsProvider).build();
     }
 
