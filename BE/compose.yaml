@@ -186,6 +186,13 @@ services:
       - mongodb
     environment:
       - MONGODB_URI=${MONGODB_URI}
+      - BROKER_URL=${BROKER_URL}
+      - CANCEL_TOPIC=${CANCEL_TOPIC}
+      - TRAINING_TOPIC=${TRAINING_TOPIC}
+      - CANCEL_RESULT_TOPIC=${CANCEL_RESULT_TOPIC}
+      - MODEL_PATH=${MODEL_PATH}
+      - USER_BEHAVIOR_TOPIC=${USER_BEHAVIOR_TOPIC}
+
     ports:
       - "5000:5000"
     volumes:

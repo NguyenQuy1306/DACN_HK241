@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 conn = pg8000.dbapi.Connection(
-    user="postgres", password="Nhut3030", host="localhost", port=5432, database="themealv3",
+    user="postgres", password="Nhut3030", host="localhost", port=5433, database="themealv3",
     ssl_context=None
 )
 cur = conn.cursor()

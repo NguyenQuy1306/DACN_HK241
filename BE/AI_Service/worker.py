@@ -2,9 +2,7 @@ from kafka import KafkaConsumer
 import pickle
 import json
 from river import linear_model, preprocessing
-
-TOPIC_NAME = "user-behavior-topic"
-BOOTSTRAP_SERVERS = ['kafka:9092']  # hoặc localhost:9092 nếu chạy local
+from app.config.config import BROKER_URL, USER_BEHAVIOR_TOPIC
 
 # Load model hoặc khởi tạo mới nếu chưa có
 try:
@@ -17,15 +15,15 @@ except FileNotFoundError:
 
 # Kết nối Kafka
 consumer = KafkaConsumer(
-    TOPIC_NAME,
-    bootstrap_servers=BOOTSTRAP_SERVERS,
+    USER_BEHAVIOR_TOPIC,
+    bootstrap_servers=BROKER_URL,
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
     auto_offset_reset='earliest',
     enable_auto_commit=True,
     group_id='ai-worker-group'
 )
 
-print(f"👂 Listening to Kafka topic: {TOPIC_NAME}")
+print(f"👂 Listening to Kafka topic: {USER_BEHAVIOR_TOPIC}")
 
 for message in consumer:
     try:
