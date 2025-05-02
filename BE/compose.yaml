@@ -41,7 +41,7 @@ services:
       - ./target:/app/target
       - ./logs:/app/logs
     env_file:
-      - .env.docker
+      - .env.prod
     environment:
       - TZ=Asia/Ho_Chi_Minh
       - SPRING_PROFILES_ACTIVE=prod
