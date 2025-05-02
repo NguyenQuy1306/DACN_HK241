@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Load CSV dữ liệu
 users_df = pd.read_csv('users.csv')
-restaurants_df = pd.read_csv('restaurants.csv')
+restaurants_df = pd.read_csv('data/restaurants.csv')
 ratings_df = pd.read_csv('ratings.csv')
 
 # Tiền xử lý như cũ
