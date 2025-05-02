@@ -1,0 +1,8 @@
+# Environment config
+.env
+.env.*
+!.env.example
+# Build
+target/
+logs/
+*.log

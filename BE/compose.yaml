@@ -1,24 +1,24 @@
 version: '3.8'
 
 services:
-  # react-frontend:
-  #   build:
-  #     context: .././FE
-  #   container_name: react-nginx
-  #   ports:
-  #     - "3000:80"
-  #   environment:
-  #     - REACT_APP_URL_BACKEND=${URL_SERVER_APP}
-  #     - REACT_APP_URL_FRONTEND=${URL_CLIENT}
-  #     - REACT_APP_URL_AI=${URL_AI}
-  #     - REACT_APP_GOOGLE_MAPS_API_KEY=${REACT_APP_GOOGLE_MAPS_API_KEY}
-  #     - REACT_APP_RAPID_API_TRAVEL_API_KEY=${REACT_APP_RAPID_API_TRAVEL_API_KEY}
-  #     - REACT_APP_RAPID_API_WEATHER_API_KEY=${REACT_APP_RAPID_API_WEATHER_API_KEY}
-  #     - REACT_APP_PAYOS_SCRIPT=${REACT_APP_PAYOS_SCRIPT}
-  #   depends_on:
-  #     - spring-backend
-  #   networks:
-  #     - app_network
+  react-frontend:
+    build:
+      context: .././FE
+    container_name: react-nginx
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_URL_BACKEND=${URL_SERVER_APP}
+      - REACT_APP_URL_FRONTEND=${URL_CLIENT}
+      - REACT_APP_URL_AI=${URL_AI}
+      - REACT_APP_GOOGLE_MAPS_API_KEY=${REACT_APP_GOOGLE_MAPS_API_KEY}
+      - REACT_APP_RAPID_API_TRAVEL_API_KEY=${REACT_APP_RAPID_API_TRAVEL_API_KEY}
+      - REACT_APP_RAPID_API_WEATHER_API_KEY=${REACT_APP_RAPID_API_WEATHER_API_KEY}
+      - REACT_APP_PAYOS_SCRIPT=${REACT_APP_PAYOS_SCRIPT}
+    depends_on:
+      - spring-backend
+    networks:
+      - app_network
 
   spring-backend:
     image: 'spring-app:latest'
@@ -27,9 +27,9 @@ services:
     container_name: spring
     depends_on:
       - postgres-db
-      #      - elasticsearch
+      - elasticsearch
       - kafka
-      # - mongodb
+      - mongodb
     develop:
       watch:
         - action: rebuild
@@ -75,19 +75,19 @@ services:
     networks:
       - app_network
 
-  #  elasticsearch:
-  #    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
-  #    container_name: elasticsearch
-  #    environment:
-  #      - discovery.type=single-node
-  #      - xpack.security.enabled=false
-  #      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #    ports:
-  #      - "9200:9200"
-  #    volumes:
-  #      - elasticsearch-data:/usr/share/elasticsearch/data
-  #    networks:
-  #      - app_network
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - app_network
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -165,36 +165,36 @@ services:
       - app_network
 
 
-  # mongodb:
-  #   image: mongo:latest
-  #   container_name: mongodb
-  #   ports:
-  #     - "27017:27017"
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-  #     - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-  #   volumes:
-  #     - mongo-data:/data/db
-  #   networks:
-  #     - app_network
-  # ai-service:
-  #   image: ai-service:latest
-  #   build:
-  #     context: ./AI_Service
-  #   container_name: ai-service
-  #   depends_on:
-  #     - mongodb
-  #   environment:
-  #     - MONGODB_URI=${MONGODB_URI}
-  #   ports:
-  #     - "5000:5000"
-  #   volumes:
-  #     - ai-models-data:/app/app/models/cancel_prediction
-  #   networks:
-  #     - app_network
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app_network
+  ai-service:
+    image: ai-service:latest
+    build:
+      context: ./AI_Service
+    container_name: ai-service
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+    ports:
+      - "5000:5000"
+    volumes:
+      - ai-models-data:/app/app/models/cancel_prediction
+    networks:
+      - app_network
 
 volumes:
-  #  elasticsearch-data:
+  elasticsearch-data:
   postgres-data:
   kafka-data:
   zookeeper-data:
