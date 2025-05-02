@@ -1,7 +1,7 @@
 import pickle
 import pandas as pd
 
-restaurants_df = pd.read_csv('restaurants.csv')  # Đặt file CSV ở gốc hoặc config sau
+restaurants_df = pd.read_csv('data/restaurants.csv')  # Đặt file CSV ở gốc hoặc config sau
 
 def load_model():
     with open("app/models/recommend_restaurant/model.pkl", "rb") as f:
