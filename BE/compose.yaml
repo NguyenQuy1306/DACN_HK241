@@ -44,7 +44,7 @@ services:
       - .env.docker
     environment:
       - TZ=Asia/Ho_Chi_Minh
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_PROFILES_ACTIVE=prod
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
