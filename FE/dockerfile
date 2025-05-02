@@ -17,7 +17,7 @@
 FROM nginx:stable-alpine
 
 # Copy build output từ host vào image
-COPY ./build /usr/share/nginx/html
+COPY ./app/build /usr/share/nginx/html
 
 # Tùy chọn: cấu hình nginx nếu bạn có
 COPY nginx.conf /etc/nginx/conf.d/default.conf
