@@ -24,7 +24,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Autowired
     private UserMapper userMapper;
 
-    public CustomerResponse updateUserInformation(UserInformationRequest userRequest) {
+    public void updateUserInformation(UserInformationRequest userRequest) {
         Optional<User> user = userRepository.findById(userRequest.getId());
         if (user.isPresent()) {
             System.out.println("==============CURRENT USER:============"+user.get());
@@ -33,7 +33,6 @@ public class UserInformationServiceImpl implements UserInformationService {
             user.get().setSDT(userRequest.getPhoneNumber());
             user.get().setNgaySinh(userRequest.getBirthDate());
             userRepository.save(user.get());
-            return customerServiceImpl.getCustomerById(userRequest.getId()).get();
         } else {
             throw new IllegalArgumentException("Invalid user id");
         }

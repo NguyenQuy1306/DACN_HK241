@@ -7,4 +7,6 @@ import com.capstoneproject.themeal.model.response.RestaurantResponse;
 
 public interface FavoriteListRestaurantService {
     List<FavoriteListRestaurantResponse> findByFavoriteListId(Long favoriteListId);
+    void deleteByFavoriteListId(Long favoriteListId);
+    void addRestaurant(Long favoriteListId, Long restaurantId);
 }

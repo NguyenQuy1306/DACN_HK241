@@ -52,6 +52,18 @@
     align-items: center;
     margin-top: 32px;
     margin-left: -3px;
+    justify-content: space-between;
+}
+
+.private-icon {
+    display: flex;
+    align-items: center;
+}
+
+.card-name-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .private__text {

@@ -1,14 +1,16 @@
 import { Button, Col, DatePicker, Form, Input, message, Row } from "antd";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../redux/api";
 import styles from "./style.module.css";
+import { fetchUser } from "../../redux/features/authenticationSlice";
 
 function PersonalInfo() {
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.authentication);
-
+    console.log("USER AT HOMEPAGE: ", user);
+    const dispatch = useDispatch();
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -48,7 +50,7 @@ function PersonalInfo() {
     useEffect(() => {
         if (user) {
             form.setFieldsValue({
-                name: user.hoTen,
+                name: user?.hoTen,
                 phone: user.sdt,
                 dob: user.ngaySinh ? moment(user.ngaySinh) : null,
                 address: user.diaChi,
@@ -75,6 +77,7 @@ function PersonalInfo() {
             const response = await updateUserInfo(payload);
             console.log("Update successful", response);
             message.success("Cập nhật thông tin thành công!");
+            dispatch(fetchUser({ userId: user?.maSoNguoiDung }));
             // You can show a success message here
         } catch (error) {
             console.error("Update failed", error);
@@ -114,7 +117,7 @@ function PersonalInfo() {
                                 ]}
                             >
                                 <Input
-                                    value={user.hoTen}
+                                    value={user?.hoTen}
                                     placeholder="Nhập họ và tên"
                                 />
                             </Form.Item>

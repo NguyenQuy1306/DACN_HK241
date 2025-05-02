@@ -70,6 +70,7 @@ function BookingHistory({ customerId }) {
                 historyList.map((his, index) => (
                     <HistoryCard
                         key={index}
+                        restaurantId={his.maSoNhaHang}
                         id={his.maSoDatBan}
                         imgUrl={his.anhNhaHang}
                         name={his.tenNhaHang}
@@ -86,17 +87,19 @@ function BookingHistory({ customerId }) {
                         bookingTime={his.thoiGianDat}
                     />
                 ))}
-            {status === "upcoming" &&
+            {status === "PENDING" &&
                 historyList
-                    ?.filter((i) => i.trangThai === "COMPLETED")
+                    ?.filter((i) => i.trangThai === "PENDING")
                     .map((his, index) => (
                         <HistoryCard
                             key={index}
                             imgUrl={his.anhNhaHang}
+                            id={his.maSoDatBan}
                             name={his.tenNhaHang}
                             address={his.diaChiNhaHang}
                             status={his.trangThai}
                             bookingTime={his.thoiGianDat}
+                            restaurantId={his.maSoNhaHang}
                             latitude={his.kinhDo}
                             longitude={his.viDo}
                             time={his.gio}
@@ -108,13 +111,15 @@ function BookingHistory({ customerId }) {
                         />
                     ))}
 
-            {status === "cancelled" &&
+            {(status === "COMPLETED" || status === "CANCELLED_REFUNDED") &&
                 historyList
-                    ?.filter((i) => i.trangThai === "CANCELED")
+                    ?.filter((i) => i.trangThai === "CANCELLED_REFUNDED" || i.trangThai === "COMPLETED")
                     .map((his, index) => (
                         <HistoryCard
                             key={index}
                             imgUrl={his.anhNhaHang}
+                            id={his.maSoDatBan}
+                            restaurantId={his.maSoNhaHang}
                             deposit={his.tienDatCoc}
                             totalPay={his.tongTienThanhToan}
                             name={his.tenNhaHang}

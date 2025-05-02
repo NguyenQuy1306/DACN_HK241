@@ -224,8 +224,8 @@ const Authentication = ({ open }) => {
                     }}
                     mask={false}
                 >
-                    {navItem === "favorite" && <FavoriteList customerId={user.maSoNguoiDung} />}
-                    {navItem === "booking" && <BookingHistory customerId={user.maSoNguoiDung} />}
+                    {navItem === "favorite" && <FavoriteList customerId={user?.maSoNguoiDung} />}
+                    {navItem === "booking" && <BookingHistory customerId={user?.maSoNguoiDung} />}
                     {navItem === "comment" && <ReviewList />}
                     {navItem === "account" && <PersonalInfo />}
                 </Drawer>

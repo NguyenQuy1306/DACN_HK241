@@ -152,6 +152,11 @@ function TableManagement() {
                         <option value="13:00">13:00</option>
                         <option value="13:30">13:30</option>
                         <option value="14:00">14:00</option>
+                        <option value="14:00">15:00</option>
+                        <option value="14:00">16:00</option>
+                        <option value="14:00">17:00</option>
+                        <option value="14:00">18:00</option>
+                        <option value="14:00">19:00</option>
                     </select>
                 </div>
 

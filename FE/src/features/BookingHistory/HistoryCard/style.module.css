@@ -7,7 +7,7 @@
 
 .confirm-status, .cancel-status, .complete-status {
     position: absolute;
-    top: 12px;
+    top: 30px;
     right: 0;
     font-size: 12px;
     font-weight: 600;
@@ -45,6 +45,7 @@
 .card-content {
     margin-left: 24px;
     margin-top: 4px;
+    width: 400px;
 }
 
 .restaurant-name {
@@ -119,6 +120,7 @@
 
 .payment-info {
     position: relative;
+    /* flex: 1; */
 }
 
 .payment-info::after {
@@ -128,9 +130,10 @@
     display: block;
     height: 80%;
     background-color: #ccc;
-    top: 0;
-    right: -50px;
+    top: 4px;
+    right: -50px;   
 }
+
 
 .order-time {
     font-style: italic;
@@ -145,7 +148,7 @@
     align-items: center;
     width: 100%;
     justify-content: space-around;
-    padding: 20px 0;
+    padding: 12px 0;
     
 }
 

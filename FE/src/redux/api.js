@@ -465,9 +465,46 @@ export const getRestaurantByOwnerId = async (params) => {
   }
 };
 
-export const getRestaurantById = async ({ id }) => {
+export const getRestaurantById = async ({ restaurantId }) => {
   try {
-    const response = await API.get(`/api/restaurants/${id}`);
+    const response = await API.get(`/api/restaurants/${restaurantId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+//Favorite List APIs
+
+export const getFavoriteList = async ({ userId }) => {
+  try {
+    const response = await API.get(`/api/favorite-list/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const updateFavoriteList = async ({ listId, listName }) => {
+  try {
+    const response = await API.post(
+      `/api/favorite-list/update/${listId}`,
+      listName,
+      {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteFavoriteList = async ({ listId }) => {
+  try {
+    const response = await API.delete(`/api/favorite-restaurants/${listId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -588,6 +625,15 @@ export const sendUserBehavior = async (params) => {
 export const trackUserBehavior = async (params) => {
   try {
     const response = await API.post(`/api/customer/trackUserBehavior`, params);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getUserInfo = async ({ userId }) => {
+  try {
+    const response = await API.get(`/api/customer/${userId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

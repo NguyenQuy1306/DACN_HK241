@@ -187,7 +187,7 @@ function Dashboard_Owner() {
 
   useEffect(() => {
     if (user) {
-      dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+      dispatch(getRestaurantByOwnerId({ ownerId: user?.maSoNguoiDung }));
     }
   }, [dispatch, user]);
 

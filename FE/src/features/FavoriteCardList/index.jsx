@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import { Divider, Modal } from "antd";
+import { Divider, message, Modal } from "antd";
 import { IoAddCircle } from "react-icons/io5";
 import FavoriteCard from "./FavoriteCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { addNewList, getList } from "../../redux/api";
+import { addNewList, deleteFavoriteList, getList, updateFavoriteList } from "../../redux/api";
 
 function FavoriteCardList({ customerId }) {
     const navigate = useNavigate();
@@ -14,21 +14,43 @@ function FavoriteCardList({ customerId }) {
     const handleAddNewCard = async () => {
         try {
             const response = await addNewList({ userId: customerId });
+            message.success("Tạo danh sách yêu thích thành công!");
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleDeleteCard = async (listId) => {
+        try {
+            const response = await deleteFavoriteList({ listId: listId });
+            message.success("Xóa danh sách yêu thích thành công!");
+            fetchFavoriteList();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleUpdateCard = async (listId, listName) => {
+        try {
+            const response = await updateFavoriteList({ listId, listName });
+
+            message.success("Cập nhật danh sách yêu thích thành công!");
+            fetchFavoriteList();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const fetchFavoriteList = async () => {
+        try {
+            const favorites = await getList({ userId: customerId });
+
+            setFavorites(favorites);
         } catch (err) {
             console.error(err);
         }
     };
 
     useEffect(() => {
-        const fetchFavoriteList = async () => {
-            try {
-                const favorites = await getList({ userId: customerId });
-
-                setFavorites(favorites);
-            } catch (err) {
-                console.error(err);
-            }
-        };
         fetchFavoriteList();
     }, [customerId]);
 
@@ -59,6 +81,9 @@ function FavoriteCardList({ customerId }) {
                                 quantity={card.soLuongNhaHang}
                                 updateTime={card.thoiGianCapNhat}
                                 imgUrl={card.anhNhaHang}
+                                listId={card.maSoDanhSachYeuThich}
+                                handleUpdateFavoriteListName={(id, name) => handleUpdateCard(id, name)}
+                                handleDeleteFavoriteList={(id) => handleDeleteCard(id)}
                             />
                         </div>
                     );

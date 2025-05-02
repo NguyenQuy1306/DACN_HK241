@@ -4,10 +4,29 @@ import Result1 from "../../components/Search/Result/Result1";
 import ListImage from "../../features/Detail/Image/ImageBox";
 import DetailBox from "../../features/Detail/DetailBox/DetailBox";
 import { useDispatch, useSelector } from "react-redux";
-import { sendUserBehavior } from "../../redux/api";
+import { getRestaurantById, sendUserBehavior } from "../../redux/api";
+import { useParams } from "react-router-dom";
 
 const DetailRestaurant = () => {
     const [selectedPlace, setSelectedPlace] = useState(JSON.parse(localStorage.getItem("selectedPlace")));
+    const { id } = useParams();
+    const [restaurantInfo, setRestaurantInfo] = useState([]);
+
+    useEffect(() => {
+        const fetchRestaurantInfo = async () => {
+            try {
+                const result = await getRestaurantById({ restaurantId: id });
+                setRestaurantInfo(result.data.payload);
+            } catch (error) {
+                console.error("Failed to fetch restaurant info:", error);
+            }
+        };
+        fetchRestaurantInfo();
+    }, [id]);
+
+    useEffect(() => {
+        console.log("Restaurant Info:", restaurantInfo);
+    }, [restaurantInfo]);
 
     const startTimeRef = useRef(null);
     const { user } = useSelector((state) => state.authentication);
@@ -37,7 +56,7 @@ const DetailRestaurant = () => {
         const time = setTimeout(() => {
             sendUserBehavior({
                 userId: user?.maSoNguoiDung,
-                restaurantId: selectedPlace?.maSoNhaHang,
+                restaurantId: restaurantInfo?.maSoNhaHang,
                 timeSpent: 5,
                 liked: false,
             });

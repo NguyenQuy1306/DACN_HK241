@@ -1,4 +1,4 @@
-import { Divider } from "antd";
+import { Divider, message, Modal } from "antd";
 import React from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { GrDirections, GrSchedule } from "react-icons/gr";
@@ -10,16 +10,20 @@ import formatCurrencyVND from "./../../../helper/formatCurrency";
 import CountdownTimer from "../../../helper/countDownTime";
 import formatDate from "../../../helper/formatDate";
 import { cancelOrder } from "../../../redux/api";
+import { useNavigate } from "react-router-dom";
 
 const handleOpenGoogleMap = (latitude, longitude) => {
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
     window.open(gmapsUrl, "_blank");
 };
 
+const { confirm } = Modal;
+
 function HistoryCard({
     status,
     imgUrl,
     name,
+    restaurantId,
     id,
     address,
     time,
@@ -32,9 +36,28 @@ function HistoryCard({
     longitude,
     bookingTime,
 }) {
+    const navigate = useNavigate();
     const hanldeCancelOrder = async () => {
         const result = await cancelOrder({ orderId: id });
         console.log(result.data);
+        if (result.data.status === 200) {
+            message.success("Hủy đơn đặt bàn thành công!. Vui lòng đợi email xác nhận từ nhà hàng.");
+        } else {
+            message.error("Hủy đơn đặt bàn thất bại!");
+        }
+    };
+
+    const showCancelConfirm = (id) => {
+        confirm({
+            title: "Bạn có chắc muốn hủy đơn đặt bàn này?",
+            content: "Hành động này không thể hoàn tác. Bạn có thể mất một phần tiền cọc.",
+            okText: "Hủy đặt",
+            okType: "danger",
+            cancelText: "Không",
+            onOk() {
+                hanldeCancelOrder?.({ userId: id }); // Gọi hàm hủy nếu người dùng đồng ý
+            },
+        });
     };
 
     return (
@@ -99,15 +122,18 @@ function HistoryCard({
                                 <span className={styles["remain-price"]}>{formatCurrencyVND(totalPay - deposit)}</span>
                             </div>
                         </div>
-                        <div style={{ textAlign: "center" }}>
-                            <p className={styles["time-frame__title"]}>Thời gian còn lại</p>
-                            <div style={{ marginLeft: "24px" }}>
-                                <CountdownTimer
-                                    bookingTime={bookingTime}
-                                    targetDate={`${date}T${time}`}
-                                />
+                        {status !== "COMPLETED" && status !== "CANCELLED_REFUNDED" && (
+                            <div style={{ textAlign: "center" }}>
+                                <p className={styles["time-frame__title"]}>Thời gian còn lại</p>
+                                <div style={{ marginLeft: "24px" }}>
+                                    <CountdownTimer
+                                        bookingTime={bookingTime}
+                                        targetDate={`${date}T${time}`}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        {status === "CANCELLED_REFUNDED" && <h3 style={{ color: "red" }}>ĐÃ HOÀN TIỀN</h3>}
                     </div>
 
                     {payment === "Thanh toán tại nhà hàng" && (
@@ -124,7 +150,7 @@ function HistoryCard({
             </div>
 
             <div className={styles["card-actions"]}>
-                {status === "COMPLETED" && (
+                {status === "PENDING" && (
                     <div className={styles["card-action"]}>
                         <div className={styles["card-direction"]}>
                             <div className={styles["direction-icon"]}>
@@ -151,7 +177,7 @@ function HistoryCard({
                                 <MdOutlineDelete size={26} />
                             </div>
                             <p
-                                onClick={() => hanldeCancelOrder(id)}
+                                onClick={() => showCancelConfirm(id)}
                                 className={[styles["action-content"], styles["action-content--delete"]].join(" ")}
                             >
                                 HỦY
@@ -159,17 +185,31 @@ function HistoryCard({
                         </div>
                     </div>
                 )}
-                {status !== "COMPLETED" && (
-                    <>
+                {(status === "COMPLETED" || status === "CANCELLED_REFUNDED") && (
+                    <div className={styles["card-action"]}>
                         <div className={styles["card-booking"]}>
                             <div className={styles["booking-icon"]}>
                                 <GrSchedule size={26} />
                             </div>
-                            <p className={[styles["action-content"], styles["action-content--booking"]].join(" ")}>
+                            <p
+                                onClick={() => navigate(`/DetailRestaurant/${restaurantId}`)}
+                                className={[styles["action-content"], styles["action-content--booking"]].join(" ")}
+                            >
                                 ĐẶT LẠI
                             </p>
                         </div>
-                    </>
+                        <div className={styles["card-direction"]}>
+                            <div className={styles["direction-icon"]}>
+                                <GrDirections size={26} />
+                            </div>
+                            <p
+                                onClick={() => handleOpenGoogleMap(latitude, longitude)}
+                                className={[styles["action-content"], styles["action-content--direction"]].join(" ")}
+                            >
+                                ĐƯỜNG ĐI ĐẾN NHÀ HÀNG
+                            </p>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
