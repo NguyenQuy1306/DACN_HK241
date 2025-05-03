@@ -102,7 +102,7 @@ public class OrderPredictConsumerService {
 
             OrderTable orderTable = orderTableRepository.findById(orderId)
                     .orElseThrow(() -> new NotFoundException("Order not found"));
-            orderTable.setPercentNoShow(1 - cancelProbability);
+            orderTable.setPercentNoShow(Math.round((1 - cancelProbability) * 100.0) / 100.0);
 
             handleOrderWithHighPercentNoShow(orderTable);
 
