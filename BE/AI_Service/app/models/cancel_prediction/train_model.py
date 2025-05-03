@@ -4,6 +4,8 @@ import pandas as pd
 import sys
 # Add the parent directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
+
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -135,3 +137,11 @@ def train_and_save_model(df: pd.DataFrame):
     except Exception as e:
         logging.error(f"❌ Failed to save model: {e}")
         print(f"[✘] Failed to save model: {e}")
+if __name__ == "__main__":
+    # Load the CSV data file
+    # df = pd.read_csv(r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv')
+    df = pd.read_csv('/app/data/sample_reservation_data.csv')
+
+
+    # Call the function to train and save the model
+    train_and_save_model(df)

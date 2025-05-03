@@ -1,7 +1,7 @@
 import pandas as pd
 from pymongo import MongoClient
 from app.config.config import MODEL_PATH, MONGODB_URI
-from app.models.cancel_prediction.train_model import train_and_save_model as actual_model_trainer
+from app.models.cancel_prediction.retrain_model import retrain_model as actual_model_trainer
 import logging
 
 client = MongoClient(MONGODB_URI)
