@@ -33,8 +33,10 @@ public class OrderPredictConsumerService {
 
     private void handleOrderWithHighPercentNoShow(OrderTable orderTable) {
         System.out.println("handleOrderWithHighPercentNoShow");
-        OverbookingSettings overbookingSettings = overbookingSettingsRepository.findByRestaurantId(orderTable.getNhaHang().getMaSoNhaHang());
-        ThresholdRule thresholdRule = thresholdRuleRepository.findByOverbookingId(overbookingSettings.getId(), "overbooking");
+        OverbookingSettings overbookingSettings = overbookingSettingsRepository
+                .findByRestaurantId(orderTable.getNhaHang().getMaSoNhaHang());
+        ThresholdRule thresholdRule = thresholdRuleRepository.findByOverbookingId(overbookingSettings.getId(),
+                "overbooking");
         Double percent = orderTable.getPercentNoShow() * 100;
         System.out.println("percent:: " + percent);
         System.out.println("thresholdRule.getMin(:: " + thresholdRule.getMin());
@@ -47,18 +49,21 @@ public class OrderPredictConsumerService {
                     Arrays.asList(orderTable.getGio()),
                     Arrays.asList(orderTable.getSoKhach()));
             System.out.println("check: " + existingTables.isEmpty());
-//                tableRequests.stream().map(TableRequest::getSoLuong).collect(Collectors.toList())
+            // tableRequests.stream().map(TableRequest::getSoLuong).collect(Collectors.toList())
             if (existingTables.size() == 1) {
                 System.out.println("check:123 ");
                 int dayofweek = orderTable.getNgay().getDayOfWeek().getValue();
-                WeeklyOverbookingRate weeklyOverbookingRate = weeklyOverbookingRateRepository.findByRestaurantIdAndDayOfWeek(orderTable.getNhaHang().getMaSoNhaHang(), dayofweek);
+                WeeklyOverbookingRate weeklyOverbookingRate = weeklyOverbookingRateRepository
+                        .findByRestaurantIdAndDayOfWeek(orderTable.getNhaHang().getMaSoNhaHang(), dayofweek);
                 System.out.println("check:232 ");
                 if (weeklyOverbookingRate == null) {
                     throw new EntityExistsException("WeeklyOverbookingRate table not found");
                 }
 
                 TableAvailable available = existingTables.getFirst();
-                Long count_number_overbooking_used_of_ordertable = orderTableRepository.countCanceledOrNoShowOrdersByDateAndTimeSlot(orderTable.getNhaHang().getMaSoNhaHang(), orderTable.getNgay());
+                Long count_number_overbooking_used_of_ordertable = orderTableRepository
+                        .countCanceledOrNoShowOrdersByDateAndTimeSlot(orderTable.getNhaHang().getMaSoNhaHang(),
+                                orderTable.getNgay());
                 Long maxoverbooking = weeklyOverbookingRate.getMaxoverbooking();
                 System.out.println("maxoverbooking: " + maxoverbooking);
                 System.out.println("count:: " + count_number_overbooking_used_of_ordertable);
@@ -95,9 +100,9 @@ public class OrderPredictConsumerService {
             System.out.println("orderId: " + orderId);
             System.out.println("cancelProbability: " + cancelProbability);
 
-            OrderTable orderTable = orderTableRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Order not found"));
-            orderTable.setPercentNoShow(0.9);
-
+            OrderTable orderTable = orderTableRepository.findById(orderId)
+                    .orElseThrow(() -> new NotFoundException("Order not found"));
+            orderTable.setPercentNoShow(1 - cancelProbability);
 
             handleOrderWithHighPercentNoShow(orderTable);
 

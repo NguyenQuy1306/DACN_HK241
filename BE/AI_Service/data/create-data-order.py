@@ -1,69 +1,107 @@
+# model/train_model.py
+import os
 import pandas as pd
-import numpy as np
-import random
-from datetime import datetime, timedelta
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
 
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+import joblib
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import roc_auc_score, classification_report
+from config.config import MODEL_PATH
+import logging
 
-def generate_biased_data(n=5000):
-    data = []
-    base_time = datetime.now()
 
-    for _ in range(n):
-        # Sinh booking & reservation times
-        booking_time = base_time - timedelta(minutes=random.randint(10, 7200))
-        reservation_datetime = booking_time + timedelta(minutes=random.randint(30, 1440))
+def train_and_evaluate_models(df: pd.DataFrame):
+    # Parse datetime and feature engineering
+    df["booking_time"] = pd.to_datetime(df["booking_time"], errors="coerce")
+    df["reservation_datetime"] = pd.to_datetime(df["reservation_date"] + " " + df["reservation_time"], errors="coerce")
+    df.dropna(subset=["booking_time", "reservation_datetime"], inplace=True)
+    df["booking_time"] = df["booking_time"].dt.tz_localize(None)
+    df["booking_hour"] = df["booking_time"].dt.hour
+    df["reservation_hour"] = df["reservation_datetime"].dt.hour
+    df["advance_minutes"] = (df["reservation_datetime"] - df["booking_time"]).dt.total_seconds() / 60
+    df["day_of_week"] = df["reservation_datetime"].dt.weekday
+    df["is_weekend"] = df["day_of_week"].isin([5,6]).astype(int)
 
-        # Các feature
-        booking_hour   = booking_time.hour
-        reservation_hour = reservation_datetime.hour
-        advance_minutes = (reservation_datetime - booking_time).total_seconds() / 60
-        num_guests     = random.randint(1, 6)
-        is_first       = random.randint(0, 1)
-        cancel_rate    = round(random.uniform(0.0, 1.0), 2)
-        payment        = random.choice(["paid", "pending", "failed"])
-        distance       = round(random.uniform(0.1, 30.0), 2)
+    FEATURES = [
+        "user_id", "booking_hour", "reservation_hour", "advance_minutes",
+        "num_guests", "is_first_booking", "day_of_week", "is_weekend",
+        "avg_user_cancel_rate", "payment_status", "user_distance_km"
+    ]
+    TARGET = "is_arrival"
 
-        # Tạo bias dựa trên kinh nghiệm:
-        # - Đặt càng sớm (advance_minutes lớn) → khả năng đến cao hơn chút
-        # - Đặt sát giờ → dễ no-show
-        # - Payment pending/failed → giảm likelihood
-        # - Nhiều khách → khả năng đến cao hơn
-        # - Xa quá (>20km) → khả năng đến thấp hơn
-        # - Giờ ăn (12–14h, 18–20h) → khả năng đến cao hơn
-        score = (
-            + 0.005 * advance_minutes
-            + 0.3 * (num_guests / 6)
-            - 0.4 * is_first
-            - 0.5 * (distance / 30)
-            + (0.5 if 12 <= booking_hour <= 14 or 18 <= booking_hour <= 20 else 0)
-            + (0.3 if payment == "paid" else (-0.2 if payment == "failed" else -0.1))
-        )
-        p_arrival = sigmoid(score - 0.5)  # shift để base rate khoảng 0.5
+    X = df[FEATURES]
+    y = df[TARGET]
 
-        is_arrival = np.random.rand() < p_arrival
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
 
-        data.append({
-            "user_id":              f"user_{random.randint(1, 100)}",
-            "booking_time":         booking_time,
-            "reservation_date":     reservation_datetime.strftime("%Y-%m-%d"),
-            "reservation_time":     reservation_datetime.strftime("%H:%M:%S"),
-            "num_guests":           num_guests,
-            "is_first_booking":     is_first,
-            "avg_user_cancel_rate": cancel_rate,
-            "payment_status":       payment,
-            "user_distance_km":     distance,
-            "advance_minutes":      advance_minutes,
-            "booking_hour":         booking_hour,
-            "reservation_hour":     reservation_hour,
-            "is_weekend":           int(reservation_datetime.weekday() >= 5),
-            "is_arrival":           int(is_arrival)
-        })
+    # Preprocessor
+    numeric_features = [
+        "booking_hour", "reservation_hour", "advance_minutes",
+        "num_guests", "is_first_booking", "day_of_week", "is_weekend",
+        "avg_user_cancel_rate", "user_distance_km"
+    ]
+    categorical_features = ["user_id", "payment_status"]
+    preprocessor = ColumnTransformer([
+        ("num", StandardScaler(), numeric_features),
+        ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_features)
+    ])
 
-    return pd.DataFrame(data)
-df = generate_biased_data(5000)
-print(df.is_arrival.mean())  # Tỉ lệ đến trung bình
+    # Define models
+    models = {
+        "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
+        "Decision Tree": DecisionTreeClassifier(random_state=42),
+        "Support Vector Machine": SVC(probability=True, random_state=42),
+        "K-Nearest Neighbors": KNeighborsClassifier(),
+        "Gradient Boosting": GradientBoostingClassifier(random_state=42),
+        "Random Forest": RandomForestClassifier(n_estimators=200, random_state=42)
+    }
 
-# Lưu ra file nếu cần
-df.to_csv("C:\\Users\\LENOVO\\Desktop\\src_DACN\\DACN_HK241\\BE\\AI_Service\\data\\sample_reservation_data.csv", index=False)
+    results = {}
+    for name, clf in models.items():
+        pipe = Pipeline([
+            ("prep", preprocessor),
+            ("clf", clf)
+        ])
+        pipe.fit(X_train, y_train)
+        y_prob = pipe.predict_proba(X_test)[:,1]
+        y_pred = pipe.predict(X_test)
+        auc = roc_auc_score(y_test, y_prob)
+        report = classification_report(y_test, y_pred)
+        print(f"=== {name} ===")
+        print(f"ROC AUC: {auc:.4f}")
+        print(report)
+        results[name] = auc
+
+    # Select best
+    best_name = max(results, key=results.get)
+    print(f"Best model by ROC AUC: {best_name} ({results[best_name]:.4f})")
+
+    # Retrain best on full data and save
+    best_clf = models[best_name]
+    final_pipe = Pipeline([
+        ("prep", preprocessor),
+        ("clf", best_clf)
+    ])
+    final_pipe.fit(X, y)
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+    joblib.dump(final_pipe, MODEL_PATH, compress=3)
+    logging.info(f"Saved best model '{best_name}' to {MODEL_PATH}")
+
+
+if __name__ == "__main__":
+    df = pd.read_csv(
+        r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv'
+    )
+    train_and_evaluate_models(df)
