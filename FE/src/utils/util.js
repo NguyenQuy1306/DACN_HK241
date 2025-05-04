@@ -1,7 +1,11 @@
+// export const FRONTEND_URL =
+//   process.env.REACT_APP_URL_FRONTEND || "http://159.223.43.202:3000";
+// export const BACKEND_URL =
+//   process.env.REACT_APP_URL_BACKEND || "http://159.223.43.202:8080";
 export const FRONTEND_URL =
-  process.env.REACT_APP_URL_FRONTEND || "http://159.223.43.202:3000";
+  process.env.REACT_APP_URL_FRONTEND || "https://themeal.online";
 export const BACKEND_URL =
-  process.env.REACT_APP_URL_BACKEND || "http://159.223.43.202:8080";
+  process.env.REACT_APP_URL_BACKEND || "https://themeal.online";
 
 export const AI_URL =
   process.env.REACT_APP_URL_AI || "http://159.223.43.202:5000";

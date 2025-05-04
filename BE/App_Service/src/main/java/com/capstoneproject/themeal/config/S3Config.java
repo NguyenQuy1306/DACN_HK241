@@ -41,7 +41,7 @@ public class S3Config {
     public S3Presigner s3Presigner() {
         DefaultCredentialsProvider credentialsProvider = DefaultCredentialsProvider.create();
         return S3Presigner.builder().region(Region.AP_SOUTHEAST_1)
-                .endpointOverride(URI.create("http://s3.ap-southeast-1.amazonaws.com")) // 🔥 Fix lỗi
+                .endpointOverride(URI.create("https://s3.ap-southeast-1.amazonaws.com")) // 🔥 Fix lỗi
                 // URL
                 .credentialsProvider(credentialsProvider).build();
     }
