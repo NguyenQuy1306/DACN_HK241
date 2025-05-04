@@ -184,7 +184,7 @@ function Dashboard_Admin() {
 
   useEffect(() => {
     // Khởi tạo kết nối WebSocket khi component mount
-    const socket = new SockJS(`https://themeal.online/ws`);
+    const socket = new SockJS(`${BACKEND_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
