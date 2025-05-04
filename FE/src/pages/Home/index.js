@@ -62,7 +62,7 @@ function Home(props) {
 
   // WebSocket connection setup
   useEffect(() => {
-    const socket = new SockJS(`${BACKEND_URL}/ws`);
+    const socket = new SockJS(`https://themeal.online/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { withCredentials: true },
