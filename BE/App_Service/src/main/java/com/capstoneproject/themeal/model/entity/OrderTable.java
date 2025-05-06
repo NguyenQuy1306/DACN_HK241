@@ -88,7 +88,6 @@ public class OrderTable {
     @OneToMany(mappedBy = "DonDatBan")
     private Set<OrderTableHasComboAvailable> DanhSachDonDatBanCoComboCoSan;
 
-
     public Long getMaSoDatBan() {
         return MaSoDatBan;
     }
@@ -169,17 +168,7 @@ public class OrderTable {
         this.DanhSachDonDatBanCoMonAn = danhSachDonDatBanCoMonAn;
     }
 
-    public Set<OrderTableApplyDiscount> getDanhSachDonDatBanApDungGiamGia() {
-        return DanhSachDonDatBanApDungGiamGia;
-    }
-
-    public void setDanhSachDonDatBanApDungGiamGia(Set<OrderTableApplyDiscount> danhSachDonDatBanApDungGiamGia) {
-        this.DanhSachDonDatBanApDungGiamGia = danhSachDonDatBanApDungGiamGia;
-    }
-
     @OneToMany(mappedBy = "DonDatBan")
     private Set<OrderTableHasFood> DanhSachDonDatBanCoMonAn;
-    @OneToMany(mappedBy = "DonDatBan")
-    private Set<OrderTableApplyDiscount> DanhSachDonDatBanApDungGiamGia;
 
 }
