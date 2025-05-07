@@ -1,13 +1,18 @@
-import { Breadcrumb, Button, Input, Space, Table, Tag } from "antd";
+import { Breadcrumb, Button, Input, Space, Table, Tag, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import MenuInOrder from "./MenuInOrder";
 import styles from "./style.module.css";
 import "./OrderOwner.css";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import { QqSquareFilled, SearchOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
+import {
+  getAllOrderByRestaurantId,
+  updateOrderStatus,
+} from "./../../redux/features/orderSlice";
 import { format } from "date-fns";
+import dayjs from "dayjs";
+
 const { Search } = Input;
 function OrderOwner() {
   const [searchText, setSearchText] = useState("");
@@ -19,6 +24,7 @@ function OrderOwner() {
   const onSearch = () => {
     console.log("onSearch");
   };
+  const { overbookingSettings } = useSelector((state) => state.overbooking);
   const restaurantOwner = useSelector(
     (state) => state.authentication.restaurantOwner
   );
@@ -106,6 +112,29 @@ function OrderOwner() {
     return date.toLocaleDateString("vi-VN"); // Kết quả: "25/03/2025"
   };
 
+  const handleUpdateStatus = (orderId, status) => {
+    // Assuming you have an action to update order status in your Redux store
+    dispatch(
+      updateOrderStatus({
+        orderId: orderId,
+        newStatus: status,
+        restaurantId: restaurantOwner.maSoNhaHang,
+      })
+    )
+      .then(() => {
+        message.success("Cập nhật trạng thái thành công");
+        // Refresh order list
+        dispatch(
+          getAllOrderByRestaurantId({
+            restaurantId: restaurantOwner.maSoNhaHang,
+          })
+        );
+      })
+      .catch((error) => {
+        message.error("Lỗi khi cập nhật trạng thái: " + error.message);
+      });
+  };
+
   const columns = [
     {
       title: "STT",
@@ -123,18 +152,14 @@ function OrderOwner() {
       key: "name",
     },
     {
-      title: "Ngày",
+      title: "Ngày tới",
       dataIndex: "date",
       key: "date",
       render: (_, { date }) => {
-        return <p>{formatDate(date)}</p>;
+        return <p>{dayjs(date).format("DD/MM/YYYY HH:mm")}</p>;
       },
     },
-    {
-      title: "Giờ",
-      dataIndex: "timezone",
-      key: "timezone",
-    },
+
     {
       title: "Số khách",
       dataIndex: "quantity",
@@ -150,6 +175,8 @@ function OrderOwner() {
           color = "blue";
         } else if (status === "Đã hủy") {
           color = "red";
+        } else if (status === "PAID_PENDING_USE") {
+          color = "orange";
         }
         return (
           <Tag color={color} key={status}>
@@ -177,20 +204,107 @@ function OrderOwner() {
     },
     {
       title: "Còn lại",
-      // dataIndex: "remain",
       key: "remain",
       render: (row) => {
         return (
           <p style={{ color: "#d61a1a" }}>
-            {formatCurrency(row.price - row.prePay)}
+            {row.price - row.prePay > 0
+              ? formatCurrency(row.price - row.prePay)
+              : 0}
           </p>
         );
       },
     },
     {
+      title: "Tỷ lệ huỷ",
+      dataIndex: "tylehuy",
+      key: "tylehuy",
+      render: (_, record) => {
+        const hour = new Date(record.time).getHours(); // dùng record.time
+        const cancelRate = record.tylehuy;
+
+        let label = "";
+        let color = "";
+        let icon = "";
+        if (
+          overbookingSettings &&
+          overbookingSettings.enabled === true &&
+          overbookingSettings.thresholds.length > 2
+        ) {
+          if (
+            cancelRate > overbookingSettings.thresholds[2].min / 100 &&
+            !(hour >= 19 && hour <= 21)
+          ) {
+            label = "Overbooking";
+            color = "red";
+            icon = "⚠️";
+          } else if (
+            cancelRate >=
+            overbookingSettings.thresholds[1].min / 100
+          ) {
+            label = "Tự huỷ sau 20'";
+            color = "orange";
+            icon = "🟠";
+          } else {
+            label = "Đã xác nhận";
+            color = "green";
+            icon = "🟢";
+          }
+        }
+        return overbookingSettings &&
+          overbookingSettings.enabled === true &&
+          overbookingSettings.thresholds.length > 2 ? (
+          <span style={{ color }}>
+            {icon} {Math.round(cancelRate * 100)}% ({label})
+          </span>
+        ) : (
+          <span style={{ color: "#999", fontStyle: "italic" }}>
+            Bạn chưa bật cấu hình hoặc cấu hình chưa đủ Overbooking.{" "}
+          </span>
+        );
+      },
+    },
+
+    {
       title: "Thời gian tạo",
       dataIndex: "time",
       key: "time",
+    },
+    {
+      title: "Thao tác",
+      key: "action",
+      render: (_, record) => {
+        return record.status === "PAID_PENDING_USE" ? (
+          <>
+            <Button
+              type="primary"
+              onClick={() => handleUpdateStatus(record.id, "COMPLETED")}
+              style={{
+                backgroundColor: "#52c41a",
+                border: "none",
+                color: "#fff",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                marginRight: "10px",
+              }}
+            >
+              Hoàn thành
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => handleUpdateStatus(record.id, "CANCELLED")}
+              style={{
+                marginTop: "5px",
+                backgroundColor: "#f5222d",
+                border: "none",
+                color: "#fff",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              Không hoàn thành
+            </Button>
+          </>
+        ) : null;
+      },
     },
   ];
 
@@ -207,19 +321,6 @@ function OrderOwner() {
     console.log("ORDER LIST: ", orderSlice?.order);
   }, [orderSlice.order]);
 
-  const data = [
-    {
-      stt: 1,
-      id: "VKZ2491",
-      key: 1,
-      name: "Nguyễn Quốc Nhựt",
-      status: "Đã hoàn thành",
-      price: 199000,
-      description: <MenuInOrder />,
-      time: "12-03-2025 14:21:21",
-    },
-  ];
-
   const [dataRender, setDataRender] = useState([]);
 
   useEffect(() => {
@@ -234,6 +335,7 @@ function OrderOwner() {
           name: order.tenKhachHang,
           status: order.trangThai,
           price: order.danhSachMonAn.reduce((acc, cur) => acc + cur.gia, 0),
+          tylehuy: order.tyLeHuy,
           description: (
             <MenuInOrder
               menu={
@@ -243,11 +345,10 @@ function OrderOwner() {
               }
             />
           ),
-          time: "12-03-2025 14:21:21",
-          timezone: order.gio,
-          date: order.ngay,
+          time: order.thoiGianTao,
+          date: `${order.ngay}T${order.gio}`,
           quantity: order.soKhach,
-          remain: 500000,
+          remain: Number(order.tongTienThanhToan) || 0,
           prePay: Number(order.tienCoc) || 0, // Đảm bảo `tienCoc` không bị NaN
         };
       })
@@ -260,7 +361,6 @@ function OrderOwner() {
 
   return (
     <div className={styles.container}>
-      {/* <SidebarOwner collapsed={collapsed} /> */}
       <div className={styles.body}>
         <Search
           placeholder="Nhập thông tin tìm kiếm"

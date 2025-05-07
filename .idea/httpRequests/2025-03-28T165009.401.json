@@ -1,0 +1,4 @@
+{
+  "error": "Unauthorized",
+  "message": "Session invalid or expired"
+}

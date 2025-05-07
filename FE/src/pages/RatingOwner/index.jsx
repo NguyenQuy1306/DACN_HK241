@@ -23,12 +23,12 @@ function RatingOwner() {
             key: "name",
             align: "center",
         },
-        {
-            title: "Ảnh đại diện",
-            dataIndex: "avatar",
-            key: "avatar",
-            align: "center",
-        },
+        // {
+        //     title: "Ảnh đại diện",
+        //     dataIndex: "avatar",
+        //     key: "avatar",
+        //     align: "center",
+        // },
         {
             title: "Đánh giá",
             dataIndex: "rating",

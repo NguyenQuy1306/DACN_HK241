@@ -30,7 +30,7 @@ export const login = createAsyncThunk("auth/login", async (params, { rejectWithV
 
 export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
     try {
-        await api.logout();
+        await api.logoutAPI();
         return true;
     } catch (error) {
         return rejectWithValue(error.response?.data || "Logout failed");
@@ -45,24 +45,48 @@ export const getRestaurantByOwnerId = createAsyncThunk("/restaurants/owner", asy
     }
 });
 
+export const loginWithGoogle = createAsyncThunk("/oauth2/google", async (params, { rejectWithValue }) => {
+    try {
+        const response = await api.loginWithGoogle(params);
+        return response.payload;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Login failed");
+    }
+});
+
+export const fetchUser = createAsyncThunk("/customer/information", async (params, { rejectWithValue }) => {
+    try {
+        const response = await api.getUserInfo(params);
+        return response.payload;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Login failed");
+    }
+});
+
 const authenticationSlice = createSlice({
     name: "authentication",
     initialState: {
         user: null,
         userRole: "guest",
         registerStatus: "",
+        oath2Callback: null,
         restaurantOwner: null,
         openModal: false,
         error: null,
-        loginRoute: false,
+        ownerLogin: false,
+        adminLogin: false,
         errorCheckSession: null,
         isAuthenticated: false,
         errorRegister: null,
         loading: false,
     },
+
     reducers: {
         setLoginRoute: (state, action) => {
-            state.loginRoute = action.payload;
+            state.ownerLogin = action.payload;
+        },
+        setAdminLogin: (state, action) => {
+            state.adminLogin = action.payload;
         },
         setUser: (state, action) => {
             state.user = action.payload;
@@ -101,6 +125,18 @@ const authenticationSlice = createSlice({
                 state.loading = false;
                 state.errorRegister = action.payload;
             })
+            .addCase(fetchUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
             .addCase(login.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -115,7 +151,11 @@ const authenticationSlice = createSlice({
                         break;
                     case "O":
                         state.userRole = "owner";
-                        state.loginRoute = true;
+                        state.ownerLogin = true;
+                        break;
+                    case "A":
+                        state.userRole = "admin";
+                        state.adminLogin = true;
                         break;
                     default:
                         state.userRole = "guest"; // Hoặc một giá trị mặc định nếu không xác định được role
@@ -141,7 +181,8 @@ const authenticationSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
                 state.userRole = "guest";
-                state.loginRoute = false;
+                state.ownerLogin = false;
+                state.adminLogin = false;
                 state.restaurantOwner = null;
             })
             .addCase(logout.rejected, (state, action) => {
@@ -159,6 +200,18 @@ const authenticationSlice = createSlice({
             .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            .addCase(loginWithGoogle.pending, (state) => {
+                state.loading = true;
+                state.oath2Callback = [];
+            })
+            .addCase(loginWithGoogle.fulfilled, (state, action) => {
+                state.loading = false;
+                state.oath2Callback = action.payload.payload;
+            })
+            .addCase(loginWithGoogle.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             });
     },
 });
@@ -171,6 +224,7 @@ export const {
     setUser,
     setUserRole,
     setStatusModalAuthentication,
+    setAdminLogin,
 } = authenticationSlice.actions;
 
 export const selectUser = (state) => state.authentication.user;

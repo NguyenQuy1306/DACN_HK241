@@ -7,7 +7,7 @@
 
 .confirm-status, .cancel-status, .complete-status {
     position: absolute;
-    top: 12px;
+    top: 30px;
     right: 0;
     font-size: 12px;
     font-weight: 600;
@@ -38,12 +38,14 @@
 
 .card-img {
     width: 236px;
+    height: 212px;
     border-top-left-radius: 8px;
 }
 
 .card-content {
     margin-left: 24px;
     margin-top: 4px;
+    width: 400px;
 }
 
 .restaurant-name {
@@ -67,34 +69,114 @@
     width: 310px;
     justify-content: space-between;
     margin-top: 16px;
+    /* gap: 64px; */
+}
+
+.time-info {
+    display: flex;;
 }
 
 .time-frame__title {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     font-size: 14px;
-    
 }
 
 .time-frame__detail {
     font-weight: 700;
 }
 
+.remain-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FF0000;
+}
+
+.card-action > div {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-action > div::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 100%;
+    right: 0px;
+    background-color: #ccc;
+    position: absolute;
+}
+
+.card-action > div:last-child::after {
+    display: none;
+}
+
+.payment-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-info {
+    position: relative;
+    /* flex: 1; */
+}
+
+.payment-info::after {
+    width: 1px;
+    content: '';
+    position: absolute;
+    display: block;
+    height: 80%;
+    background-color: #ccc;
+    top: 4px;
+    right: -50px;   
+}
+
+
+.order-time {
+    font-style: italic;
+    margin-top: 8px;
+}
+
+
+
+
 .card-actions {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-around;
-    padding: 20px 0;
+    padding: 12px 0;
+    
+}
+
+.card-action {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
 }
 
 .card-delete, .card-modify, .card-direction, .card-booking {
     display: flex;
     align-items: center;
-
+    
 }
 
-.card-modify {
+.card-delete, .card-modify, .card-direction {
+    flex: 1;
+}
 
+.action-content:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.action-content--delete:hover {
+    cursor: pointer;
 }
 
 .card-direction {

@@ -1,0 +1,22 @@
+{
+    "name": "postgres-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "database.hostname": "postgres-db",
+      "database.port": "5432",
+      "database.user": "postgres",
+      "database.password": "Ngocquynguyen1",
+      "database.dbname": "curcus",
+      "database.server.name": "curcus",
+      "table.include.list": "public.nhahang",
+      "plugin.name": "pgoutput",
+      "slot.name": "debezium",
+      "publication.name": "debezium_pub",
+      "topic.prefix": "curcus",
+      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "key.converter.schemas.enable": "false",
+      "value.converter.schemas.enable": "false"
+    }
+  }
+  

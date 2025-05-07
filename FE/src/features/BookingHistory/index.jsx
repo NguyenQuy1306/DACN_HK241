@@ -1,73 +1,131 @@
 import { Divider } from "antd";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import HistoryCard from "./HistoryCard";
 import styles from "./style.module.css";
+import { getOrderHistory } from "../../redux/api";
+import formatDate from "./../../helper/formatDate";
 
 function BookingHistory({ customerId }) {
     const [historyList, setHistoryList] = useState([]);
+    const [status, setStatus] = useState("all");
 
     useEffect(() => {
         const fetchOrderList = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/orders/customer/${customerId}/history`,{ withCredentials: true});
-                if (response.status === 200) {
-                    setHistoryList(response.data);
-                } else {
-                    console.error("Failed to get order list!");
-                }
+                const result = await getOrderHistory({ userId: customerId });
+                setHistoryList(result || []);
             } catch (error) {
-                console.error(error.message);
+                console.error("Failed to fetch order history:", error);
             }
         };
         fetchOrderList();
     }, [customerId]);
-    const totalItem = historyList.length;
-    const totalCommingItems = historyList.filter((item) => item.trangThai === "Confirmed").length;
-    const totalCancelItems = historyList.filter((item) => item.trangThai === "Cancelled").length;
-    const totalDonnedItems = historyList.filter((item) => item.trangThai === "Completed").length;
 
-    useEffect(() => {
-        console.log(historyList);
-    }, [historyList]);
+    const upcomingBookings = useMemo(() => historyList.filter((card) => card.trangThai === "COMPLETED"), [historyList]);
+    const completedOrCancelled = useMemo(
+        () => historyList.filter((card) => card.trangThai === "Completed" || card.trangThai === "CANCELLED_REFUNDED"),
+        [historyList],
+    );
+
     return (
         <div className={styles.container}>
             <h3 className={styles.header}>Lịch sử đặt bàn</h3>
-            <p className={styles.quantity}>({totalItem}) đơn đặt bàn</p>
+            <p className={styles.quantity}>({historyList.length}) Đơn đặt bàn</p>
             <Divider />
             <ul className={styles["status-list"]}>
-                <li className={styles["status-item"]}>Tất cả ({totalItem})</li>
-                <li className={styles["status-item"]}>Sắp đếm ({totalCommingItems})</li>
-                <li className={styles["status-item"]}>Hoàn thành và hủy ({totalCancelItems + totalDonnedItems})</li>
+                <li
+                    onClick={() => setStatus("all")}
+                    className={
+                        status === "all"
+                            ? `${styles["status-item"]} ${styles["status-item--active"]}`
+                            : styles["status-item"]
+                    }
+                >
+                    Tất cả ({historyList.length})
+                </li>
+                <li
+                    onClick={() => setStatus("upcoming")}
+                    className={
+                        status === "upcoming"
+                            ? `${styles["status-item"]} ${styles["status-item--active"]}`
+                            : styles["status-item"]
+                    }
+                >
+                    Sắp đến ({upcomingBookings.length})
+                </li>
+                <li
+                    onClick={() => setStatus("cancelled")}
+                    className={
+                        status === "cancelled"
+                            ? `${styles["status-item"]} ${styles["status-item--active"]}`
+                            : styles["status-item"]
+                    }
+                >
+                    Hoàn thành hoặc hủy ({historyList.length - upcomingBookings.length})
+                </li>
             </ul>
-            <p className={styles["list-title"]}>Sắp đến ({totalCommingItems})</p>
-            {historyList
-                .filter((card) => card.trangThai === "Confirmed")
-                .map((his, index) => {
-                    return (
-                        <HistoryCard
-                            key={index}
-                            imgUrl={his.anhNhaHang}
-                            name={his.tenNhaHang}
-                            address={his.diaChiNhaHang}
-                            status={his.trangThai}
-                            time={his.gio}
-                            date={his.ngay}
-                            numOfCustomers={his.soKhach}
-                            payment={his.tenPhuongThucThanhToan}
-                        />
-                    );
-                })}
 
-            <p className={styles["list-title"]}>Hoàn thành và hủy ({totalCancelItems + totalDonnedItems})</p>
-            {historyList
-                .filter((card) => card.trangThai === "Cancelled" || card.trangThai === "Completed")
-                .map((his, index) => {
-                    return (
+            <p className={styles["list-title"]}>Sắp đến ({upcomingBookings.length})</p>
+            {status === "all" &&
+                historyList.map((his, index) => (
+                    <HistoryCard
+                        key={index}
+                        restaurantId={his.maSoNhaHang}
+                        id={his.maSoDatBan}
+                        imgUrl={his.anhNhaHang}
+                        name={his.tenNhaHang}
+                        address={his.diaChiNhaHang}
+                        latitude={his.kinhDo}
+                        longitude={his.viDo}
+                        status={his.trangThai}
+                        time={his.gio}
+                        deposit={his.tienDatCoc}
+                        totalPay={his.tongTienThanhToan}
+                        date={his.ngay}
+                        numOfCustomers={his.soKhach}
+                        payment={his.tenPhuongThucThanhToan}
+                        bookingTime={his.thoiGianDat}
+                    />
+                ))}
+            {status === "PENDING" &&
+                historyList
+                    ?.filter((i) => i.trangThai === "PENDING")
+                    .map((his, index) => (
                         <HistoryCard
                             key={index}
                             imgUrl={his.anhNhaHang}
+                            id={his.maSoDatBan}
                             name={his.tenNhaHang}
+                            address={his.diaChiNhaHang}
+                            status={his.trangThai}
+                            bookingTime={his.thoiGianDat}
+                            restaurantId={his.maSoNhaHang}
+                            latitude={his.kinhDo}
+                            longitude={his.viDo}
+                            time={his.gio}
+                            deposit={his.tienDatCoc}
+                            totalPay={his.tongTienThanhToan}
+                            date={his.ngay}
+                            numOfCustomers={his.soKhach}
+                            payment={his.tenPhuongThucThanhToan}
+                        />
+                    ))}
+
+            {(status === "COMPLETED" || status === "CANCELLED_REFUNDED") &&
+                historyList
+                    ?.filter((i) => i.trangThai === "CANCELLED_REFUNDED" || i.trangThai === "COMPLETED")
+                    .map((his, index) => (
+                        <HistoryCard
+                            key={index}
+                            imgUrl={his.anhNhaHang}
+                            id={his.maSoDatBan}
+                            restaurantId={his.maSoNhaHang}
+                            deposit={his.tienDatCoc}
+                            totalPay={his.tongTienThanhToan}
+                            name={his.tenNhaHang}
+                            latitude={his.kinhDo}
+                            bookingTime={his.thoiGianDat}
+                            longitude={his.viDo}
                             address={his.diaChiNhaHang}
                             status={his.trangThai}
                             time={his.gio}
@@ -75,8 +133,7 @@ function BookingHistory({ customerId }) {
                             numOfCustomers={his.soKhach}
                             payment={his.tenPhuongThucThanhToan}
                         />
-                    );
-                })}
+                    ))}
         </div>
     );
 }

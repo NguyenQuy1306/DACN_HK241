@@ -11,7 +11,10 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "./StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setHoveredMarkerIndex } from "../../redux/features/restaurantSlice";
+import {
+  setHoveredMarkerIndex,
+  trackUserBehavior,
+} from "../../redux/features/restaurantSlice";
 import { motion } from "framer-motion";
 const PlaceDetails = ({
   place,
@@ -24,10 +27,20 @@ const PlaceDetails = ({
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.authentication.user);
   const handleClickDetailRestaurant = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(place));
     localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    if (user) {
+      dispatch(
+        trackUserBehavior({
+          restaurantId: id,
+          userId: user?.maSoNguoiDung,
+          timestamp: new Date().toISOString(),
+        })
+      );
+    }
+
     window.open("/DetailRestaurant/${id}", "_blank");
   };
   const [startIndex, setStartIndex] = useState(0);

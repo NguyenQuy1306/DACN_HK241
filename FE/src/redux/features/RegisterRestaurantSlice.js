@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    fname: "Nguyễn Quốc",
-    lname: "Nhựt",
-    phone: "0346808304",
-    email: "nguyenquocnhut11c1@gmail.com",
-    restaurantName: "AZ Food",
-    restaurantAddress: "212, Ngô Đức Kế, Q1, TPHCM",
-    avgPrice: "300.000",
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+    restaurantName: "",
+    restaurantAddress: "",
+    avgPrice: "",
 };
 
 const registerRestaurantSlice = createSlice({
-    name: "restaurant-register",
+    name: "restaurantRegister",
     initialState: initialState,
     reducers: {
         setLastName: (state, action) => {
@@ -39,6 +39,14 @@ const registerRestaurantSlice = createSlice({
     },
 });
 
-export const { setFirstName, setRestaurantName,resetState, setRestaurantAddress, setLastName, setEmail, setPhone, setAvgPrice } =
-    registerRestaurantSlice.actions;
+export const {
+    setFirstName,
+    setRestaurantName,
+    resetState,
+    setRestaurantAddress,
+    setLastName,
+    setEmail,
+    setPhone,
+    setAvgPrice,
+} = registerRestaurantSlice.actions;
 export default registerRestaurantSlice.reducer;

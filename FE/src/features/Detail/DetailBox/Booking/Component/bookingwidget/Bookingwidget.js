@@ -124,6 +124,7 @@ const Bookingwidget = ({ selectedPlace }) => {
   const [timeTableAvailable, setTimeTableAvailable] = useState([]);
   const [personTableAvailable, setPersonTableAvailable] = useState([]);
   const openModalPayment = useSelector((state) => state.table.openModalPayment);
+  console.log("tableAvailable", tableAvailable);
   useEffect(() => {
     if (date) {
       const formattedDate = date
@@ -141,6 +142,7 @@ const Bookingwidget = ({ selectedPlace }) => {
           return item.ngay === formattedDate;
         })
         .map((item) => item.gio);
+      console.log("times", times);
 
       setTimeTableAvailable(times); // Update state
     }

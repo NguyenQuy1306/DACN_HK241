@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4cf7f47-f899-4076-8016-dabfa1b9360d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/model/request/OrderTrainingEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/AI_Service/logs/scheduler.log" beforeDir="false" afterPath="$PROJECT_DIR$/BE/AI_Service/logs/scheduler.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/config/KafkaProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/model/request/OrderEvent.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Dockerfile" />
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -40,8 +46,12 @@
     &quot;accountId&quot;: &quot;503fce79-741d-4ae1-86c1-bc695964b198&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -54,33 +64,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CurcusApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.capstoneprojectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.lms [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.lms [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.lms [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;foodCRUD&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/LENOVO/Desktop/droppii/BE&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CurcusApplication.executor": "Run",
+    "Application.capstoneprojectApplication.executor": "Coverage",
+    "Docker.BE/compose.yaml.elasticsearch: Compose Deployment.executor": "Run",
+    "HTTP Request.generated-requests | #1.executor": "Run",
+    "Maven.lms [clean].executor": "Run",
+    "Maven.lms [install].executor": "Run",
+    "Maven.lms [package].executor": "Run",
+    "Node.js.console.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "mergeAdmin",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/Desktop/src DACN/DACN_HK241/BE",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;redis&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis",
+      "postgresql",
+      "mongo"
     ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\src DACN\DACN_HK241" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Desktop\src DACN\DACN_HK241\BE" />
+      <recent name="C:\Users\LENOVO\Desktop\src DACN\DACN_HK241\BE folder" />
+      <recent name="C:\Users\LENOVO\Desktop\src DACN\DACN_HK241\App_Service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.capstoneproject.themeal.model.request" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -92,32 +124,91 @@
         <entry key="Application">
           <value>
             <set>
-              <option value="capstoneprojectApplication" />
+              <option value="B" />
             </set>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="capstoneprojectApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.capstoneproject.themeal.capstoneprojectApplication" />
-      <module name="lms" />
+  <component name="RunManager" selected="Application.B">
+    <configuration name="B" type="Application" factoryName="Application" temporary="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="DACN_HK241" />
+      <option name="PROGRAM_PARAMETERS" value="BE/" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BE/App_Service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.capstoneproject.themeal.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" executionIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="console.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$APPLICATION_CONFIG_DIR$/consoles/db/bbb137aa-cbdf-4fb3-bc1e-c7b9151c4e63/console.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="capstoneprojectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="lms" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.themeal.capstoneprojectApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BE/compose.yaml.elasticsearch: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="elasticsearch" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="BE/compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.B" />
+      <item itemvalue="Docker.BE/compose.yaml.elasticsearch: Compose Deployment" />
+      <item itemvalue="HTTP Request.generated-requests | #1" />
+      <item itemvalue="Node.js.console.js" />
+      <item itemvalue="Spring Boot.capstoneprojectApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.capstoneprojectApplication" />
+        <item itemvalue="Application.B" />
+        <item itemvalue="Docker.BE/compose.yaml.elasticsearch: Compose Deployment" />
+        <item itemvalue="Node.js.console.js" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -128,8 +219,35 @@
       <option name="presentableId" value="Default" />
       <updated>1730344912597</updated>
       <workItem from="1742538911347" duration="265000" />
+      <workItem from="1743146578743" duration="494000" />
+      <workItem from="1743147319283" duration="23442000" />
+      <workItem from="1743178524523" duration="1446000" />
+      <workItem from="1743214770106" duration="30276000" />
+      <workItem from="1743328164823" duration="48118000" />
+      <workItem from="1743415281493" duration="25000" />
+      <workItem from="1743507509230" duration="3480000" />
+      <workItem from="1743899614780" duration="21675000" />
+      <workItem from="1743932181282" duration="391000" />
+      <workItem from="1743950168638" duration="2598000" />
+      <workItem from="1743984602468" duration="4209000" />
+      <workItem from="1743996202369" duration="5205000" />
+      <workItem from="1744071075807" duration="29195000" />
+      <workItem from="1744124133123" duration="5110000" />
+      <workItem from="1744184837224" duration="12030000" />
+      <workItem from="1744357377412" duration="22268000" />
+      <workItem from="1744460261362" duration="1169000" />
+      <workItem from="1744542140154" duration="115000" />
+      <workItem from="1744547833205" duration="3857000" />
+      <workItem from="1744552422299" duration="8305000" />
+      <workItem from="1744600308395" duration="7000" />
+      <workItem from="1744600420038" duration="1292000" />
+      <workItem from="1744622994640" duration="3775000" />
+      <workItem from="1744632171150" duration="454000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
@@ -172,5 +290,398 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/oidc/OidcIdToken.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/oidc/OidcIdToken.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/oidc/OidcIdToken.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/authentication/OidcAuthorizationCodeAuthenticationProvider.java</url>
+          <line>182</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/authentication/OidcAuthorizationCodeAuthenticationProvider.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/authentication/OidcAuthorizationCodeAuthenticationProvider.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/authentication/OidcAuthorizationCodeAuthenticationProvider.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/authentication/OidcAuthorizationCodeAuthenticationProvider.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/userinfo/OidcUserService.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="174" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/userinfo/OidcUserService.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/userinfo/OidcUserService.java</url>
+          <line>113</line>
+          <option name="timeStamp" value="176" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/oidc/userinfo/OidcUserService.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>143</line>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="184" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>194</line>
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/6.3.1/spring-security-core-6.3.1-sources.jar!/org/springframework/security/authentication/ProviderManager.java</url>
+          <line>214</line>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/6.3.1/spring-security-core-6.3.1-sources.jar!/org/springframework/security/authentication/ProviderManager.java</url>
+          <line>215</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>230</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>237</line>
+          <option name="timeStamp" value="220" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>240</line>
+          <option name="timeStamp" value="221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.3.1/spring-security-web-6.3.1-sources.jar!/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.java</url>
+          <line>249</line>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.1.10/spring-web-6.1.10-sources.jar!/org/springframework/web/filter/OncePerRequestFilter.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-jose/6.3.1/spring-security-oauth2-jose-6.3.1-sources.jar!/org/springframework/security/oauth2/jwt/NimbusJwtDecoder.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="233" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="248" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/config/SecurityConfig.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="250" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="251" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="252" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="254" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/controller/AuthenticationController.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="286" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>133</line>
+          <option name="timeStamp" value="287" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>139</line>
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/impl/TableAvailableServiceImpl.java</url>
+          <line>140</line>
+          <option name="timeStamp" value="289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/web/HttpSessionOAuth2AuthorizationRequestRepository.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="295" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/OrderTableService.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-client/6.3.1/spring-security-oauth2-client-6.3.1-sources.jar!/org/springframework/security/oauth2/client/authentication/OAuth2LoginAuthenticationProvider.java</url>
+          <line>92</line>
+          <properties class="org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider" method="authenticate">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-oauth2-core/6.3.1/spring-security-oauth2-core-6.3.1-sources.jar!/org/springframework/security/oauth2/core/DelegatingOAuth2TokenValidator.java</url>
+          <line>55</line>
+          <properties class="org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator" method="validate">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/BE/App_Service/src/main/java/com/capstoneproject/themeal/service/KafkaConsumerService.java</url>
+          <line>25</line>
+          <properties class="com.capstoneproject.themeal.service.KafkaConsumerService">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="296" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.apache.catalina.connector.Request" memberName="attributes" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((StrictFirewalledRequest)((HeaderWriterRequest)request).request).this$0" custom="org.springframework.security.web.firewall.StrictHttpFirewall.StrictFirewalledRequest,org.springframework.security.web.header.HeaderWriterFilter.HeaderWriterRequest" />
+        <watch expression="response" />
+        <watch expression="authorizationCodeAuthentication" />
+        <watch expression="((org.springframework.util.LinkedMultiValueMap)request.body).entrySet().toArray()[1]" custom="org.springframework.util.LinkedMultiValueMap" />
+        <watch expression="ex" />
+        <watch expression="responseExtractor" />
+        <watch expression="token" />
+        <watch expression="((Duration)((JwtTimestampValidator)((java.util.ArrayList)this.tokenValidators).get(0)).clockSkew).seconds" custom="org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator,org.springframework.security.oauth2.jwt.JwtTimestampValidator,java.time.Duration,java.util.ArrayList" />
+        <watch expression="((ZoneOffset)((SystemClock)((OidcIdTokenValidator)((java.util.ArrayList)this.tokenValidators).get(2)).clock).zone).rules" custom="org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator,java.time.Clock.SystemClock,org.springframework.security.oauth2.client.oidc.authentication.OidcIdTokenValidator,java.time.ZoneOffset,java.util.ArrayList" />
+        <watch expression="((ZoneOffset)((SystemClock)((OidcIdTokenValidator)((java.util.ArrayList)this.tokenValidators).get(2)).clock).zone).rules" custom="org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator,java.time.Clock.SystemClock,org.springframework.security.oauth2.client.oidc.authentication.OidcIdTokenValidator,java.time.ZoneOffset,java.util.ArrayList" />
+        <watch expression="((OidcIdTokenValidator)((java.util.ArrayList)this.tokenValidators).get(2)).clock" custom="org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator,org.springframework.security.oauth2.client.oidc.authentication.OidcIdTokenValidator,java.util.ArrayList" />
+        <watch expression="accessTokenResponse" />
+        <watch expression="accessTokenResponse" />
+        <watch expression="clientRegistration" />
+        <watch expression="clientRegistration" />
+        <watch expression="accessTokenResponse" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DACN_HK241$capstoneprojectApplication.ic" NAME="capstoneprojectApplication Coverage Results" MODIFIED="1744632503477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.capstoneproject.themeal.*</FILTER>
+    </SUITE>
   </component>
 </project>

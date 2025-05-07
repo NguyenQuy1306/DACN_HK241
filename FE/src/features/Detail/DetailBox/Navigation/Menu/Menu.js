@@ -24,7 +24,7 @@ const Menu = ({ selectedPlace }) => {
     const location_id = localStorage.getItem("selectedPlaceId");
     navigate(`/DetailRestaurant/${location_id}/menuImages`);
   };
-
+  console.log("selectedPlace", selectedPlace);
   const [newCombo, setNewCombo] = useState([]);
   const handleAddItem = (item, quantity) => {
     setNewCombo((prev) => {
@@ -62,6 +62,7 @@ const Menu = ({ selectedPlace }) => {
     indexOfFirstItem,
     indexOfLastItem
   );
+  console.log("currentFoodItems", currentFoodItems);
   const theme = createTheme({
     palette: {
       primary: {
@@ -128,8 +129,8 @@ const Menu = ({ selectedPlace }) => {
 
       {activeTabMenu === "Tất cả món ăn" && (
         <div className="MenuNavBar_allfood">
-          {selectedPlace.imageUrls.MENUIMAGE ? (
-            selectedPlace.imageUrls.MENUIMAGE.map((menuImage, index) => {
+          {selectedPlace.danhSachAnhMenu ? (
+            selectedPlace.danhSachAnhMenu.map((menuImage, index) => {
               if (index < 8) {
                 return (
                   <div

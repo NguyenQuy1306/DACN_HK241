@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function TableHeader() {
   return (
@@ -26,6 +26,12 @@ function TableHeader() {
 }
 
 export default function OrderTableDemo({ data }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data.status == "PAID") {
+      console.log("dataa4/6 ");
+    }
+  }, [dispatch]);
   return (
     <Box component={"div"}>
       <CssBaseline />

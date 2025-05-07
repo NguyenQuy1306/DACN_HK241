@@ -19,7 +19,7 @@ const RestaurantInfoForm = () => {
 
     // useEffect(() => {
     //   if (user) {
-    //     dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+    //     dispatch(getRestaurantByOwnerId({ ownerId: user?.maSoNguoiDung }));
     //   }
     // }, [dispatch, user]);
 

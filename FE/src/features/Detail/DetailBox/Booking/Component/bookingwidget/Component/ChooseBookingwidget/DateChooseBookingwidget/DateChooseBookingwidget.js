@@ -17,7 +17,12 @@ const DateChooseBookingwidget = ({
   setDate,
   tableAvailable,
 }) => {
-  const uniqueDates = [...new Set(tableAvailable.map((item) => item.ngay))];
+  console.log("tableAvailable", tableAvailable);
+  const uniqueDates = [
+    ...new Set(
+      tableAvailable.filter((item) => item.soluong > 0).map((item) => item.ngay)
+    ),
+  ];
   const dateObjects = uniqueDates.map((dateStr) => new Date(dateStr));
 
   // Get min and max date

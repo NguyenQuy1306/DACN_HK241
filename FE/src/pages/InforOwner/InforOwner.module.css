@@ -1,0 +1,92 @@
+.formContainer {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 16px #00000012;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    color: #5e5e5e;
+    margin-bottom: 10px;
+    font-family:
+      Segoe UI,
+      sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .restName {
+    color: rgb(0,102,92);
+  }
+  
+  .input {
+    color: #5e5e5e;
+    border: 0.7px solid #cecece;
+    border-radius: 4px;
+    width: 100%;
+    padding: 13px;
+    font-family:
+      Segoe UI,
+      sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  .textarea {
+    color: #5e5e5e;
+    resize: none;
+    border: 0.7px solid #cecece;
+    border-radius: 4px;
+    width: 100%;
+    height: 125px;
+    padding: 13px;
+    font-family:
+      Segoe UI,
+      sans-serif;
+    font-size: 14px;
+  }
+  
+  .threeColumnGrid {
+    gap: 20px;
+    display: flex;
+  }
+  
+  @media (width<=640px) {
+    .threeColumnGrid {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+  
+  .column {
+    flex: 1;
+  }
+  
+  .submitButton {
+    color: #fff;
+    cursor: pointer;
+    background-color: #f49b33;
+    border: none;
+    border-radius: 4px;
+    width: 244px;
+    height: 44px;
+    margin: 20px auto;
+    font-family:
+      Segoe UI,
+      sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+  }
+  
+  @media (width<=640px) {
+    .submitButton {
+      width: 100%;
+    }
+  }
+  

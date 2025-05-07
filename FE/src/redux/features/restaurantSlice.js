@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 import { create } from "@mui/material/styles/createTransitions";
+import { getRestaurantById } from "./../../api/travelAdvisorAPI";
 
 export const getRestaurants = createAsyncThunk(
   "/restaurants",
@@ -27,12 +28,60 @@ export const getRestaurantsInMaps = createAsyncThunk(
     }
   }
 );
+export const getRestaurant = createAsyncThunk(
+  "/restaurant",
+  async (params, { rejectWithValue }) => {
+    try {
+      console.log("-params", params);
+
+      const response = await api.getRestaurantByOwnerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getRestaurantId = createAsyncThunk(
+  "/restaurant/id",
+  async (params, { rejectWithValue }) => {
+    try {
+      console.log("-params", params);
+
+      const response = await api.getRestaurantById(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getRestaurantByOwnerId = createAsyncThunk(
+  "/restaurants/owner",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.getRestaurantByOwnerId(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const updateRestaurantInfor = createAsyncThunk(
   "/restaurants/update",
   async (params, { rejectWithValue }) => {
     try {
       const response = await api.updateRestaurantInfor(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const trackUserBehavior = createAsyncThunk(
+  "/restaurants/trackUserBehavior",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.trackUserBehavior(params);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -49,9 +98,12 @@ export const restaurantSlice = createSlice({
     loading: false,
     openBookingWithMenu: false,
     menuChoosed: [],
+    restaurantOwnerByAdmin: null,
     newMenu: [],
     currentPage: 0,
     updateRestaurantResponse: null,
+    trackUserBehaviorResponse: null,
+    selectedRestaurant: null,
     thanhPho: "TP Hồ Chí Minh",
     time: null,
     date: null,
@@ -60,6 +112,7 @@ export const restaurantSlice = createSlice({
     bookingWithNewCombo: false,
     hoveredMarkerIndex: null,
   },
+
   reducers: {
     setOpenBookingWithMenu: (state, action) => {
       const { openBookingWithMenu, menuChoosed, newMenu, bookingWithNewCombo } =
@@ -88,6 +141,7 @@ export const restaurantSlice = createSlice({
       state.people = people;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getRestaurantsInMaps.pending, (state) => {
@@ -104,6 +158,18 @@ export const restaurantSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(getRestaurantByOwnerId.pending, (state) => {
+        state.loading = true;
+        state.restaurantOwnerByAdmin = [];
+      })
+      .addCase(getRestaurantByOwnerId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurantOwnerByAdmin = action.payload.payload;
+      })
+      .addCase(getRestaurantByOwnerId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
       .addCase(updateRestaurantInfor.pending, (state) => {
         state.loading = true;
@@ -114,6 +180,31 @@ export const restaurantSlice = createSlice({
         state.updateRestaurantInfor = action.payload.payload;
       })
       .addCase(updateRestaurantInfor.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getRestaurantId.pending, (state) => {
+        state.loading = true;
+        state.selectedRestaurant = null;
+      })
+      .addCase(getRestaurantId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedRestaurant = action.payload.payload;
+      })
+      .addCase(getRestaurantId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(trackUserBehavior.pending, (state) => {
+        state.loading = true;
+        state.trackUserBehaviorResponse = null;
+      })
+      .addCase(trackUserBehavior.fulfilled, (state, action) => {
+        state.loading = false;
+        state.trackUserBehaviorResponse = action.payload.payload;
+      })
+      .addCase(trackUserBehavior.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

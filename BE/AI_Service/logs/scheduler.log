@@ -1,0 +1,416 @@
+2025-04-30 00:24:41,673 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 00:24:41,673 - INFO - [Kafka] Consumer thread started
+2025-04-30 00:24:41,674 - INFO - Scheduler started...
+2025-04-30 00:24:41,674 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 00:24:41,718 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-04-30 00:24:41,718 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 00:24:44,389 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:24:44,389 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:24:44,389 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:24:44,390 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:24:52,088 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:24:52,088 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:24:52,088 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:24:52,088 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:24:59,790 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:24:59,790 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:24:59,791 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:24:59,791 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:25:07,508 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:25:07,508 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:25:07,508 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:25:07,508 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:25:15,211 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:25:15,211 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:25:15,211 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:25:15,211 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:25:41,698 - INFO - Scheduler calling retrain job...
+2025-04-30 00:25:41,698 - INFO - Getting data...
+2025-04-30 00:25:41,698 - INFO - (Getting data...)
+2025-04-30 00:44:52,763 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 00:44:52,763 - INFO - [Kafka] Consumer thread started
+2025-04-30 00:44:52,764 - INFO - Scheduler started...
+2025-04-30 00:44:52,764 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 00:44:52,785 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-04-30 00:44:52,785 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 00:44:55,452 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:44:55,452 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:44:55,452 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:44:55,453 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:45:03,160 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:45:03,161 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:45:03,161 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:45:03,161 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:45:10,867 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:45:10,867 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:45:10,867 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:45:10,867 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:45:18,571 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:45:18,571 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:45:18,571 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:45:18,572 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:45:26,279 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:45:26,279 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:45:26,280 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:45:26,280 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:45:52,789 - INFO - Scheduler calling retrain job...
+2025-04-30 00:45:52,789 - INFO - Getting data...
+2025-04-30 00:45:52,789 - INFO - (Getting data...)
+2025-04-30 00:58:09,079 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 00:58:09,079 - INFO - [Kafka] Consumer thread started
+2025-04-30 00:58:09,080 - INFO - Scheduler started...
+2025-04-30 00:58:09,080 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 00:58:09,100 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-04-30 00:58:09,100 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 00:58:11,783 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:58:11,783 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:58:11,783 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:58:11,783 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:58:19,486 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:58:19,487 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:58:19,487 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:58:19,487 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:58:27,190 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:58:27,190 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:58:27,191 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:58:27,191 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:58:34,897 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:58:34,897 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:58:34,897 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:58:34,897 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:58:42,615 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 00:58:42,615 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 00:58:42,615 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 00:58:42,615 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 00:59:09,101 - INFO - Scheduler calling retrain job...
+2025-04-30 00:59:09,101 - INFO - Getting data...
+2025-04-30 00:59:09,102 - INFO - (Getting data...)
+2025-04-30 10:24:38,070 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 10:24:38,070 - INFO - [Kafka] Consumer thread started
+2025-04-30 10:24:38,071 - INFO - Scheduler started...
+2025-04-30 10:24:38,071 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 10:24:38,094 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2025-04-30 10:24:38,094 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 10:24:40,785 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 10:24:40,785 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 10:24:40,785 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 10:24:40,785 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 10:24:48,483 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 10:24:48,483 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 10:24:48,483 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 10:24:48,484 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 10:24:56,196 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 10:24:56,196 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 10:24:56,197 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 10:24:56,197 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 10:25:03,905 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 10:25:03,905 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 10:25:03,905 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 10:25:03,906 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 10:25:11,619 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 10:25:11,619 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 10:25:11,619 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 10:25:11,619 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 10:25:38,093 - INFO - Scheduler calling retrain job...
+2025-04-30 10:25:38,093 - INFO - Getting data...
+2025-04-30 10:25:38,093 - INFO - (Getting data...)
+2025-04-30 13:07:19,160 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 13:07:19,160 - INFO - [Kafka] Consumer thread started
+2025-04-30 13:07:19,162 - INFO - Scheduler started...
+2025-04-30 13:07:19,162 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 13:07:19,232 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2025-04-30 13:07:19,232 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 13:07:21,887 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:07:21,887 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:07:21,887 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:07:21,887 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:07:29,584 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:07:29,584 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:07:29,584 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:07:29,584 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:07:37,296 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:07:37,296 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:07:37,296 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:07:37,296 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:07:45,006 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:07:45,006 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:07:45,006 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:07:45,006 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:07:52,710 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:07:52,710 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:07:52,710 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:07:52,711 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:08:19,189 - INFO - Scheduler calling retrain job...
+2025-04-30 13:08:19,189 - INFO - Getting data...
+2025-04-30 13:08:19,189 - INFO - (Getting data...)
+2025-04-30 13:14:25,885 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 13:14:25,885 - INFO - [Kafka] Consumer thread started
+2025-04-30 13:14:25,886 - INFO - Scheduler started...
+2025-04-30 13:14:25,886 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 13:14:25,921 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2025-04-30 13:14:25,921 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 13:14:28,604 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:14:28,605 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:14:28,605 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:14:28,605 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:14:36,321 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:14:36,321 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:14:36,321 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:14:36,321 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:14:44,041 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:14:44,042 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:14:44,042 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:14:44,042 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:14:51,733 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:14:51,733 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:14:51,733 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:14:51,734 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:14:59,440 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 13:14:59,441 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 13:14:59,442 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 13:14:59,443 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 13:15:25,913 - INFO - Scheduler calling retrain job...
+2025-04-30 13:15:25,913 - INFO - Getting data...
+2025-04-30 13:15:25,913 - INFO - (Getting data...)
+2025-04-30 14:52:30,015 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 14:52:30,015 - INFO - [Kafka] Consumer thread started
+2025-04-30 14:52:30,016 - INFO - Scheduler started...
+2025-04-30 14:52:30,016 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 14:52:30,044 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.7:5000
+2025-04-30 14:52:30,044 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 14:52:32,721 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 14:52:32,721 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 14:52:32,721 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 14:52:32,722 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 14:52:40,420 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 14:52:40,420 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 14:52:40,421 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 14:52:40,421 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 14:52:48,129 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 14:52:48,129 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 14:52:48,129 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 14:52:48,129 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 14:52:55,823 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 14:52:55,823 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 14:52:55,823 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 14:52:55,824 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 14:53:03,537 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 14:53:03,537 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 14:53:03,537 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 14:53:03,537 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 14:53:30,039 - INFO - Scheduler calling retrain job...
+2025-04-30 14:53:30,039 - INFO - Getting data...
+2025-04-30 14:53:30,039 - INFO - (Getting data...)
+2025-04-30 17:58:13,911 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 17:58:13,911 - INFO - [Kafka] Consumer thread started
+2025-04-30 17:58:13,912 - INFO - Scheduler started...
+2025-04-30 17:58:13,912 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 17:58:13,963 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.10:5000
+2025-04-30 17:58:13,963 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 17:58:16,611 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 17:58:16,612 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 17:58:16,612 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 17:58:16,612 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 17:58:24,304 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 17:58:24,304 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 17:58:24,304 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 17:58:24,305 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 17:58:32,008 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 17:58:32,008 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 17:58:32,008 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 17:58:32,009 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 17:58:39,694 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 17:58:39,694 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 17:58:39,694 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 17:58:39,694 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 17:58:47,405 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 17:58:47,405 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 17:58:47,405 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 17:58:47,405 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 17:59:13,937 - INFO - Scheduler calling retrain job...
+2025-04-30 17:59:13,937 - INFO - Getting data...
+2025-04-30 17:59:13,937 - INFO - (Getting data...)
+2025-04-30 23:13:20,301 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-04-30 23:13:20,304 - INFO - [Kafka] Consumer thread started
+2025-04-30 23:13:20,305 - INFO - Scheduler started...
+2025-04-30 23:13:20,305 - INFO - [Scheduler] Scheduler thread started
+2025-04-30 23:13:20,393 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.4:5000
+2025-04-30 23:13:20,393 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 23:13:23,008 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 23:13:23,008 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 23:13:23,008 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 23:13:23,009 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 23:13:30,700 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 23:13:30,700 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 23:13:30,700 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 23:13:30,700 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 23:13:38,404 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 23:13:38,404 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 23:13:38,404 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 23:13:38,404 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 23:13:46,111 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 23:13:46,111 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 23:13:46,111 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 23:13:46,111 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 23:13:53,812 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-04-30 23:13:53,813 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-04-30 23:13:53,813 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-04-30 23:13:53,813 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-04-30 23:14:20,352 - INFO - Scheduler calling retrain job...
+2025-04-30 23:14:20,352 - INFO - Getting data...
+2025-04-30 23:14:20,352 - INFO - (Getting data...)
+2025-05-01 08:58:04,437 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-05-01 08:58:04,437 - INFO - [Kafka] Consumer thread started
+2025-05-01 08:58:04,439 - INFO - Scheduler started...
+2025-05-01 08:58:04,439 - INFO - [Scheduler] Scheduler thread started
+2025-05-01 08:58:04,528 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-05-01 08:58:04,528 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-01 08:58:07,133 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 08:58:07,133 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 08:58:07,133 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 08:58:07,133 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 08:58:14,828 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 08:58:14,829 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 08:58:14,829 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 08:58:14,829 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 08:58:22,549 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 08:58:22,549 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 08:58:22,550 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 08:58:22,550 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 08:58:30,242 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 08:58:30,243 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 08:58:30,243 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 08:58:30,243 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 08:58:37,949 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 08:58:37,949 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 08:58:37,949 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 08:58:37,950 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 08:59:04,497 - INFO - Scheduler calling retrain job...
+2025-05-01 08:59:04,498 - INFO - Getting data...
+2025-05-01 08:59:04,498 - INFO - (Getting data...)
+2025-05-01 14:18:06,119 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-05-01 14:18:06,119 - INFO - [Kafka] Consumer thread started
+2025-05-01 14:18:06,120 - INFO - Scheduler started...
+2025-05-01 14:18:06,120 - INFO - [Scheduler] Scheduler thread started
+2025-05-01 14:18:06,169 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-05-01 14:18:06,169 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-01 14:18:08,816 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:18:08,816 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:18:08,816 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:18:08,816 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:18:16,524 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:18:16,524 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:18:16,524 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:18:16,524 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:18:24,236 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:18:24,237 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:18:24,237 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:18:24,237 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:18:31,932 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:18:31,932 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:18:31,932 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:18:31,933 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:18:39,648 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:18:39,649 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:18:39,649 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:18:39,649 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:19:06,141 - INFO - Scheduler calling retrain job...
+2025-05-01 14:19:06,142 - INFO - Getting data...
+2025-05-01 14:19:06,142 - INFO - (Getting data...)
+2025-05-01 14:25:11,519 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-05-01 14:25:11,520 - INFO - [Kafka] Consumer thread started
+2025-05-01 14:25:11,521 - INFO - Scheduler started...
+2025-05-01 14:25:11,521 - INFO - [Scheduler] Scheduler thread started
+2025-05-01 14:25:11,555 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-05-01 14:25:11,555 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-01 14:25:14,215 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:25:14,215 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:25:14,215 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:25:14,216 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:25:21,923 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:25:21,923 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:25:21,923 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:25:21,924 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:25:29,634 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:25:29,634 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:25:29,635 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:25:29,635 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:25:37,333 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:25:37,334 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:25:37,334 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:25:37,334 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:25:45,034 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 14:25:45,034 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 14:25:45,034 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 14:25:45,034 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 14:26:11,626 - INFO - Scheduler calling retrain job...
+2025-05-01 14:26:11,626 - INFO - Getting data...
+2025-05-01 14:26:11,626 - INFO - (Getting data...)
+2025-05-01 20:12:12,179 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-05-01 20:12:12,179 - INFO - [Kafka] Consumer thread started
+2025-05-01 20:12:12,180 - INFO - Scheduler started...
+2025-05-01 20:12:12,180 - INFO - [Scheduler] Scheduler thread started
+2025-05-01 20:12:12,221 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-05-01 20:12:12,221 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-01 20:12:14,874 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 20:12:14,875 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 20:12:14,875 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 20:12:14,875 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 20:12:22,589 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 20:12:22,589 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 20:12:22,589 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 20:12:22,589 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 20:12:30,287 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 20:12:30,287 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 20:12:30,288 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 20:12:30,288 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 20:12:37,985 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 20:12:37,985 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 20:12:37,985 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 20:12:37,985 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 20:12:45,686 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-01 20:12:45,686 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-01 20:12:45,686 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-01 20:12:45,687 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-01 20:13:12,234 - INFO - Scheduler calling retrain job...
+2025-05-01 20:13:12,235 - INFO - Getting data...
+2025-05-01 20:13:12,235 - INFO - (Getting data...)

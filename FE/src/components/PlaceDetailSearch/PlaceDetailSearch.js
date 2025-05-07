@@ -8,7 +8,11 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import StarRating from "../PlaceDetails/StarRating/StarRating.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setHoveredMarkerIndex } from "../../redux/features/restaurantSlice.js";
+import { calculateDistance } from "../../pages/SearchResult/index.js";
+import {
+  setHoveredMarkerIndex,
+  trackUserBehavior,
+} from "../../redux/features/restaurantSlice.js";
 const PlaceDetailSearch = ({
   place,
   selected,
@@ -20,10 +24,20 @@ const PlaceDetailSearch = ({
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.authentication.user);
 
   const handleClickDetailRestaurant = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(place));
     localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    if (user) {
+      dispatch(
+        trackUserBehavior({
+          restaurantId: id,
+          userId: user?.maSoNguoiDung,
+          timestamp: new Date().toISOString(),
+        })
+      );
+    }
     window.open("/DetailRestaurant/${id}", "_blank");
   };
   const [currentImages, setCurrentImages] = useState(
@@ -45,6 +59,15 @@ const PlaceDetailSearch = ({
   const handleBooking = async (id) => {
     localStorage.setItem("selectedPlace", JSON.stringify(place));
     localStorage.setItem("selectedPlaceId", JSON.stringify(id));
+    if (user) {
+      dispatch(
+        trackUserBehavior({
+          restaurantId: id,
+          userId: user?.maSoNguoiDung,
+          timestamp: new Date().toISOString(),
+        })
+      );
+    }
     window.open("/DetailRestaurant/${id}", "_blank");
   };
   return (
@@ -129,6 +152,15 @@ const PlaceDetailSearch = ({
               <p className="PlaceDetailSearch_H1_detail_p">
                 <span className="PlaceDetailSearch_H1_detail_p123">
                   {place.khoangGia} đ/người
+                </span>
+              </p>
+              <p className="PlaceDetailSearch_H1_detail_p">
+                <span className="PlaceDetailSearch_H1_detail_p456">
+                  {calculateDistance(
+                    { longitude: 106.6983125, latitude: 10.7802256 },
+                    { lat: place.viDo, lng: place.kinhDo }
+                  )}{" "}
+                  km
                 </span>
               </p>
               <Button
