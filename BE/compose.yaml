@@ -61,6 +61,7 @@ services:
       - app_network
 
   postgres-db:
+
     # image: 'postgres:17.2-alpine3.21'
     image: 'postgres:15'
     container_name: pgsql

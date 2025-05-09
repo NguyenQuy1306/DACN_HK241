@@ -6,5 +6,6 @@ public enum OrderTableStatus {
     NOT_PAID,
     CANCELLED_REFUNDED,
     COMFIRMED_GOING_TO,
-    COMPLETED
+    COMPLETED,
+    CANCELED
 }
