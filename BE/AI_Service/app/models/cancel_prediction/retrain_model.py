@@ -13,7 +13,7 @@ from imblearn.over_sampling import RandomOverSampler
 
 # Import config
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from config.config import MODEL_PATH
+from app.config.config import MODEL_PATH
 
 def retrain_model(df: pd.DataFrame):
     # 1. Parse datetime

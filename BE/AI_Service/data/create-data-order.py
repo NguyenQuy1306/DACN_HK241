@@ -16,7 +16,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import roc_auc_score, classification_report
-from config.config import MODEL_PATH
+from app.config.config import MODEL_PATH
 import logging
 
 
