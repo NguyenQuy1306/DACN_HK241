@@ -22,4 +22,4 @@ RUN mkdir -p /app/logs
 EXPOSE 5000
 
 # Chạy app
-CMD ["python", "-m", "app.app"]
+CMD ["python", "-m", "app.main"]

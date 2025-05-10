@@ -2,9 +2,9 @@
 import os
 import pandas as pd
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
-
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
+sys.path.append('/app')
 import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -101,7 +101,12 @@ def train_and_evaluate_models(df: pd.DataFrame):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(
-        r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv'
-    )
+    # df = pd.read_csv(
+    #     r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv'
+    # )
+    # df = pd.read_csv(
+    #     r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv'
+    # )
+    df = pd.read_csv("../data/sample_reservation_data.csv")
+
     train_and_evaluate_models(df)
