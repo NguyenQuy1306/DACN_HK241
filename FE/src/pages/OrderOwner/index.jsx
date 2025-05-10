@@ -129,6 +129,7 @@ function OrderOwner() {
             restaurantId: restaurantOwner.maSoNhaHang,
           })
         );
+        window.location.reload();
       })
       .catch((error) => {
         message.error("Lỗi khi cập nhật trạng thái: " + error.message);
