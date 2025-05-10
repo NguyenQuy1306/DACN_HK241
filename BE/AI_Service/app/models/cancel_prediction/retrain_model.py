@@ -4,7 +4,7 @@ import joblib
 import logging
 import sys
 
-from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -14,7 +14,6 @@ from imblearn.over_sampling import RandomOverSampler
 # Import config
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from config.config import MODEL_PATH
-
 
 def retrain_model(df: pd.DataFrame):
     # 1. Parse datetime
@@ -67,11 +66,10 @@ def retrain_model(df: pd.DataFrame):
         pipeline = ImbPipeline([
             ("prep", preprocessor),
             ("sampler", sampler),
-            ("clf", XGBClassifier(
-                objective='binary:logistic',
-                use_label_encoder=False,
-                eval_metric='auc',
+            ("clf", RandomForestClassifier(
+                n_estimators=200,
                 random_state=2025,
+                class_weight="balanced",
                 n_jobs=-1
             ))
         ])
@@ -80,5 +78,6 @@ def retrain_model(df: pd.DataFrame):
     pipeline.fit(X_train, y_train)
 
     # Save model
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(pipeline, MODEL_PATH, compress=3)
     logging.info(f"Model retrained and saved to {MODEL_PATH}")
