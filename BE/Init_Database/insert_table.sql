@@ -5,12 +5,12 @@ WITH base_tables AS (
     SELECT 
         thutuban,
         masonhahang
-    FROM generate_series(1, 64) AS masonhahang, generate_series(0, 20) AS thutuban
+    FROM generate_series(64, 72) AS masonhahang, generate_series(0, 20) AS thutuban
 ),
 random_tables AS (
     SELECT DISTINCT
         (0 + FLOOR(random() * 20))::SMALLINT AS thutuban,  
-        (1 + FLOOR(random() * 64))::BIGINT AS masonhahang 
+        (64 + FLOOR(random() * 8))::BIGINT AS masonhahang 
     FROM generate_series(1, 1000)                          
 ),
 unique_combinations AS (
