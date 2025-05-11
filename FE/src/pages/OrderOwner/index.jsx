@@ -7,6 +7,7 @@ import { getAllOrderByRestaurantId, updateOrderStatus } from "../../redux/featur
 import MenuInOrder from "./MenuInOrder";
 import "./OrderOwner.css";
 import styles from "./style.module.css";
+import generateDisplayBookingId from "../../helper/formatOrderId";
 
 const { Search } = Input;
 
@@ -91,7 +92,7 @@ function OrderOwner() {
                     <Button
                         type="primary"
                         onClick={() => handleSearch(selectedKeys, confirm)}
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined color="white" />}
                         size="small"
                         style={{ width: 90 }}
                     >
@@ -99,8 +100,9 @@ function OrderOwner() {
                     </Button>
                     <Button
                         onClick={close}
-                        type="link"
+                        type="cancel"
                         size="small"
+                        style={{ width: 90, color: "#fff" }}
                     >
                         Close
                     </Button>
@@ -132,6 +134,9 @@ function OrderOwner() {
             title: "Mã đơn",
             dataIndex: "id",
             key: "id",
+            render: (id) => {
+                return generateDisplayBookingId(id);
+            },
             ...getColumnSearchProps("id"),
         },
         {
@@ -244,6 +249,7 @@ function OrderOwner() {
             dataIndex: "time",
             key: "time",
             render: (time) => <p>{formatDate(time)}</p>,
+            sorter: (a, b) => new Date(a.time) - new Date(b.time),
         },
         {
             title: "Thao tác",

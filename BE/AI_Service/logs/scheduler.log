@@ -446,3 +446,48 @@
 2025-05-09 16:18:25,784 - INFO - Scheduler calling retrain job...
 2025-05-09 16:18:25,784 - INFO - Getting data...
 2025-05-09 16:18:25,784 - INFO - (Getting data...)
+2025-05-10 00:41:27,956 - INFO - [Kafka] Start listening to topic: predict-request-events
+2025-05-10 00:41:27,957 - INFO - [Kafka] Consumer thread started
+2025-05-10 00:41:27,957 - INFO - Scheduler started...
+2025-05-10 00:41:27,958 - INFO - [Scheduler] Scheduler thread started
+2025-05-10 00:41:27,991 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.5.151:5000
+2025-05-10 00:41:27,991 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-10 00:41:30,671 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-10 00:41:30,671 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-10 00:41:30,671 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-10 00:41:30,672 - WARNING - [KafkaConsumer] Attempt 1/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-10 00:41:38,373 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-10 00:41:38,373 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-10 00:41:38,373 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-10 00:41:38,373 - WARNING - [KafkaConsumer] Attempt 2/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-10 00:41:46,085 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-10 00:41:46,085 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-10 00:41:46,085 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-10 00:41:46,086 - WARNING - [KafkaConsumer] Attempt 3/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-10 00:41:52,822 - INFO - 127.0.0.1 - - [10/May/2025 00:41:52] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 00:41:52,867 - INFO - 127.0.0.1 - - [10/May/2025 00:41:52] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 00:41:53,788 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-10 00:41:53,789 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-10 00:41:53,789 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-10 00:41:53,789 - WARNING - [KafkaConsumer] Attempt 4/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-10 00:42:01,485 - WARNING - DNS lookup failed for kafka:9092, exception was [Errno 11001] getaddrinfo failed. Is your advertised.listeners (called advertised.host.name before Kafka 9) correct and resolvable?
+2025-05-10 00:42:01,485 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: DNS lookup failed for kafka:9092 (0)
+2025-05-10 00:42:01,485 - ERROR - <BrokerConnection client_id=kafka-python-2.1.5, node_id=bootstrap-0 host=kafka:9092 <connecting> [unspecified None]>: Closing connection. KafkaConnectionError: DNS failure
+2025-05-10 00:42:01,486 - WARNING - [KafkaConsumer] Attempt 5/5 failed. Retrying in 5 seconds... Error: NoBrokersAvailable
+2025-05-10 00:42:27,983 - INFO - Scheduler calling retrain job...
+2025-05-10 00:42:27,983 - INFO - Getting data...
+2025-05-10 00:42:27,983 - INFO - (Getting data...)
+2025-05-10 01:27:15,139 - INFO - 127.0.0.1 - - [10/May/2025 01:27:15] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:27:15,386 - INFO - 127.0.0.1 - - [10/May/2025 01:27:15] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:27:41,502 - INFO - 127.0.0.1 - - [10/May/2025 01:27:41] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:27:42,635 - INFO - 127.0.0.1 - - [10/May/2025 01:27:42] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:31:43,454 - INFO - 127.0.0.1 - - [10/May/2025 01:31:43] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:31:43,722 - INFO - 127.0.0.1 - - [10/May/2025 01:31:43] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:32:26,878 - INFO - 127.0.0.1 - - [10/May/2025 01:32:26] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:32:27,922 - INFO - 127.0.0.1 - - [10/May/2025 01:32:27] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:32:47,179 - INFO - 127.0.0.1 - - [10/May/2025 01:32:47] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:32:48,186 - INFO - 127.0.0.1 - - [10/May/2025 01:32:48] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
+2025-05-10 01:35:46,274 - INFO - 127.0.0.1 - - [10/May/2025 01:35:46] "GET /recommend/online?user_id=6&top_n=10 HTTP/1.1" 200 -
