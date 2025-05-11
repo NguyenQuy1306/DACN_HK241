@@ -61,7 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public ObjectNode createPaymentLink(Integer deposit, CreateOrderRequest request, String returnUrl,
-            Boolean isRefund, OrderTable orderTable) {
+                                        Boolean isRefund, OrderTable orderTable) {
         ObjectNode response = objectMapper.createObjectNode();
 
         try {
@@ -236,6 +236,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .reservationDate(order.getNgay().toString())
                 .userDistanceKm(distanceKm)
                 .numGuests(order.getSoKhach())
+                .totalCancelBookings(cancelCount.intValue())
+                .totalBookings(paidCount.intValue())
                 .isFirstBooking(totalCount == 0 ? Boolean.TRUE : Boolean.FALSE)
                 .build();
         orderPredictRepository.save(orderPredict);

@@ -30,10 +30,11 @@ def retrain_model(df: pd.DataFrame):
     df["is_weekend"] = df["day_of_week"].isin([5, 6]).astype(int)
 
     FEATURES = [
-        "user_id", "booking_hour", "reservation_hour", "advance_minutes",
+         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week", "is_weekend",
-        "avg_user_cancel_rate", "payment_status", "user_distance_km"
+        "avg_user_cancel_rate", "payment_status", "user_distance_km","total_cancel_bookings","total_bookings"
     ]
+
     TARGET = "is_arrival"
     X = df[FEATURES]
     y = df[TARGET]
@@ -47,9 +48,9 @@ def retrain_model(df: pd.DataFrame):
     numeric_features = [
         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week",
-        "is_weekend", "avg_user_cancel_rate", "user_distance_km"
+        "is_weekend", "avg_user_cancel_rate", "user_distance_km","total_cancel_bookings","total_bookings"
     ]
-    categorical_features = ["user_id", "payment_status"]
+    categorical_features = [ "payment_status"]
     preprocessor = ColumnTransformer([
         ("num", StandardScaler(), numeric_features),
         ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_features)

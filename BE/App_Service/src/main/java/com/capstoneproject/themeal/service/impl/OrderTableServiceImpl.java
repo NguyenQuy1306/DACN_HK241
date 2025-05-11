@@ -266,6 +266,8 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .reservationDate(order.getNgay().toString())
                 .userDistanceKm(orderPredict.getUserDistanceKm())
                 .usedTraining(false)
+                .totalBookings(orderPredict.getTotalBookings())
+                .totalCancelBookings(orderPredict.getTotalCancelBookings())
                 .numGuests(order.getSoKhach())
                 .isFirstBooking(orderPredict.getIsFirstBooking())
                 .isArrival(isArrival)

@@ -4,10 +4,11 @@ import pandas as pd
 import sys
 # Add the parent directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'app')))
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
 
 import joblib
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -65,11 +66,12 @@ def train_and_save_model(df: pd.DataFrame):
 
     # 3. Features & label
     FEATURES = [
-        "user_id", "booking_hour", "reservation_hour", "advance_minutes",
+         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week", "is_weekend",
-         "avg_user_cancel_rate","payment_status","user_distance_km"
+         "avg_user_cancel_rate","payment_status","user_distance_km", "total_cancel_bookings","total_bookings"
     ]
     TARGET = "is_arrival"
+
 
     X = df[FEATURES]
     y = df[TARGET]
@@ -86,10 +88,10 @@ def train_and_save_model(df: pd.DataFrame):
     numeric_features = [
         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week",
-        "is_weekend", "avg_user_cancel_rate","user_distance_km"
+        "is_weekend", "avg_user_cancel_rate","user_distance_km","total_cancel_bookings","total_bookings"
     ]
 
-    categorical_features = ["user_id","payment_status"]
+    categorical_features = ["payment_status"]
 
     numeric_transformer = StandardScaler()
     categorical_transformer = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
@@ -116,6 +118,8 @@ def train_and_save_model(df: pd.DataFrame):
     }
     grid = GridSearchCV(pipeline, param_grid, cv=3, scoring="roc_auc", n_jobs=-1)
     grid.fit(X_train, y_train)
+        
+
 
     # 8. Evaluate
     logging.info("Evaluate")
@@ -137,6 +141,83 @@ def train_and_save_model(df: pd.DataFrame):
     except Exception as e:
         logging.error(f"❌ Failed to save model: {e}")
         print(f"[✘] Failed to save model: {e}")
+    
+    
+    #     # 10. Feature Importance Analysis
+    # import matplotlib.pyplot as plt
+    # import numpy as np
+    # # import shap
+    # from sklearn.inspection import permutation_importance
+
+    # # Lấy lại tên các cột sau khi preprocessing (numeric + one-hot encoded)
+    # final_feature_names = (
+    #     numeric_features +
+    #     list(best_model.named_steps["prep"]
+    #          .transformers_[1][1]  # categorical transformer
+    #          .get_feature_names_out(categorical_features))
+    # )
+
+    # # 1. Built-in Feature Importance
+    # importances = best_model.named_steps["clf"].feature_importances_
+    # sorted_idx = np.argsort(importances)[::-1]
+
+    # plt.figure(figsize=(10, 6))
+    # plt.title("Built-in Feature Importance (Gini)")
+    # plt.barh(np.array(final_feature_names)[sorted_idx], importances[sorted_idx])
+    # plt.gca().invert_yaxis()
+    # plt.tight_layout()
+    # plt.savefig("built_in_importance.png")
+    # print("✔ Saved built-in feature importance to built_in_importance.png")
+
+    # # 2. Permutation Feature Importance
+    # print("Computing permutation importance...")
+    # result = permutation_importance(best_model, X_test, y_test, n_repeats=10, random_state=42, n_jobs=-1)
+    # sorted_idx_perm = result.importances_mean.argsort()[::-1]
+
+    # plt.figure(figsize=(10, 6))
+    # plt.title("Permutation Feature Importance")
+    # plt.barh(np.array(final_feature_names)[sorted_idx_perm], result.importances_mean[sorted_idx_perm])
+    # plt.gca().invert_yaxis()
+    # plt.tight_layout()
+    # plt.savefig("permutation_importance.png")
+    # print("✔ Saved permutation importance to permutation_importance.png")
+
+    # # # 3. SHAP Values (KernelExplainer for pipeline)
+    # # print("Computing SHAP values...")
+    # # # Lấy pipeline xử lý dữ liệu
+    # # X_sample = X_test.sample(n=100, random_state=42)  # SHAP nên dùng sample nhỏ
+    # # explainer = shap.Explainer(best_model.named_steps["clf"],
+    # #                            best_model.named_steps["prep"].transform(X_sample),
+    # #                            feature_names=final_feature_names)
+    # # shap_values = explainer(best_model.named_steps["prep"].transform(X_sample))
+
+    # # plt.figure()
+    # # shap.plots.beeswarm(shap_values, max_display=20, show=False)
+    # # plt.title("SHAP Feature Importance")
+    # # plt.tight_layout()
+    # # plt.savefig("shap_importance.png")
+    # # print("✔ Saved SHAP feature importance to shap_importance.png")
+    # from treeinterpreter import treeinterpreter as ti
+    # best_model = grid.best_estimator_
+
+    # # Lấy 5 mẫu từ tập test
+    # X_sample = X_test[:5]
+    # y_sample = y_test[:5]
+
+    # # Lấy model đã huấn luyện (clf trong pipeline)
+    # clf = best_model.named_steps["clf"]
+    # X_transformed = best_model.named_steps["prep"].transform(X_sample)
+
+    # # Giải thích bằng treeinterpreter
+    # predictions, bias, contributions = ti.predict(clf, X_transformed)
+
+    # for i in range(len(X_sample)):
+    #     print(f"\n➡ Dự đoán cho mẫu {i+1}:")
+    #     print(f"  - Prediction: {predictions[i]}")
+    #     print(f"  - Bias (gốc từ dữ liệu huấn luyện): {bias[i]}")
+    #     print(f"  - Feature contributions:")
+    #     for name, value in zip(final_feature_names, contributions[i]):
+    #         print(f"     {name}: {value}")
 if __name__ == "__main__":
     # Load the CSV data file
     # df = pd.read_csv(r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv')
