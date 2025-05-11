@@ -140,8 +140,12 @@ function Home(props) {
         } else {
           // message.success("User detected, fetching recommendations...");
 
+          // response = await axios.get(
+          //   `${AI_URL}/recommend/online?user_id=${user.maSoNguoiDung}&top_n=10`
+          // );
+
           response = await axios.get(
-            `${AI_URL}/recommend/online?user_id=${user.maSoNguoiDung}&top_n=10`
+            `https://themeal.online/recommend/online?user_id=${user.maSoNguoiDung}&top_n=10`
           );
 
           // message.success("Recommendations fetched successfully");
