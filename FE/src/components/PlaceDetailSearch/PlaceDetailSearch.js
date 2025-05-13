@@ -108,7 +108,7 @@ const PlaceDetailSearch = ({
             <div>
               <div className="PlaceDetailSearch_H1_detail_listTag">
                 <Tags></Tags>
-                <div className="heart_favorite">
+                {/* <div className="heart_favorite">
                   {isFavorited ? (
                     <FavoriteRoundedIcon
                       className="heart_favorite_button_icon1"
@@ -120,7 +120,7 @@ const PlaceDetailSearch = ({
                       onClick={handleFavoriteClick}
                     />
                   )}
-                </div>
+                </div> */}
               </div>
               <div className="PlaceDetailSearch_H1_detail_name">
                 <div className="PlaceDetailSearch_H1_detail_name_div1">

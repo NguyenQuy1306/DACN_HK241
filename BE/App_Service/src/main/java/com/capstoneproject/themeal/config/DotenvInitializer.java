@@ -18,8 +18,8 @@ public class DotenvInitializer implements ApplicationContextInitializer<Configur
         if (Arrays.asList(applicationContext.getEnvironment().getActiveProfiles()).contains("local")) {
             Dotenv dotenv = Dotenv.configure()
                     .filename(".env.local")
-//                    .directory("../BE")// mvn run
-                    .directory("../../BE") // mvn package
+                    .directory("../BE")// mvn run
+//                    .directory("../../BE") // mvn package
                     .load();
 
             Map<String, Object> envMap = new HashMap<>();

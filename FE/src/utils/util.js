@@ -8,6 +8,14 @@ export const BACKEND_URL =
   process.env.REACT_APP_URL_BACKEND || "https://themeal.online";
 
 export const AI_URL = process.env.REACT_APP_URL_AI || "https://themeal.online";
+
+// export const FRONTEND_URL =
+//   process.env.REACT_APP_URL_FRONTEND || "localhost:3000";
+// export const BACKEND_URL =
+//   process.env.REACT_APP_URL_BACKEND || "localhost:8080";
+
+// export const AI_URL = process.env.REACT_APP_URL_AI || "localhost:5000";
+
 export const REACT_APP_GOOGLE_MAPS_API_KEY =
   process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "";
 export const REACT_APP_RAPID_API_TRAVEL_API_KEY =

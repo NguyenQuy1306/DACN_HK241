@@ -118,7 +118,7 @@ const Search = () => {
             }}
           >
             <Reservation />
-            <Filter />
+            {/* <Filter /> */}
           </div>
           {/* <div>bbbádaaa</div> */}
         </div>
@@ -135,7 +135,7 @@ const Search = () => {
               <div className="listRestaurantDiv_H1_left_sort_div">
                 <div className="listRestaurantDiv_H1_left_sort_div_div">
                   <div>
-                    <Button
+                    {/* <Button
                       className="listRestaurantDiv_H1_left_sort_div_div_button"
                       onClick={handleOnCloseSort}
                     >
@@ -148,7 +148,7 @@ const Search = () => {
                       <div className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv2">
                         <ExpandMoreIcon className="listRestaurantDiv_H1_left_sort_div_div_button_iconDiv_icon"></ExpandMoreIcon>
                       </div>
-                    </Button>
+                    </Button> */}
                     {openSort && (
                       <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown">
                         <div className="listRestaurantDiv_H1_left_sort_div_div_dropdown_title">

@@ -34,5 +34,5 @@ public class RestaurantHasPaymentMethod {
     @MapsId("MaSoPhuongThucThanhToan")
     @JoinColumn(name = "MaSoPhuongThucThanhToan")
     private PaymentMethod PhuongThucThanhToan;
-
+    
 }
