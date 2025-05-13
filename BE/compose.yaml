@@ -79,7 +79,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./Init_Database:/init_scripts 
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
