@@ -21,10 +21,10 @@ public class ScheduledOverbookingUpdater {
     @Autowired
     private TableAvailableService tableAvailableService;
 
-    // @PostConstruct
-    // public void initUpdateWeeklyOverbookingRates() {
-    // overbookingService.updateOverbookingRateForAllRestaurants();
-    // }
+    @PostConstruct
+    public void initUpdateWeeklyOverbookingRates() {
+        overbookingService.updateOverbookingRateForAllRestaurants();
+    }
 
     @PostConstruct
     public void initDeleteOverdueTableAvailable() {
