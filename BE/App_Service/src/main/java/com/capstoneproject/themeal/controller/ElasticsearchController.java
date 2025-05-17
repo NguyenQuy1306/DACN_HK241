@@ -7,6 +7,8 @@ import com.capstoneproject.themeal.model.response.ApiResponse;
 import com.capstoneproject.themeal.model.response.ResponseCode;
 import com.capstoneproject.themeal.model.response.RestaurantInMapsResponse;
 import com.capstoneproject.themeal.repository.ElasticSearchQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class ElasticsearchController {
     @Autowired
     private ElasticSearchQuery elasticSearchQuery;
+    private static final Logger logger = LoggerFactory.getLogger(ElasticsearchController.class);
 
     @PostMapping("/createOrUpdateDocument")
     public ResponseEntity<ApiResponse<Object>> createOrUpdateDocument(
@@ -85,7 +88,10 @@ public class ElasticsearchController {
             apiResponse.error(ResponseCode.getError(1));
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            logger.error("Lỗi xảy ra khi xử lý elasticsearch: {}", e.getMessage(), e); // log chi tiết lỗi và stack
+                                                                                       // trace
             apiResponse.error(Map.of("error", e.getMessage()));
+
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
