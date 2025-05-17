@@ -85,7 +85,7 @@ public class ElasticsearchController {
             apiResponse.error(ResponseCode.getError(1));
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            apiResponse.error(ResponseCode.getError(23));
+            apiResponse.error(Map.of("error", e.getMessage()));
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
