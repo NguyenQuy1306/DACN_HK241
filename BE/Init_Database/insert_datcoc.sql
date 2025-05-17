@@ -2,7 +2,7 @@ WITH base_tables AS (
     SELECT 
         datcoc,
         masonhahang
-    FROM generate_series(64, 72) AS masonhahang, generate_series(1,1) AS datcoc
+    FROM generate_series(189, 197) AS masonhahang, generate_series(1,1) AS datcoc
 ),
 random_values AS (
     SELECT (1 + FLOOR(random() * 10))::SMALLINT AS x
