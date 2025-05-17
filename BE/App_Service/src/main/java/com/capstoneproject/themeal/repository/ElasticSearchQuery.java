@@ -176,12 +176,16 @@ public class ElasticSearchQuery {
                 SearchRequest searchRequest = SearchRequest
                                 .of(q -> q.index(indexName).query(finalQuery).sort(sortByDistance));
                 SearchResponse<Void> searchResponse = elasticsearchClient.search(searchRequest, Void.class);
+                System.out.println("Elasticsearch search executed successfully.");
+                System.out.println("Total hits: " + searchResponse.hits().total().value());
                 for (Hit<Void> object : searchResponse.hits().hits()) {
+                        System.out.println("Hit found with ID: " + object.id());
                         if (object != null && object.id() != null) {
 
                                 Restaurant restaurant = restaurantRepository
                                                 .findById(Long.parseLong(object.id())).orElse(null);
                                 if (restaurant == null) {
+                                        System.out.println("Restaurant not found for ID: " + object.id());
                                         throw new IllegalArgumentException(
                                                         "Restaurant IDs not found: " + object.id());
                                 }
