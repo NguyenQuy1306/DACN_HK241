@@ -200,6 +200,7 @@ services:
     container_name: ai-service
     depends_on:
       - mongodb
+      - spring-backend
     environment:
       - MONGODB_URI=${MONGODB_URI}
       - BROKER_URL=${BROKER_URL}
