@@ -4,7 +4,7 @@ import requests
   # Đặt file CSV ở gốc hoặc config sau
 
 def get_restaurants_df():
-    url = "https://themeal.online/api/restaurants/all"  # Thay bằng URL thật
+    url = "http://spring:8080/api/restaurants/all"  # Thay bằng URL thật
     response = requests.get(url)
 
     if response.status_code == 200:
