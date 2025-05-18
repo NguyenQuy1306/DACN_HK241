@@ -5,8 +5,8 @@ import pandas as pd
 import requests
   # Đặt file CSV ở gốc hoặc config sau
 @retry(
-    wait=wait_fixed(5),
-    stop=stop_after_attempt(15),
+    wait=wait_fixed(10),
+    stop=stop_after_attempt(18),
     retry=retry_if_exception_type((requests.exceptions.RequestException,))
 )
 def get_restaurants_df():
