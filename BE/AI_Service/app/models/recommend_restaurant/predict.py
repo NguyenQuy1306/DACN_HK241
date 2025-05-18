@@ -10,7 +10,7 @@ import requests
     retry=retry_if_exception_type((requests.exceptions.RequestException,))
 )
 def get_restaurants_df():
-    url = "http://spring:8080/api/restaurants/all"  # Thay bằng URL thật
+    url = "http://spring-backend:8080/api/restaurants/all"  # Thay bằng URL thật
     response = requests.get(url)
 
     if response.status_code == 200:
