@@ -1,8 +1,14 @@
 import pickle
+from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
+
 import pandas as pd
 import requests
   # Đặt file CSV ở gốc hoặc config sau
-
+@retry(
+    wait=wait_fixed(5),
+    stop=stop_after_attempt(10),
+    retry=retry_if_exception_type((requests.exceptions.RequestException,))
+)
 def get_restaurants_df():
     url = "http://spring:8080/api/restaurants/all"  # Thay bằng URL thật
     response = requests.get(url)
