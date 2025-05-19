@@ -41,6 +41,19 @@ export const getAllOrderByRestaurantId = createAsyncThunk(
   }
 );
 
+export const getDanhSachMonAn = createAsyncThunk(
+  "/order/getDanhSachMonAn",
+  async ({ orderId }, { rejectWithValue }) => {
+    try {
+      const response = await api.getDanhSachMonAn(orderId);
+      console.log("DATA danh sach FROM SERVER: ", response);
+      return { orderId, items: response };
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
   async (params, { rejectWithValue }) => {
@@ -58,7 +71,8 @@ export const orderSlice = createSlice({
   name: "order",
   initialState: {
     order: [],
-
+    orderAllByRestaurant: [],
+    danhSachMonAnMap: {},
     error: "",
     loading: false,
   },
@@ -91,14 +105,25 @@ export const orderSlice = createSlice({
       })
       .addCase(getAllOrderByRestaurantId.pending, (state) => {
         state.loading = true;
-        state.order = [];
+        state.orderAllByRestaurant = [];
       })
       .addCase(getAllOrderByRestaurantId.fulfilled, (state, action) => {
         state.loading = false;
-
-        state.order = action.payload;
+        state.orderAllByRestaurant = action.payload;
       })
       .addCase(getAllOrderByRestaurantId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getDanhSachMonAn.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDanhSachMonAn.fulfilled, (state, action) => {
+        state.loading = false;
+        const { orderId, items } = action.payload;
+        state.danhSachMonAnMap[orderId] = items;
+      })
+      .addCase(getDanhSachMonAn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.capstoneproject.themeal.config.S3Buckets;
 import com.capstoneproject.themeal.exception.ApplicationException;
 import com.capstoneproject.themeal.model.entity.*;
-import com.capstoneproject.themeal.model.entity.Category;
 import com.capstoneproject.themeal.model.mapper.FoodMapper;
 import com.capstoneproject.themeal.model.mapper.RestaurantMapper;
 import com.capstoneproject.themeal.model.request.*;
@@ -33,6 +32,8 @@ import java.util.ArrayList;
 
 @Service
 public class FoodServiceImpl implements FoodService {
+    @Autowired
+    private OrderTableHasFoodRepository orderTableHasFoodRepository;
     @Autowired
     private FoodRepository foodRepository;
     @Autowired
@@ -208,4 +209,8 @@ public class FoodServiceImpl implements FoodService {
         return foodRepository.save(food);
     }
 
+    @Override
+    public List<OrderTableHasFoodResponse> getFoodsByOrderId(Long orderId) {
+        return orderTableHasFoodRepository.findAllByOrderId(orderId);
+    }
 }

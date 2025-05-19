@@ -1,6 +1,8 @@
+import React, { useEffect, useMemo, useState } from "react";
 import { Client } from "@stomp/stompjs";
-import { Col, Divider, message, Row, Select } from "antd";
-
+import SockJS from "sockjs-client";
+import { Col, Divider, Row, Select } from "antd";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 import {
   ArcElement,
   BarElement,
@@ -13,20 +15,23 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import React, { useEffect, useState } from "react";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
-import SockJS from "sockjs-client";
-import cancelImg from "../../assets/images/cancel.svg";
+import food from "../../assets/images/food.png";
 import money from "../../assets/images/money.png";
-import partnerImg from "../../assets/images/partner.svg";
-import waitingImg from "../../assets/images/waiting.svg";
-import { getAllRestaurants } from "../../redux/features/adminSlice";
-import CommentCard from "./components/CommentCard";
+import orderImg from "../../assets/images/order.png";
+import ship from "../../assets/images/ship.png";
 import Statistic from "./components/Statistic";
+import CommentCard from "./components/CommentCard";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
+import { getRestaurantByOwnerId } from "../../redux/features/authenticationSlice";
+import {
+  getAllOrderByRestaurantId,
+  getDanhSachMonAn,
+} from "../../redux/features/orderSlice";
+import { getFoodImage } from "../../redux/api";
 import { BACKEND_URL } from "../../utils/util";
+import dayjs from "dayjs";
 
 ChartJS.register(
   ArcElement,
@@ -40,404 +45,138 @@ ChartJS.register(
   Legend
 );
 
+const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const labels = weekDays;
 const chartOptions = {
-  revenue: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-    },
-  },
-
+  revenue: { responsive: true, plugins: { legend: { position: "top" } } },
   category: {
     responsive: true,
     cutout: "60%",
-    plugins: {
-      legend: {
-        display: true,
-        position: "bottom",
-      },
-    },
+    plugins: { legend: { display: true, position: "bottom" } },
   },
 };
 
-const getMonthLabels = (count) => {
-  const months = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
-  return months.slice(0, count);
-};
-
-const labels = getMonthLabels(7);
-
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
-
-const getDayOfWeek = (dateString) => {
-  const date = new Date(dateString);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  return days[date.getDay()];
-};
-
-const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currency,
-  })
-    .format(value)
-    .replace("₫", "");
-};
-
-function Dashboard_Admin() {
+export default function Dashboard_Owner() {
   const dispatch = useDispatch();
-  const { restaurants } = useSelector((state) => state.admin);
-  const [stompClient, setStompClient] = useState(null);
+  const user = useSelector((s) => s.authentication.user);
+  const restaurantOwner = useSelector((s) => s.authentication.restaurantOwner);
+  const orders = useSelector((s) => s.order.orderAllByRestaurant);
+  const danhSachMonAnMap = useSelector((s) => s.order.danhSachMonAnMap);
 
-  const [messages, setMessages] = useState(restaurants);
-
-  const [joinData, setJoinData] = useState({
+  const [orderData, setOrderData] = useState({
     labels,
     datasets: [
       {
-        label: "Đối tác liên kết",
-        data: [0, 0, 0, 0, 0, 0, 0],
+        label: "Đơn đặt bàn",
+        data: [],
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
+        borderColor: "rgb(75,192,192)",
         tension: 0.1,
       },
     ],
   });
-
   const [revenueData, setRevenueData] = useState({
     labels,
     datasets: [
       {
         label: "Doanh thu (VND)",
-        data: [0, 0, 0, 0, 0, 0, 0],
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        data: [],
+        backgroundColor: undefined,
+        borderColor: undefined,
         borderWidth: 1,
       },
     ],
   });
-
-  const [regionData, setRegionData] = useState({
+  const [categoryData, setCategoryData] = useState({
     labels: [],
-    datasets: [
-      {
-        label: "Phần trăm",
-        data: [],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"],
-        hoverOffset: 4,
-      },
-    ],
+    datasets: [{ label: "Số lượng", data: [], hoverOffset: 4 }],
   });
 
-  const processJoinData = (orders) => {
-    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-    orders.forEach((order) => {
-      const day = getDayOfWeek(order.ngayThamGia);
-      dayData[day] += 1; // Increment the count for the day
-    });
-
-    return Object.values(dayData);
-  };
-
-  const processRevenueData = (orders) => {
-    const dayData = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
-
-    orders.forEach((order) => {
-      const day = getDayOfWeek(order.ngay);
-      const revenue = order.danhSachMonAn.reduce(
-        (acc, cur) => acc + cur.gia,
-        0
+  // load restaurant and orders
+  useEffect(() => {
+    if (user) dispatch(getRestaurantByOwnerId({ ownerId: user.maSoNguoiDung }));
+  }, [dispatch, user]);
+  useEffect(() => {
+    if (restaurantOwner)
+      dispatch(
+        getAllOrderByRestaurantId({ restaurantId: restaurantOwner.maSoNhaHang })
       );
-      dayData[day] += revenue; // Add the revenue for the day
+  }, [dispatch, restaurantOwner]);
+
+  // batch fetch food items for all orders
+  useEffect(() => {
+    if (orders?.length) {
+      const ids = orders.map((o) => o.maSoDatBan);
+      dispatch(getDanhSachMonAn(ids));
+    }
+  }, [dispatch, orders]);
+
+  // derive chart data
+  useEffect(() => {
+    if (!orders) return;
+    const dayCount = Object.fromEntries(weekDays.map((d) => [d, 0]));
+    const dayRevenue = Object.fromEntries(weekDays.map((d) => [d, 0]));
+    const catCount = {};
+
+    orders.forEach((order) => {
+      const day = weekDays[new Date(order.ngay).getDay() - 1] || "Sun";
+      dayCount[day]++;
+      const items = danhSachMonAnMap[order.maSoDatBan] || [];
+      const rev = items.reduce((sum, i) => sum + i.gia * i.soLuong, 0);
+      dayRevenue[day] += rev;
+      items.forEach(
+        (i) => (catCount[i.tenMon] = (catCount[i.tenMon] || 0) + i.soLuong)
+      );
     });
 
-    return Object.values(dayData);
-  };
-
-  const processRegionData = (res) => {
-    const regionData = {};
-
-    res.forEach((item) => {
-      if (regionData[item.thanhPho]) {
-        regionData[item.thanhPho] += 1;
-      } else {
-        regionData[item.thanhPho] = 1;
-      }
+    setOrderData({
+      labels,
+      datasets: [
+        { ...orderData.datasets[0], data: weekDays.map((d) => dayCount[d]) },
+      ],
     });
+    setRevenueData({
+      labels,
+      datasets: [
+        {
+          ...revenueData.datasets[0],
+          data: weekDays.map((d) => dayRevenue[d]),
+        },
+      ],
+    });
+    setCategoryData({
+      labels: Object.keys(catCount),
+      datasets: [
+        { ...categoryData.datasets[0], data: Object.values(catCount) },
+      ],
+    });
+  }, [orders, danhSachMonAnMap]);
 
-    const labels = Object.keys(regionData);
-    const data = Object.values(regionData);
-    const total = data.reduce((acc, cur) => acc + cur, 0);
-    const percentData = data.map((item) => ((item / total) * 100).toFixed(2));
-
-    return { labels, percentData };
-  };
-
+  // websocket for live updates
   useEffect(() => {
-    dispatch(getAllRestaurants());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // Khởi tạo kết nối WebSocket khi component mount
     const socket = new SockJS(`${BACKEND_URL}/ws`);
     const client = new Client({
       webSocketFactory: () => socket,
-      connectHeaders: { withCredentials: true }, // Sử dụng SockJS làm transport
-      onConnect: () => {
-        setStompClient(client);
-        client.subscribe("/topic/restaurants", (message) => {
-          console.log("DATA WEBSOCKET NHẬN ĐƯỢC: ", message.body);
-          setMessages(JSON.parse(message.body));
-        });
-      },
-      onStompError: (frame) => {
-        console.error("Broker reported error: " + frame.headers["message"]);
-        console.error("Additional details: " + frame.body);
-      },
-      debug: (str) => {
-        console.log(str); // Bật debug để xem log
-      },
+      onConnect: () =>
+        client.subscribe("/topic/messages", (msg) => {
+          const live = JSON.parse(msg.body);
+          dispatch({ type: "order/liveUpdate", payload: live });
+        }),
     });
-
-    client.activate(); // Kích hoạt kết nối
-
-    return () => {
-      if (client) {
-        client.deactivate(); // Ngắt kết nối khi component unmount
-      }
-    };
-  }, []);
-
-  // const menuNames = messages.reduce(
-  //     (acc, cur) => new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
-  //     new Set(),
-  // );
-
-  // const timeFrame = messages.reduce((acc, cur) => new Set([...acc, cur.gio]), new Set());
-
-  // const timeFrameDetail = [...timeFrame].reduce((acc, cur) => {
-  //     acc[cur] = 0;
-  //     return acc;
-  // }, {});
-
-  // messages.forEach((item) => {
-  //     timeFrameDetail[item.gio] += 1;
-  // });
-
-  // const timeFrameDetailArray = Object.entries(timeFrameDetail)
-  //     .sort((a, b) => b[1] - a[1])
-  //     .map((i) => i[0]);
-
-  // const topTrending = [...menuNames].map((i) => {
-  //     return {
-  //         name: i,
-  //         quantity: 0,
-  //         price: 0,
-  //     };
-  // }, []);
-
-  // const topMenuTrending = messages.forEach((item) => {
-  //     item.danhSachMonAn.forEach((i) => {
-  //         const curItem = topTrending.find((item1) => item1.name === i.tenMon);
-  //         curItem.quantity += i.soLuong;
-  //         curItem.price = i.gia;
-  //     });
-  // });
-
-  useEffect(() => {
-    if (messages.length > 0) {
-      const processedRegionData = processRegionData(messages);
-      const processedJoinData = processJoinData(messages);
-      // const processedCategoryData = processCategoryData(messages);
-      // setOrderData((prevData) => ({
-      //     ...prevData,
-      //     datasets: [
-      //         {
-      //             ...prevData.datasets[0],
-      //             data: processedOrderData,
-      //         },
-      //     ],
-      // }));
-
-      setJoinData((prevData) => ({
-        ...prevData,
-        datasets: [
-          {
-            ...prevData.datasets[0],
-            data: processedJoinData,
-          },
-        ],
-      }));
-
-      setRegionData((prevData) => ({
-        ...prevData,
-        labels: processedRegionData.labels,
-        datasets: [
-          {
-            ...prevData.datasets[0],
-            data: processedRegionData.percentData,
-          },
-        ],
-      }));
-    }
-  }, [messages]);
-
-  useEffect(() => {
-    setMessages(restaurants);
-  }, [restaurants]);
-
-  useEffect(() => {
-    console.log("RESTAURANT LIST: ", messages);
-  }, [messages]);
+    client.activate();
+    return () => client.deactivate();
+  }, [dispatch]);
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles["dashboard-body"]}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {/* {stompClient && <div>Đang lắng nghe từ server websocket | </div>}
-                        {!stompClient && <div>Đang tạm không lắng nghe từ server websocket | </div>} */}
-            <p style={{ margin: 0, marginLeft: "8px", color: "rgb(28,69,28)" }}>
-              Bạn đang xem thống kê theo
-            </p>
-            <Select
-              defaultValue="Ngày"
-              style={{
-                width: 120,
-                marginLeft: "10px",
-              }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: "ngay",
-                  label: "Ngày",
-                },
-                {
-                  value: "thang",
-                  label: "Tháng",
-                },
-                {
-                  value: "nam",
-                  label: "Năm",
-                },
-              ]}
-            />
-          </div>
-          <Row gutter={16} className={styles["statistic-wrap"]}>
-            <Col span={6}>
-              <Statistic
-                img={partnerImg}
-                title=<p style={{ marginBottom: "8px" }}>Tổng số đối tác</p>
-                quantity={messages.length}
-                up={true}
-                rate={3}
-                compare="So với hôm qua"
-              />
-            </Col>
-            <Col span={6}>
-              <Statistic
-                img={waitingImg}
-                title="Đối tác chờ duyệt"
-                quantity={
-                  messages.filter((i) => i.trangThai === "pending").length
-                }
-                up={false}
-                rate={12}
-                compare="So với hôm qua"
-              />
-            </Col>
-            <Col span={6}>
-              <Statistic
-                img={cancelImg}
-                title="Đối tác đã hủy"
-                quantity={
-                  messages.filter((i) => i.trangThai === "deactive").length
-                }
-                up={true}
-                compare=""
-              />
-            </Col>
-
-            <Col span={6}>
-              <Statistic
-                img={money}
-                title="Tổng doanh thu (VND)"
-                quantity={formatCurrency(0)}
-                up={true}
-                rate={13}
-                compare="So với hôm qua"
-              />
-            </Col>
-          </Row>
-          <Divider />
-          <div className={styles["chart-wrap"]}>
-            <div className={styles["order-statistic"]}>
-              <h2 className={styles["line-title"]}>Biểu đồ đối tác mới</h2>
-              <Line data={joinData} label={labels} />
-            </div>
-            <div className={styles["order-statistic"]}>
-              <h2 className={styles["bar-title"]}>
-                Biểu đồ chi tiết doanh thu
-              </h2>
-              <Bar data={revenueData} options={chartOptions.revenue} />
-            </div>
-          </div>
-          <Divider />
-
-          <h2 style={{ color: "rgb(28,69,28)" }}>Nhận xét của nhà hàng</h2>
-
-          <div className={styles["comment-wrap"]}>
-            <CommentCard />
-            <CommentCard />
-            <CommentCard />
-            <CommentCard />
-            <CommentCard />
-            <CommentCard />
-            <CommentCard />
-          </div>
-          <div className={styles["trending-wrap"]}>
-            <div className={styles.trending}>
-              <h2
-                style={{
-                  paddingLeft: "16px",
-                  marginTop: "12px",
-                  color: "rgb(28,69,28)",
-                }}
-              >
-                Top các nhà hàng có doanh số cao nhất
-              </h2>
-              {/* {topTrending
-                                .sort((a, b) => b["quantity"] - a["quantity"])
-                                .map((item, index) => {
-                                    return (
-                                        <TrendingItem
-                                            rank={index + 1}
-                                            key={index}
-                                            name={item.name}
-                                            price={item.price}
-                                            quantity={item.quantity}
-                                        />
-                                    );
-                                })} */}
-
-              <Divider />
-            </div>
-            <div className={styles.doughnut}>
-              <h2 className={styles["doughnut-title"]}>
-                Tỷ lệ nhà hàng theo khu vực
-              </h2>
-              <Doughnut data={regionData} options={chartOptions.category} />
-            </div>
-          </div>
-        </div>
+    <div className={styles.container}>
+      <div className={styles["dashboard-body"]}>
+        <h2>Biểu đồ đơn đặt</h2>
+        <Line data={orderData} />
+        <h2>Biểu đồ doanh thu</h2>
+        <Bar data={revenueData} options={chartOptions.revenue} />
+        <h2>Danh mục bán chạy</h2>
+        <Doughnut data={categoryData} options={chartOptions.category} />
       </div>
-    </>
+    </div>
   );
 }
-
-export default Dashboard_Admin;

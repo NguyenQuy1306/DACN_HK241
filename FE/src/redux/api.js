@@ -231,9 +231,7 @@ export const createOrder = async ({ request, totalAmount, deposit }) => {
 };
 export const getOrdersByRestaurantId = async ({ restaurantId }) => {
   try {
-    const response = await API.get(
-      `api/orders/all/${restaurantId}` // Gửi request body đúng cách, // Gửi request body đúng cách
-    );
+    const response = await API.get(`api/orders/all/${restaurantId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
@@ -459,6 +457,15 @@ export const updateCategory = async (categoryId, params) => {
 export const getRestaurantByOwnerId = async (params) => {
   try {
     const response = await API.get(`/api/restaurants`, { params });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
+
+export const getDanhSachMonAn = async (orderId) => {
+  try {
+    const response = await API.get(`/api/food/foods/${orderId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;

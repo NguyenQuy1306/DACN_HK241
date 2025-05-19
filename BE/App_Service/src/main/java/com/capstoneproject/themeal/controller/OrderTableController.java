@@ -95,7 +95,7 @@ public class OrderTableController {
 
     @PutMapping("")
     public ResponseEntity<ApiResponse<String>> updateIsArrivalCustormer(@RequestBody Long userId,
-                                                                        @RequestBody Long orderID, @RequestBody Boolean isArrival) {
+            @RequestBody Long orderID, @RequestBody Boolean isArrival) {
 
         ApiResponse<String> apiResponse = new ApiResponse<>();
         try {
@@ -177,7 +177,7 @@ public class OrderTableController {
 
     @PutMapping(path = "/orderRefund")
     public ResponseEntity<?> updateStatusRefund(@RequestParam Boolean status, @RequestParam Long totalRefund,
-                                                @RequestParam Long orderId) {
+            @RequestParam Long orderId) {
         try {
             ApiResponse<String> apiResponse = new ApiResponse<>();
             orderTableService.updateStatusRefund(status, totalRefund, orderId);
@@ -200,10 +200,10 @@ public class OrderTableController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
 
         if (startTime == null) {
-            startTime = LocalTime.of(0, 0);  // 00:00
+            startTime = LocalTime.of(0, 0); // 00:00
         }
         if (endTime == null) {
-            endTime = LocalTime.of(23, 59, 59, 999999999);  // 24:00 (the last moment of the day)
+            endTime = LocalTime.of(23, 59, 59, 999999999); // 24:00 (the last moment of the day)
         }
         List<OverbookingRateRequest> rate = orderTableService.getOverbookingRateByTimeSlot(
                 restaurantId, startTime, endTime);

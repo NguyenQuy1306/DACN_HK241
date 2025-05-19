@@ -93,10 +93,8 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Override
     public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
-        List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
-        return orderTables.stream().map(
-                orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
-                .collect(Collectors.toList());
+        List<FinalOrderTableResponse> orderTables = orderTableRepository.findAllByRestaurantId(restaurantId);
+        return orderTables;
     }
 
     @Override
