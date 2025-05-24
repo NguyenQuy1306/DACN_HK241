@@ -360,15 +360,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         orderTableRepository.save(orderTable);
     }
 
-    public void reducePercentNoShow(OrderTable orderTable) {
-        Long arrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, true);
-        Long notArrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO,
-                false);
-        double total = arrival + notArrival;
-        double alpha = total == 0 ? 0.0 : (double) arrival / total;
-        alpha = Math.max(alpha, DEFAULT_ALPHA);
-        orderTable.setPercentNoShow(alpha * orderTable.getPercentNoShow());
-    }
+ a
 
     @Override
     public List<OverbookingRateRequest> getOverbookingRatesByDate(Long restaurantId, LocalDate date) {
