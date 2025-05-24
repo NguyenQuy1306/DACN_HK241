@@ -16,4 +16,5 @@ import jakarta.persistence.Embeddable;
 public class RestaurantHasTagId implements Serializable {
     private Long MaSoTag;
     private Long MaSoNhaHang;
+
 }

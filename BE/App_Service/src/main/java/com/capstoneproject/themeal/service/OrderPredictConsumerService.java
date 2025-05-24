@@ -40,7 +40,8 @@ public class OrderPredictConsumerService {
         Double percent = orderTable.getPercentNoShow() * 100;
         System.out.println("percent:: " + percent);
         System.out.println("thresholdRule.getMin(:: " + thresholdRule.getMin());
-        if (percent >= thresholdRule.getMin()) {
+        Double threshold = (double) thresholdRule.getMin();
+        if (percent >= threshold) {
             System.out.println("check: ");
 
             List<TableAvailable> existingTables = tableAvailableRepository.findExistingTables(

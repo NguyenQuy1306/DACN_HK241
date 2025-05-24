@@ -24,5 +24,7 @@ def enrich_booking_data(data):
         "is_weekend": int(reservation_datetime.weekday() in [5, 6]),
         "avg_user_cancel_rate": data["avg_user_cancel_rate"],
         "user_distance_km": data["user_distance_km"],
-        "payment_status":data["payment_status"]
+        "payment_status":data["payment_status"],
+        "total_cancel_bookings":data["total_cancel_bookings"],
+        "total_bookings":data["total_bookings"]
     }

@@ -53,4 +53,11 @@ public class OrderTrainingEvent {
 
     @Field(targetType = FieldType.BOOLEAN, name = "is_arrival")
     private Boolean isArrival;
+
+    @Field(targetType = FieldType.INT32, name = "total_cancel_bookings")
+    private Integer totalCancelBookings;
+
+    @Field(targetType = FieldType.INT32, name = "total_bookings")
+    private Integer totalBookings;
+
 }

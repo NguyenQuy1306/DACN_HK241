@@ -93,15 +93,13 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Override
     public List<FinalOrderTableResponse> getAllOrdersByRestaurantId(Long restaurantId) {
-        List<OrderTable> orderTables = orderTableRepository.findByRestaurantId(restaurantId);
-        return orderTables.stream().map(
-                        orderTable -> orderTableMapper.toFinalOrderTableResponse(orderTable, foodRepository))
-                .collect(Collectors.toList());
+        List<FinalOrderTableResponse> orderTables = orderTableRepository.findAllByRestaurantId(restaurantId);
+        return orderTables;
     }
 
     @Override
     public OrderTable saveOrderTable(User user, PaymentMethod paymentMethod, Restaurant restaurant, Short tableId,
-                                     String statusOrder, Long totalAmount, Long deposit) {
+            String statusOrder, Long totalAmount, Long deposit) {
         TableAvailableId tableAvailableId = new TableAvailableId(restaurant.getMaSoNhaHang(), tableId);
         TableAvailable tableAvailable = tableAvailableRepository.findById(tableAvailableId)
                 .orElseThrow(() -> new NotFoundException("Table not found"));
@@ -166,7 +164,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         }
         if (request.getComboId() != null
                 && !comboAvailableService.isComboExists(request.getComboId(),
-                request.getRestaurantId())) {
+                        request.getRestaurantId())) {
             throw new ValidationException("Combo does not exist");
         }
         if (!request.getFoodOrderRequests().isEmpty()) {
@@ -194,7 +192,7 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Transactional
     public OrderTableResponse createOrder(CreateOrderRequest request, String statusOrder, Long totalAmount,
-                                          Long deposit) {
+            Long deposit) {
         Long customerID = request.getCustomerID();
         Short tableId = request.getTableId();
         Long comboId = request.getComboId();
@@ -266,6 +264,8 @@ public class OrderTableServiceImpl implements OrderTableService {
                 .reservationDate(order.getNgay().toString())
                 .userDistanceKm(orderPredict.getUserDistanceKm())
                 .usedTraining(false)
+                .totalBookings(orderPredict.getTotalBookings())
+                .totalCancelBookings(orderPredict.getTotalCancelBookings())
                 .numGuests(order.getSoKhach())
                 .isFirstBooking(orderPredict.getIsFirstBooking())
                 .isArrival(isArrival)
@@ -273,12 +273,12 @@ public class OrderTableServiceImpl implements OrderTableService {
         System.out.println(" check orderTrainingEvent");
         orderTrainingEventRepository.save(orderTrainingEvent);
         System.out.println(" check after save orderTrainingEvent");
-        // orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
+        orderTrainingProducerService.sendBookingRequestEvent(orderTrainingEvent);
     }
 
     @Override
     public PaymentResponse createPayment(Long paymentAmount,
-                                         String maSoThanhToan, Long maSoDatBan) {
+            String maSoThanhToan, Long maSoDatBan) {
         OrderTable orderTable = orderTableRepository.findById(maSoDatBan)
                 .orElseThrow(() -> new NotFoundException("Order table not found"));
         Payment payment = Payment.builder()
@@ -360,15 +360,7 @@ public class OrderTableServiceImpl implements OrderTableService {
         orderTableRepository.save(orderTable);
     }
 
-    public void reducePercentNoShow(OrderTable orderTable) {
-        Long arrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO, true);
-        Long notArrival = orderTableRepository.countByStatusOrderAndIsArrival(OrderTableStatus.COMFIRMED_GOING_TO,
-                false);
-        double total = arrival + notArrival;
-        double alpha = total == 0 ? 0.0 : (double) arrival / total;
-        alpha = Math.max(alpha, DEFAULT_ALPHA);
-        orderTable.setPercentNoShow(alpha * orderTable.getPercentNoShow());
-    }
+ a
 
     @Override
     public List<OverbookingRateRequest> getOverbookingRatesByDate(Long restaurantId, LocalDate date) {
@@ -398,13 +390,13 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Override
     public List<OverbookingRateRequest> getOverbookingRateByTimeSlot(Long restaurantId,
-                                                                     LocalTime startTime, LocalTime endTime) {
+            LocalTime startTime, LocalTime endTime) {
         return calculateWeeklyOverbookingRates(restaurantId, startTime, endTime);
     }
 
     private List<OverbookingRateRequest> calculateWeeklyOverbookingRates(Long restaurantId,
-                                                                         LocalTime startTime,
-                                                                         LocalTime endTime) {
+            LocalTime startTime,
+            LocalTime endTime) {
         List<OverbookingRateRequest> weeklyRates = new ArrayList<>();
 
         for (int dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++) {

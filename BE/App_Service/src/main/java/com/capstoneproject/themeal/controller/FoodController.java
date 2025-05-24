@@ -66,6 +66,12 @@ public class FoodController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/foods/{orderId}")
+    public ResponseEntity<List<OrderTableHasFoodResponse>> getFoods(@PathVariable Long orderId) {
+        List<OrderTableHasFoodResponse> foods = foodService.getFoodsByOrderId(orderId);
+        return ResponseEntity.ok(foods);
+    }
+
     @GetMapping("/{foodId}")
     public ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@RequestParam Long restaurantId,
             @PathVariable Long foodId) {

@@ -51,8 +51,8 @@ INSERT INTO nguoidung (
 ('1994-10-15', 'C', 'Lam Dong', 'lequangthao46@gmail.com', 'Nữ', 'Le Quang Thao', 'LinhNa0405', '0901000046','LOCAL'),
 ('1995-11-16', 'C', 'Vung Tau', 'trinhthangduc47@gmail.com', 'Nam', 'Trinh Thang Duc', 'qwerty987', '0901000047','LOCAL'),
 ('1992-12-17', 'C', 'Kon Tum', 'nguyenminhnghia48@gmail.com', 'Nam', 'Nguyen Minh Nghia', 'Linh321Secure', '0901000048','LOCAL'),
-('1986-01-18', 'C', 'Bac Giang', 'nguyenleminh49@gmail.com', 'Nữ', 'Nguyen Le Minh', '1234Password1', '0901000049','LOCAL'),
-('1985-02-19', 'C', 'Khanh Hoa', 'hoangtuanquy50@gmail.com', 'Nam', 'Hoang Tuan Quy', '1234SecureAB', '0901000050','LOCAL');
+('1986-01-18', 'C', 'Bac Giang', 'nngocquy75@gmail.com', 'Nam', 'Nguyen Ngoc Quy', 'Ngocquynguyen1', '0901000049','LOCAL'),
+('1985-02-19', 'O', 'Khanh Hoa', 'quy.nguyennngocquy75@gmail.com', 'Nam', 'Nguyen Ngoc Quy Owner', 'Ngocquynguyen1', '0901000050','LOCAL');
 
 
 INSERT INTO khachhang (diemtichluy, masokhachhang)

@@ -135,7 +135,7 @@ public class AuthenticationController {
             HttpSession newSession = request.getSession(true);
             System.out.println("checksessionxxx " + existingSession);
             newSession.setAttribute("JSESSIONID", loginResponse);
-            newSession.setMaxInactiveInterval(300); // 5 phút
+            newSession.setMaxInactiveInterval(3000); // 5 phút
             Authentication auth = new UsernamePasswordAuthenticationToken(loginResponse, null, Collections.emptyList());
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(auth);

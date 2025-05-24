@@ -24,7 +24,7 @@ public class KafkaConsumerService {
         this.elasticSearchQuery = elasticSearchQuery;
     }
 
-    @KafkaListener(topics = "${kafka.elasticsearch.topic}", groupId = "${kafka.group.id}")
+    @KafkaListener(topics = "curcus.public.nhahang", groupId = "elasticsearch-group")
     public void consumeMessage(String message) {
         try {
             JsonNode rootNode = objectMapper.readTree(message);

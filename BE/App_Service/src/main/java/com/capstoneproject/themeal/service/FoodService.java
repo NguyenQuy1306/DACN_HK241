@@ -34,4 +34,6 @@ public interface FoodService {
     public List<FoodFinalReponse> searchFood(String key, Long restaurantId, Pageable pageable);
 
     public void upLoadImageRestaurant(Long restaurantId, Long categoryId, Long foodId, MultipartFile file);
+
+    public List<OrderTableHasFoodResponse> getFoodsByOrderId(Long orderId);
 }

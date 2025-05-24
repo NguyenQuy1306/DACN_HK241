@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public interface OrderTableMapper {
     OrderTableMapper INSTANCE = Mappers.getMapper(OrderTableMapper.class);
 
-
     @Mapping(source = "khachHang.maSoNguoiDung", target = "maSoKhachHang")
     @Mapping(source = "nhaHang.ten", target = "tenNhaHang")
     @Mapping(source = "nhaHang.diaChi", target = "diaChiNhaHang")
@@ -48,7 +47,6 @@ public interface OrderTableMapper {
 
     OrderTable toOrderTable(OrderTableResponse orderTableResponse);
 
-
     @Mapping(source = "maSoDatBan", target = "maSoDatBan")
     @Mapping(source = "soKhach", target = "soKhach")
     @Mapping(source = "ngay", target = "ngay")
@@ -56,15 +54,16 @@ public interface OrderTableMapper {
     @Mapping(source = "tienDatCoc", target = "tienCoc")
     @Mapping(source = "trangThai", target = "trangThai")
     @Mapping(source = "khachHang.hoTen", target = "tenKhachHang")
-    @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
-    @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
+    // @Mapping(source = "danhSachDonDatBanCoComboCoSan", target = "danhSachCombo")
+//    @Mapping(source = "danhSachDonDatBanCoMonAn", target = "danhSachMonAn", qualifiedByName = "addFoodInfo")
     @Mapping(source = "orderAt", target = "thoiGianTao")
     @Mapping(source = "tongTienThanhToan", target = "tongTienThanhToan")
     @Mapping(source = "percentNoShow", target = "tyLeHuy")
     FinalOrderTableResponse toFinalOrderTableResponse(OrderTable orderTable, @Context FoodRepository foodRepository);
 
     @Named("addFoodInfo")
-    default Set<OrderTableHasFoodResponse> addFoodName(Set<OrderTableHasFood> orderTableHasFoods, @Context FoodRepository foodRepository) {
+    default Set<OrderTableHasFoodResponse> addFoodName(Set<OrderTableHasFood> orderTableHasFoods,
+                                                       @Context FoodRepository foodRepository) {
         return orderTableHasFoods.stream().map(food -> {
             OrderTableHasFoodResponse orderTableHasFoodResponse = new OrderTableHasFoodResponse();
             orderTableHasFoodResponse.setSoLuong(food.getSoLuong());
@@ -74,6 +73,5 @@ public interface OrderTableMapper {
             return orderTableHasFoodResponse;
         }).collect(Collectors.toSet());
     }
-
 
 }

@@ -56,7 +56,7 @@ public class S3Config {
         // Use default virtual-hosted-style access (Fixes SSL issue)
         S3Client s3Client = S3Client.builder()
                 .region(Region.AP_SOUTHEAST_1)
-                .endpointOverride(URI.create("http://s3.ap-southeast-1.amazonaws.com")) // not a hyphen
+                .endpointOverride(URI.create("https://s3.ap-southeast-1.amazonaws.com")) // not a hyphen
                 .forcePathStyle(true)
                 .build();
 

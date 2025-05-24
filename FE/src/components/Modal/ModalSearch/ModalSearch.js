@@ -79,7 +79,7 @@ const ModalSearch = ({ open }) => {
   const extractedResults = format_keywordResult
     .filter((item) => typeof item === "string" && item.trim() !== "") // Ensure valid strings
     .map((item) => getSubStringWithKeyword(item, paramketyword));
-
+  console.log("extractedResults", extractedResults);
   const keywords_conver =
     keywords.length > 0
       ? keywords.map((item) => {
@@ -95,7 +95,11 @@ const ModalSearch = ({ open }) => {
 
   useEffect(() => {
     if (openOf2) {
-      setTempRestaurantSearch(restaurantSearch.slice());
+      if (Array.isArray(restaurantSearch) && restaurantSearch.length > 0) {
+        setTempRestaurantSearch(restaurantSearch.slice());
+      } else {
+        setTempRestaurantSearch([]);
+      }
     }
   }, [openOf2, restaurantSearch]);
 

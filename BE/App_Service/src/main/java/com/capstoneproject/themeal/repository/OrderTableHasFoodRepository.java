@@ -10,11 +10,18 @@ import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailable;
 import com.capstoneproject.themeal.model.entity.OrderTableHasComboAvailableId;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFood;
 import com.capstoneproject.themeal.model.entity.OrderTableHasFoodId;
+import com.capstoneproject.themeal.model.response.OrderTableHasFoodResponse;
 
 import java.util.List;
 
 @Repository
 public interface OrderTableHasFoodRepository
-        extends JpaRepository<OrderTableHasFood, OrderTableHasFoodId> {
+                extends JpaRepository<OrderTableHasFood, OrderTableHasFoodId> {
+
+        @Query("SELECT new com.capstoneproject.themeal.model.response.OrderTableHasFoodResponse("
+                        + "f.MaSo, f.MonAn.Ten, f.MonAn.Gia, f.SoLuong)"
+                        + "FROM OrderTableHasFood f "
+                        + "WHERE f.DonDatBan.MaSoDatBan = :orderId")
+        List<OrderTableHasFoodResponse> findAllByOrderId(@Param("orderId") Long orderId);
 
 }

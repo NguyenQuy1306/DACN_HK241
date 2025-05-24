@@ -1,0 +1,188 @@
+import os
+import pandas as pd
+import sys
+import matplotlib.pyplot as plt
+import joblib
+import logging
+from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import (
+    roc_auc_score,
+    classification_report,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+sys.path.append('/app')
+from app.config.config import MODEL_PATH
+
+
+def train_and_evaluate_models(df: pd.DataFrame):
+    # Feature engineering
+    df["booking_time"] = pd.to_datetime(df["booking_time"], errors="coerce")
+    df["reservation_datetime"] = pd.to_datetime(df["reservation_date"] + " " + df["reservation_time"], errors="coerce")
+    df.dropna(subset=["booking_time", "reservation_datetime"], inplace=True)
+    df["booking_time"] = df["booking_time"].dt.tz_localize(None)
+    df["booking_hour"] = df["booking_time"].dt.hour
+    df["reservation_hour"] = df["reservation_datetime"].dt.hour
+    df["advance_minutes"] = (df["reservation_datetime"] - df["booking_time"]).dt.total_seconds() / 60
+    df["day_of_week"] = df["reservation_datetime"].dt.weekday
+    df["is_weekend"] = df["day_of_week"].isin([5,6]).astype(int)
+
+    FEATURES = [
+        "booking_hour", "reservation_hour", "advance_minutes",
+        "num_guests", "is_first_booking", "day_of_week", "is_weekend",
+        "avg_user_cancel_rate", "payment_status", "user_distance_km",
+        "total_cancel_bookings", "total_bookings"
+    ]
+    TARGET = "is_arrival"
+
+    X = df[FEATURES]
+    y = df[TARGET]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
+
+    # Preprocessing
+    numeric_features = [
+        "booking_hour", "reservation_hour", "advance_minutes",
+        "num_guests", "is_first_booking", "day_of_week",
+        "is_weekend", "avg_user_cancel_rate", "user_distance_km",
+        "total_cancel_bookings", "total_bookings"
+    ]
+    categorical_features = ["payment_status"]
+
+    preprocessor = ColumnTransformer([
+        ("num", StandardScaler(), numeric_features),
+        ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_features)
+    ])
+
+    models = {
+        "Logistic Regression": LogisticRegression(max_iter=1000, random_state=12),
+        "Decision Tree": DecisionTreeClassifier(random_state=42),
+        "Support Vector Machine": SVC(probability=True, random_state=42),
+        "K-Nearest Neighbors": KNeighborsClassifier(),
+        "Gradient Boosting": GradientBoostingClassifier(
+            n_estimators=50, learning_rate=0.05, max_depth=2,
+            subsample=1, min_samples_leaf=10, min_samples_split=20,
+            random_state=22
+        ),
+        "Random Forest": RandomForestClassifier(n_estimators=200, random_state=42)
+    }
+
+    results = {}
+    metrics_summary = []
+    roc_curves = {}
+
+    for name, clf in models.items():
+        pipe = Pipeline([
+            ("prep", preprocessor),
+            ("clf", clf)
+        ])
+        pipe.fit(X_train, y_train)
+        y_prob = pipe.predict_proba(X_test)[:, 1]
+        y_pred = pipe.predict(X_test)
+
+        auc = roc_auc_score(y_test, y_prob)
+        precision = precision_score(y_test, y_pred, pos_label=0)
+        recall = recall_score(y_test, y_pred, pos_label=0)
+        f1 = f1_score(y_test, y_pred, pos_label=0)
+        accuracy = accuracy_score(y_test, y_pred)
+
+        cm = confusion_matrix(y_test, y_pred)
+        tn, fp, fn, tp = cm.ravel()
+        specificity = tn / (tn + fp)
+
+        # ROC curve
+        fpr, tpr, _ = roc_curve(y_test, y_prob, pos_label=1)
+        roc_curves[name] = (fpr, tpr)
+
+        print(f"\n=== {name} ===")
+        print(f"ROC AUC (label=1): {auc:.4f}")
+        print(f"Accuracy:         {accuracy:.4f}")
+        print(f"Precision (label=0): {precision:.4f}")
+        print(f"Recall (label=0):    {recall:.4f}")
+        print(f"Specificity:      {specificity:.4f}")
+        print(f"F1 Score (label=0):  {f1:.4f}")
+        print(f"Confusion Matrix:\n{cm}")
+        print(classification_report(y_test, y_pred, digits=4))
+
+        results[name] = auc
+        metrics_summary.append({
+            "Model": name,
+            "ROC AUC": round(auc, 4),
+            "Accuracy": round(accuracy, 4),
+            "Precision": round(precision, 4),
+            "Recall": round(recall, 4),
+            "Specificity": round(specificity, 4),
+            "F1 Score": round(f1, 4)
+        })
+
+    # Summary table
+    summary_df = pd.DataFrame(metrics_summary).sort_values(by="ROC AUC", ascending=False)
+    print("\n=== Model Comparison Summary ===")
+    print(summary_df)
+
+    # Bar chart with values
+    ax = summary_df.set_index("Model")[["ROC AUC", "Accuracy", "Precision", "Recall", "Specificity", "F1 Score"]].plot(
+        kind="bar", figsize=(14, 7), title="Model Performance Comparison", legend=True
+    )
+    plt.ylabel("Score")
+    plt.xticks(rotation=45)
+
+    for p in ax.patches:
+        ax.annotate(f"{p.get_height():.2f}", 
+                    (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='bottom', fontsize=8, color='black', xytext=(0, 3), textcoords='offset points')
+
+    plt.tight_layout()
+    plt.show()
+
+    # ROC AUC Curve Plot
+    plt.figure(figsize=(10, 7))
+    for name, (fpr, tpr) in roc_curves.items():
+        plt.plot(fpr, tpr, label=f"{name} (AUC = {results[name]:.2f})")
+
+    plt.plot([0, 1], [0, 1], linestyle='--', color='gray')
+    plt.title("ROC Curve Comparison")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.legend(loc="lower right")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+    # Save best model
+    best_name = summary_df.iloc[0]["Model"]
+    best_clf = models[best_name]
+    final_pipe = Pipeline([
+        ("prep", preprocessor),
+        ("clf", best_clf)
+    ])
+    final_pipe.fit(X, y)
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+    joblib.dump(final_pipe, MODEL_PATH, compress=3)
+    logging.info(f"Saved best model '{best_name}' to {MODEL_PATH}")
+
+
+
+if __name__ == "__main__":
+    # Load the CSV data file
+    df = pd.read_csv(r'C:\Users\LENOVO\Desktop\src_DACN\DACN_HK241\BE\AI_Service\data\sample_reservation_data.csv')
+    # df = pd.read_csv('/app/data/sample_reservation_data.csv')
+
+
+    # Call the function to train and save the model
+    train_and_evaluate_models(df)

@@ -21,6 +21,9 @@
     background-color: #fff;
     border-radius: 0 0 5px 5px;
     border-radius: 5px;
+    /* padding-right: 8px; */
+    max-height: 80vh;
+    overflow-y: auto;
 }
 .ModalSearchDivWrapperSearch_KeyWord .ModalSearchDivWrapperSearch_Recommendation
 {

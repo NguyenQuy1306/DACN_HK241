@@ -26,7 +26,6 @@ import Statistic from "./components/Statistic";
 import TrendingItem from "./components/TrendingItem";
 import styles from "./style.module.css";
 
-import { getAllOrderByRestaurantId } from "./../../redux/features/orderSlice";
 import { getFoodImage } from "../../redux/api";
 import { BACKEND_URL } from "../../utils/util";
 
@@ -93,9 +92,11 @@ const formatCurrency = (value, locale = "vi-VN", currency = "VND") => {
 function Dashboard_Owner() {
   const [stompClient, setStompClient] = useState(null);
   const dispatch = useDispatch();
-  const { order } = useSelector((state) => state.order);
+  const { orderAllByRestaurant } = useSelector((state) => state.order);
   const user = useSelector((state) => state.authentication.user);
-  const [messages, setMessages] = useState(order);
+  const [messages, setMessages] = useState(orderAllByRestaurant);
+  const itemsMap = useSelector((s) => s.order.danhSachMonAnMap);
+
   const restaurantOwner = useSelector(
     (state) => state.authentication.restaurantOwner
   );
@@ -143,8 +144,11 @@ function Dashboard_Owner() {
 
     orders.forEach((order) => {
       const day = getDayOfWeek(order.ngay);
+      const items = itemsMap[order.maSoDatBan] || [];
       dayData[day] += 1; // Increment the count for the day
     });
+
+    return Object.values(dayData);
   };
 
   const processRevenueData = (orders) => {
@@ -152,10 +156,8 @@ function Dashboard_Owner() {
 
     orders.forEach((order) => {
       const day = getDayOfWeek(order.ngay);
-      const revenue = order.danhSachMonAn.reduce(
-        (acc, cur) => acc + cur.gia,
-        0
-      );
+      const items = itemsMap[order.maSoDatBan] || [];
+      const revenue = items.reduce((acc, cur) => acc + cur.gia, 0);
       dayData[day] += revenue; // Add the revenue for the day
     });
 
@@ -166,7 +168,8 @@ function Dashboard_Owner() {
     const categoryData = {};
 
     orders.forEach((order) => {
-      order.danhSachMonAn.forEach((item) => {
+      const items = itemsMap[order.maSoDatBan] || [];
+      items.forEach((item) => {
         if (categoryData[item.tenMon]) {
           categoryData[item.tenMon] += 1;
         } else {
@@ -222,11 +225,11 @@ function Dashboard_Owner() {
     };
   }, []);
 
-  const menuNames = messages.reduce(
-    (acc, cur) =>
-      new Set([...acc, ...cur.danhSachMonAn.map((i) => i.tenMon, [])]),
-    new Set()
-  );
+  // Calculate menu names using itemsMap
+  const menuNames = messages.reduce((acc, cur) => {
+    const items = itemsMap[cur.maSoDatBan] || [];
+    return new Set([...acc, ...items.map((i) => i.tenMon)]);
+  }, new Set());
 
   const timeFrame = messages.reduce(
     (acc, cur) => new Set([...acc, cur.gio]),
@@ -259,30 +262,38 @@ function Dashboard_Owner() {
   const [foodIdList, setFoodIdList] = useState([]);
   const [foodImage, setFoodImage] = useState([]);
 
-  const topMenuTrending = messages.forEach((item) => {
-    item.danhSachMonAn.forEach((i) => {
+  // Update topTrending with itemsMap data
+  messages.forEach((item) => {
+    const items = itemsMap[item.maSoDatBan] || [];
+    items.forEach((i) => {
       const curItem = topTrending.find((item1) => item1.name === i.tenMon);
-      curItem.quantity += i.soLuong;
-      curItem.price = i.gia;
-      curItem.id = i.maSo.maSoMonAn;
+      if (curItem) {
+        curItem.quantity += i.soLuong;
+        curItem.price = i.gia;
+        curItem.id = i.maSo?.maSoMonAn;
+      }
     });
   });
 
   useEffect(() => {
     topTrending.forEach((i) => {
-      i.url = foodImage.find((item) => item.foodId === i.id).imageUrl || "";
+      const foundImage = foodImage.find((item) => item.foodId === i.id);
+      i.url = foundImage ? foundImage.imageUrl : "";
     });
   }, [foodImage]);
 
   useEffect(() => {
     const IdList = messages.reduce((acc, cur) => {
-      const request = cur.danhSachMonAn.map((i) => {
-        return i.maSo.maSoMonAn;
-      });
+      const items = itemsMap[cur.maSoDatBan] || [];
+      const request = items
+        .map((i) => {
+          return i.maSo?.maSoMonAn;
+        })
+        .filter((id) => id); // Filter out undefined/null IDs
       return new Set([...acc, ...request]);
     }, new Set());
     setFoodIdList([...IdList]);
-  }, [messages]);
+  }, [messages, itemsMap]);
 
   useEffect(() => {
     const callFoodImage = async () => {
@@ -301,7 +312,7 @@ function Dashboard_Owner() {
       }
     };
 
-    if (foodIdList.length > 0) {
+    if (foodIdList.length > 0 && restaurantOwner?.maSoNhaHang) {
       callFoodImage();
     }
   }, [foodIdList, restaurantOwner?.maSoNhaHang]);
@@ -309,13 +320,10 @@ function Dashboard_Owner() {
   useEffect(() => {
     console.log("IMAGE OF FOOD: ", foodImage);
   }, [foodImage]);
-  useEffect(() => {
-    console.log("TOP TRENDING: ", topTrending);
-  }, [topTrending]);
 
   useEffect(() => {
-    setMessages(order);
-  }, [order]);
+    setMessages(orderAllByRestaurant);
+  }, [orderAllByRestaurant]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -353,7 +361,13 @@ function Dashboard_Owner() {
         ],
       }));
     }
-  }, [messages]);
+  }, [messages, itemsMap]);
+
+  // Calculate total revenue from itemsMap
+  const totalRevenue = messages.reduce((acc, cur) => {
+    const items = itemsMap[cur.maSoDatBan] || [];
+    return acc + items.reduce((itemAcc, item) => itemAcc + item.gia, 0);
+  }, 0);
 
   return (
     <>
@@ -429,11 +443,7 @@ function Dashboard_Owner() {
               <Statistic
                 img={money}
                 title="Tổng doanh thu (VND)"
-                quantity={formatCurrency(
-                  messages
-                    .reduce((acc, cur) => [...acc, ...cur.danhSachMonAn], [])
-                    .reduce((acc, cur) => acc + cur.gia, 0)
-                )}
+                quantity={formatCurrency(totalRevenue)}
                 up={true}
                 rate={13}
                 compare="So với hôm qua"
@@ -491,7 +501,7 @@ function Dashboard_Owner() {
                       name={item.name}
                       price={item.price}
                       quantity={item.quantity}
-                      url={item.url[0]}
+                      url={item.url}
                     />
                   );
                 })}

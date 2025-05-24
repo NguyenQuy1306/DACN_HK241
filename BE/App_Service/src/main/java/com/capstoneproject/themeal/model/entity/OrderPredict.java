@@ -38,4 +38,9 @@ public class OrderPredict {
     private Double userDistanceKm;
     @Column(nullable = false)
     private String paymentStatus;
+    @Column(nullable = false)
+    private Integer totalCancelBookings;
+    @Column(nullable = false)
+    private Integer totalBookings;
+
 }

@@ -4,7 +4,7 @@ import joblib
 import logging
 import sys
 
-from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -13,8 +13,7 @@ from imblearn.over_sampling import RandomOverSampler
 
 # Import config
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from config.config import MODEL_PATH
-
+from app.config.config import MODEL_PATH
 
 def retrain_model(df: pd.DataFrame):
     # 1. Parse datetime
@@ -31,10 +30,11 @@ def retrain_model(df: pd.DataFrame):
     df["is_weekend"] = df["day_of_week"].isin([5, 6]).astype(int)
 
     FEATURES = [
-        "user_id", "booking_hour", "reservation_hour", "advance_minutes",
+         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week", "is_weekend",
-        "avg_user_cancel_rate", "payment_status", "user_distance_km"
+        "avg_user_cancel_rate", "payment_status", "user_distance_km","total_cancel_bookings","total_bookings"
     ]
+
     TARGET = "is_arrival"
     X = df[FEATURES]
     y = df[TARGET]
@@ -48,9 +48,9 @@ def retrain_model(df: pd.DataFrame):
     numeric_features = [
         "booking_hour", "reservation_hour", "advance_minutes",
         "num_guests", "is_first_booking", "day_of_week",
-        "is_weekend", "avg_user_cancel_rate", "user_distance_km"
+        "is_weekend", "avg_user_cancel_rate", "user_distance_km","total_cancel_bookings","total_bookings"
     ]
-    categorical_features = ["user_id", "payment_status"]
+    categorical_features = [ "payment_status"]
     preprocessor = ColumnTransformer([
         ("num", StandardScaler(), numeric_features),
         ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_features)
@@ -67,11 +67,10 @@ def retrain_model(df: pd.DataFrame):
         pipeline = ImbPipeline([
             ("prep", preprocessor),
             ("sampler", sampler),
-            ("clf", XGBClassifier(
-                objective='binary:logistic',
-                use_label_encoder=False,
-                eval_metric='auc',
+            ("clf", RandomForestClassifier(
+                n_estimators=200,
                 random_state=2025,
+                class_weight="balanced",
                 n_jobs=-1
             ))
         ])
@@ -80,5 +79,6 @@ def retrain_model(df: pd.DataFrame):
     pipeline.fit(X_train, y_train)
 
     # Save model
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(pipeline, MODEL_PATH, compress=3)
     logging.info(f"Model retrained and saved to {MODEL_PATH}")
